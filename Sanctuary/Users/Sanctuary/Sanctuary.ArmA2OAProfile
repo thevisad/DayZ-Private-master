@@ -1,0 +1,143 @@
+class Difficulties
+{
+	class Recruit
+	{
+		class Flags
+		{
+			3rdPersonView=1;
+			armor=1;
+			autoAim=0;
+			autoGuideAT=1;
+			autoSpot=1;
+			cameraShake=0;
+			clockIndicator=1;
+			deathMessages=1;
+			enemyTag=0;
+			friendlyTag=1;
+			hud=1;
+			hudGroupInfo=1;
+			hudPerm=1;
+			hudWp=1;
+			hudWpPerm=1;
+			map=1;
+			netStats=1;
+			tracers=1;
+			ultraAI=0;
+			unlimitedSaves=1;
+			vonID=1;
+			weaponCursor=1;
+		};
+		skillFriendly=1;
+		precisionFriendly=1;
+		skillEnemy=0;
+		precisionEnemy=0;
+	};
+	class Regular
+	{
+		class Flags
+		{
+			3rdPersonView=1;
+			armor=0;
+			autoAim=0;
+			autoGuideAT=0;
+			autoSpot=0;
+			cameraShake=1;
+			clockIndicator=0;
+			deathMessages=1;
+			enemyTag=0;
+			friendlyTag=0;
+			hud=0;
+			hudGroupInfo=0;
+			hudPerm=1;
+			hudWp=0;
+			hudWpPerm=0;
+			map=0;
+			netStats=1;
+			tracers=0;
+			ultraAI=0;
+			unlimitedSaves=0;
+			vonID=1;
+			weaponCursor=1;
+		};
+		skillFriendly=0;
+		precisionFriendly=0;
+		skillEnemy=0;
+		precisionEnemy=0;
+	};
+	class Veteran
+	{
+		class Flags
+		{
+			3rdPersonView=1;
+			armor=0;
+			autoAim=0;
+			autoGuideAT=0;
+			autoSpot=0;
+			cameraShake=1;
+			clockIndicator=0;
+			deathMessages=1;
+			enemyTag=0;
+			friendlyTag=0;
+			hud=1;
+			hudGroupInfo=0;
+			hudPerm=0;
+			hudWp=1;
+			hudWpPerm=0;
+			map=0;
+			netStats=1;
+			tracers=0;
+			ultraAI=0;
+			unlimitedSaves=0;
+			vonID=1;
+			weaponCursor=1;
+		};
+		skillFriendly=0;
+		precisionFriendly=0;
+		skillEnemy=0;
+		precisionEnemy=0;
+	};
+	class Mercenary
+	{
+		class Flags
+		{
+			3rdPersonView=0;
+			armor=0;
+			autoAim=0;
+			autoGuideAT=0;
+			autoSpot=0;
+			cameraShake=1;
+			clockIndicator=0;
+			deathMessages=0;
+			enemyTag=0;
+			friendlyTag=0;
+			hud=0;
+			hudGroupInfo=0;
+			hudPerm=0;
+			hudWp=0;
+			hudWpPerm=0;
+			map=0;
+			netStats=0;
+			tracers=0;
+			ultraAI=0;
+			unlimitedSaves=0;
+			vonID=0;
+			weaponCursor=0;
+		};
+		skillFriendly=0;
+		precisionFriendly=0;
+		skillEnemy=0;
+		precisionEnemy=0;
+	};
+};
+shadingQuality=7;
+shadowQuality=3;
+singleVoice=0;
+maxSamplesPlayed=32;
+sceneComplexity=300000;
+viewDistance=2000;
+terrainGrid=25;
+volumeCD=6.5;
+volumeFX=8.5;
+volumeSpeech=5.5;
+volumeVoN=6.5;
+vonRecThreshold=0.029999999;

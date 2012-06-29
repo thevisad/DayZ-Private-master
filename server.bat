@@ -1,0 +1,1 @@
+"D:\Program Files (x86)\ArmA 2\Expansion\beta\arma2oaserver.exe" -port=2302 "-config=D:\Program Files (x86)\ArmA 2\Sanctuary\TA2DST_config.cfg" "-cfg=D:\Program Files (x86)\ArmA 2\Sanctuary\TA2DST_basic.cfg" "-profiles=D:\Program Files (x86)\ArmA 2\Sanctuary" -name=Sanctuary "-mod=@Arma2NET;@CBA;@DayZ" -arma2netdev -cpuCount=4 -maxMem=3072

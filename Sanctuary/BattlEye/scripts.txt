@@ -1,0 +1,56 @@
+7 Bo_Mk82
+7 Loki
+7 Gerk
+7 (vehicle player) addEventHandler ["handleDamage", { false }];
+7 player addEventHandler ["handleDamage", { false }];
+7 GodMode
+7 God mode
+7 Infammo
+7 InfiniteAmmo
+7 Infinite Ammo
+7 Killplayer
+7 OwnageMenu
+7 EjectPlayer
+1 setVehicleInit
+7 MrMedic
+7 U-NO-WHO
+7 Darky
+7 Alexenderpack
+7 Alexenderp$ck
+7 Troopman
+7 Troopmon
+7 hacks
+7 U-NO-
+7 onMapSingleClick
+7 gau
+7 aa12
+7 bomblauncher
+7 azp85
+7 m1a1
+7 M1A2_TUSK_MG
+1 createMarker
+1 setMarkerPos
+7 Teleport
+7 teled
+1 vehicle player setPos
+1 (vehicle player) setPos
+1 addWeapon
+7 createLocation
+7 Vojtec
+7 hint format ["A %1 has been added", gun]
+7 vehicle player setpos _pos;
+7 marker2 setMarkerPosLocal (getPos veh)
+7 marker2 = createMarkerLocal [marker2,getPos veh];
+7 marker2 = "VehMarker" + (str i);
+7 onDoubleClick
+7 _markerMirador
+7 TKCV1_0\TKCOWNS.sqf
+7 [_this,"players"] execVM "\ca\ui\scripts\dedicatedServerInterface.sqf";
+7 _v addweapon "A"+"A1"+"2_PM"+"C"; _v addmagazine "20R"+"nd
+7 private ["_dummy"]; _dummy = [_this,"onload"]
+7 addWeaponCargo [_x,100]
+7 addMagazineCargo [_x,100]
+7 addWeaponCargoGlobal [_x,100]
+7 addMagazineCargoGlobal [_x,100]
+7 createMarkerLocal [
+7 createMarker [
