@@ -42,7 +42,7 @@ switch (_key) do
 	_owner = _result select 5;
 	_pos = _result select 6;
 	_uid = _result select 10;
-	"Arma2Net.Unmanaged" callExtension format ["Arma2NETMySQL ['dayz','insOselI','mytype=%1,myowner=%2,myhealth=[],myhp=0,mypos=%3,myuid=%4,myfuel=0']", _type,_owner,_pos,_uid];
+	"Arma2Net.Unmanaged" callExtension format ["Arma2NETMySQL ['dayz','insOselI','mytype=%1,myowner=%2,myhealth=[],myhp=0,mypos=%3,myuid=%4,myfuel=0,myinstance=%5']", _type,_owner,_pos,_uid,dayz_instance];
 	};
 //local_delObj //only for tents?
 //format["CHILD:310:%1:",_uid];
