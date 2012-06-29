@@ -23,7 +23,7 @@ given (scalar(@ARGV))
 my $dsn = "dbi:mysql:$db:localhost:3306";
 print "Generating vehicles for instance: ".$dbinstance." , with user: ".$dbuser."\n";
 my $dbh = DBI->connect($dsn, $dbuser, $pw) or die "Couldn't connect to db: ".DBI->errstr;
-my $sth = $dbh->prepare('DELETE FROM objects WHERE damage>=0.95') or die;
+my $sth = $dbh->prepare('DELETE FROM objects WHERE damage>=0.95 OR (lastupdate<DATE_SUB(NOW(),INTERVAL 5 DAY) AND NOT otype="TentStorage");') or die;
 $sth->execute() or die "Couldn't execute statement" . $sth->errstr;#Clean dead vehicles
 my $numGenerated=0;#counter for the number of generated vehicles
 my @vehicles = ("UAZ%","ATV%","Skoda%","TT650%","Old_bike%","UH1H%","hilux%","Ikarus%","Tractor","S1203%","V3S_Gue","UralCivil","car%","%boat%","PBX","Volha%","SUV%");
