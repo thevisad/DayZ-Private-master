@@ -74,7 +74,7 @@ for (my $i=0;$i<scalar @vehicles;$i++)
 		}
 		elsif($vehicle eq "UH1H%")
 		{
-			@parts = ('["motor",1]','["elektronika",1]','["mala vrtule",1]','["velka vrtule",1]]');
+			@parts = ('["motor",1]','["elektronika",1]','["mala vrtule",1]','["velka vrtule",1]');
 			$damage=rand(0.4);
 			$health = genDamage(@parts);
 		}
