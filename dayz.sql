@@ -45,8 +45,9 @@ CREATE TABLE `main` (
   `late` int(2) unsigned NOT NULL DEFAULT '0',
   `ldrank` int(2) unsigned NOT NULL DEFAULT '0',
   `stime` int(2) unsigned NOT NULL DEFAULT '0',
+  `lastupdate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2403 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=2480 DEFAULT CHARSET=utf8;
 
 --
 -- Definition of table `objects`
@@ -64,8 +65,9 @@ CREATE TABLE `objects` (
   `otype` varchar(255) NOT NULL DEFAULT 'none',
   `oid` int(11) unsigned NOT NULL DEFAULT '0',
   `instance` int(11) unsigned NOT NULL DEFAULT '0',
+  `lastupdate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=MyISAM AUTO_INCREMENT=25 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+) ENGINE=MyISAM AUTO_INCREMENT=32 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 --
 -- Definition of table `spawns`
@@ -161,22 +163,6 @@ INSERT INTO `spawns` (`id`,`pos`,`otype`,`uuid`) VALUES
  (128,'[222,[12360.468, 10817.882,0]]','car_sedan',73);
 /*!40000 ALTER TABLE `spawns` ENABLE KEYS */;
 
---
--- Definition of procedure `insOselI`
---
-
-DROP PROCEDURE IF EXISTS `insOselI`;
-
-DELIMITER $$
-
-/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
-CREATE DEFINER=`dayz`@`localhost` PROCEDURE `insOselI`(IN myuid VARCHAR(50),IN myowner INT,IN myhp DOUBLE,IN myhealth VARCHAR(1024),IN mypos VARCHAR(255),IN mytype VARCHAR(255),IN myfuel DOUBLE,IN myinstance INT)
-BEGIN
-      INSERT INTO objects (uid,otype,health,damage,oid,pos,fuel,instance) VALUES (myuid,mytype,myhealth,myhp,myowner,mypos,myfuel,myinstance);
-END $$
-/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
-
-DELIMITER ;
 
 --
 -- Definition of procedure `delO`
@@ -241,6 +227,23 @@ DELIMITER $$
 CREATE DEFINER=`dayz`@`localhost` PROCEDURE `getTime`(IN pointless INT)
 BEGIN
       SELECT DATE_FORMAT(NOW(),'%d-%m-%Y'), CURTIME();
+END $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
+
+DELIMITER ;
+
+--
+-- Definition of procedure `insOselI`
+--
+
+DROP PROCEDURE IF EXISTS `insOselI`;
+
+DELIMITER $$
+
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+CREATE DEFINER=`dayz`@`localhost` PROCEDURE `insOselI`(IN myuid VARCHAR(50),IN myowner INT,IN myhp DOUBLE,IN myhealth VARCHAR(1024),IN mypos VARCHAR(255),IN mytype VARCHAR(255),IN myfuel DOUBLE,IN myinstance INT)
+BEGIN
+      INSERT INTO objects (uid,otype,health,damage,oid,pos,fuel,instance) VALUES (myuid,mytype,myhealth,myhp,myowner,mypos,myfuel,myinstance);
 END $$
 /*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
 
