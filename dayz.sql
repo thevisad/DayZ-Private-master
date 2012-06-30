@@ -192,7 +192,7 @@ DELIMITER $$
 /*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
 CREATE DEFINER=`dayz`@`localhost` PROCEDURE `getO`(IN myinstance INT,IN page INT)
 BEGIN
-      SELECT id,otype,oid,pos,inventory,health,fuel,damage FROM objects LIMIT page,15;
+      SELECT id,otype,oid,pos,inventory,health,fuel,damage FROM objects WHERE instance=myinstance LIMIT page,15;
 END $$
 /*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
 
