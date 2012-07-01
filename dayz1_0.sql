@@ -29,11 +29,11 @@ DROP TABLE IF EXISTS `main`;
 CREATE TABLE `main` (
   `id` int(8) unsigned NOT NULL AUTO_INCREMENT,
   `uid` int(8) unsigned NOT NULL,
-  `name` varchar(128) CHARACTER SET latin2 NOT NULL DEFAULT 'GI Joe',
-  `pos` varchar(255) CHARACTER SET latin2 NOT NULL DEFAULT '[]',
-  `inventory` varchar(1024) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '[]',
-  `backpack` varchar(1024) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '["DZ_Patrol_Pack_EP1"|[[]|[]]|[[]|[]]]',
-  `medical` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '[false|false|false|false|false|false|false|12000|[]|[0|0]|0]',
+  `name` varchar(128) NOT NULL DEFAULT 'GI Joe',
+  `pos` varchar(255) NOT NULL DEFAULT '[]',
+  `inventory` varchar(1024) NOT NULL DEFAULT '[]',
+  `backpack` varchar(1024) NOT NULL DEFAULT '["DZ_Patrol_Pack_EP1"|[[]|[]]|[[]|[]]]',
+  `medical` varchar(255) NOT NULL DEFAULT '[false|false|false|false|false|false|false|12000|[]|[0|0]|0]',
   `death` tinyint(1) NOT NULL DEFAULT '0',
   `model` varchar(255) NOT NULL DEFAULT 'Survivor2_DZ',
   `state` varchar(255) NOT NULL DEFAULT '[""|"aidlpercmstpsnonwnondnon_player_idlesteady04"|36]',
@@ -47,7 +47,7 @@ CREATE TABLE `main` (
   `stime` int(2) unsigned NOT NULL DEFAULT '0',
   `lastupdate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2480 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=3757 DEFAULT CHARSET=utf8;
 
 --
 -- Definition of table `objects`
@@ -67,7 +67,7 @@ CREATE TABLE `objects` (
   `instance` int(11) unsigned NOT NULL DEFAULT '0',
   `lastupdate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=MyISAM AUTO_INCREMENT=32 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+) ENGINE=MyISAM AUTO_INCREMENT=284 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 --
 -- Definition of table `spawns`
@@ -165,6 +165,34 @@ INSERT INTO `spawns` (`id`,`pos`,`otype`,`uuid`) VALUES
 
 
 --
+-- Definition of procedure `cleanS`
+--
+
+DROP PROCEDURE IF EXISTS `cleanS`;
+
+DELIMITER $$
+
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+(nil) $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
+
+DELIMITER ;
+
+--
+-- Definition of procedure `delDead`
+--
+
+DROP PROCEDURE IF EXISTS `delDead`;
+
+DELIMITER $$
+
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+(nil) $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
+
+DELIMITER ;
+
+--
 -- Definition of procedure `delO`
 --
 
@@ -173,10 +201,49 @@ DROP PROCEDURE IF EXISTS `delO`;
 DELIMITER $$
 
 /*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
-CREATE DEFINER=`dayz`@`localhost` PROCEDURE `delO`(IN myuid VARCHAR(50))
-BEGIN
-      DELETE FROM objects WHERE uid=myuid;
-END $$
+(nil) $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
+
+DELIMITER ;
+
+--
+-- Definition of procedure `getCO`
+--
+
+DROP PROCEDURE IF EXISTS `getCO`;
+
+DELIMITER $$
+
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+(nil) $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
+
+DELIMITER ;
+
+--
+-- Definition of procedure `getDead`
+--
+
+DROP PROCEDURE IF EXISTS `getDead`;
+
+DELIMITER $$
+
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+(nil) $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
+
+DELIMITER ;
+
+--
+-- Definition of procedure `getFS`
+--
+
+DROP PROCEDURE IF EXISTS `getFS`;
+
+DELIMITER $$
+
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+(nil) $$
 /*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
 
 DELIMITER ;
@@ -190,10 +257,7 @@ DROP PROCEDURE IF EXISTS `getO`;
 DELIMITER $$
 
 /*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
-CREATE DEFINER=`dayz`@`localhost` PROCEDURE `getO`(IN myinstance INT,IN page INT)
-BEGIN
-      SELECT id,otype,oid,pos,inventory,health,fuel,damage FROM objects WHERE instance=myinstance LIMIT page,15;
-END $$
+(nil) $$
 /*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
 
 DELIMITER ;
@@ -207,10 +271,7 @@ DROP PROCEDURE IF EXISTS `getOC`;
 DELIMITER $$
 
 /*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
-CREATE DEFINER=`dayz`@`localhost` PROCEDURE `getOC`(IN myinstance INT)
-BEGIN
-      SELECT COUNT(*) FROM objects WHERE instance=myinstance;
-END $$
+(nil) $$
 /*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
 
 DELIMITER ;
@@ -224,10 +285,7 @@ DROP PROCEDURE IF EXISTS `getTime`;
 DELIMITER $$
 
 /*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
-CREATE DEFINER=`dayz`@`localhost` PROCEDURE `getTime`(IN pointless INT)
-BEGIN
-      SELECT DATE_FORMAT(NOW(),'%d-%m-%Y'), CURTIME();
-END $$
+(nil) $$
 /*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
 
 DELIMITER ;
@@ -241,10 +299,7 @@ DROP PROCEDURE IF EXISTS `insOselI`;
 DELIMITER $$
 
 /*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
-CREATE DEFINER=`dayz`@`localhost` PROCEDURE `insOselI`(IN myuid VARCHAR(50),IN myowner INT,IN myhp DOUBLE,IN myhealth VARCHAR(1024),IN mypos VARCHAR(255),IN mytype VARCHAR(255),IN myfuel DOUBLE,IN myinstance INT)
-BEGIN
-      INSERT INTO objects (uid,otype,health,damage,oid,pos,fuel,instance) VALUES (myuid,mytype,myhealth,myhp,myowner,mypos,myfuel,myinstance);
-END $$
+(nil) $$
 /*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
 
 DELIMITER ;
@@ -258,11 +313,21 @@ DROP PROCEDURE IF EXISTS `insUNselI`;
 DELIMITER $$
 
 /*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
-CREATE DEFINER=`dayz`@`localhost` PROCEDURE `insUNselI`(IN myuid INT,IN myname VARCHAR(255))
-BEGIN
-      INSERT INTO main (uid, name) VALUES (myuid, myname);
-      SELECT LAST_INSERT_ID();
-END $$
+(nil) $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
+
+DELIMITER ;
+
+--
+-- Definition of procedure `selIIB`
+--
+
+DROP PROCEDURE IF EXISTS `selIIB`;
+
+DELIMITER $$
+
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+(nil) $$
 /*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
 
 DELIMITER ;
@@ -276,10 +341,7 @@ DROP PROCEDURE IF EXISTS `selIIBSM`;
 DELIMITER $$
 
 /*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
-CREATE DEFINER=`dayz`@`localhost` PROCEDURE `selIIBSM`(IN myuid INT)
-BEGIN
-      SELECT id, inventory, backpack, stime, model, late, ldrank FROM main WHERE uid=myuid AND death=0;
-END $$
+(nil) $$
 /*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
 
 DELIMITER ;
@@ -293,10 +355,7 @@ DROP PROCEDURE IF EXISTS `selIPIBMSSS`;
 DELIMITER $$
 
 /*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
-CREATE DEFINER=`dayz`@`localhost` PROCEDURE `selIPIBMSSS`(IN myuid INT)
-BEGIN
-      SELECT id, pos, inventory, backpack, medical, stime, stats, state, late, ldrank FROM main WHERE uid=myuid AND death=0;
-END $$
+(nil) $$
 /*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
 
 DELIMITER ;
@@ -310,10 +369,7 @@ DROP PROCEDURE IF EXISTS `selMPSSH`;
 DELIMITER $$
 
 /*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
-CREATE DEFINER=`dayz`@`localhost` PROCEDURE `selMPSSH`(IN myid INT)
-BEGIN
-      SELECT medical, pos, kills, state, humanity, hs, hkills, bkills FROM main WHERE id=myid AND death=0;
-END $$
+(nil) $$
 /*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
 
 DELIMITER ;
@@ -327,10 +383,21 @@ DROP PROCEDURE IF EXISTS `setCD`;
 DELIMITER $$
 
 /*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
-CREATE DEFINER=`dayz`@`localhost` PROCEDURE `setCD`(IN myid INT)
-BEGIN
-      UPDATE main SET death=1 WHERE id=myid;
-END $$
+(nil) $$
+/*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
+
+DELIMITER ;
+
+--
+-- Definition of procedure `setFS`
+--
+
+DROP PROCEDURE IF EXISTS `setFS`;
+
+DELIMITER $$
+
+/*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
+(nil) $$
 /*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
 
 DELIMITER ;
@@ -344,17 +411,7 @@ DROP PROCEDURE IF EXISTS `update`;
 DELIMITER $$
 
 /*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
-CREATE DEFINER=`dayz`@`localhost` PROCEDURE `update`(IN myk INT, IN myhs INT, IN mybk INT,
-       IN myhk INT, IN mystate VARCHAR(255), IN mymod VARCHAR(255), IN myate INT, IN mydrank INT,
-       IN mytime INT, IN myid INT, IN myhum INT, IN mypos VARCHAR(1024), IN myinv VARCHAR(1024),
-       IN myback VARCHAR(1024), IN mymed VARCHAR(1024))
-BEGIN
-      UPDATE main SET kills=kills+myk,hs=hs+myhs,bkills=bkills+mybk,hkills=hkills+myhk,
-                      state=mystate,model=if(mymod='any',model,mymod),late=if(myate=-1,0,late+myate),ldrank=if(mydrank=-1,0,ldrank+mydrank),stime=stime+mytime,
-                      pos=if(mypos='[]',pos,mypos),humanity=if(myhum=0,humanity,myhum),medical=if(mymed='[]',medical,mymed),
-                      backpack=if(myback='[]',backpack,myback),inventory=if(myinv='[]',inventory,myinv)
-                  WHERE id=myid;
-END $$
+(nil) $$
 /*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
 
 DELIMITER ;
@@ -368,10 +425,7 @@ DROP PROCEDURE IF EXISTS `updIH`;
 DELIMITER $$
 
 /*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
-CREATE DEFINER=`dayz`@`localhost` PROCEDURE `updIH`(IN myid INT,IN myhealth VARCHAR(1024),IN myhp DOUBLE)
-BEGIN
-      UPDATE objects SET health=if(myhealth='[]',health,myhealth),damage=myhp WHERE id=myid;
-END $$
+(nil) $$
 /*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
 
 DELIMITER ;
@@ -385,10 +439,7 @@ DROP PROCEDURE IF EXISTS `updII`;
 DELIMITER $$
 
 /*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
-CREATE DEFINER=`dayz`@`localhost` PROCEDURE `updII`(IN myid INT,IN myinv VARCHAR(1024))
-BEGIN
-      UPDATE objects SET inventory=if(myinv='[]',inventory,myinv) WHERE id=myid;
-END $$
+(nil) $$
 /*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
 
 DELIMITER ;
@@ -402,10 +453,7 @@ DROP PROCEDURE IF EXISTS `updIPF`;
 DELIMITER $$
 
 /*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
-CREATE DEFINER=`dayz`@`localhost` PROCEDURE `updIPF`(IN myid INT,IN mypos VARCHAR(255),IN myfuel DOUBLE)
-BEGIN
-      UPDATE objects SET pos=if(mypos='[]',pos,mypos),fuel=myfuel WHERE id=myid;
-END $$
+(nil) $$
 /*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
 
 DELIMITER ;
@@ -419,10 +467,7 @@ DROP PROCEDURE IF EXISTS `updUI`;
 DELIMITER $$
 
 /*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
-CREATE DEFINER=`dayz`@`localhost` PROCEDURE `updUI`(IN myuid VARCHAR(50),IN myinv VARCHAR(1024))
-BEGIN
-      UPDATE objects SET inventory=if(myinv='[]',inventory,myinv) WHERE uid=myuid;
-END $$
+(nil) $$
 /*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
 
 DELIMITER ;
@@ -436,10 +481,7 @@ DROP PROCEDURE IF EXISTS `updV`;
 DELIMITER $$
 
 /*!50003 SET @TEMP_SQL_MODE=@@SQL_MODE, SQL_MODE='STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ $$
-CREATE DEFINER=`dayz`@`localhost` PROCEDURE `updV`(IN myuid VARCHAR(50),IN myhealth VARCHAR(1024),IN mypos VARCHAR(255),IN mytype VARCHAR(255))
-BEGIN
-      UPDATE objects SET otype=if(mytype='',otype,mytype),health=if(myhealth='[]',health,myhealth),pos=if(mypos='[]',pos,mypos) WHERE uid=myuid;
-END $$
+(nil) $$
 /*!50003 SET SESSION SQL_MODE=@TEMP_SQL_MODE */  $$
 
 DELIMITER ;
