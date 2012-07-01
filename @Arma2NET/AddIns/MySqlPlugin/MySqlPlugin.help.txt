@@ -1,0 +1,1 @@
+This will provide information about the MySQL Addin for Arma2Net in a future Version.

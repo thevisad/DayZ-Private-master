@@ -1,0 +1,2 @@
+This development version of Arma2NETMySQLPlugin.dll is not signed. In order to use please put Arma2NET in development mode using the startup switch -arma2netdev
+Build versions of this plugin can be found here: https://github.com/firefly2442/Arma2NETMySQLPlugin 

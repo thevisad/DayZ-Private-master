@@ -1,0 +1,84 @@
+Arma2NET 1.9 (21 May 2012):
+
+- New alternative function call syntax, e.g. ["DateTime", ["now", "HH:mm:ss"]]
+- Added outputSize support to Arma2NetMethodAddIn and friends.
+- Arma2NetMethodAddIn now optionally formats results as SQF.
+- New YAML settings file that can be used to configure Arma2NET.
+- The list of plugins to automatically activate on Arma2NET startup can now be configured through YAML.
+- The Arma2NET plugin whitelist can now be configured through YAML.
+- Added the ability to play a beep sound when Arma2NET is activated. This can be configured through YAML.
+- Sharpened text in Arma2NetExplorer.
+- Dropped installer banner images to reduce file size.
+- Improved return result logic further from version 1.8.
+- UtilitiesPlugin and WeatherPlugin dropped from Arma2NET and are now auxiliary plugins.
+- Dropped FunctionArgumentsInvalidException in favour of the standard .NET exceptions.
+- Error messages vastly improved.
+
+Arma2NET 1.8 (9 May 2012):
+
+- Added a utility application which can be used to explore addins.
+- New function 'VersionOfAddIn' which will return the version of the specified addin.
+- Logging directory moved to AppData/Local/Arma2NET by suggestion.
+- Improved PythonPlugin to use the standard library and user-provided .py files. See the wiki for more details.
+- Fixed a minor logic error in returning the result back to Arma 2.
+- Fixed an issue where SQF arrays inside other SQF arrays weren't being converted properly.
+- Fixed an issue where the 'Functions' function wasn't actually returning a list of functions.
+
+Arma2NET 1.7.1 (1 May 2012):
+
+- Fixed bug where all auto-activated plugins were ignoring Developer mode.
+
+Arma2NET 1.7 (30 April 2012):
+
+- New function CompareVersion to compare versions, e.g. is version 1.7.0.0 higher than 1.6.0.0?
+- Improved the plugin activation/deactivation system, where only one plugin is activated as needed.
+- Overhauled SQF/object formatting.
+- Fixed a couple of bugs related to sandboxed plugins.
+- Internal code and design improvements.
+
+Arma2NET 1.6 (21 Apr 2012):
+
+- Arma2NET consolidated into a single modfolder, improving portability and allowing Arma2NET to be used with Arma 2 1.61 stable. arma2oa.exe.config and arma2oaserver.exe.config removed.
+
+Arma2NET 1.5 (19 Apr 2012):
+
+- Arma2NET log now displays the correct version.
+- Arma2NET will now return its version if an empty string is passed to it via callExtension.
+- New Bridge.GetDeveloperMode() and Bridge.GetVersion() methods.
+- New plugin type Arma2NetLongOutputAddIn.
+- Installer now checks for an installation of the .NET 4 Client Profile before continuing.
+- Arma2NetMethodAddIn now throws the correct exception if matching parameters can't be found.
+- Added arma2oaserver.exe.config for use with servers.
+
+Arma2NET 1.4 (10 Apr 2012):
+
+- New command-line parameter "-arma2netdev" can be used to disable sandboxing for development purposes.
+- Arma2NET Logs are now stored with the main ArmA 2 logs, in the AppData\Local\ArmA 2 OA\Arma2NET Logs folder.
+- Improved input checking for DateTimePlugin and WeatherPlugin.
+- Internal Arma2NET improvements.
+
+Arma2NET 1.3 (30 Mar 2012):
+
+- Small string formatting changes.
+- Finalised the Arma2NET API.
+- Plugins can now have code execute when they are deactivated.
+- Logs are now archived into a Logs folder after they reach a day old. Logs are stored for 7 days. This behaviour can be changed by editing NLog.config. Some minor logging performance improvements.
+
+Arma2NET 1.2 (14 Mar 2012):
+
+- Added the ability to cancel long-running functions.
+- Added the ability to start the CLR without calling an Arma2NET function at the same time, to allow the CLR to be started during mission loading etc.
+- Added the ability to reactivate plugins, so missions for example will be able to start cleanly, without interference from the previous mission.
+- Added a SQF code/expression generator.
+- SQF arrays are now represented as a ReadOnlyCollection rather than a List.
+
+Arma2NET 1.1 (2 Mar 2012):
+
+- Arma2NET now runs foreign/untrusted plugins in a sandboxed environment.
+- PythonPlugin now runs all Python code in a sandboxed environment.
+- String manipulation functions have been added.
+- The plugin-writing API has been simplified.
+
+Arma2NET 1.0 (18 Feb 2012):
+
+- Initial release

@@ -1,0 +1,1737 @@
+h2. 2011-12-09 14:19:54 +0100
+
+Build 175
+Updated to source:@9d3a8138fe683ce34f1f88acd09e4631a3ad3679
+
+
+
+
+h2. 2011-12-09 14:16:24 +0100
+
+Build 174
+Updated to source:@5cb4e5c21f98a6397e9aaedee5af68c9712cd849
+
+
+
+
+h2. 2011-12-09 14:11:52 +0100
+
+Build 173
+Updated to source:@47fc4b99d6e878b114ecb184a38bca65156ccb34
+
+h3. Added
+
+* CBA_fnc_select and reject, array manipulation functions. closes #26732 [Sickboy]
+
+
+
+h3. Added
+
+* CBA_fnc_select and reject, array manipulation functions. closes #26732 [Sickboy]
+
+
+h2. 2011-11-25 17:52:10 +0100
+
+Build 172
+Updated to source:@c1118d0a3598b3b0e8033b7bad2ec751e5906347
+
+h3. Fixed
+
+* Performance issue for PFH after long usage is fixed. [Nou]
+
+
+
+
+h2. 2011-11-18 17:04:51 +0100
+
+Build 171
+Updated to source:@1e125a1a2d287a9a8e824fba876efa977ff4948c
+
+h3. Fixed
+
+* BIS_OO_grpLogic due to early spawning of the BIS Functions Manager. fixes #26194 [Sickboy]
+
+
+
+
+h2. 2011-11-04 16:25:57 +0100
+
+Build 170
+Updated to source:@cbe1c286e841b9e26e504fc40d9ad080e6307140
+
+h3. Added
+
+* Player Object info to PostInit log entry. closes #25925 [Sickboy]
+
+
+
+
+h2. 2011-10-28 14:52:15 +0200
+
+Build 169
+Updated to source:@66fd7aa6153255699a57586a0ded2adb07c1d5a5
+
+h3. Changed
+
+* PerFrameHandler should use diag_frameNo to check if it has ran, not diag_tickTime (to account for very low FPS). [Sickboy]
+
+h3. Fixed
+
+* PerFrame handler when Save/Quitgame/Startgame/Load. fixes #25654 [Sickboy]
+* RemoteLocalEvent function should be private, not public [Sickboy]
+
+
+
+
+h2. 2011-10-21 12:22:43 +0200
+
+Build 168
+Updated to source:@a6cbd1362984c485a2a9fda3d04d9d0b4ac8422a
+
+h3. Changed
+
+* Addon script path macros now contain leading \. For missions, use script_macros_mission.hpp [Sickboy]
+* Allow specify main_addon for versioning system. [Sickboy]
+* Split TRACE formatting to PFORMAT (Pretty Format) macros. [Sickboy]
+
+h3. Fixed
+
+* EXPLODE_ macros shouldn't contain private due to flexible usage - like using it in scopes. added EXPLODE_#_PVT variants. fixes #25665 [Sickboy]
+* May not use _forEachIndex due to A2 Original compatibility. fixes #25282 [Sickboy]
+
+h3. Added
+
+* CBA_fnc_intToString, converts integer numbers to string by using a lookup table if possible [Xeno]
+* Local DISABLE_COMPILE_CACHE define to disable caching where COMPILE_FILE variants are involved (incl PREP, etc). refs #23841 [Sickboy]
+
+
+
+
+h2. 2011-09-30 15:37:10 +0200
+
+Build 167
+Updated to source:@bc0d868fcae6ecb377b5687d9d4e9f245c89b513
+
+h3. Changed
+
+* Added more features to cba_fnc_addMagazineVerified, thanks to Wolffy.au. closes #24089 [Sickboy]
+* IS_ macros (IS_ARRAY etc) check for nil. closes #24906 [Sickboy]
+* Write CBA Cache state to rpt. closes #24979 [Sickboy]
+
+h3. Fixed
+
+* EXPLODE Macros (used by e.g PARAMS macros) cause recursive private assignment. closes #24907 [Sickboy]
+* Player Eventhandlers added n+1 each respawn. fixes #24931 [Sickboy]
+* SLX_XEH_INIT_MEN error. fixes #24904 [Sickboy]
+
+h3. Added
+
+* A2 check, like OA. [Sickboy]
+* CBA_MISSION_START event, triggered locally once time > 0. [Sickboy]
+
+
+
+
+h2. 2011-09-16 16:48:42 +0200
+
+Build 166
+Updated to source:@2743fba8f9fcdaf49ad355f6fc6ee018df230532
+
+h3. Fixed
+
+* Functions Module functions are recompiled each mission. [Sickboy]
+
+
+
+
+h2. 2011-09-09 18:50:19 +0200
+
+Build 165
+Updated to source:@283a33f69a7c6b1b7808a0518e0733559da22285
+
+
+
+
+h2. 2011-09-02 14:18:31 +0200
+
+Build 164
+Updated to source:@35b24af4c1c2693141821d2473cbd56ce37e3c0d
+
+h3. Changed
+
+* Complete rewrite of CBA_fnc_Split, optimized and much faster now [Xeno]
+* Rewrite of CBA_fnc_find, speed almost doubled [Xeno]
+
+h3. Added
+
+* Backwards compatibility init.sqf for Extended_EventHandlers. [Sickboy]
+
+
+
+
+h2. 2011-08-26 13:22:47 +0200
+
+Build 163
+Updated to source:@ab272d119110fd52210a56b0571097ca48defe5b
+
+h3. Changed
+
+* All COMPILE_FILE'd scripts are now cached in UINamespace. [Sickboy]
+* All Extended_EventHandlers features are now using cache. Improving initialization, peak memory usage, etc. [Sickboy]
+* CfgFunctions are now compiled only once (stored in uiNamespace) [Xeno]
+
+
+
+
+h2. 2011-08-19 15:20:23 +0200
+
+Build 162
+Updated to source:@de12a00ecd7cf236582835ab3989cf801f8d4aa3
+
+h3. Added
+
+* Mission specialized macros (WIP). By Muzzleflash. refs #23277 [Sickboy]
+
+
+
+
+h2. 2011-08-05 16:24:23 +0200
+
+Build 161
+Updated to source:@5efaf79a3a6a894790a56518f788df565cea131c
+
+h3. Changed
+
+* Behaviour for CBA_ui_fnc_add when a player is dead. Default now is that the menu won't show when a player is dead. Can be overriden by adding false as a fifth parameter. [Xeno]
+
+h3. Fixed
+
+* AddWeaponCargo and addMagazineCargo now works. [Killswitch]
+* Added docs for CBA_fnc_AddMagazineVerified. Refs #11009. [Killswitch]
+* Added more function docs. Refs #11009. [Killswitch]
+
+h3. Added
+
+* CBA_fnc_hashRem; Remove key from hash. closes #23118 [Sickboy]
+* CBA_fnc_systemChat - display a global chat channel message. (Fixes #2727) [Killswitch]
+* Docs for a few more functions... refs: 11009 [Killswitch]
+
+
+
+h3. Added
+
+* CBA_fnc_hashRem; Remove key from hash. closes #23118 [Sickboy]
+
+
+h2. 2011-07-08 15:11:47 +0200
+
+Build 160
+Updated to source:@686042ffa8aa00c878a6cadf25a481e0e4d8be10
+
+
+
+
+h2. 2011-07-01 17:10:27 +0200
+
+Build 159
+Updated to source:@91eccd174047782c7b6ec522f9383f7a2f94f86b
+
+h3. Changed
+
+* Do not ReAttach KeyHandlers every 10 seconds of key inactivity when in MultiPlayer. (It's rather only needed where saving/loading is involved. Mostly Singleplayer). refs #20483 [Sickboy]
+* More Robust AttachKeyHandlers. refs #20483 [Sickboy]
+
+
+
+
+h2. 2011-05-20 18:10:36 +0200
+
+Build 158
+Updated to source:@f75116b42e0bb6162b8f544c5b07ea801c7d4299
+
+h3. Fixed
+
+* PostInit didn't initialize when player is not a man, but animal. fixes #19667 [Sickboy]
+
+h3. Added
+
+* CBA_fnc_modelHeadDir, gets the direction of any unit's head, refs #19088 [Xeno]
+* CBA_fnc_publicVariable, does only broadcast the new value if it doesn't exist in missionNamespace yet or the new value is different to the one in missionNamespace [Xeno]
+* CBA_fnc_setVarNet, broadcasts only with setVariable public if the previous value is different to the new one to reduce network traffic. [Xeno]
+
+
+
+
+h2. 2011-04-22 14:13:43 +0200
+
+Build 156
+Updated to source:@568ae380e9ec223ffef310a36899183dbdc387a1
+
+h3. Changed
+
+* PerFrameHandler Monitor now uses Trigger, makes for unscheduled execution, and execute every 0.5s. Also useful for usage on dedicated servers. [Sickboy]
+
+h3. Fixed
+
+* Missing semicolon in function getNearest [Xeno]
+* Weird issues like TakeMagazine action not working properly due to weird initialization issue. refs #19031 [Sickboy]
+
+
+
+
+h2. 2011-04-18 18:31:18 +0200
+
+Build 155
+Updated to source:@bbfc7924681bb1cc207fbdfb72fd4fea3a48724a
+
+
+
+
+h2. 2011-04-15 17:59:00 +0200
+
+Build 154
+Updated to source:@42d01679ba29a554c653dab44136724c45e6e358
+
+h3. Added
+
+* Quoted Path macros (QPATHTO_F etc) [Sickboy]
+* XEH macros for Pre and Post Init [Sickboy]
+
+
+
+
+h2. 2011-04-11 17:41:57 +0200
+
+Build 153
+Updated to source:@6ef3c53468d67185b260f39ba1423d825366a3ce
+
+h3. Fixed
+
+* Groups using CBA_fnc_searchNearby could get stuck in some cases, fixes #17745 [Xeno]
+
+
+
+
+h2. 2011-04-08 18:09:56 +0200
+
+Build 152
+Updated to source:@6b42ba48040a6dbf42bcddec5d8b094957857a5b
+
+h3. Changed
+
+* CBA_fnc_findEntity uses now the engine function instead of iterating over an array [Xeno]
+
+h3. Added
+
+* CBA_fnc_addLocalEventHandler and CBA_fnc_whereLocalEvent; triggers events only where the first parameter (object) is local, refs #16310 [Xeno]
+
+
+
+
+h2. Fri Feb 18 18:34:36 +0100 2011
+
+Build 151
+Updated to source:@f82103a942e0288a95defbfd5667c43506b87d43
+
+
+
+
+h2. Fri Feb 11 15:47:23 +0100 2011
+
+Build 150
+Updated to source:@b1dad968a31e72011bced58acfa0145ba8160bd3
+
+h3. Fixed
+
+* GetVariable array usage is not allowed due to casual ArmA 2 support. fixes #17470 [Sickboy]
+
+
+
+
+h2. Fri Feb 04 14:55:56 +0100 2011
+
+Build 149
+Updated to source:@84afcaa787dc5630240736bee1f8162219851a72
+
+h3. Added
+
+* ARR_ macro by Nou. [Sickboy]
+* FORMAT_ macro by Nou. [Sickboy]
+
+
+
+
+h2. Fri Jan 21 15:03:41 +0100 2011
+
+Build 148
+Updated to source:@df5e6fcd2e3f463f3ed74b3133fc13cb940d49a9
+
+
+
+
+h2. Fri Jan 14 15:35:58 +0100 2011
+
+Build 147
+Updated to source:@d970935f0f2fa818ff495d53a760de2706f6701e
+
+h3. Fixed
+
+* PMC Classes missing from XEH. fixes #16684 [Sickboy]
+
+
+
+
+h2. Fri Dec 31 14:13:22 +0100 2010
+
+Build 146
+Updated to source:@3aec7ad38faf4edb16eb9dd0face577775077344
+
+h3. Changed
+
+* Improved XEH initialization behaviour on servers and Singleplayer. [Sickboy]
+
+h3. Fixed
+
+* CBA displayEvents added with CBA_fnc_addDisplayEventhandler sometimes didn't work until no keypress for longer than 10 seconds (which reAttaches the handlers for Save/Load fixes). refs #16217 [Sickboy]
+* PostInit not waiting for playerObject in single player, and player not being first unit on map.. [Sickboy]
+* XEH initialized twice for crew units when JIPing. [Sickboy]
+* XEH possibility of _ha undefined. [Sickboy]
+
+
+
+
+h2. Wed Dec 22 16:20:07 +0100 2010
+
+Build 145
+Updated to source:@f07efb0333a2c41522c39665cf3516521d524b6d
+
+h3. Changed
+
+* IMPROVED: Logging. [Sickboy]
+* Improved XEH InitOthers for all non man-based objects. [Sickboy]
+* Improved XEH PostInit/SupportMonitor initialization by detecting null-objects and aborting processing on them. [Sickboy]
+* Improved XEH SupportMonitor implementation; speeds up script processing at initialization. [Sickboy]
+* Improved XEH crew man init. [Sickboy]
+* Improved XEH delayed initialization for man-based units in MP. [Sickboy]
+* Improved XEH initialization for man-based units SP. [Sickboy]
+* Improved XEH initialization for man-based units in MP. [Sickboy]
+
+h3. Fixed
+
+* Possible handlerData error in perFrame handler. [Sickboy]
+* SLX_XEH_DISABLED wasn't respected by SupportMonitor. [Sickboy]
+
+
+
+
+h2. Fri Dec 17 14:16:46 +0100 2010
+
+Build 144
+Updated to source:@af61e11bb1342b2ff559a5d7be6f6c6a487d0c6d
+
+h3. Fixed
+
+* EH excludes bleed through to other classes. [Sickboy]
+* Using deprecated function in vect2polar. Fixes #15996 [Sickboy]
+
+
+
+
+h2. Fri Dec 10 16:09:10 +0100 2010
+
+Build 143
+Updated to source:@a5645a34ea0d6dfaa8c7b95bb35a442e9654daf0
+
+h3. Fixed
+
+* FunctionsModule init for non CBA users in MP. fixes #15622 [Sickboy]
+
+
+
+
+h2. Sat Dec 04 15:13:03 +0100 2010
+
+Build 142
+Updated to source:@51b89d54f242945ca86bddf8e262ae5f2323baa1
+
+h3. Fixed
+
+* CBA isNil check warning didn't work due to PostInit also breaking by early nil overridance. [Sickboy]
+
+
+
+
+h2. Fri Dec 03 18:51:55 +0100 2010
+
+Build 141
+Updated to source:@79a261e035ca0c59e7080a01fc73984d42476bb9
+
+
+
+
+h2. Fri Dec 03 15:41:07 +0100 2010
+
+Build 140
+Updated to source:@ffefc6694801336fde0bfb9cd9642b834696aafa
+
+h3. Changed
+
+* CBA LoadingScreen Disabled. New solution for credits soon. [Sickboy]
+
+
+
+
+h2. Tue Nov 30 18:33:17 +0100 2010
+
+Build 139
+Updated to source:@8e88dbd966926ad830e327980634cb588771afb5
+
+h3. Changed
+
+* All XEH "Other" events (like Fired, Killed, etc), are now read from config and compiled at (pre)Init again, as opposed to postInit. (It seems setVariable does not disappear anymore at call from init- eventhandlers/fields) [Sickboy]
+
+h3. Fixed
+
+* PMC v1.56 missing function file error during startup. [Sickboy]
+
+
+
+
+h2. Fri Nov 26 15:58:05 +0100 2010
+
+Build 138
+Updated to source:@b683b564b4df1b1383e1cb15d2cb73635278d170
+
+h3. Changed
+
+* Added "PERSIST" optional boolean parameter to CBA_fnc_createMarker, when included, the marker will be CBA_fnc_setMarkerPersistent (available to JIP players), closes #15294. [Sickboy]
+* CBA OnPlayerConnected event parameters updated to [name player,getPlayerUID player,player,isClass(configFile>>'CfgPatches'>>'cba_main')] [Sickboy]
+* SetMarkerPersistent will now broadcast to the server if ran from a client. refs #15298 [Sickboy]
+
+h3. Fixed
+
+* JIP players were considered respawning and therefore didn't have the correct EH initializations. fixes #15328 [Sickboy]
+* OnPlayerConnected event should include playerUID [Sickboy]
+* XEH Exclude classes were not reset each iteration, making exclude settings active for all classes following a class with exclude settings, and effectively therefore missing certain eventhandlers. [Sickboy]
+* XEH didn't exclude server/client eventhandlers if exclusion was specified. It only excluded the normal eventhandlers. [Sickboy]
+
+
+
+
+h2. Fri Nov 19 13:39:29 +0100 2010
+
+Build 137
+Updated to source:@756b9973ec64bc9c8c7b76aa2eebab986ff2944e
+
+h3. Changed
+
+* Better handling of BIS Fired EH, and backwards compatibility. Please use Extended_FiredBis_Eventhandler for 100% native operation. [Sickboy]
+* Clients not running CBA will now also trigger onPlayerConnected. [Sickboy]
+* IMPROVED: XEH Support for XEH-incompatible addons. closes #15038. [Sickboy]
+* Improved XEH FiredEH; no unnecessary operations if no handler is attached. [Sickboy]
+* No loading screen for main menu intro. [Sickboy]
+* Optimized XEH handlers; no unnecessary calls if no handler is attached to an event. [Sickboy]
+* RespawnMonitor now replaced with system MPRespawn eventhandler; cleaner, simpler, optimized. [Sickboy]
+* Vehicle init and PostInit executed in one frame [Xeno]
+* XEH Config eventhandlers (internal) simplified. Opens some better debug-abilities as well as easier to verify if a class is XEH enabled. refs #15038 [Sickboy]
+
+h3. Fixed
+
+* BIS / XEH FiredEH compatibility. [Sickboy]
+* Functions Init _path vars broken. fixes #15023 [Sickboy]
+* XEH could cause FiredEH parameter corruption. fixes #15085 [Sickboy]
+* XEH onRespawn value not passed into initPost. [Sickboy]
+* XEH's broken on AAV and AH6X_EP1. fixes #15143 [Sickboy]
+
+h3. Added
+
+* RPT Warning when XEH is initializing late, probably indicating there are no XEH-compatible units in the mission at start. Remedy; place SLX_XEH_Logic module. [Sickboy]
+* SLX_XEH_Logic (Module); (Backup) initialization for XEH; useful when all objects in the mission are not XEH compatible. refs #15038 [Sickboy]
+* Support for new A2/OA eventhandlers; Respawn, MPRespawn, MPHit and MPKilled Eventhandlers. closes #14768 [Sickboy]
+* XEH support for addons that do not support XEH out of the box. refs #15038 [Sickboy]
+
+
+
+
+h2. Mon Nov 08 18:00:54 +0100 2010
+
+Build 136
+Updated to source:@ba7c8241f23d7c37c334b54e904e8a4ae11a2179
+
+
+
+
+h2. Mon Nov 08 14:21:31 +0100 2010
+
+Build 135
+Updated to source:@fe6d633452ee1e1be9d45b05e80e754f45b116c6
+
+h3. Fixed
+
+* Fnc_getTurret; now filters for non-class-entries in the turrets classes. fixes #14922 [Sickboy]
+
+
+
+
+h2. Fri Nov 05 15:37:55 +0100 2010
+
+Build 134
+Updated to source:@d0a7def3cf4a980904904a710f5f37803c5fdd6b
+
+
+
+
+h2. Mon Nov 01 17:06:56 +0100 2010
+
+Build 133
+Updated to source:@920597da206de46c651d65e9a3051ef9cc55383d
+
+h3. Changed
+
+* Improved Functions Module initialization; Now single initialization and fully compile. [Sickboy]
+* Vehicle and PostInit's now run in a context where suspension isn't allowed by engine, providing proper error reporting and handling. [Sickboy]
+
+h3. Fixed
+
+* Different playableUnits behaviour on Killed Event. refs #13366. [Sickboy]
+* InitPost did not run onRespawn. refs #13366. [Sickboy]
+* No entry CfgSkeletons. fixes #14759 [Sickboy]
+* XEH onRespawn initEHs. fixes #13366 [Sickboy]
+
+
+
+
+h2. Sat Oct 30 14:17:49 +0200 2010
+
+Build 132
+Updated to source:@6ff22c02a71bea11a5fb236da8f1bdfcb3c7b839
+
+
+
+
+h2. Fri Oct 29 17:06:22 +0200 2010
+
+Build 131
+Updated to source:@99f9141960e820ea68cfc78232750d45910df61f
+
+
+
+
+h2. Fri Oct 29 14:22:08 +0200 2010
+
+Build 130
+Updated to source:@a6c5bd43f841947ffb053462c8115b1f0eead8c6
+
+h3. Fixed
+
+* Odd preprocessor issue with CBA_ui. refs #14647 [Sickboy]
+* Reintroduced deprecated script_eventhandlers.hpp in Extended_Eventhandlers. Should use the one in CBA_main instead. fixes #14710 [Sickboy]
+* Relative path inclusion in UI. refs #14647 [Sickboy]
+
+
+
+
+h2. Fri Oct 22 14:49:46 +0200 2010
+
+Build 129
+Updated to source:@c24358b0a662342b8bf5a456478e8a3701241fa4
+
+h3. Changed
+
+* KeyHandler now uses hash instead of array, hashKey returned on add. refs #14487. [Sickboy]
+
+h3. Added
+
+* CBA_fnc_changeKeyHandler; Move a handler to a different key. Needs hashKey, new key, and settings. closes #14487. [Sickboy]
+* CBA_fnc_removeKeyHandler; Remove a handler completely. Needs hashKey only. closes #14487. [Sickboy]
+
+
+
+
+h2. Fri Oct 15 16:23:39 +0200 2010
+
+Build 128
+Updated to source:@e5c14d7c8be744ee20f9d85bca96106ce95ebd3d
+
+h3. Changed
+
+* Added support for "CODE" actions next to "STRING" actions, in cba_ui. [Sickboy]
+
+
+
+
+h2. Fri Oct 08 17:42:48 +0200 2010
+
+Build 127
+Updated to source:@ff0a619c040b6ea80951757fe66402afb8a4afc0
+
+h3. Changed
+
+* Added LoadingScreen PostInit behaviour to dedicated servers! [Sickboy]
+* CBA_fnc_getFirer returns pilot for helicopters, incase gunner is missing. refs #14138. [Sickboy]
+
+h3. Added
+
+* CBA_actionHelper. By BigDawgKS. closes #12423 [Sickboy]
+* Serialize and Deserialize variables to addPerFrameHandlerLogic. Saves having to adjust scripts to set/getVar. [Sickboy]
+
+
+
+
+h2. Fri Oct 01 19:32:49 +0200 2010
+
+Build 126
+Updated to source:@7006acd4cee41723a323e00c89981b392399984a
+
+
+
+
+h2. Fri Oct 01 18:03:28 +0200 2010
+
+Build 125
+Updated to source:@7260e49fa7e96d153f90392aa08b26e700d02a82
+
+h3. Changed
+
+* Added magazine to fired eventhandler for OA builds before 73643. [Sickboy]
+* Added magazine to fired eventhandler for OA builds before 73643. refs #14068 [Sickboy]
+* FiredEH properties reversed to not break existing XEH scripts. projectile, magazine instead of magazine, projectile. refs #14068 [Sickboy]
+* Show blackscreen during init, remove after loading screen finished. fixes #14008 [Sickboy]
+
+h3. Added
+
+* Support for new Fired EH properties. fixes #14068 [Sickboy]
+
+
+
+
+h2. Fri Sep 24 17:47:19 +0200 2010
+
+Build 124
+Updated to source:@5ad1fdc08e2c2d6eaa1832cd6f3bb300ef3c0a67
+
+
+
+
+h2. Mon Sep 20 16:06:07 +0200 2010
+
+Build 123
+Updated to source:@a2e7e55330dc342b807d7146603b7ee51e536b40
+
+
+
+
+h2. Fri Sep 17 15:41:16 +0200 2010
+
+Build 122
+Updated to source:@3bb37805fec1ea7aed8ee7600162de2ed3fc8ab4
+
+h3. Added
+
+* AddPerFrameHandlerLogic; Small higher level framework for easy PerFrame usage [Sickboy]
+
+
+
+
+h2. Fri Sep 10 13:57:36 +0200 2010
+
+Build 121
+Updated to source:@27fb27c5eff169ec4dc83ad8527118607f65bc3b
+
+h3. Added
+
+* Per-frame execution system. [Nou]
+
+
+
+
+h2. Fri Sep 03 18:14:03 +0200 2010
+
+Build 120
+Updated to source:@5118bae2c83206a3be71fb3d3bf9d2a383912c0a
+
+
+
+
+h2. Fri Aug 27 17:33:03 +0200 2010
+
+Build 119
+Updated to source:@9a0c5091bc57712b694913ba4b18cdfddcde2304
+
+h3. Fixed
+
+* Fnc_globalSay example [Sickboy]
+
+
+
+
+h2. Fri Jul 30 18:29:51 +0200 2010
+
+Build 118
+Updated to source:@aed24b3094e61e249d7b3e985652e577973322a3
+
+
+
+
+h2. Fri Jul 30 17:57:44 +0200 2010
+
+Build 117
+Updated to source:@13e1c7fe16bc81303b89823b1f764a50654b4ae1
+
+h3. Fixed
+
+* KeyHandler could try to access an array out of bounds, causing excessive rpt spam. refs #12154 [Sickboy]
+
+h3. Added
+
+* GetInMan and GetOutMan eventhandlers. closes #2916 [Sickboy]
+
+
+
+
+h2. Sat Jul 24 11:43:29 +0200 2010
+
+Build 116
+Updated to source:@07b453ad675d9143a54c15d5d435398f820df4af
+
+h3. Fixed
+
+* Server and Client Extended Eventhandlers [Sickboy]
+
+
+
+
+h2. Fri Jul 23 14:44:58 +0200 2010
+
+Build 115
+Updated to source:@c830af7c08ebf3eb64aa965543bc7290c3d1b049
+
+
+
+
+h2. Fri Jul 23 14:38:38 +0200 2010
+
+Build 114
+Updated to source:@e900065ababdb4ba61396412ef38c7977f131a57
+
+
+
+
+h2. Fri Jul 23 14:27:14 +0200 2010
+
+Build 113
+Updated to source:@93ea7548a427e3fcbe063acd251f617ad1890d3e
+
+h3. Changed
+
+* CBA is now available again for both A2 and OA, equal version / package. [Sickboy]
+
+h3. Added
+
+* Extra warnings required for CBA unified version for A2 and OA. [Sickboy]
+
+
+
+
+h2. Fri Jul 16 17:44:20 +0200 2010
+
+Build 112
+Updated to source:@072dbdafa7f4c56121e1e173e316b1199b7f8f6f
+
+
+
+
+h2. Fri Jul 16 17:36:58 +0200 2010
+
+Build 111
+Updated to source:@0da2e91eb321005736be8fdb33e6bb12b9a1e21e
+
+h3. Changed
+
+* Made CBA default log output a bit more friendly [Sickboy]
+
+
+
+
+h2. Fri Jul 16 17:13:28 +0200 2010
+
+Build 110
+Updated to source:@60d7c7f4217d404ea57d72d4a42d6c0738063789
+
+h3. Added
+
+* Server now writes to RPT when version array overwritten, and will re-publish it's own. [Sickboy]
+
+
+
+
+h2. Fri Jul 16 16:55:30 +0200 2010
+
+Build 109
+Updated to source:@4ec95900adb2325a7e0fad148aba0ff87bf15135
+
+h3. Changed
+
+* All components now use SLX_XEH_MACHINE to determine isServer/client/dedicated etc. Hopefully resolving issues with JIP players thinking they are servers. Or scripts overwriting isServer. [Sickboy]
+
+h3. Fixed
+
+* Hopefully fixed versioning where jip client ruins joins for new joiners [Sickboy]
+
+h3. Added
+
+* Temporary warning to rpt when isServer == true on a machine that is not a dedicated server. [Sickboy]
+* Warning when the 'nil' variable is overriden by some script. [Sickboy]
+
+
+
+
+h2. Fri Jul 09 15:00:51 +0200 2010
+
+Build 108
+Updated to source:@dd13d5df890fe6c9d1d0a891b3937ebfcc566015
+
+h3. Added
+
+* Combined Operations servers warn OA Standalone users. [Sickboy]
+* Framework for cheap player-only events. [Sickboy]
+* Mod/Addon version dependency verification and warning. [Sickboy]
+* Upgrade check; warn on found previously removed addons [Sickboy]
+* Warning message for OA-standalone users, when @CBA_OA is not detected. [Sickboy]
+* XEH Diagnostics addon [Sickboy]
+
+
+
+
+h2. Fri Jul 02 16:22:07 +0200 2010
+
+Build 107
+Updated to source:@b186537ac973048b1b0adceee4d068e1a3d93b4b
+
+
+
+
+h2. Fri Jun 25 18:42:29 +0200 2010
+
+Build 106
+Updated to source:@a7b8145b8460444528636e90c744250be2567cbe
+
+h3. Added
+
+* CBA_fnc_peek; Function to look at variables on the server. [Sickboy]
+
+
+
+h3. Added
+
+* CBA_fnc_peek; Function to look at variables on the server. [Sickboy]
+
+
+h2. Fri Jun 25 17:50:01 +0200 2010
+
+Build 105
+Updated to source:@f2d5e6be4a8ed84ce4f846c40b669486ca220816
+
+h3. Changed
+
+* Added diag_frameNo to log output. [Sickboy]
+* Logging format is array without format (reducing scheduled script performance impact) [Sickboy]
+
+h3. Fixed
+
+* TickTime and Time were not saved at moment of event, but at moment of logging [Sickboy]
+
+h3. Added
+
+* DelayLess prototype, using triggers [Sickboy]
+
+
+
+
+h2. Fri Jun 18 19:02:12 +0200 2010
+
+Build 104
+Updated to source:@e5c22669dbcfbe76e70570157b98a2cc28167c84
+
+h3. Added
+
+* Delayless_loop prototype [Sickboy]
+
+
+
+
+h2. Fri Jun 11 17:43:43 +0200 2010
+
+Build 103
+Updated to source:@2f639da6fb3566f76291705cdf40db2ba6a20393
+
+
+
+
+h2. Mon Jun 07 16:19:29 +0200 2010
+
+Build 102
+Updated to source:@532876b78ad64c3ced6d554acdf4a268c8d07a55
+
+h3. Added
+
+* Prototype script performance diagnostics [Sickboy]
+
+
+
+
+h2. Fri Jun 04 16:09:03 +0200 2010
+
+Build 101
+Updated to source:@cd5ee94356e4dc3ad5402ef06f5f6b5432b98600
+
+h3. Added
+
+* CBA_fnc_getVolume [rommel]
+* CBA_fnc_vectRotate2D [rommel]
+* Cba_fnc_posInZone (Triggers, Markers and defined Zone support) [rommel]
+* Fnc_inArea [rommel]
+
+
+
+
+h2. Sat May 29 12:48:12 +0200 2010
+
+Build 100
+Updated to source:@2408db05b675d88c35ce6d8862a4e3e5c54a2684
+
+h3. Added
+
+* Warning when postInit processing takes too long [Sickboy]
+
+
+
+
+h2. Fri May 28 17:14:09 +0200 2010
+
+Build 99
+Updated to source:@8e373a7332fdd06acba4ef868f343d582c5b8e9d
+
+h3. Fixed
+
+* Versioning should handle all mods lowercased. fixes #10845 [Sickboy]
+
+h3. Added
+
+* CBA_fnc_DeleteEntity, small changes in getpos [rommel]
+* CBA_fnc_findEntity for quick entity finding [rommel]
+* Task, marker, radius, object, location and default support to fnc_setpos [rommel]
+
+
+
+
+h2. Fri May 21 16:00:36 +0200 2010
+
+Build 98
+Updated to source:@9afe1ecd605aea2d9fe5244176e8451e19646a40
+
+h3. Fixed
+
+* CBA_fnc_isAlive group support [rommel]
+
+h3. Added
+
+* Houseposition support for cba_fnc_addwaypoint [rommel]
+
+
+
+
+h2. Fri May 07 17:49:14 +0200 2010
+
+Build 97
+Updated to source:@848800173b29c3e0c6a54c9cb3466a87cebd2799
+
+
+
+
+h2. Mon May 03 15:38:53 +0200 2010
+
+Build 96
+Updated to source:@bdb084afd85b391db10e837d9290a2b96f142260
+
+
+
+
+h2. Mon Apr 26 16:03:47 +0200 2010
+
+Build 95
+Updated to source:@0774f9e592f30ad390284937a2d0b4705d54f3af
+
+h3. Added
+
+* Task support for cba_fnc_getpos [rommel]
+
+
+
+
+h2. Mon Apr 19 17:09:18 +0200 2010
+
+Build 94
+Updated to source:@f945259d09bb2e12d54653efd8c03a0111445f2e
+
+h3. Added
+
+* CBA_fnc_globalSay3d. refs #10138 [Sickboy]
+
+
+
+
+h2. Fri Apr 16 18:09:38 +0200 2010
+
+Build 93
+Updated to source:@2ebc48c3ae1ae77b03452be2fe20e6b306adac64
+
+h3. Added
+
+* EXPLODE_9 macro and taskPatrol documentation fix [rommel]
+
+
+
+
+h2. Fri Apr 09 17:45:24 +0200 2010
+
+Build 92
+Updated to source:@a09b7b3e21ed295364d31a5b860695867cbfbe55
+
+h3. Changed
+
+* [rommel]
+
+
+
+
+h2. Mon Mar 29 21:14:02 +0200 2010
+
+Build 91
+Updated to source:@9bda3261075461acc8639d448d0143a84d501e63
+
+
+
+
+h2. Mon Mar 29 16:55:51 +0200 2010
+
+Build 90
+Updated to source:@de22554760af843be1a68722df743fb885b005b7
+
+
+
+
+h2. Fri Mar 26 15:12:23 +0100 2010
+
+Build 89
+Updated to source:@bf773519f9a8429d520b14b426bc15323b4677b9
+
+h3. Changed
+
+* Removed delayLess processing from initPosts, they are covered by the loading screen anyway. fixes #9590. Endless loadscreen. [Sickboy]
+
+
+
+
+h2. Mon Mar 15 16:51:56 +0100 2010
+
+Build 88
+Updated to source:@41b8c7a722430dc25fe4601573351190e82f9fea
+
+
+
+
+h2. Fri Mar 12 21:21:57 +0100 2010
+
+Build 87
+Updated to source:@f75550ad4b021f84683ba0d3fe97f150829f5659
+
+
+
+
+h2. Fri Mar 12 16:45:46 +0100 2010
+
+Build 86
+Updated to source:@3a692b302e14067b1fcce32dca12822e375958f2
+
+
+
+
+h2. Fri Mar 12 16:14:07 +0100 2010
+
+Build 85
+Updated to source:@682e20e40ed55aa4e642f93b75c76dffd3f08fee
+
+
+
+
+h2. Mon Mar 08 16:20:34 +0100 2010
+
+Build 84
+Updated to source:@64d697a38bae0d0367ec28ddeb366a4faecc8df3
+
+
+
+
+h2. Fri Mar 05 15:07:34 +0100 2010
+
+Build 83
+Updated to source:@4ee110e3f32d13587a46273cbae6828f467c3b36
+
+
+
+
+h2. Wed Mar 03 15:08:20 +0100 2010
+
+Build 82
+Updated to source:@6e77de68bbcde3936595d8c2b6859e6d098bf1ee
+
+
+
+
+h2. Mon Mar 01 15:03:24 +0100 2010
+
+Build 81
+Updated to source:@d8943f385bd85cd74e9b4aca75c2f867db700c48
+
+
+
+
+h2. Wed Feb 24 15:47:00 +0100 2010
+
+Build 80
+Updated to source:@a283babb98488278c51a545ac4743e439c9213da
+
+
+
+
+h2. Mon Feb 22 15:12:36 +0100 2010
+
+Build 79
+Updated to source:@41af79869cb172e876413e485cc437e6ff61f99e
+
+
+h2. Fri Feb 19 17:01:40 +0100 2010
+
+Build 77
+Updated to source:@9d659d41462cc36114a19f87932b02d7ce63041a
+
+
+h2. Thu Feb 18 17:09:22 +0100 2010
+
+Build 77
+Updated to source:@ca803a8fbb87db9824c8a1bd10a0b4f45af08786
+
+
+h2. Thu Feb 18 17:05:16 +0100 2010
+
+Build 77
+Updated to source:@ca803a8fbb87db9824c8a1bd10a0b4f45af08786
+
+
+h2. Thu Feb 18 17:00:11 +0100 2010
+
+Build 77
+Updated to source:@ca803a8fbb87db9824c8a1bd10a0b4f45af08786
+
+
+h2. Wed Feb 17 18:57:33 +0100 2010
+
+Build 76
+Updated to source:@c29e2958c80994976be4912339fbd6dbf80e4403
+
+
+h2. Wed Feb 17 17:46:05 +0100 2010
+
+Build 75
+Updated to source:@202c8f44fa37173d7304042c287ddf67b796cf67
+
+
+h2. Wed Feb 17 16:38:17 +0100 2010
+
+Build 74
+Updated to source:@7eb1a3c9b70366e9fde90f6a06cee1cd3bdef664
+
+
+h2. Wed Feb 17 16:31:37 +0100 2010
+
+Build 74
+Updated to source:@552949c4ba9f9381a0dc4b8938a8b48bc3c2c9c5
+
+
+h2. Tue Feb 16 14:59:05 +0100 2010
+
+Build 74
+Updated to source:@8881a9ee78c2b0f991cd32fa238771e1a561a2f7
+
+
+h2. Mon Feb 15 17:16:26 +0100 2010
+
+Build 73
+Updated to source:@e1e983d35a33b27edf8b2167f6e95253dbbc02f4
+
+h3. Fixed
+
+* Using array as default value for Hash now copies the array on get, instead of linking all back to same array [Sickboy]
+
+h3. Added
+
+* ARG_# macros. By rommel. [Sickboy]
+* CBA_fnc_getFirer to find exact unit who fired weapon. by Rocko. [Sickboy]
+
+
+h2. Fri Feb 12 18:54:50 +0100 2010
+
+Build 72
+Updated to source:@dfed29aae944d7291f5f5cfbfbcc324f730c201d
+
+
+h2. Fri Feb 12 18:10:17 +0100 2010
+
+Build 71
+Updated to source:@83dc9cd0b16f615d7e194496a6f79036dcca2f8c
+
+h3. Changed
+
+* PREP macros now compile functions/scripts on first use, like CfgFunctions. closes #8828 [Sickboy]
+
+
+h2. Wed Feb 10 17:02:07 +0100 2010
+
+Build 70
+Updated to source:@b856ecea384fe8241dc9b6bbf0b4f33fa58d5f21
+
+h3. Fixed
+
+* Missing addWaypoint function compilation. Fixes #8946 [Sickboy]
+
+h3. Added
+
+* Mapfunctions by Noubernou [Sickboy]
+
+
+h2. Mon Feb 08 17:00:29 +0100 2010
+
+Build 69
+Updated to source:@b4d4381047ca5d211e1abd861b27b094d606a9dd
+
+h3. Added
+
+* CBA_ai. By Rommel. [Sickboy]
+* CBA_common related functions. By Rommel. [Sickboy]
+
+
+h2. Fri Feb 05 17:39:24 +0100 2010
+
+Build 68
+Updated to source:@bf17822adc8498f8b2980df61f822d717ccecbc7
+
+h3. Changed
+
+* SelectWeapon function now works fine in vehicle. by Rommel [Sickboy]
+
+
+h2. Wed Feb 03 18:13:40 +0100 2010
+
+Build 67
+Updated to source:@eb5b6f6e085cda655fff55b999338421a8cdc398
+
+
+h2. Mon Feb 01 17:48:16 +0100 2010
+
+Build 66
+Updated to source:@a749f8fa8f1e618ae29860c6aa1a81c56245c7bf
+
+
+h2. Fri Jan 29 18:04:47 +0100 2010
+
+Build 65
+Updated to source:@a427a5a554a1b5c5b55464c7fd0420d2b2fb56f3
+
+
+h2. Mon Jan 25 18:12:18 +0100 2010
+
+Build 64
+Updated to source:@c2e8b2188a8dfd4c686803d3809a7a3a5f27742c
+
+h3. Changed
+
+* XEH respawn checks on deddy server, only performed when a respawnable entity (Man) is detected. Fixes #8488 [Sickboy]
+
+
+h2. Mon Jan 25 18:07:18 +0100 2010
+
+Build 63
+Updated to source:@c2e8b2188a8dfd4c686803d3809a7a3a5f27742c
+
+h3. Changed
+
+* XEH respawn checks on deddy server, only performed when a respawnable entity (Man) is detected. Fixes #8488 [Sickboy]
+
+
+h2. Mon Jan 25 18:02:55 +0100 2010
+
+Build 62
+Updated to source:@c2e8b2188a8dfd4c686803d3809a7a3a5f27742c
+
+h3. Changed
+
+* XEH respawn checks on deddy server, only performed when a respawnable entity (Man) is detected. Fixes #8488 [Sickboy]
+
+
+h2. Fri Jan 22 18:22:09 +0100 2010
+
+Build 61
+Updated to source:@e86b54533cbd23db1dddecde233ac179b2e17ec2
+
+
+h2. Fri Jan 22 16:13:20 +0100 2010
+
+Build 58
+Updated to source:@d30542d8cc9e9d73159fd4d3a2bac928552df0e2
+
+
+h2. Fri Jan 22 15:23:36 +0100 2010
+
+Build 57
+Updated to source:@be7ea64762cc0d9597a806c625c10577db950d30
+
+
+h2. Fri Jan 22 14:36:00 +0100 2010
+
+Build 56
+Updated to source:@8908b5e9afb3503bdaa1c44766569d59ea426f0d
+
+
+h2. Fri Jan 22 13:18:12 +0100 2010
+
+Build 55
+Updated to source:@8408d448ce5182dd3644c273e2ae8cee1fb893b9
+
+
+h2. Fri Jan 22 13:07:31 +0100 2010
+
+Build 54
+Updated to source:@ee4377b73b792a08a8ed99ae6709366a3b923211
+
+h3. Removed
+
+* Actionhandler prototype [Sickboy]
+
+
+h2. Thu Jan 21 15:42:54 +0100 2010
+
+Build 53
+Updated to source:@352f69c8554249cf925b7f1fd52aa76ffed29844
+
+
+h2. Wed Jan 20 18:00:46 +0100 2010
+
+Build 52
+Updated to source:@d51b9b5728e386453e65b827982b97757c2c4ecf
+
+h3. Fixed
+
+* Fnc_vectDir syntax error. (By tcp) [Sickboy]
+
+
+h2. Mon Jan 18 18:09:25 +0100 2010
+
+Build 51
+Updated to source:@a804f388a24c02196a3efb51eefd8c36e83fb72d
+
+h3. Changed
+
+* Cba_common_fnc_isTurnedOut enhanced to use config properties to find turnedOut animation. Fixes #8243 [Sickboy]
+
+
+h2. Mon Jan 18 18:06:05 +0100 2010
+
+Build 51
+Updated to source:@a804f388a24c02196a3efb51eefd8c36e83fb72d
+
+h3. Changed
+
+* Cba_common_fnc_isTurnedOut enhanced to use config properties to find turnedOut animation. Fixes #8243 [Sickboy]
+
+
+h2. Fri Jan 15 18:04:29 +0100 2010
+
+Build 50
+Updated to source:@d07aa385d491e403ece1334f69ee7c36af58389b
+
+h3. Fixed
+
+* Cba_fnc_debug network didn't work [Sickboy]
+
+
+h2. Wed Jan 13 18:55:11 +0100 2010
+
+Build 49
+Updated to source:@48be21fe4f3f77306d811e3c25477e05c76603ef
+
+
+h2. Wed Jan 13 18:08:43 +0100 2010
+
+Build 48
+Updated to source:@46fc94483e80d8b2f6ca3419c13664fc154d367f
+
+
+h2. Fri Jan 08 18:14:50 +0100 2010
+
+Build 47
+Updated to source:@2ad3fbe71e22159ea22f119ad88b55e8643f7d71
+
+h3. Fixed
+
+* CBA versioning custom mismatch event [Sickboy]
+
+
+h2. Wed Jan 06 18:10:30 +0100 2010
+
+Build 46
+Updated to source:@5b22cb5bd098991cb782ad56c1b3db0af59bb035
+
+h3. Changed
+
+* Applied loading screen for postInit and reintroduced delayLess.fsm for initPosts [Sickboy]
+* Extended_EventHandlers postinits now run like before again [Sickboy]
+
+h3. Fixed
+
+* Fnc_debug MP side not working. Fixes #7796 [Sickboy]
+
+
+h2. Mon Jan 04 18:49:51 +0100 2010
+
+Build 45
+Updated to source:@e096573e1187f9e06f89b1c3ca2150e011a62f33
+
+
+h2. Mon Jan 04 18:32:31 +0100 2010
+
+Build 44
+Updated to source:@1e25e71fe142ff2a9bf9aaa2161d4f78d7b0efac
+
+
+h2. Mon Jan 04 18:23:18 +0100 2010
+
+Build 43
+Updated to source:@cad927e85163e345baf61791a471be77df367e28
+
+
+h2. Mon Jan 04 18:09:02 +0100 2010
+
+Build 42
+Updated to source:@7ab910ad68a8306de5f2ab5f18db8ea8348d8984
+
+
+h2. Mon Jan 04 17:53:44 +0100 2010
+
+Build 41
+Updated to source:@e1860c9b89903a00d70ca583b631ca4340b61c99
+
+h3. Changed
+
+* Added SLX_XEH_MACHINE write value to rpt to trace isServer issue on JIP clients. Refs #7626 [Sickboy]
+* DisplayEventhandlers now reattached with delayless processing FSM [Sickboy]
+* Extended_EventHandlers postinits now run in delayless FSM [Sickboy]
+
+h3. Fixed
+
+* Init event handlers will fire twice on server. Fixes #7432 [Killswitch]
+
+h3. Added
+
+* Basic versioning system [Sickboy]
+* Delayless processing FSM [Sickboy]
+* Versioning now also reports users who don't run mods the server runs [Sickboy]
+
+
+h2. Wed Dec 30 18:32:28 +0100 2009
+
+Build 40
+Updated to source:@e558dac050e365905a2e2a1916c2fa5e4fe0669e
+
+h3. Fixed
+
+* Display eventhandlers were still not reattached after restarting game and reloading savegame. [Sickboy]
+
+
+h2. Tue Dec 29 18:38:43 +0100 2009
+
+Build 39
+Updated to source:@7eed285b812bc593a9433305aeb7f1cd77390f40
+
+
+h2. Tue Dec 29 15:42:04 +0100 2009
+
+Build 38
+Updated to source:@173e2250b441ec740563a77f95e0c1356f3e0287
+
+
+h2. Tue Dec 29 15:21:38 +0100 2009
+
+Build 37
+Updated to source:@173e2250b441ec740563a77f95e0c1356f3e0287
+
+
+h2. Mon Dec 28 17:52:32 +0100 2009
+
+Build 36
+Updated to source:@b52c5d5b9df4cebcc23e2314929c75fc6763cef9
+
+h3. Changed
+
+* DisplayEventhandling is now split into low-level abstraction layer and high-level api (specially for keyDown/keyUp/Actions). You can now register any displayEvent with CBA events (And enjoy the workaround for save->loadgame DEH issues). [Sickboy]
+
+h3. Fixed
+
+* Display eventhandlers (keys/actions) are now reattached after loading a saved game. [Sickboy]
+
+h3. Added
+
+* CBA_fnc_addDisplayEventhandler [Sickboy]
+* CBA_fnc_removeDisplayEventhandler [Sickboy]
+
+
+h2. 2009-12-25 17:29:11 +0100
+
+Build 35
+Updated to source:@b18f3109d94a16b343b9298a2721ab953dfdef24
+
+
+h2. 2009-12-23 18:39:29 +0100
+
+Build 34
+Updated to source:@2f0c7da85b2ff166fc2b261a03840b12d7a1dcf2
+
+h3. Changed
+
+* Optimized array operations, by Xeno. [Sickboy]
+
+h3. Fixed
+
+* Updated the AAV7 init XEH to correspond to the ArmA II 1.05 patch [Killswitch]
+
+
+h2. 2009-12-04 20:21:34 +0100
+
+Build 33
+Updated to source:@2829b93672307b3bc68833c457c47894ef71cdb4
+
+h3. Changed
+
+* Disabled Time synchronization feature. ArmA 2 1.05 beta synchronizes automatically. [Sickboy]
+
+
+h2. 2009-11-27 11:26:34 +0100
+
+Updated to source:@3d37d25f2717a5f6a336b46ebb06741ee8db9213
+
+h3. Fixed
+
+* CBA_fnc_addKeyHandler would cause an array-out-of-bounds error for certain key codes. Fixes: 6283 [Killswitch]
+
+
+h2. 2009-11-10 14:28:58 +0100
+
+Updated to source:@6e11aa0cd5ec67abda7581605742498b55d62a33
+
+
+h2. 2009-11-09 19:36:57 +0100
+
+Updated to source:@0e4570f094c0f0786275d68cfc551b8f25edaa5a
+
+h3. Added
+
+* One can now define per-campaign and per-mission extended event handlers in the description.ext file. Resolves: 2915 [Killswitch]
+
+
+h2. 2009-11-08 18:32:06 +0100
+
+Updated to source:@6685e35f97963576c7a9bb414b0717935cc7226e
+
+
+h2. 2009-11-03 13:03:17 +0100
+
+Updated to source:@32383aa851845494b4eb3bb2aa722eaf2cc93073
+
+
+h2. 2009-11-03 11:31:43 +0100
+
+Updated to source:@d3345061d453dd94d9cb448e4ba91142f622cf83
+
+h3. Fixed
+
+* The CBA_fnc_getAnimType documentation referenced an ACE 1 function, causing confusion. Refs: 2725 [Killswitch]
+
+
+h2. 2009-11-02 19:26:56 +0100
+
+Updated to source:@d7d76adcd30a7abc2a267f71ade25b03f3ff639c
+
+h3. Fixed
+
+* Vector cross and dot product function brokenness. Refs: 5444 [Killswitch]
+
+
+h2. 2009-10-07 17:39:49 +0100
+
+Updated to source:@2a8b4f44e8dfedfacb8e76c20070af23a9a333f7
+
+
+h2. 2009-10-07 17:35:33 +0100
+
+Updated to source:@7bec669fe58175c4bcabdce81c82809734ced944
+
+
+h2. 2009-10-06 09:07:37 +0100
+
+Updated to source:@fe0b29d693f1d87e4b50947392a516e9909acaed
+
+h3. Fixed
+
+* Updated functionsInit code for ArmA 2 v1.04 compatibility [Sickboy]
+
+
+h2. Sun Sep 13 09:31:05 +0200 2009
+
+Updated to source:@d95598f114d4297e6017ecaa8e55adea4ec7386c
+
+h3. Changed
+
+* Actionlist syntax now depends on array instead of string [Sickboy]
+* BIS Functions preInit is now handled correctly in each machine situation (dedicated client/server, and serverClient) refs #2785 [Sickboy]
+* Date and weather or no longer synched to everyone when a player joins. Rather only the joining player receives the change. refs #3435 [Sickboy]
+* Disabled XEH's "CA_Editor" requiredAddons entry. Steam version doesn't have it, nor do we use classes from it. fixes #2987 [Sickboy]
+* Disabled onPlayerDisconnected until better alternative [Sickboy]
+* Keyhandler now supports keyUp, not only keyDown [Sickboy]
+* Moved PostInit to seperate initEH class in config and initPost script [Sickboy]
+* Network events are now handled by the event system, instead of custom usage of PVEH. [Sickboy]
+* Order of XEH Pre and Post initialization logic; Per Component: init, serverInit, clientInit [Sickboy]
+* RemoteExecute -> globalExecute [Sickboy]
+
+h3. Fixed
+
+* ActionMonitor had old array inited [Sickboy]
+* BIS Functions Module not initializing properly. Needs to be created in a group as unit as opposed to createVehicle. fixes #2785 [Sickboy]
+* Bug #2935 - XEH disables pop-up targets. [Killswitch]
+* Errors about missing addons, due to XEH CfgPatches. [Sickboy]
+* Heavy performance and other issues caused by looping PostInit. fixes #2663 [Sickboy]
+* Use playableUnits for Respawn handler in Extended Eventhandlers. Refs: #2647 [Killswitch]
+* XEH init EHs would run on respawn by default, unlike normal ArmA II init EH:s. Refs: #3396 [Killswitch]
+
+h3. Added
+
+* AddPlayerAction and removePlayerAction [Sickboy]
+* Alternative macros for path handling of modular addons [Sickboy]
+* And Updated vector functions [Sickboy]
+* CBA_Vectors. By Vigilante. [Sickboy]
+* CBA_loadgame event: Whenever you load a savegame it will trigger [Sickboy]
+* CBA_playerSpawn event [Sickboy]
+* GlobalHit and globalKilled eventhandlers [Sickboy]
+* ReAdd displayEventHandlers for key and action events on loadGame event [Sickboy]
+* Support for AnimStateChanged event handlers. [Killswitch]
+
+
