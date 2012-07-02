@@ -124,7 +124,7 @@ _countr = 0;
 	};
 } forEach _myArray;
 //TIME
-_qresult = "Arma2Net.Unmanaged" callExtension "Arma2NETMySQL ['dayz','getTime','pointless=0']";
+_qresult = "Arma2Net.Unmanaged" callExtension format["Arma2NETMySQL ['dayz','getTime','myinstance=%1']",dayz_instance];
 _qresult = call compile _qresult;
 _qresult = _qresult select 0;
 _date = _qresult select 0;
