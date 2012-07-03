@@ -4,8 +4,7 @@
 
 dayz_versionNo = 		getText(configFile >> "CfgMods" >> "DayZ" >> "version");
 dayz_hiveVersionNo = 1;
-mysqlblocked = false;
-
+allowConnection = false;
 diag_log("SERVER: INITIALIZING!");
 call compile preprocessFileLineNumbers "server\overrides.sqf";
 
@@ -44,19 +43,21 @@ _countr = 0;
 {
 		
 	//Parse Array
-	diag_log(_x);
+	_countr = _countr + 1;
+
 	_idKey = call compile (_x select 0);
-	_type =	_x select 1;
+	_type = _x select 1;
 	_ownerID = _x select 2;
 	_pos = call compile (_x select 3);
 	_dir = (_pos) select 0;
 	_pos = (_pos) select 1;
 	_intentory = call compile (_x select 4);
 	_hitPoints = call compile (_x select 5);
-	_fuel =	 call compile (_x select 6);
+	_fuel = call compile (_x select 6);
 	_damage = call compile (_x select 7);
+	
 	if (_damage < 1) then {
-		diag_log ("OBJ: " + str(_idKey) + " " +_type);
+		//diag_log ("OBJ: " + str(_idKey) + _type);
 		
 		//Create it
 		_object = createVehicle [_type, _pos, [], 0, "CAN_COLLIDE"];
@@ -78,9 +79,12 @@ _countr = 0;
 			//Add weapons
 			_objWpnTypes = (_intentory select 0) select 0;
 			_objWpnQty = (_intentory select 0) select 1;
-			_countr = 0;
+			_countr = 0;					
 			{
-				_object addWeaponCargoGlobal [_x,(_objWpnQty select _countr)];
+				_isOK = 	isClass(configFile >> "CfgWeapons" >> _x);
+				if (_isOK) then {
+					_object addWeaponCargoGlobal [_x,(_objWpnQty select _countr)];
+				};
 				_countr = _countr + 1;
 			} forEach _objWpnTypes;
 			
@@ -89,7 +93,10 @@ _countr = 0;
 			_objWpnQty = (_intentory select 1) select 1;
 			_countr = 0;
 			{
-				_object addMagazineCargoGlobal [_x,(_objWpnQty select _countr)];
+				_isOK = 	isClass(configFile >> "CfgMagazines" >> _x);
+				if (_isOK) then {
+					_object addMagazineCargoGlobal [_x,(_objWpnQty select _countr)];
+				};
 				_countr = _countr + 1;
 			} forEach _objWpnTypes;
 
@@ -98,7 +105,10 @@ _countr = 0;
 			_objWpnQty = (_intentory select 2) select 1;
 			_countr = 0;
 			{
-				_object addBackpackCargoGlobal [_x,(_objWpnQty select _countr)];
+				_isOK = 	isClass(configFile >> "CfgVehicles" >> _x);
+				if (_isOK) then {
+					_object addBackpackCargoGlobal [_x,(_objWpnQty select _countr)];
+				};
 				_countr = _countr + 1;
 			} forEach _objWpnTypes;
 		};	
@@ -118,6 +128,7 @@ _countr = 0;
 			};
 			_id = _object spawn fnc_vehicleEventHandler;				
 		};
+
 		//Monitor the object
 		//_object enableSimulation false;
 		dayz_serverObjectMonitor set [count dayz_serverObjectMonitor,_object];
@@ -149,10 +160,9 @@ hiveInUse = false;
 if (isDedicated) then {
 	[] execFSM "server\server_cleanup.fsm";
 };
-
+allowConnection = true;
 //Spawn crashed helos
 for "_x" from 1 to 5 do {
 	_id = [] spawn spawn_heliCrash;
 };
-allowConnection = true;
 diag_log("SERVER: INITIALIZATION DONE!");
