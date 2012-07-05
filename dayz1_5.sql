@@ -97,7 +97,7 @@ CREATE TABLE `main` (
   `lastupdate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `survival` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -213,7 +213,7 @@ DELIMITER ;
 DELIMITER ;;
 /*!50003 CREATE*/ /*!50020 DEFINER=`dayz`@`localhost`*/ /*!50003 PROCEDURE `getTime`(IN myinstance INT)
 BEGIN
-      SELECT DATE_FORMAT(NOW(),'%d-%m-%Y'), TIME_FORMAT(CURRENT_TIMESTAMP + INTERVAL (SELECT timezone FROM instances WHERE instance=myinstance) HOUR,'%T');
+      SELECT DATE_FORMAT(NOW(),'%d-%m-%Y'), TIME_FORMAT(CURRENT_TIMESTAMP + INTERVAL (SELECT if((SELECT timezone FROM instances WHERE instance=myinstance) IS NULL,0,(SELECT timezone FROM instances WHERE instance=myinstance))) HOUR,'%T');
 END */;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -230,9 +230,9 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-/*!50003 CREATE*/ /*!50020 DEFINER=`dayz`@`localhost`*/ /*!50003 PROCEDURE `insOselI`(IN myuid VARCHAR(50),IN myowner INT,IN myhp DOUBLE,IN myhealth VARCHAR(1024),IN mypos VARCHAR(255),IN mytype VARCHAR(255),IN myfuel DOUBLE,IN myinstance INT)
-BEGIN
-      INSERT INTO objects (uid,otype,health,damage,oid,pos,fuel,instance) VALUES (myuid,mytype,myhealth,myhp,myowner,mypos,myfuel,myinstance);
+/*!50003 CREATE*/ /*!50020 DEFINER=`dayz`@`localhost`*/ /*!50003 PROCEDURE `insOselI`(IN myuid VARCHAR(50),IN mytype VARCHAR(255),IN myhealth VARCHAR(1024),IN myhp DOUBLE,IN myfuel DOUBLE,IN myowner INT,IN mypos VARCHAR(255),IN myinstance INT)
+BEGIN
+      INSERT INTO objects (uid,otype,health,damage,oid,pos,fuel,instance) VALUES (myuid,mytype,myhealth,myhp,myowner,mypos,myfuel,myinstance);
 END */;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -253,27 +253,6 @@ DELIMITER ;;
 BEGIN
       INSERT INTO main (uid, name,survival) VALUES (myuid, myname,NOW());
       SELECT LAST_INSERT_ID();
-END */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `selIIB` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50020 DEFINER=`dayz`@`localhost`*/ /*!50003 PROCEDURE `selIIB`(IN myuid INT)
-BEGIN
-
-      SELECT id, inventory, backpack FROM main WHERE uid=myuid AND death=0;
-
 END */;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -366,16 +345,13 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-/*!50003 CREATE*/ /*!50020 DEFINER=`dayz`@`localhost`*/ /*!50003 PROCEDURE `update`(IN myk INT, IN myhs INT, IN mybk INT,
-       IN myhk INT, IN mystate VARCHAR(255), IN mymod VARCHAR(255), IN myate INT, IN mydrank INT,
-       IN mytime INT, IN myid INT, IN myhum INT, IN mypos VARCHAR(1024), IN myinv VARCHAR(1024),
-       IN myback VARCHAR(1024), IN mymed VARCHAR(1024))
-BEGIN
-      UPDATE main SET kills=kills+myk,hs=hs+myhs,bkills=bkills+mybk,hkills=hkills+myhk,
-                      state=mystate,model=if(mymod='any',model,mymod),late=if(myate=-1,0,late+myate),ldrank=if(mydrank=-1,0,ldrank+mydrank),stime=stime+mytime,
-                      pos=if(mypos='[]',pos,mypos),humanity=if(myhum=0,humanity,myhum),medical=if(mymed='[]',medical,mymed),
-                      backpack=if(myback='[]',backpack,myback),inventory=if(myinv='[]',inventory,myinv)
-                  WHERE id=myid;
+/*!50003 CREATE*/ /*!50020 DEFINER=`dayz`@`localhost`*/ /*!50003 PROCEDURE `update`(IN myid INT, IN mypos VARCHAR(1024), IN myinv VARCHAR(1024), IN myback VARCHAR(1024), IN mymed VARCHAR(1024), IN myate INT, IN mydrank INT, IN mytime INT, IN mymod VARCHAR(255), IN myhum INT,IN myk INT, IN myhs INT, IN myhk INT,IN mybk INT,IN mystate VARCHAR(255))
+BEGIN
+      UPDATE main SET kills=kills+myk,hs=hs+myhs,bkills=bkills+mybk,hkills=hkills+myhk,
+                      state=mystate,model=if(mymod='any',model,mymod),late=if(myate=-1,0,late+myate),ldrank=if(mydrank=-1,0,ldrank+mydrank),stime=stime+mytime,
+                      pos=if(mypos='[]',pos,mypos),humanity=if(myhum=0,humanity,myhum),medical=if(mymed='[]',medical,mymed),
+                      backpack=if(myback='[]',backpack,myback),inventory=if(myinv='[]',inventory,myinv)
+                  WHERE id=myid;
 END */;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -468,9 +444,9 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-/*!50003 CREATE*/ /*!50020 DEFINER=`dayz`@`localhost`*/ /*!50003 PROCEDURE `updV`(IN myuid VARCHAR(50),IN myhealth VARCHAR(1024),IN mypos VARCHAR(255),IN mytype VARCHAR(255))
-BEGIN
-      UPDATE objects SET otype=if(mytype='',otype,mytype),health=if(myhealth='[]',health,myhealth),pos=if(mypos='[]',pos,mypos) WHERE uid=myuid;
+/*!50003 CREATE*/ /*!50020 DEFINER=`dayz`@`localhost`*/ /*!50003 PROCEDURE `updV`(IN myuid VARCHAR(50),IN mytype VARCHAR(255) ,IN mypos VARCHAR(255), IN myhealth VARCHAR(1024))
+BEGIN
+      UPDATE objects SET otype=if(mytype='',otype,mytype),health=if(myhealth='[]',health,myhealth),pos=if(mypos='[]',pos,mypos) WHERE uid=myuid;
 END */;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -487,4 +463,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2012-07-03 11:49:27
+-- Dump completed on 2012-07-05 19:10:20

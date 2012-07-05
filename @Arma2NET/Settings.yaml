@@ -3,20 +3,26 @@
 
 # This is the list of addins to activate after Arma2NET has initialised.
 ActivateAddIns:
-  - Activate # Don't touch these entries!
-  - IsFunction
-  - Deactivate
-  - _Empty
-  - VersionOfAddIn
-  - CompareVersion
-  - ClrVersion
-  - Version
-  - Functions
+    - Activate # Don't touch these entries!
+    - IsFunction
+    - Deactivate
+    - _Empty
+    - VersionOfAddIn
+    - CompareVersion
+    - ClrVersion
+    - Version
+    - Functions
 
 # This is the list of public key tokens trusted by Arma2NET.
 PublicKeyTokens:
-  - 8762987cc8e6095e # Scott_NZ/Arma2NET
+    - 8762987cc8e6095e # Scott_NZ/Arma2NET
+
+# This determines whether sandboxing is disabled. Most users will not need to touch this.
+# If set to True or the -arma2netdev command line argument is specified, sandboxing will be disabled, otherwise sandboxing will be enabled. The default is False.
+DisableSandboxing: False
 
 # This determines whether Arma2NET will play a beep sound after it has initialised.
 # If set to True, Arma2NET will play a beep sound, otherwise it will not play a beep sound. The default is False.
 PlayInitSound: False
+
+LogConfigurationFile: NLog.dll.nlog

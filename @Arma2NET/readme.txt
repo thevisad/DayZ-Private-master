@@ -1,6 +1,10 @@
-Arma2NET 1.9 - https://bitbucket.org/Scott_NZ/arma2net
+Arma2NET 1.11.1 - https://bitbucket.org/Scott_NZ/arma2net
 
  Arma2NET is a wrapper used for communicating between managed code and SQF code used in the game Arma 2, adding significant functionality to SQF scripting.
+
+ Arma2NET gives you the ability to use the .NET Framework from Arma 2. It is designed to be an alternative for those who don't want to use C or C++ with callExtension or Java and the JVM.
+
+ There is a wide range of language implementations that target the Common Language Runtime, so you can use C#, Python, VB.NET, F#, Ruby code and more, directly from Arma 2.
 
 Features
 
@@ -22,7 +26,7 @@ Installation
 Uninstallation
 
  Uninstall Arma2NET using Programs and Features in your Control Panel if you used the installer. If you did not use the installer, delete the @Arma2NET modfolder.
- Optionally delete any Arma2NET log files from the same place as the RPT files.
+ Optionally delete any Arma2NET log files from your AppData folder.
 
 Documentation
 

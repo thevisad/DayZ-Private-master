@@ -1,56 +1,133 @@
-7 Bo_Mk82
-7 Loki
-7 Gerk
-7 (vehicle player) addEventHandler ["handleDamage", { false }];
-7 player addEventHandler ["handleDamage", { false }];
-7 GodMode
-7 God mode
-7 Infammo
-7 InfiniteAmmo
-7 Infinite Ammo
-7 Killplayer
-7 OwnageMenu
-7 EjectPlayer
+5 Bo_Mk82
+5 Loki
+5 Gerk
+5 (vehicle player) addEventHandler ["handleDamage", { false }];
+5 player addEventHandler ["handleDamage", { false }];
+5 GodMode
+5 God mode
+5 Infammo
+5 InfiniteAmmo
+5 Infinite Ammo
+5 Killplayer
+5 OwnageMenu
+5 EjectPlayer
 1 setVehicleInit
-7 MrMedic
-7 U-NO-WHO
-7 Darky
-7 Alexenderpack
-7 Alexenderp$ck
-7 Troopman
-7 Troopmon
-7 hacks
-7 U-NO-
-7 onMapSingleClick
-7 gau
-7 aa12
-7 bomblauncher
-7 azp85
-7 m1a1
-7 M1A2_TUSK_MG
+5 MrMedic
+5 U-NO-WHO
+5 Darky
+5 Alexenderpack
+5 Alexenderp$ck
+5 Troopman
+5 Troopmon
+5 hacks
+5 U-NO-
+5 onMapSingleClick
+5 gau
+5 aa12
+5 bomblauncher
+5 azp85
+5 m1a1
+5 M1A2_TUSK_MG
 1 createMarker
 1 setMarkerPos
-7 Teleport
-7 teled
+5 Teleport
+5 teled
 1 vehicle player setPos
 1 (vehicle player) setPos
 1 addWeapon
-7 createLocation
-7 Vojtec
-7 hint format ["A %1 has been added", gun]
-7 vehicle player setpos _pos;
-7 marker2 setMarkerPosLocal (getPos veh)
-7 marker2 = createMarkerLocal [marker2,getPos veh];
-7 marker2 = "VehMarker" + (str i);
-7 onDoubleClick
-7 _markerMirador
-7 TKCV1_0\TKCOWNS.sqf
-7 [_this,"players"] execVM "\ca\ui\scripts\dedicatedServerInterface.sqf";
-7 _v addweapon "A"+"A1"+"2_PM"+"C"; _v addmagazine "20R"+"nd
-7 private ["_dummy"]; _dummy = [_this,"onload"]
-7 addWeaponCargo [_x,100]
-7 addMagazineCargo [_x,100]
-7 addWeaponCargoGlobal [_x,100]
-7 addMagazineCargoGlobal [_x,100]
-7 createMarkerLocal [
-7 createMarker [
+5 createLocation
+5 Vojtec
+5 hint format ["A %1 has been added", gun]
+5 vehicle player setpos _pos;
+5 marker2 setMarkerPosLocal (getPos veh)
+1 private ["_dummy"]; _dummy =
+5 marker2 = createMarkerLocal [marker2,getPos veh];
+5 marker2 = "VehMarker" + (str i);
+1 private ["_dummy"]; _dummy
+5 onDoubleClick
+5 _markerMirador
+5 TKCV1_0\TKCOWNS.sqf
+5 [_this,"players"] execVM "\ca\ui\scripts\dedicatedServerInterface.sqf";
+5 _v addweapon "A"+"A1"+"2_PM"+"C"; _v addmagazine "20R"+"nd
+5 addWeaponCargo ["M14_EP1"
+5 addWeaponCargo ["Remington870_lamp"
+5 addWeaponCargo ["M4A3_CCO_EP1"
+5 addWeaponCargo ["M4A1_AIM_SD_camo"
+5 addWeaponCargo ["BAF_L85A2_RIS_CWS"
+5 addWeaponCargo ["BAF_AS50_scoped"
+5 addWeaponCargo ["Winchester1866"
+5 addWeaponCargo ["LeeEnfield"
+5 addWeaponCargo ["revolver_EP1"
+5 addWeaponCargo ["FN_FAL"
+5 addWeaponCargo ["FN_FAL_ANPVS4"
+5 addWeaponCargo ["m107"
+5 addWeaponCargo ["Mk_48_DZ"
+5 addWeaponCargo ["M249_DZ"
+5 addWeaponCargo ["DMR"
+5 addWeaponCargo ["M16A2"
+5 addWeaponCargo ["M16A2GL"
+5 addWeaponCargo ["AK_47_M"
+5 addWeaponCargo ["AK_74"
+5 addWeaponCargo ["M4A1_Aim"
+5 addWeaponCargo ["AKS_74_kobra"
+5 addWeaponCargo ["AKS_74_U"
+5 addWeaponCargo ["AK_47_M"
+5 addWeaponCargo ["M24"
+5 addWeaponCargo ["M1014"
+5 addWeaponCargo ["M4A1"
+5 addWeaponCargo ["MP5SD"
+5 addWeaponCargo ["MP5A5"
+5 addWeaponCargo ["huntingrifle"
+5 addWeaponCargo ["glock17_EP1"
+5 addWeaponCargo ["M9"
+5 addWeaponCargo ["M9SD"
+5 addWeaponCargo ["Colt1911"
+5 addWeaponCargo ["UZI_EP1"
+5 addMagazineCargo ["30Rnd_556x45_Stanag"
+5 addMagazineCargo ["30Rnd_556x45_StanagSD"
+5 addMagazineCargo ["20Rnd_762x51_DMR"
+5 addMagazineCargo ["30Rnd_762x39_AK47"
+5 addMagazineCargo ["5Rnd_762x51_M24"
+5 addMagazineCargo ["10Rnd_127x99_m107"
+5 addMagazineCargo ["8Rnd_B_Beneli_74Slug"
+5 addMagazineCargo ["1Rnd_HE_M203"
+5 addMagazineCargo ["FlareWhite_M203"
+5 addMagazineCargo ["FlareGreen_M203"
+5 addMagazineCargo ["1Rnd_Smoke_M203"
+5 addMagazineCargo ["200Rnd_556x45_M249"
+5 addMagazineCargo ["8Rnd_B_Beneli_Pellets"
+5 addMagazineCargo ["30Rnd_9x19_MP5"
+5 addMagazineCargo ["30Rnd_9x19_MP5SD"
+5 addMagazineCargo ["100Rnd_762x51_M240"
+5 addMagazineCargo ["15Rnd_W1866_Slug"
+5 addMagazineCargo ["5x_22_LR_17_HMR"
+5 addMagazineCargo ["10x_303"
+5 addMagazineCargo ["15Rnd_9x19_M9"
+5 addMagazineCargo ["15Rnd_9x19_M9SD"
+5 addMagazineCargo ["7Rnd_45ACP_1911"
+5 addMagazineCargo ["17Rnd_9x19_glock17"
+5 addMagazineCargo ["8Rnd_9x18_Makarov"
+5 addMagazineCargo ["6Rnd_45ACP"
+5 addMagazineCargo ["8Rnd_9x18_Makarov"
+5 addWeaponCargo ["Binocular_Vector"
+5 addWeaponCargo ["NVGoggles"
+5 addWeaponCargo ["ItemGPS"
+5 addWeaponCargo ["ItemMap"
+5 addWeaponCargo ["ItemCompass"
+5 addWeaponCargo ["ItemWatch"
+5 addWeaponCargo ["ItemKnife"
+5 addWeaponCargo ["ItemMatchbox"
+5 addMagazineCargo ["PipeBomb"
+5 addMagazineCargo ["HandGrenade_west"
+5 addMagazineCargo ["ItemBandage"
+5 addMagazineCargo ["ItemPainkiller"
+5 addMagazineCargo ["ItemMorphine"
+5 addMagazineCargo ["ItemEpinephrine"
+5 addMagazineCargo ["ItemAntibiotic"
+5 addMagazineCargo ["ItemBloodbag"
+5 addMagazineCargo ["PartEngine"
+5 addMagazineCargo ["PartGeneric"
+5 addMagazineCargo ["PartVRotor"
+5 addMagazineCargo ["ItemJerrycan"
+5 addBackpackCargo ["DZ_ALICE_Pack_EP1"
+5 addBackpackCargo ["DZ_Backpack_EP1"

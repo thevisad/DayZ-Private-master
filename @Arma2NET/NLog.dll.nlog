@@ -4,7 +4,7 @@
     <target name="File"
             xsi:type="File"
             fileName="${specialfolder:LocalApplicationData}/Arma2NET/Arma2NET.log"
-            layout="${date} ${logger} ${uppercase:${level}} ${message}${onexception:inner=${newline}${exception:format=tostring}}"
+            layout="${date} ${level} ${message}${onexception:inner=${newline}${exception:format=tostring}}"
             keepFileOpen="true"
             openFileCacheTimeout="60"
             

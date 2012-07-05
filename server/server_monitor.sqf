@@ -1,3 +1,9 @@
+/*
+*				Sanctuary v2.0
+*
+*	This and all the next versions are dedicated
+*		to anti_rocket. Get some skill, son!
+*/
 #include "\x\cba\addons\main\script_mod.hpp"
 #include "\x\cba\addons\main\script_macros.hpp"
 #define PREFIX asff
@@ -5,6 +11,7 @@
 dayz_versionNo = 		getText(configFile >> "CfgMods" >> "DayZ" >> "version");
 dayz_hiveVersionNo = 1;
 allowConnection = false;
+diag_log("SERVER VERSION: Sanctuary v2.0");
 diag_log("SERVER: INITIALIZING!");
 call compile preprocessFileLineNumbers "server\overrides.sqf";
 
@@ -165,4 +172,4 @@ allowConnection = true;
 for "_x" from 1 to 5 do {
 	_id = [] spawn spawn_heliCrash;
 };
-diag_log("SERVER: INITIALIZATION DONE!");
+diag_log("SERVER: ALL DONE!");

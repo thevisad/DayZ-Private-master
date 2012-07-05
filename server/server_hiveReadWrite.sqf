@@ -7,7 +7,7 @@ switch (_result select 1) do
 {
 	case "102":{
 		diag_log("102");
-		_qresult = "Arma2Net.Unmanaged" callExtension format ["Arma2NETMySQL ['dayz','selMPSSH','myid=%1']", _muid];
+		_qresult = "Arma2Net.Unmanaged" callExtension format ["Arma2NETMySQL ['dayz','selMPSSH','[myid=%1]']", _muid];
 		_qresult = [_qresult,"|",","] call CBA_fnc_replace;
 		_qresult = call compile _qresult;
 		_qresult = _qresult select 0;
@@ -15,19 +15,18 @@ switch (_result select 1) do
 	};
 	case "101":{
 		diag_log("101");
-		_qresult = "Arma2Net.Unmanaged" callExtension format ["Arma2NETMySQL ['dayz','selIIBSM','myuid=%1']", _muid];
+		_qresult = "Arma2Net.Unmanaged" callExtension format ["Arma2NETMySQL ['dayz','selIIBSM','[myuid=%1]']", _muid];
 		_qresult = [_qresult,"|",","] call CBA_fnc_replace;
-		_qresult = call compile _qresult;
-		_newPlayer = count _qresult<1;
-		if (_newPlayer) then
+		if (_qresult=="[[]]") then
 		{
-			_qresult = "Arma2Net.Unmanaged" callExtension format ["Arma2NETMySQL ['dayz','insUNselI','myuid=%1,myname=%2']", _muid, _result select 4];
+			_qresult = "Arma2Net.Unmanaged" callExtension format ["Arma2NETMySQL ['dayz','insUNselI','[myuid=%1,myname=%2]']", _muid, _result select 4];
 			_qresult = call compile _qresult;
 			_qresult = _qresult select 0 ;
 			_ret = ["",true,_qresult select 0,"Survivor2_DZ",dayz_hiveVersionNo];
 		}else{
+			_qresult = call compile _qresult;
 			_qresult 	= _qresult select 0;
-			_ret = ["",false,_qresult select 0,[],call compile (_qresult select 1),call compile (_qresult select 2),[call compile (_qresult select 3),call compile (_qresult select 5),call compile (_qresult select 6)],call compile (_qresult select 4),dayz_hiveVersionNo];
+			_ret = ["",false,_qresult select 0,[],call compile (_qresult select 1),call compile ([_qresult select 2,"["",","["""","] call CBA_fnc_replace),[call compile (_qresult select 3),call compile (_qresult select 5),call compile (_qresult select 6)],call compile (_qresult select 4),dayz_hiveVersionNo];
 		};
 	};
 };

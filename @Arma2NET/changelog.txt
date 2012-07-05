@@ -1,3 +1,24 @@
+Arma2NET 1.11.1 (26 Jun 2012):
+
+- Fixed issue where script files were being read wrongly.
+- Renamed #r directive to //reference so that files can compile normally.
+
+Arma2NET 1.11 (25 Jun 2012):
+
+- Added a scripting system, allowing C# code to be modified at runtime. Errors and warnings are stored in the Arma2NET log.
+- Overhauled the Arma2Net.Managed.Expressions namespace.
+- Format.SqfAsDouble now uses an invariant culture to improve portability.
+- Improved readability of logs and added additional information.
+
+Arma2NET 1.10 (6 Jun 2012):
+
+- Settings.yaml is now created by the installer.
+- Log configuration file option added to Settings.yaml.
+- Arma2NET evaluator added to Arma2NET Explorer, providing the ability to test code without needing to start the game.
+- Fixed an issue where Arma2NetMethodAddIn methods with UnformattedResultAttribute were sometimes causing a NullReferenceException.
+- "<NULL-object>" from the game is now treated as null by Arma2NET.
+- Improved error messages for plugins using Arma2NetMethodAddIn.
+
 Arma2NET 1.9 (21 May 2012):
 
 - New alternative function call syntax, e.g. ["DateTime", ["now", "HH:mm:ss"]]
@@ -28,7 +49,7 @@ Arma2NET 1.7.1 (1 May 2012):
 
 - Fixed bug where all auto-activated plugins were ignoring Developer mode.
 
-Arma2NET 1.7 (30 April 2012):
+Arma2NET 1.7 (30 Apr 2012):
 
 - New function CompareVersion to compare versions, e.g. is version 1.7.0.0 higher than 1.6.0.0?
 - Improved the plugin activation/deactivation system, where only one plugin is activated as needed.
