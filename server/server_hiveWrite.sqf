@@ -29,7 +29,7 @@ switch (_key) do
 //server_publishObject
 //format["CHILD:308:%1:%2:%3:%4:%5:%6:%7:%8:%9:",dayZ_instance, _class, 0 , _charID, _worldspace, [], [], 0,_uid];
 	case "308":{
-	"Arma2Net.Unmanaged" callExtension format ["Arma2NETMySQL ['dayz','insOselI','[myuid=%1,mytype=%2,myhealth=[],myhp=0,myfuel=0,myowner=%3,mypos=%4,myinstance=%5]']", _result select 3,_result select 5,_result select 6,_result select 10,dayz_instance];
+	"Arma2Net.Unmanaged" callExtension format ["Arma2NETMySQL ['dayz','insOselI','[myuid=%1,mytype=%2,myhealth=[],myhp=0,myfuel=0,myowner=%3,mypos=%4,myinstance=%5]']", _result select 10,_result select 3,_result select 5,_result select 6,dayz_instance];
 	};
 //local_delObj //only for tents?
 //format["CHILD:310:%1:",_uid];

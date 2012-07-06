@@ -1,5 +1,5 @@
 /*
-*				Sanctuary v2.0
+*				Sanctuary v2.0.2
 *
 *	This and all the next versions are dedicated
 *		to anti_rocket. Get some skill, son!
@@ -11,7 +11,7 @@
 dayz_versionNo = 		getText(configFile >> "CfgMods" >> "DayZ" >> "version");
 dayz_hiveVersionNo = 1;
 allowConnection = false;
-diag_log("SERVER VERSION: Sanctuary v2.0");
+diag_log("SERVER VERSION: Sanctuary v2.0.2");
 diag_log("SERVER: INITIALIZING!");
 call compile preprocessFileLineNumbers "server\overrides.sqf";
 
