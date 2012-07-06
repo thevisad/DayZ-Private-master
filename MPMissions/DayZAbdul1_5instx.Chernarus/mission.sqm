@@ -21,7 +21,7 @@ class Mission
 	randomSeed=11171215;
 	class Intel
 	{
-		briefingName="DayZ Private 2.0";
+		briefingName="DayZ Private 2.0.1";
 		briefingDescription="Mission file required by the Sanctuary servers for DayZ";
 		startWeather=0.067362607;
 		forecastWeather=0.52341133;

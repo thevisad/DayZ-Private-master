@@ -9,13 +9,12 @@ startLoadingScreen ["","DayZ_loadingScreen"];
 */
 enableSaving [false, false];
 
-dayZ_instance =	6;	//The instance
+dayZ_instance =	1;	//The instance
 hiveInUse	=	true;
 dayzHiveRequest = [];
 initialized = false;
 dayz_previousID = 0;
 dayz_hiveVersionNo = 1;
-CBA_display_ingame_warnings = false;
 enableItemsDropping = 0;
 
 call compile preprocessFileLineNumbers "\z\addons\dayz_code\init\variables.sqf";				//Initilize the Variables (IMPORTANT: Must happen very early)
@@ -40,6 +39,8 @@ if ((!isServer) && (player != player)) then
 };
 if (isServer) then {
 	hiveInUse = true;
+	CBA_display_ingame_warnings = false;
+	publicVariable "CBA_display_ingame_warnings";
 	_serverMonitor = [] execVM "server\server_monitor.sqf";
 };
 dayz_preloadFinished=true;
