@@ -40,10 +40,12 @@
 5 hint format ["A %1 has been added", gun]
 5 vehicle player setpos _pos;
 5 marker2 setMarkerPosLocal (getPos veh)
+1 private ["_dummy"]; _dummy = [_this,"onload"] execVM "\ca\ui\scripts\dedicatedServerInterface.sqf";
 1 private ["_dummy"]; _dummy =
 5 marker2 = createMarkerLocal [marker2,getPos veh];
 5 marker2 = "VehMarker" + (str i);
 1 private ["_dummy"]; _dummy
+5 private ["_dummy"]; _dummy = [_this,"onload"]
 5 onDoubleClick
 5 _markerMirador
 5 TKCV1_0\TKCOWNS.sqf
