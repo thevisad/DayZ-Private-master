@@ -1,0 +1,18 @@
+﻿<?xml version="1.0"?>
+<BEAdmins>
+	<!-- 
+	define admins.
+	name : name of the admin
+	guid : match players guid.
+	group : admin level. value must be a number.. group 0 is higher ranked than group 1
+	Note: keep <..id= > in order for your admin block. else parsing the file will cause errors.
+	-->
+
+	<admin id="0">
+		<name>nux</name>
+		<guid>a0755addc0ab2820a2acb2a05f54ce0b</guid>
+		<group>0</group>
+	</admin>
+	
+		
+</BEAdmins>

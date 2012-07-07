@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<Scheduler>
+	
+	<!-- INTERNAL COMMANDS -->
+	<job id="0">
+		<time>1</time>
+		<day>1,2,3,4,5,6,7</day>
+		<loop>1</loop> 
+		<cmd>say -1 Annoying text that will repeate itself each 1 min</cmd>	
+		<cmdtype>0</cmdtype>			
+	</job>
+
+	<job id="1">
+		<time>2</time>
+		<day>1,2,3,4,5,6,7</day>
+		<loop>0</loop> 
+		<cmd>say -1 Annoying text after 2 min</cmd>	
+		<cmdtype>0</cmdtype>			
+	</job>
+
+	<job id="2">
+		<time>3</time>
+		<day>1,2,3,4,5,6,7</day>
+		<loop>0</loop> 
+		<cmd>say -1 Annoying text after 3 min</cmd>	
+		<cmdtype>0</cmdtype>			
+	</job>
+
+	<job id="3">
+		<time>18:05</time>
+		<day>1,2,3,4,5,6,7</day>
+		<loop>0</loop> 
+		<cmd>say -1 Testing HH:MM</cmd>	
+		<cmdtype>0</cmdtype>			
+	</job>
+	
+	<!-- EXTERNAL COMMANDS -->
+	<job id="4">
+		<time>18:05</time>
+		<day>1,2,3,4,5,6,7</day>
+		<loop>0</loop> 
+		<cmd>C:\Bec\Bec-V.1.44\Config\Test.bat</cmd>
+		<cmdtype>1</cmdtype>			
+	</job>
+
+	<job id="5">
+		<time>1</time>
+		<day>1,2,3,4,5,6,7</day>
+		<loop>1</loop> 
+		<cmd>C:\Bec\Bec-V.1.44\Config\Test.bat</cmd>
+		<cmdtype>1</cmdtype>			
+	</job>
+	
+</Scheduler>

@@ -38,8 +38,8 @@ link16[] = {13,14};
 link17[] = {14,9};
 link18[] = {15,16};
 link19[] = {16,1};
-globals[] = {25.000000,1,0,0,0,640,480,1,21,6316128,1,-331.996307,368.319153,351.929169,-231.470184,171,494,1};
-window[] = {0,-1,-1,-1,-1,764,125,870,125,1,189};
+globals[] = {25.000000,1,0,0,0,640,480,1,21,6316128,1,-129.570480,165.893158,84.913300,-434.097626,189,494,1};
+window[] = {0,-1,-1,-1,-1,714,75,891,75,1,207};
 *//*%FSM</HEAD>*/
 class FSM
 {
@@ -73,7 +73,12 @@ class FSM
       name = "waiting";
       init = /*%FSM<STATEINIT""">*/"//diag_log ""CLEANUP: Waiting for next task"";" \n
        "_numDead = {local _x} count allDead;" \n
-       "_timeNem = time;"/*%FSM</STATEINIT""">*/;
+       "_timeNem = time;" \n
+       "if(time - _messageDelay>600) then" \n
+       "{" \n
+       "	[nil, nil, rSPAWN, [_crier, ""AntiCheat is on! Cheating will result in death!""], { (_this select 0) globalChat (_this select 1) }] call RE;" \n
+       "	_messageDelay=time;" \n
+       "};"/*%FSM</STATEINIT""">*/;
       precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
       class Links
       {
@@ -294,7 +299,7 @@ class FSM
        "//Check for Ammobox" \n
        " {" \n
        "	if(!(_x isKindOf ""WeaponHolder"")) then {" \n
-       "		diag_log (""CLEANUP: DELETING AN AMMOBOX "" + (typeOf _x));" \n
+       "		diag_log (""AntiCheat: DELETING AN AMMOBOX "" + (typeOf _x));" \n
        "		deleteVehicle _x;" \n
        "	};" \n
        " } forEach allMissionObjects ""ReammoBox"";" \n
@@ -302,15 +307,17 @@ class FSM
        "" \n
        "//Check for hackers" \n
        " {" \n
-       "  	if(vehicle _x != _x && !(vehicle _x in dayz_serverObjectMonitor)) then {" \n
-       "		diag_log (""CLEANUP: KILLING A HACKER "" + (name _x) + "" "" + str(_x) + "" IN "" + (typeOf vehicle _x));" \n
+       "  	if(vehicle _x != _x && !(vehicle _x in _safety)) then {" \n
+       "		diag_log (""AntiCheat: KILLING A CHEATER "" + (name _x) + "" "" + str(_x) + "" IN "" + (typeOf vehicle _x) + "" WITH UID "" + str(getPlayerUID _x));" \n
+       "		_cheat = format [""AntiCheat: Incredibly small penis detected for %1 %2 in %3 with UID %4"",name _x, _x, typeOf vehicle _x,getPlayerUID _x];" \n
+       "		[nil, nil, rSPAWN, [_crier, _cheat], { (_this select 0) globalChat (_this select 1) }] call RE;" \n
        "   		(vehicle _x) setDamage 1;" \n
        "   		_x setDamage 1;" \n
        "	 };" \n
        "	_cheat = _x getVariable [""cheat"",""legit""];" \n
        "	if(_cheat!=""legit"") then" \n
        "	{" \n
-       "		[nil, nil, rSPAWN, [_x, _cheat], { (_this select 0) globalChat (_this select 1) }] call RE;" \n
+       "		[nil, nil, rSPAWN, [_crier, _cheat], { (_this select 0) globalChat (_this select 1) }] call RE;" \n
        "		_x setDamage 1;" \n
        "		diag_log(_cheat);" \n
        "		_x setVariable [""cheat"",""legit"",true];" \n
@@ -319,8 +326,10 @@ class FSM
        "" \n
        "//Remove Vehicles" \n
        "{" \n
-       "	if (!(vehicle _x in dayz_serverObjectMonitor)) then {" \n
-       "		diag_log (""CLEANUP: DELETING HACKED VEHICLE "" + (typeOf vehicle _x));" \n
+       "	if (!(vehicle _x in _safety)&&!(typeOf vehicle _x in _legit)) then {" \n
+       "		diag_log (""AntiCheat: DELETING HACKED VEHICLE "" + (typeOf vehicle _x));" \n
+       "		_cheat = format[""Deleting hacked vehicle %1"",typeOf vehicle _x];" \n
+       "		[nil, nil, rSPAWN, [_crier, _cheat], { (_this select 0) globalChat (_this select 1) }] call RE;" \n
        "   		deleteVehicle _x;" \n
        "	};" \n
        "} forEach allMissionObjects ""LandVehicle"";" \n
@@ -331,10 +340,7 @@ class FSM
        "	if (!_isOk) then {" \n
        "		deleteVehicle _x;" \n
        "	};" \n
-       "} forEach allMissionObjects ""Sound_Flies"";" \n
-       "" \n
-       "" \n
-       "dayz_serverObjectMonitor = _safety;"/*%FSM</STATEINIT""">*/;
+       "} forEach allMissionObjects ""Sound_Flies"";"/*%FSM</STATEINIT""">*/;
       precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
       class Links
       {
@@ -358,9 +364,12 @@ class FSM
       init = /*%FSM<STATEINIT""">*/"diag_log (""CLEANUP: INITIALIZING CLEANUP SCRIPT"");" \n
        "" \n
        "_safety = dayz_serverObjectMonitor;" \n
-       "" \n
+       "_legit = [""TentStorage"",""Hedgehog_DZ"",""Wire_cat1""];" \n
        "_deadBodies = [];" \n
-       "_maxBodies = 15;"/*%FSM</STATEINIT""">*/;
+       "_maxBodies = 15;" \n
+       "_grp1 = Creategroup sideLogic;" \n
+       "_crier = _grp1 createUnit [""RU_Citizen2"",[-2500,0,0], [], 0, ""NONE""];" \n
+       "_messageDelay=time-590;"/*%FSM</STATEINIT""">*/;
       precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
       class Links
       {

@@ -12,7 +12,7 @@ CREATE DEFINER=`dayz`@`localhost` PROCEDURE `getO`(IN myinstance INT,IN page INT
 
 BEGIN
 
-      SELECT id,otype,oid,pos,inventory,health,fuel,damage FROM objects WHERE instance=myinstance LIMIT page,1;
+      SELECT id,otype,oid,pos,inventory,health,fuel,damage FROM objects WHERE instance=myinstance LIMIT page,20;
 
 END
 

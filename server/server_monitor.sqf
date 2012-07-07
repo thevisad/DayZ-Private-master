@@ -1,5 +1,5 @@
 /*
-*				Sanctuary v2.0.3
+*				Sanctuary v2.0.5
 *
 *	This and all the next versions are dedicated
 *		to anti_rocket. Get some skill, son!
@@ -11,7 +11,7 @@
 dayz_versionNo = 		getText(configFile >> "CfgMods" >> "DayZ" >> "version");
 dayz_hiveVersionNo = 1;
 allowConnection = false;
-diag_log("SERVER VERSION: Sanctuary v2.0.2");
+diag_log("SERVER VERSION: Sanctuary v2.0.5");
 diag_log("SERVER: INITIALIZING!");
 call compile preprocessFileLineNumbers "server\overrides.sqf";
 
@@ -37,13 +37,19 @@ if(_val>0) then
 		_result = "Arma2Net.Unmanaged" callExtension format ["Arma2NETMySQL ['dayz','getO','myinstance=%1,page=%2']",dayz_instance,_part];
 		_result = [_result,"|",","] call CBA_fnc_replace;
 		_result = call compile _result;
-		diag_log(_result);
-		_end = count _result;
+		_result = _result select 0;
+		_end = (count _result)/8 - 1;
 		for "_i" from 0 to _end do {
-			_data = _result select _i;
+			_x = _i*8;
+			_data=[];
+			while {_x<(_i*8+8)} do
+			{
+				_data set [count _data, _result select _x];
+				INC(_x);
+			};
 			_myArray set [count _myArray,_data];
 		};
-		_part = _part + 1;
+		_part = _part + 20;
 	};
 	diag_log ("EVIH: Streamed " + str(_val) + " objects");
 };
