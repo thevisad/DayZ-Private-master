@@ -38,8 +38,8 @@ link16[] = {13,14};
 link17[] = {14,9};
 link18[] = {15,16};
 link19[] = {16,1};
-globals[] = {25.000000,1,0,0,0,640,480,1,21,6316128,1,-129.570480,165.893158,84.913300,-434.097626,189,494,1};
-window[] = {0,-1,-1,-1,-1,714,75,891,75,1,207};
+globals[] = {25.000000,1,0,0,0,640,480,1,21,6316128,1,-120.925217,157.247787,315.575500,-411.501038,189,494,1};
+window[] = {0,-1,-1,-1,-1,687,216,1032,48,1,207};
 *//*%FSM</HEAD>*/
 class FSM
 {
@@ -333,7 +333,14 @@ class FSM
        "   		deleteVehicle _x;" \n
        "	};" \n
        "} forEach allMissionObjects ""LandVehicle"";" \n
-       "" \n
+       "{" \n
+       "	if (!(vehicle _x in _safety)&&!(typeOf vehicle _x in _legit)) then {" \n
+       "		diag_log (""AntiCheat: DELETING HACKED VEHICLE "" + (typeOf vehicle _x));" \n
+       "		_cheat = format[""Deleting hacked vehicle %1"",typeOf vehicle _x];" \n
+       "		[nil, nil, rSPAWN, [_crier, _cheat], { (_this select 0) globalChat (_this select 1) }] call RE;" \n
+       "   		deleteVehicle _x;" \n
+       "	};" \n
+       "} forEach allMissionObjects ""Air"";" \n
        "//Check Flies" \n
        "{" \n
        "	_isOk = {!alive _x} count (nearestObjects [_x, [""CAManBase""], 1]);" \n
@@ -361,15 +368,15 @@ class FSM
     class prepare
     {
       name = "prepare";
-      init = /*%FSM<STATEINIT""">*/"diag_log (""CLEANUP: INITIALIZING CLEANUP SCRIPT"");" \n
-       "" \n
+      init = /*%FSM<STATEINIT""">*/"private ""_safety""; " \n
        "_safety = dayz_serverObjectMonitor;" \n
        "_legit = [""TentStorage"",""Hedgehog_DZ"",""Wire_cat1""];" \n
        "_deadBodies = [];" \n
        "_maxBodies = 15;" \n
        "_grp1 = Creategroup sideLogic;" \n
        "_crier = _grp1 createUnit [""RU_Citizen2"",[-2500,0,0], [], 0, ""NONE""];" \n
-       "_messageDelay=time-590;"/*%FSM</STATEINIT""">*/;
+       "_messageDelay=time-590;" \n
+       "diag_log (""CLEANUP: INITIALIZING CLEANUP SCRIPT"");"/*%FSM</STATEINIT""">*/;
       precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
       class Links
       {
