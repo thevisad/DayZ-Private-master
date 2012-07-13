@@ -1,0 +1,7 @@
+ALTER TABLE `dayz`.`main` CHANGE COLUMN `uid` `uid` VARCHAR(128) NOT NULL  , CHANGE COLUMN `name` `name` VARCHAR(32) NOT NULL DEFAULT 'GI Joe'  , CHANGE COLUMN `pos` `pos` VARCHAR(128) NOT NULL DEFAULT '[]'  , CHANGE COLUMN `medical` `medical` VARCHAR(128) NOT NULL DEFAULT '[false|false|false|false|false|false|false|12000|[]|[0|0]|0]'  , CHANGE COLUMN `model` `model` VARCHAR(128) NOT NULL DEFAULT 'Survivor2_DZ'  , CHANGE COLUMN `state` `state` VARCHAR(128) NOT NULL DEFAULT '[""|"aidlpercmstpsnonwnondnon_player_idlesteady04"|36]'  , CHANGE COLUMN `humanity` `humanity` INT(2) NOT NULL DEFAULT '2500'  ;
+ALTER TABLE `dayz`.`instances` CHANGE COLUMN `id` `id` INT(8) UNSIGNED NOT NULL AUTO_INCREMENT  , CHANGE COLUMN `instance` `instance` INT(2) UNSIGNED NOT NULL  , CHANGE COLUMN `timezone` `timezone` INT(1) UNSIGNED NOT NULL DEFAULT '0'  ;
+ALTER TABLE `dayz`.`main` CHANGE COLUMN `death` `death` TINYINT(1) UNSIGNED NOT NULL DEFAULT '0'  ;
+ALTER TABLE `dayz`.`spawns` CHANGE COLUMN `id` `id` INT(2) UNSIGNED NOT NULL AUTO_INCREMENT  , CHANGE COLUMN `pos` `pos` VARCHAR(128) NOT NULL  , CHANGE COLUMN `otype` `otype` VARCHAR(128) NOT NULL DEFAULT 'Smallboat_1'  , CHANGE COLUMN `uuid` `uuid` INT(2) UNSIGNED NOT NULL  ;
+ALTER TABLE `dayz`.`instances` ENGINE = MyISAM ;
+ALTER TABLE `dayz`.`spawns` ENGINE = MyISAM ;
+OPTIMIZE TABLE dayz.main, dayz.instances, dayz.objects, dayz.spawns;

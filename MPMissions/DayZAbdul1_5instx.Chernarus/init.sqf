@@ -9,7 +9,7 @@ startLoadingScreen ["","DayZ_loadingScreen"];
 */
 enableSaving [false, false];
 
-dayZ_instance =	3;	//The instance
+dayZ_instance =	1;	//The instance
 hiveInUse	=	true;
 initialized = false;
 dayz_previousID = 0;
