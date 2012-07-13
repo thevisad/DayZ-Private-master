@@ -38,8 +38,8 @@ link16[] = {13,14};
 link17[] = {14,9};
 link18[] = {15,16};
 link19[] = {16,1};
-globals[] = {25.000000,1,0,0,0,640,480,1,21,6316128,1,-120.925217,157.247787,315.575500,-411.501038,189,494,1};
-window[] = {0,-1,-1,-1,-1,687,216,1032,48,1,207};
+globals[] = {25.000000,1,0,0,0,640,480,1,21,6316128,1,-167.267441,110.905586,315.575500,-411.501038,153,583,1};
+window[] = {0,-1,-1,-1,-1,764,125,941,125,1,171};
 *//*%FSM</HEAD>*/
 class FSM
 {
@@ -231,22 +231,19 @@ class FSM
     {
       name = "sync_the_time";
       init = /*%FSM<STATEINIT""">*/"//Send request" \n
-       "_qresult = ""Arma2Net.Unmanaged"" callExtension format[""Arma2NETMySQL ['dayz','getTime','myinstance=%1']"",dayz_instance];" \n
-       "_qresult = call compile _qresult;" \n
-       "_qresult = _qresult select 0;" \n
-       "_date = _qresult select 0;" \n
-       "_date = [_date,""-""] call CBA_fnc_split;" \n
-       "_time = [_qresult select 1,"":""] call CBA_fnc_split;" \n
-       "_m = call compile (_date select 1);" \n
-       "_y = call compile (_date select 2);" \n
-       "_d = call compile (_date select 0);" \n
-       "_h = call compile (_time select 0);" \n
-       "_mm = call compile (_time select 1);" \n
-       "_date = [_y,_m,_d,_h,_mm];" \n
-       "setDate _date;" \n
-       "dayzSetDate = _date;" \n
-       "publicVariable ""dayzSetDate"";" \n
-       "diag_log (""TIME SYNC: Local Time set to "" + str(_date));" \n
+       "_key = ""CHILD:307:"";" \n
+       "_result = [_key] call server_hiveReadWrite;" \n
+       "_outcome = _result select 0;" \n
+       "if(_outcome == ""PASS"") then {" \n
+       "	_date = _result select 1; " \n
+       "	if(isDedicated) then {" \n
+       "		setDate _date;" \n
+       "		dayzSetDate = _date;" \n
+       "		publicVariable ""dayzSetDate"";" \n
+       "	};" \n
+       "" \n
+       "	diag_log (""TIME SYNC: Local Time set to "" + str(_date));" \n
+       "};" \n
        "_lastUpdate = time;" \n
        ""/*%FSM</STATEINIT""">*/;
       precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
@@ -314,6 +311,7 @@ class FSM
        "   		(vehicle _x) setDamage 1;" \n
        "   		_x setDamage 1;" \n
        "	 };" \n
+       "	//Check for client cheat messages" \n
        "	_cheat = _x getVariable [""cheat"",""legit""];" \n
        "	if(_cheat!=""legit"") then" \n
        "	{" \n
@@ -326,7 +324,7 @@ class FSM
        "" \n
        "//Remove Vehicles" \n
        "{" \n
-       "	if (!(vehicle _x in _safety)&&!(typeOf vehicle _x in _legit)) then {" \n
+       "	if (!(vehicle _x in _safety) then {" \n
        "		diag_log (""AntiCheat: DELETING HACKED VEHICLE "" + (typeOf vehicle _x));" \n
        "		_cheat = format[""Deleting hacked vehicle %1"",typeOf vehicle _x];" \n
        "		[nil, nil, rSPAWN, [_crier, _cheat], { (_this select 0) globalChat (_this select 1) }] call RE;" \n
@@ -334,7 +332,7 @@ class FSM
        "	};" \n
        "} forEach allMissionObjects ""LandVehicle"";" \n
        "{" \n
-       "	if (!(vehicle _x in _safety)&&!(typeOf vehicle _x in _legit)) then {" \n
+       "	if (!(vehicle _x in _safety)) then {" \n
        "		diag_log (""AntiCheat: DELETING HACKED VEHICLE "" + (typeOf vehicle _x));" \n
        "		_cheat = format[""Deleting hacked vehicle %1"",typeOf vehicle _x];" \n
        "		[nil, nil, rSPAWN, [_crier, _cheat], { (_this select 0) globalChat (_this select 1) }] call RE;" \n
@@ -370,11 +368,10 @@ class FSM
       name = "prepare";
       init = /*%FSM<STATEINIT""">*/"private ""_safety""; " \n
        "_safety = dayz_serverObjectMonitor;" \n
-       "_legit = [""TentStorage"",""Hedgehog_DZ"",""Wire_cat1""];" \n
        "_deadBodies = [];" \n
        "_maxBodies = 15;" \n
        "_grp1 = Creategroup sideLogic;" \n
-       "_crier = _grp1 createUnit [""RU_Citizen2"",[-2500,0,0], [], 0, ""NONE""];" \n
+       "_crier = _grp1 createUnit [""SurvivorW2_DZ"",[-2500,0,0], [], 0, ""NONE""];" \n
        "_messageDelay=time-590;" \n
        "diag_log (""CLEANUP: INITIALIZING CLEANUP SCRIPT"");"/*%FSM</STATEINIT""">*/;
       precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;

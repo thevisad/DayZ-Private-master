@@ -7,6 +7,9 @@ _key = _result select 1;
 //Player death
 switch (_key) do
 {
+	case "203":{
+	"Arma2Net.Unmanaged" callExtension format ["Arma2NETMySQL ['dayz','update','[myid=%1,mypos=[],myinv=%2,myback=%3,mymed=[],myate=-1,mydrank=-1,mytime=0,mymod=any,myhum=0,myk=0,myhs=0,myhk=0,mybk=0,mystate=[""""|""aidlpercmstpsnonwnondnon_player_idlesteady04""|36]]']", _result select 2,_result select 3, _result select 4];
+	};
 	case "202":{
 	"Arma2Net.Unmanaged" callExtension format ["Arma2NETMySQL ['dayz','setCD','[myid=%1]']", _mid];
 	};
@@ -31,11 +34,10 @@ switch (_key) do
 	case "308":{
 	"Arma2Net.Unmanaged" callExtension format ["Arma2NETMySQL ['dayz','insOselI','[myuid=%1,mytype=%2,myhealth=[],myhp=0,myfuel=0,myowner=%3,mypos=%4,myinstance=%5]']", _result select 10,_result select 3,_result select 5,_result select 6,dayz_instance];
 	};
-//local_delObj //only for tents?
+//local_delObj 
 //format["CHILD:310:%1:",_uid];
 	case "310":{
-	_uid = _result select 2;
-	_uid = [_uid, "."] call CBA_fnc_split;
+	_uid = [_result select 2, "."] call CBA_fnc_split;
 	_uid = _uid select 0;
 	"Arma2Net.Unmanaged" callExtension format ["Arma2NETMySQL ['dayz','delO','[myuid=%1]']",_uid];
 	};

@@ -11,7 +11,6 @@ enableSaving [false, false];
 
 dayZ_instance =	3;	//The instance
 hiveInUse	=	true;
-dayzHiveRequest = [];
 initialized = false;
 dayz_previousID = 0;
 dayz_hiveVersionNo = 1;
@@ -24,11 +23,10 @@ call compile preprocessFileLineNumbers "\z\addons\dayz_code\medical\setup_functi
 progressLoadingScreen 0.4;
 call compile preprocessFileLineNumbers "\z\addons\dayz_code\init\compiles.sqf";				//Compile regular functions
 progressLoadingScreen 1.0;
-dayz_preloadFinished=true;
 
 if (isServer) then {
 	hiveInUse = true;
-	_serverMonitor = [] execVM "server\server_monitor.sqf";
+	_serverMonitor = [] execVM "\z\addons\dayz_server\system\server_monitor.sqf";
 };
 if (!isDedicated) then {
 	0 fadeSound 0;

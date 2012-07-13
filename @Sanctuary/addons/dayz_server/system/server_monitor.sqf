@@ -1,5 +1,6 @@
+waitUntil{!isnil "bis_fnc_init"};
 /*
-*				Sanctuary v2.0.6
+*				Sanctuary v2.1
 *
 *	This and all the next versions are dedicated
 *		to anti_rocket. Get some skill, son!
@@ -8,13 +9,9 @@
 #include "\x\cba\addons\main\script_macros.hpp"
 #define PREFIX asff
 
-dayz_versionNo = 		getText(configFile >> "CfgMods" >> "DayZ" >> "version");
+dayz_versionNo = getText(configFile >> "CfgMods" >> "DayZ" >> "version");
 dayz_hiveVersionNo = 1;
-allowConnection = false;
-diag_log("SERVER VERSION: Sanctuary v2.0.6");
-diag_log("SERVER: INITIALIZING!");
-call compile preprocessFileLineNumbers "server\overrides.sqf";
-
+diag_log("SERVER VERSION: Sanctuary v2.1");
 if ((count playableUnits == 0) and !isDedicated) then {
 	isSinglePlayer = true;
 	diag_log("SERVER: SINGLEPLAYER DETECTED!");
@@ -25,12 +22,10 @@ waitUntil{initialized};
 _result = "Arma2Net.Unmanaged" callExtension format ["Arma2NETMySQL ['dayz','getOC','myinstance=%1']",dayz_instance];
 _result = call compile _result;
 _val = call compile ((_result select 0) select 0);
-diag_log("SERVER: " + str(_val) + " Objects to stream!");
 //Stream Objects
 _myArray = [];
 if(_val>0) then 
 {
-	diag_log ("EVIH: Commence Object Streaming...");
 	_part = 0; //paging, compile doesnt work on too big arrays
 	while {_part < _val} do
 	{
@@ -51,14 +46,14 @@ if(_val>0) then
 		};
 		_part = _part + 15;
 	};
-	diag_log ("EVIH: Streamed " + str(_val) + " objects");
+	diag_log ("SERVER: Streamed " + str(_val) + " objects");
 };
 _countr = 0;		
 {
 		
 	//Parse Array
+	diag_log(_x);
 	_countr = _countr + 1;
-
 	_idKey = call compile (_x select 0);
 	_type = _x select 1;
 	_ownerID = _x select 2;
@@ -71,7 +66,7 @@ _countr = 0;
 	_damage = call compile (_x select 7);
 	
 	if (_damage < 1) then {
-		//diag_log ("OBJ: " + str(_idKey) + _type);
+		diag_log ("Spawned: " + str(_idKey) + " " + _type);
 		
 		//Create it
 		_object = createVehicle [_type, _pos, [], 0, "CAN_COLLIDE"];
@@ -142,29 +137,24 @@ _countr = 0;
 			};
 			_id = _object spawn fnc_vehicleEventHandler;				
 		};
-
-		//Monitor the object
-		//_object enableSimulation false;
 		dayz_serverObjectMonitor set [count dayz_serverObjectMonitor,_object];
 	};
 } forEach _myArray;
 //TIME
-_qresult = "Arma2Net.Unmanaged" callExtension format["Arma2NETMySQL ['dayz','getTime','myinstance=%1']",dayz_instance];
-_qresult = call compile _qresult;
-_qresult = _qresult select 0;
-_date = _qresult select 0;
-_date = [_date,"-"] call CBA_fnc_split;
-_time = [_qresult select 1,":"] call CBA_fnc_split;
-_m = call compile (_date select 1);
-_y = call compile (_date select 2);
-_d = call compile (_date select 0);
-_h = call compile (_time select 0);
-_mm = call compile (_time select 1);
-_date = [_y,_m,_d,_h,_mm];
-setDate _date;
-dayzSetDate = _date;
-publicVariable "dayzSetDate";
-diag_log("SERVER: Time set to "+str(_y)+"-"+str(_m)+"-"+str(_d)+" "+str(_h)+":"+str(_mm));
+_key = "CHILD:307:";
+_result = [_key] call server_hiveReadWrite;
+_outcome = _result select 0;
+if(_outcome == "PASS") then {
+	_date = _result select 1; 
+	if(isDedicated) then {
+		setDate _date;
+		dayzSetDate = _date;
+		publicVariable "dayzSetDate";
+	};
+
+	diag_log ("SERVER: Local Time set to " + str(_date));
+};
+	
 createCenter civilian;
 if (isDedicated) then {
 	endLoadingScreen;
@@ -172,11 +162,11 @@ if (isDedicated) then {
 hiveInUse = false;
 
 if (isDedicated) then {
-	[] execFSM "server\server_cleanup.fsm";
+	[] execFSM "\z\addons\dayz_server\system\server_cleanup.fsm";
 };
 allowConnection = true;
 //Spawn crashed helos
 for "_x" from 1 to 5 do {
 	_id = [] spawn spawn_heliCrash;
 };
-diag_log("SERVER: ALL DONE!");
+diag_log("SERVER: INITIALIZED!");
