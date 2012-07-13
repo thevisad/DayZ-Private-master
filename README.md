@@ -8,5 +8,5 @@ You can now set separate timezones for each instance in the database modifying t
 
 You no longer need to generate any pbos. Just merge this repository with your main ArmA directory!
 
-If you have dayz1_5.sql you can just run objectfix1_5to1_6.sql, if not please install dayz1_6.sql
+Guide http://www.tunngle.net/community/topic/78211-guru-abduls-private-dayz-172-compatible/
 =======
