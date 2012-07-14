@@ -45,7 +45,7 @@ if(_val>0) then
 			};
 			_myArray set [count _myArray,_data];
 		};
-		_part = _part + 10;
+		_part = _part + 15;
 	};
 	diag_log ("SERVER: Streamed " + str(_val) + " objects");
 };
