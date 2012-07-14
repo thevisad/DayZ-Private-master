@@ -12,7 +12,7 @@ if (count _this > 2) then {
 waitUntil{allowConnection};
 
 //Variables
-_inventory =	[];
+_inventory =	initialLoadout;
 _backpack = 	[];
 _items = 		[];
 _magazines = 	[];
@@ -106,7 +106,6 @@ if (!_isNew) then {
 	//get loadout
 	if(str(initialLoadout)!="[]")then
 	{
-		_inventory = initialLoadout;
 		_inventory2 = _inventory;
 	};
 	//Wait for HIVE to be free

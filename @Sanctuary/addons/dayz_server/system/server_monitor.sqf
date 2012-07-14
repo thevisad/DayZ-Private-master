@@ -1,7 +1,7 @@
 waitUntil{!isnil "bis_fnc_init"};
 
 /*
-*				Sanctuary v2.3
+*				Sanctuary v2.3.1
 *
 *	This and all the next versions are dedicated
 *		to anti_rocket. Get some skill, son!
@@ -12,15 +12,20 @@ waitUntil{!isnil "bis_fnc_init"};
 
 dayz_versionNo = getText(configFile >> "CfgMods" >> "DayZ" >> "version");
 dayz_hiveVersionNo = 1;
-diag_log("SERVER VERSION: Sanctuary v2.3");
+diag_log("SERVER VERSION: Sanctuary v2.3.1");
 if ((count playableUnits == 0) and !isDedicated) then {
 	isSinglePlayer = true;
 	diag_log("SERVER: SINGLEPLAYER DETECTED!");
 };
 waitUntil{initialized};
-
+//GET instance settings;
+_result = "Arma2Net.Unmanaged" callExtension format ["Arma2NETMySQL ['dayz','getLoadout','[myinstance=%1]']",dayz_instance];
+_result = [_result,"|",","] call CBA_fnc_replace;
+_result = call compile _result;
+initialLoadout = call compile ((_result select 0)select 0);
+diag_log("SERVER: Initial Loadout "+str(initialLoadout));
 //GET OBJECT COUNT
-_result = "Arma2Net.Unmanaged" callExtension format ["Arma2NETMySQL ['dayz','getOC','myinstance=%1']",dayz_instance];
+_result = "Arma2Net.Unmanaged" callExtension format ["Arma2NETMySQL ['dayz','getOC','[myinstance=%1]']",dayz_instance];
 _result = call compile _result;
 _val = call compile ((_result select 0) select 0);
 //Stream Objects
@@ -30,7 +35,7 @@ if(_val>0) then
 	_part = 0; //paging, compile doesnt work on too big arrays
 	while {_part < _val} do
 	{
-		_result = "Arma2Net.Unmanaged" callExtension format ["Arma2NETMySQL ['dayz','getO','myinstance=%1,page=%2']",dayz_instance,_part];
+		_result = "Arma2Net.Unmanaged" callExtension format ["Arma2NETMySQL ['dayz','getO','[myinstance=%1,page=%2]']",dayz_instance,_part];
 		_result = [_result,"|",","] call CBA_fnc_replace;
 		_result = call compile _result;
 		_result = _result select 0;
@@ -45,7 +50,7 @@ if(_val>0) then
 			};
 			_myArray set [count _myArray,_data];
 		};
-		_part = _part + 10;
+		_part = _part + 15;
 	};
 	diag_log ("SERVER: Streamed " + str(_val) + " objects");
 };

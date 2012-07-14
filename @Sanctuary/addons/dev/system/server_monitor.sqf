@@ -18,7 +18,11 @@ if ((count playableUnits == 0) and !isDedicated) then {
 	diag_log("SERVER: SINGLEPLAYER DETECTED!");
 };
 waitUntil{initialized};
-
+//GET instance settings;
+_result = "Arma2Net.Unmanaged" callExtension format ["Arma2NETMySQL ['dayz','getLoadout','[myinstance=%1]']",dayz_instance]
+_result = call compile _result;
+initialLoadout = call compile ((_result select 0)select 0);
+diag_log("SERVER: Initial Loadout "+str(initialLoadout));
 //GET OBJECT COUNT
 _result = "Arma2Net.Unmanaged" callExtension format ["Arma2NETMySQL ['dayz','getOC','myinstance=%1']",dayz_instance];
 _result = call compile _result;
@@ -45,7 +49,7 @@ if(_val>0) then
 			};
 			_myArray set [count _myArray,_data];
 		};
-		_part = _part + 10;
+		_part = _part + 15;
 	};
 	diag_log ("SERVER: Streamed " + str(_val) + " objects");
 };
