@@ -1,7 +1,7 @@
 waitUntil{!isnil "bis_fnc_init"};
 
 /*
-*				Sanctuary v2.3.1
+*				Sanctuary v2.3.1.2
 *
 *	This and all the next versions are dedicated
 *		to anti_rocket. Get some skill, son!
@@ -12,7 +12,7 @@ waitUntil{!isnil "bis_fnc_init"};
 
 dayz_versionNo = getText(configFile >> "CfgMods" >> "DayZ" >> "version");
 dayz_hiveVersionNo = 1;
-diag_log("SERVER VERSION: Sanctuary v2.3.1");
+diag_log("SERVER VERSION: Sanctuary v2.3.1.2");
 if ((count playableUnits == 0) and !isDedicated) then {
 	isSinglePlayer = true;
 	diag_log("SERVER: SINGLEPLAYER DETECTED!");
@@ -50,7 +50,7 @@ if(_val>0) then
 			};
 			_myArray set [count _myArray,_data];
 		};
-		_part = _part + 15;
+		_part = _part + 10;
 	};
 	diag_log ("SERVER: Streamed " + str(_val) + " objects");
 };
