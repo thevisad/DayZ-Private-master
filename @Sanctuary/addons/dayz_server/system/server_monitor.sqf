@@ -1,10 +1,11 @@
 waitUntil{!isnil "bis_fnc_init"};
 
 /*
-*				Sanctuary v2.3.1.2
+*				Sanctuary v2.3.2
 *
 *	This and all the next versions are dedicated
-*		to anti_rocket. Get some skill, son!
+*	to the pathetic leech! Too bad Rocket doesn't
+*		do the work for you anymore :]
 */
 #include "\x\cba\addons\main\script_mod.hpp"
 #include "\x\cba\addons\main\script_macros.hpp"
@@ -12,13 +13,38 @@ waitUntil{!isnil "bis_fnc_init"};
 
 dayz_versionNo = getText(configFile >> "CfgMods" >> "DayZ" >> "version");
 dayz_hiveVersionNo = 1;
-diag_log("SERVER VERSION: Sanctuary v2.3.1.2");
+diag_log("SERVER VERSION: Sanctuary v2.3.2");
 if ((count playableUnits == 0) and !isDedicated) then {
 	isSinglePlayer = true;
 	diag_log("SERVER: SINGLEPLAYER DETECTED!");
 };
 waitUntil{initialized};
 //GET instance settings;
+_result = "Arma2Net.Unmanaged" callExtension format ["Arma2NETMySQL ['dayz','getTasks','[myinstance=%1]']",dayz_instance];
+_result = [_result,"|",","] call CBA_fnc_replace;
+_result = call compile _result;
+_result = _result select 0;
+taskList = [];
+diag_log("SERVER: Scheduler populating task list!");
+_end = (count _result)/4 - 1;
+for "_i" from 0 to _end do {
+	_x = _i*4;
+	_data=[];
+	while {_x<(_i*4+4)} do
+	{
+		if(_x==((_i*4)+2) || _x==((_i*4)+3))then
+		{
+			_data set [count _data, call compile (_result select _x)];
+		}else
+		{
+			_data set [count _data, _result select _x];
+		};
+		INC(_x);
+	};
+	diag_log("Task added: "+str(_data));
+	taskList set [count taskList,_data];
+};
+diag_log("SERVER: Task list populated! ");
 _result = "Arma2Net.Unmanaged" callExtension format ["Arma2NETMySQL ['dayz','getLoadout','[myinstance=%1]']",dayz_instance];
 _result = [_result,"|",","] call CBA_fnc_replace;
 _result = call compile _result;
