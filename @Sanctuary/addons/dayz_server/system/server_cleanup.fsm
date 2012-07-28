@@ -3,7 +3,7 @@
 /*
 item0[] = {"init",0,250,-75.000000,-400.000000,25.000000,-350.000000,0.000000,"init"};
 item1[] = {"true",8,218,-75.000000,-175.000000,25.000000,-125.000000,0.000000,"true"};
-item2[] = {"waiting",2,4346,-75.000000,-100.000000,25.000000,-50.000000,0.000000,"waiting"};
+item2[] = {"waiting",2,250,-75.000000,-100.000000,25.000000,-50.000000,0.000000,"waiting"};
 item3[] = {"too_many_dead",4,218,-75.000000,-25.000000,25.000000,25.000000,2.000000,"too many" \n "dead"};
 item4[] = {"cleanup_dead",2,250,-75.000000,50.000000,25.000000,100.000000,0.000000,"cleanup" \n "dead"};
 item5[] = {"too_many_objects",4,218,50.000000,-25.000000,150.000000,25.000000,0.000000,"too many" \n "objects"};
@@ -11,7 +11,7 @@ item6[] = {"cleanup_objects",2,250,50.000000,50.000000,150.000000,100.000000,0.0
 item7[] = {"time_sync",4,218,-200.000000,-25.000000,-100.000000,25.000000,1.000000,"time" \n "sync"};
 item8[] = {"sync_the_time",2,250,-200.000000,50.000000,-100.000000,100.000000,0.000000,"sync" \n "the time"};
 item9[] = {"true",8,218,-75.000000,125.000000,25.000000,175.000000,0.000000,"true"};
-item10[] = {"general_cleanup",2,250,-75.000000,200.000000,25.000000,250.000000,0.000000,"general" \n "cleanup"};
+item10[] = {"general_cleanup",2,4346,-75.000000,200.000000,25.000000,250.000000,0.000000,"general" \n "cleanup"};
 item11[] = {"",7,210,-229.000000,220.999985,-220.999985,229.000015,0.000000,""};
 item12[] = {"",7,210,-229.000000,-154.000000,-221.000000,-146.000000,0.000000,""};
 item13[] = {"",7,210,171.000000,-79.000000,179.000000,-71.000000,0.000000,""};
@@ -38,8 +38,8 @@ link16[] = {13,14};
 link17[] = {14,9};
 link18[] = {15,16};
 link19[] = {16,1};
-globals[] = {25.000000,1,0,0,0,640,480,1,21,6316128,1,-175.987015,102.186020,618.793091,-783.426147,98,494,1};
-window[] = {0,-1,-1,-1,-1,739,100,916,100,1,116};
+globals[] = {25.000000,1,0,0,0,640,480,1,21,6316128,1,-239.632843,197.325012,367.462860,-313.677460,574,880,1};
+window[] = {2,-1,-1,-1,-1,1122,180,1509,180,3,596};
 *//*%FSM</HEAD>*/
 class FSM
 {
@@ -107,7 +107,7 @@ class FSM
           priority = 2.000000;
           to="cleanup_dead";
           precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
-          condition=/*%FSM<CONDITION""">*/"(_numDead > 50)"/*%FSM</CONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"(_numDead > 300)"/*%FSM</CONDITION""">*/;
           action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
         };
         /*%FSM</LINK>*/
@@ -137,7 +137,7 @@ class FSM
           priority = 0.000000;
           to="cleanup_objects";
           precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
-          condition=/*%FSM<CONDITION""">*/"time - _timeNem > 5"/*%FSM</CONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"(time - _timeNem) > 10"/*%FSM</CONDITION""">*/;
           action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
         };
         /*%FSM</LINK>*/
@@ -355,11 +355,9 @@ class FSM
        "//Check for hackers" \n
        " {" \n
        "  	if(vehicle _x != _x && !(vehicle _x in _safety)) then {" \n
-       "		diag_log (""AntiCheat: KILLING A CHEATER "" + (name _x) + "" "" + str(_x) + "" IN "" + (typeOf vehicle _x) + "" WITH UID "" + str(getPlayerUID _x));" \n
-       "		_cheat = format [""AntiCheat: Incredibly small penis detected for %1 %2 in %3 with UID %4"",name _x, _x, typeOf vehicle _x,getPlayerUID _x];" \n
-       "		[nil, nil, rSPAWN, [_crier, _cheat], { (_this select 0) globalChat (_this select 1) }] call RE;" \n
-       "   		(vehicle _x) setDamage 1;" \n
-       "   		_x setDamage 1;" \n
+       "		diag_log (""CLEANUP: KILLING A HACKER "" + (name _x) + "" "" + str(_x) + "" IN "" + (typeOf vehicle _x));" \n
+       "   		//(vehicle _x) setDamage 1;" \n
+       "   		//_x setDamage 1;" \n
        "	 };" \n
        "	//Check for client cheat messages" \n
        "	_cheat = _x getVariable [""cheat"",""legit""];" \n
@@ -371,6 +369,26 @@ class FSM
        "		_x setVariable [""cheat"",""legit"",true];" \n
        "	};" \n
        " } forEach allUnits;" \n
+       "" \n
+       "/*" \n
+       "//Let's move this into the body removal sequence so uncontrolled flies are removed only if corpses are cleaned" \n
+       "//Check Flies" \n
+       "_isOK=-1;" \n
+       "_dwUSOFC=0;" \n
+       "{" \n
+       "	//_isOk = {!alive _x} count (nearestObjects [_x, [""CAManBase""], 2]);" \n
+       "	_isOk = {!alive _x} count (_x nearEntities [[""CAManBase""], 2]);" \n
+       "	if (_isOk>-1) then {" \n
+       "		diag_log (""DW_DEBUG _isOK: "" + str(_isOK) );" \n
+       "	};" \n
+       "	if ((_isOk>-1) AND (isOK<1)) then {" \n
+       "		//diag_log (""CLEANUP: DELETING A SOUND OF FLIES"");" \n
+       "_dwUSOFC=_dwUSOFC+1;" \n
+       "		deleteVehicle _x;" \n
+       "		diag_log (""CLEANUP: DELETED AN UNCONTROLLED SOUND OF FLIES:"" + str(_dwUSOFC) );" \n
+       "	};" \n
+       "} forEach allMissionObjects ""Sound_Flies"";" \n
+       "*/" \n
        "" \n
        "dayz_serverObjectMonitor = _safety;"/*%FSM</STATEINIT""">*/;
       precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
@@ -397,6 +415,7 @@ class FSM
        "diag_log (""CLEANUP: INITIALIZING!"");" \n
        "diag_log(""SCHEDULER: INITIALIZING"");" \n
        "_safety = dayz_serverObjectMonitor;" \n
+       "" \n
        "_deadBodies = [];" \n
        "_maxBodies = 15;" \n
        "_taskList = taskList;" \n

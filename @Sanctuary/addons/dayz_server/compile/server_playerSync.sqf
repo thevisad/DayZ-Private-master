@@ -32,9 +32,13 @@ diag_log ("DW_DEBUG: _characterID: " + str(_characterID));
 };
 */
 
+if (_character isKindOf "Animal") exitWith {
+	diag_log ("ERROR: Cannot Sync Character " + (name _character) + " is an Animal class");
+};
+
 if (isnil "_characterID") exitWith {
 	diag_log ("ERROR: Cannot Sync Character " + (name _character) + " has nil characterID");	
-	};
+};
 
 if (_characterID == "0") exitWith {
 	diag_log ("ERROR: Cannot Sync Character " + (name _character) + " as no characterID");

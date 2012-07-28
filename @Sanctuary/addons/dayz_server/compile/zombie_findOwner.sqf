@@ -1,5 +1,11 @@
 private["_unit","_potential","_newOwner","_client"];
 _unit = _this select 0;
+
+diag_log ("CLEANUP: DELETE UNCONTROLLED ZOMBIE: " + (typeOf _unit) + " OF: " + str(_unit) );
+deleteVehicle _unit;
+
+/*
+
 //Not server then exit
 if(!isServer) exitWith {
 	diag_log ("DW_DEBUG: #findOwner exits as not server: " + str(isServer));
@@ -36,3 +42,5 @@ _client = owner _newOwner;
 _unit setOwner _client;
 
 diag_log ("CLEANUP: TRANSFERRED OWNERSHIP OF TYPE: " + (typeOf _unit) + " OF _unit: " + str(_unit) + " TO _client: " + str(_client) );
+
+*/

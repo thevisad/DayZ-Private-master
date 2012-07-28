@@ -63,6 +63,17 @@ if (count _worldspace > 0) then {
 		//prevent debug world!
 		_randomSpot = true;
 	};
+	_debug = getMarkerpos "respawn_west";
+	_distance = _debug distance _position;
+	if (_distance < 2000) then {
+		_randomSpot = true;
+	};
+	
+	_distance = [0,0,0] distance _position;
+	if (_distance < 500) then {
+		_randomSpot = true;
+	};
+
 	//_playerObj setPosATL _position;
 	//_playerObj setDir _direction;
 } else {
@@ -228,3 +239,5 @@ diag_log (format["player%1 = myObj",_playerID]);
 
 dayzLogin = null;
 dayzLogin2 = null;
+
+//Save Login
