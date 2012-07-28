@@ -2,6 +2,7 @@ private["_hasDel","_serial","_object","_updates","_myGroup","_nearVeh"];
 _playerID = _this select 0;
 _playerName = _this select 1;
 _object = call compile format["player%1",_playerID];
+_characterID =	_object getVariable ["characterID","0"];
 
 if (vehicle _object != _object) then {
 	_object action ["eject", vehicle _object];
@@ -13,6 +14,7 @@ _object setVariable["medForceUpdate",true];
 _object setVariable["updatePlayer",[true,true,true,false,false]];
 [_object,[],true] call server_playerSync;
 
+_id = [_playerID,_characterID,2] spawn dayz_recordLogin;
 
 //Delete group
 if (!isNull _object) then {

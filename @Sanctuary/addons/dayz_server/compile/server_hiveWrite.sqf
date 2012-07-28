@@ -7,6 +7,10 @@ _key = _result select 1;
 //Player death
 switch (_key) do
 {
+	//Save Login
+	case "103":{
+		diag_log("SAVELOGIN:103");
+	};
 	case "203":{
 	"Arma2Net.Unmanaged" callExtension format ["Arma2NETMySQL ['dayz','update','[myid=%1,mypos=[],myinv=%2,myback=%3,mymed=[],myate=-1,mydrank=-1,mytime=0,mymod=any,myhum=0,myk=0,myhs=0,myhk=0,mybk=0,mystate=[""""|""aidlpercmstpsnonwnondnon_player_idlesteady04""|36]]']", _result select 2,_result select 3, _result select 4];
 	};

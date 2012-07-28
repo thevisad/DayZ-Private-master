@@ -137,3 +137,10 @@ dayz_objectUID2 = {
 	_key = format["%1%2%3%4",_p1,_p2,_p3,_dir];
 	_key
 };
+
+dayz_recordLogin = {
+	private["_key"];
+	_key = format["CHILD:103:%1:%2:%3:",_this select 0,_this select 1,_this select 2];
+	diag_log ("DISCONNECT: "+ str(_key));
+	_key call server_hiveWrite;
+};
