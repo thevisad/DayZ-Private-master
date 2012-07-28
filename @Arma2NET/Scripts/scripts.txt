@@ -1,1 +1,0 @@
-Place scripts here. Scripts must have a .cs file name extension.
