@@ -7,7 +7,7 @@ if (vehicle _object != _object) then {
 	_object action ["eject", vehicle _object];
 };
 
-diag_log ("DISCONNECT START: " + _playerName + " (" + str(_playerID) + ") Object: " + str(_object) );
+diag_log ("DISCONNECT START (i): " + _playerName + " (" + str(_playerID) + ") Object: " + str(_object) );
 
 _object setVariable["medForceUpdate",true];
 _object setVariable["updatePlayer",[true,true,true,false,false]];
@@ -22,6 +22,7 @@ if (!isNull _object) then {
 		deleteGroup _myGroup;
 	};
 };
+
 /*
 //Update Vehicle
 if (!isNull _object) then {

@@ -30,6 +30,7 @@ switch (_result select 1) do
 		};
 	};
 	case "307":{
+		diag_log("GETTIME:307");
 		_qresult = "Arma2Net.Unmanaged" callExtension format["Arma2NETMySQL ['dayz','getTime','myinstance=%1']",dayz_instance];
 		_qresult = call compile _qresult;
 		_qresult = _qresult select 0;

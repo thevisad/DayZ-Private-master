@@ -13,7 +13,7 @@ switch (_key) do
 	case "202":{
 	"Arma2Net.Unmanaged" callExtension format ["Arma2NETMySQL ['dayz','setCD','[myid=%1]']", _mid];
 	};
-//Player update
+	//Player update
 	case "201":{		
 	_mate 		= _result select 7;
 	_mdrank 	= _result select 8;
