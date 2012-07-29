@@ -1,1 +1,0 @@
-Download dayz_server.pbo you want and try to merge me with it. Hopefuly nothing needs changing. GL!
