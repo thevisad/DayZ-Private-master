@@ -26,7 +26,7 @@ my $dbh = DBI->connect($dsn, $dbuser, $pw) or die "Couldn't connect to db: ".DBI
 my $sth = $dbh->prepare('DELETE FROM objects WHERE damage>=0.95 OR (lastupdate<DATE_SUB(NOW(),INTERVAL 5 DAY) AND NOT otype="TentStorage");') or die;
 $sth->execute() or die "Couldn't execute statement" . $sth->errstr;#Clean dead vehicles
 my $numGenerated=0;#counter for the number of generated vehicles
-my @vehicles = ("UAZ%","ATV%","Skoda%","TT650%","Old_bike%","UH1H%","hilux%","Ikarus%","Tractor","S1203%","V3S_Gue","UralCivil","car%","%boat%","PBX","Volha%","SUV%");
+my @vehicles = ("UAZ%","ATV%","Skoda%","TT650%","Old_bike%","UH1H%","hilux%","Ikarus%","Tractor","S1203%","V3S_Civ","UralCivil","car%","%boat%","PBX","Volha%","SUV%");
 my @vehicleLimits = (4,3,3,3,10,3,3,3,3,4,1,1,2,4,1,3,1);
 my @chances = (0.65,0.7,0.65,0.7,0.95,0.25,0.55,0.55,0.75,0.55,0.55,0.55,0.55,0.75,0.55,0.55,0.45);
 my $n=0;
