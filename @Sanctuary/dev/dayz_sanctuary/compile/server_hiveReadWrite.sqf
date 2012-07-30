@@ -12,6 +12,7 @@ switch (_result select 1) do
 		_qresult = [_qresult,"|",","] call CBA_fnc_replace;
 		_qresult = call compile _qresult;
 		_qresult = _qresult select 0;
+		_qresult = _qresult select 0;
 		_ret = ["",call compile (_qresult select 0),[call compile (_qresult select 2),call compile (_qresult select 5),call compile (_qresult select 6),call compile (_qresult select 7)],call compile ([_qresult select 3,"["",","["""","] call CBA_fnc_replace),call compile (_qresult select 1),call compile (_qresult select 4)];
 	};
 	case "101":{
@@ -23,11 +24,13 @@ switch (_result select 1) do
 		{
 			_qresult = "Arma2Net.Unmanaged" callExtension format ["Arma2NETMySQL ['dayz','insUNselI','[myuid=%1,myname=%2]']", _muid, _result select 4];
 			_qresult = call compile _qresult;
-			_qresult = _qresult select 0 ;
+			_qresult = _qresult select 0;
+			_qresult = _qresult select 0;
 			_ret = ["",true,_qresult select 0,"Survivor2_DZ",dayz_hiveVersionNo];
 		}else{
 			_qresult = call compile _qresult;
-			_qresult 	= _qresult select 0;
+			_qresult = _qresult select 0;
+			_qresult = _qresult select 0;
 			_ret = ["",false,_qresult select 0,[],call compile (_qresult select 1),call compile ([_qresult select 2,"["",","["""","] call CBA_fnc_replace),[call compile (_qresult select 3),call compile (_qresult select 5),call compile (_qresult select 6)],call compile (_qresult select 4),dayz_hiveVersionNo];
 		};
 	};
@@ -36,6 +39,7 @@ switch (_result select 1) do
 		//diag_log("GETTIME:307");
 		_qresult = "Arma2Net.Unmanaged" callExtension format["Arma2NETMySQL ['dayz','getTime','myinstance=%1']",dayz_instance];
 		_qresult = call compile _qresult;
+		_qresult = _qresult select 0;
 		_qresult = _qresult select 0;
 		_date = _qresult select 0;
 		_date = [_date,"-"] call CBA_fnc_split;

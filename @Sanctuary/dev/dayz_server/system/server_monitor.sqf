@@ -24,6 +24,7 @@ _result = "Arma2Net.Unmanaged" callExtension format ["Arma2NETMySQL ['dayz','get
 _result = [_result,"|",","] call CBA_fnc_replace;
 _result = call compile _result;
 _result = _result select 0;
+_result = _result select 0;
 taskList = [];
 diag_log("SERVER: Scheduler populating task list!");
 _end = (count _result)/4 - 1;
@@ -48,42 +49,40 @@ diag_log("SERVER: Task list populated! ");
 _result = "Arma2Net.Unmanaged" callExtension format ["Arma2NETMySQL ['dayz','getLoadout','[myinstance=%1]']",dayz_instance];
 _result = [_result,"|",","] call CBA_fnc_replace;
 _result = call compile _result;
-initialLoadout = call compile ((_result select 0)select 0);
+_result = _result select 0;
+initialLoadout = call compile ((_result select 0) select 0);
 diag_log("SERVER: Initial Loadout "+str(initialLoadout));
 //GET OBJECT COUNT
 _result = "Arma2Net.Unmanaged" callExtension format ["Arma2NETMySQL ['dayz','getOC','[myinstance=%1]']",dayz_instance];
 _result = call compile _result;
+_result = _result select 0;
 _val = call compile ((_result select 0) select 0);
+diag_log("SERVER: Got object count of " + str(_val));
 //Stream Objects
 _myArray = [];
 if(_val>0) then 
 {
 	_part = 0; //paging, compile doesnt work on too big arrays
+	_streamCount = 0;
 	while {_part < _val} do
 	{
-		_result = "Arma2Net.Unmanaged" callExtension format ["Arma2NETMySQL ['dayz','getO','[myinstance=%1,page=%2]']",dayz_instance,_part];
+		_result = "Arma2Net.Unmanaged" callExtension format ["Arma2NETMySQL ['dayz','getO','[myinstance=%1,page=%2]']", dayz_instance, _part];
 		_result = [_result,"|",","] call CBA_fnc_replace;
 		_result = call compile _result;
 		_result = _result select 0;
-		_end = (count _result)/8 - 1;
+		_end = (count _result);
 		for "_i" from 0 to _end do {
-			_x = _i*8;
-			_data=[];
-			while {_x<(_i*8+8)} do
-			{
-				_data set [count _data, _result select _x];
-				INC(_x);
-			};
-			_myArray set [count _myArray,_data];
+			_item = _result select _i;
+			_myArray set [count _myArray, _item];
+			_streamCount = _streamCount + 1;
 		};
 		_part = _part + 10;
 	};
-	diag_log ("SERVER: Streamed " + str(_val) + " objects");
+	diag_log ("SERVER: Streamed " + str(_streamCount) + " objects");
 };
-_countr = 0;		
+_countr = 0;
 {
-		
-	//Parse Array
+	//Parse individual vehicle row
 	diag_log(_x);
 	_countr = _countr + 1;
 	_idKey = call compile (_x select 0);
@@ -98,7 +97,7 @@ _countr = 0;
 	_damage = call compile (_x select 7);
 	
 	if (_damage < 1) then {
-		diag_log ("Spawned: " + str(_idKey) + " " + _type);
+		diag_log("Spawned: " + str(_idKey) + " " + _type);
 		
 		//Create it
 		_object = createVehicle [_type, _pos, [], 0, "CAN_COLLIDE"];
@@ -184,19 +183,20 @@ _countr = 0;
 		dayz_serverObjectMonitor set [count dayz_serverObjectMonitor,_object];
 	};
 } forEach _myArray;
+
 //TIME
 _key = "CHILD:307:";
 _result = [_key] call server_hiveReadWrite;
 _outcome = _result select 0;
-if(_outcome == "PASS") then {
+if (_outcome == "PASS") then {
 	_date = _result select 1; 
-	if(isDedicated) then {
+	if (isDedicated) then {
 		setDate _date;
 		dayzSetDate = _date;
 		publicVariable "dayzSetDate";
 	};
 
-	diag_log ("SERVER: Local Time set to " + str(_date));
+	diag_log("SERVER: Local Time set to " + str(_date));
 };
 	
 createCenter civilian;
@@ -209,6 +209,7 @@ if (isDedicated) then {
 	_id = [] execFSM "\z\addons\dayz_server\system\server_cleanup.fsm";
 };
 allowConnection = true;
+
 //Spawn crashed helos
 for "_x" from 1 to 5 do {
 	_id = [] spawn spawn_heliCrash;
