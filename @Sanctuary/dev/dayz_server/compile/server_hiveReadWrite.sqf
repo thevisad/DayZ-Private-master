@@ -6,7 +6,8 @@ _muid = _result select 2;
 switch (_result select 1) do
 {
 	case "102":{
-		diag_log("SETUP:102");
+		//Setup
+		//diag_log("SETUP:102");
 		_qresult = "Arma2Net.Unmanaged" callExtension format ["Arma2NETMySQL ['dayz','selMPSSH','[myid=%1]']", _muid];
 		_qresult = [_qresult,"|",","] call CBA_fnc_replace;
 		_qresult = call compile _qresult;
@@ -14,7 +15,8 @@ switch (_result select 1) do
 		_ret = ["",call compile (_qresult select 0),[call compile (_qresult select 2),call compile (_qresult select 5),call compile (_qresult select 6),call compile (_qresult select 7)],call compile ([_qresult select 3,"["",","["""","] call CBA_fnc_replace),call compile (_qresult select 1),call compile (_qresult select 4)];
 	};
 	case "101":{
-		diag_log("LOGIN:101");
+		//Login
+		//diag_log("LOGIN:101");
 		_qresult = "Arma2Net.Unmanaged" callExtension format ["Arma2NETMySQL ['dayz','selIIBSM','[myuid=%1]']", _muid];
 		_qresult = [_qresult,"|",","] call CBA_fnc_replace;
 		if (_qresult=="[[]]") then
@@ -30,7 +32,8 @@ switch (_result select 1) do
 		};
 	};
 	case "307":{
-		diag_log("GETTIME:307");
+		//Get Time
+		//diag_log("GETTIME:307");
 		_qresult = "Arma2Net.Unmanaged" callExtension format["Arma2NETMySQL ['dayz','getTime','myinstance=%1']",dayz_instance];
 		_qresult = call compile _qresult;
 		_qresult = _qresult select 0;
