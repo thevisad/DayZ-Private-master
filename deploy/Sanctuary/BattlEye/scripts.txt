@@ -1,3 +1,4 @@
+//new
 1 addAction !"\"addAction\"," !"_action1 = _unit addAction [localize \"str_actions_medical_01", \"\z\addon" !"s_player_grabflare = player addAction [format[localize \"str_actions_medical_15\",_te" !"raddAction = 'addAction'" !"raddActioncode = compile PreprocessFile (BIS_PathMPscriptCommands + 'addAction.sqf')"
 1 addBackpack !"\"addBackpack\"," !"player addBackpack _backpackType;" !"_newUnit addBackpack _newBackpackType;" !"player addBackpack _bcpk;" !"_holder addbackpackcargoGlobal [_x,(_objWpnQty select _countr)];"
 1 addEventHandler !"\"addEventHandler !"\"displayAddEventHandler\"," !"(findDisplay 46) displayAddEventHandler [\"\"KeyDown\"\",\"\"_this call dayz_spaceInterrupt\"\"];"  //!"(findDisplay 46) displayAddEventHandler [" //!"(findDisplay 46) displayAddEventHandler [\"KeyDown\",\"_this call dayz_spaceInterrupt\"];"
