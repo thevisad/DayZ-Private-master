@@ -26,27 +26,23 @@ When you see the following names in bold, substitute in the appropriate path as 
 Installation
 ============
 
-1. Copy all files from **Repository**\\deploy into **ArmA2**\\
-2. Enter **Repository**\\Sanctuary and run **repack.bat**. You should now see a **@Sanctuary** directory
-3. Copy the newly created **@Sanctuary** directory and paste it into **ArmA2**\\
-4. Run **Repository**\\dayz2_0.sql on your MySQL server as the **root** user. Do **NOT** use MySQL Workbench to run the SQL queries, it will not work. I recommend "TOAD for MySQL," but every user will have their own preference.
-5. Run **Repository**\\2_0to2_1.sql on your MySQL server as the **root** user.
-6. Run the following SQL code as the **root** user (be **sure** to change the password from CHANGEME):  
+1. Enter **Repository**\\Sanctuary and run **repack.bat**.
+2. Copy all files from **Repository**\\deploy into **ArmA2**\\
+3. Run **Repository**\\dayz2_0.sql on your MySQL server as the **root** user. Do **NOT** use MySQL Workbench to run the SQL queries, it will not work. I recommend "TOAD for MySQL," but every user will have their own preference.
+4. Run **Repository**\\2_0to2_1.sql on your MySQL server as the **root** user.
+5. Run the following SQL code as the **root** user (be **sure** to change the password from CHANGEME):  
 
 		create user 'dayz'@'localhost' identified by 'CHANGEME';  
 		grant all privileges on dayz.* to 'dayz'@'localhost';
 
-7. Ensure that the username and password in **ArmA2**\\databases.txt match the user created in the previous step.
-8. Adjust server name/passwords in **ArmA2**\\Sanctuary\\server.cfg
-
-9. Adjust the **timezone** field in the instances table for instance 1. This is an offset applied to the time on your server. Therefore, if your Windows clock says 5:00 PM / 17:00 and your timezone is set to -5, it will be noon on your server. 
-
-10. Adjust the **loadout** field in the instances table for instance 1. Some options:
+6. Ensure that the username and password in **ArmA2**\\databases.txt match the user created in the previous step.
+7. Adjust server name/passwords in **ArmA2**\\Sanctuary\\server.cfg
+8. Adjust the **timezone** field in the instances table for instance 1. This is an offset applied to the time on your server. Therefore, if your Windows clock says 5:00 PM / 17:00 and your timezone is set to -5, it will be noon on your server. 
+9. Adjust the **loadout** field in the instances table for instance 1. Some options:
 	- Default DayZ loadout - **[]**
 	- Survival loadout - **[["ItemMap","ItemCompass","ItemMatchbox","FoodCanBakedBeans","ItemKnife","FoodCanBakedBeans"],["ItemTent","ItemBandage","ItemBandage"]]**
 	- PvP loadout - **[["Mk_48_DZ","NVGoggles","Binocular_Vector","M9SD","ItemGPS","ItemToolbox","ItemEtool","ItemCompass","ItemMatchbox","FoodCanBakedBeans","ItemKnife","ItemMap","ItemWatch"],[["100Rnd_762x51_M240",47],"ItemPainkiller","ItemBandage","15Rnd_9x19_M9SD","100Rnd_762x51_M240","ItemBandage","ItemBandage","15Rnd_9x19_M9SD","15Rnd_9x19_M9SD","15Rnd_9x19_M9SD","ItemMorphine","PartWoodPile"]]**
-
-11. Run **ArmA2**\\server.bat to start the server.
+10. Run **ArmA2**\\server.bat to start the server.
 
 **NOTE**: This installation guide is a work in progress.
 
