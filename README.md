@@ -4,6 +4,9 @@ DayZ-Private (Sanctuary/Bliss)
 This is a private server project for DayZ.
 The latest release is compatible with DayZ 1.7.2.4.
 
+This would not be possible without the work of Rocket
+and Guru Abdul.
+
 **NOTE**: No support is implied or offered for pirated copies of ArmA 2.
 
 Prerequisites
