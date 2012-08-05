@@ -1,12 +1,4 @@
 startLoadingScreen ["","DayZ_loadingScreen"];
-/*
-*	Original by Rocket (www.dayzmod.com)
-*	Private persistance by Guru Abdul.
-*				Enjoy!
-*
-*	This and all the next versions are dedicated
-*	to anti_rocket. Get some skill, son!
-*/
 enableSaving [false, false];
 
 dayZ_instance =	1;	//The instance
