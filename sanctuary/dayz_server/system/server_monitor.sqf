@@ -1,19 +1,12 @@
 waitUntil{!isnil "bis_fnc_init"};
 
-/*
-*				Sanctuary v2.3.2
-*
-*	This and all the next versions are dedicated
-*	to the pathetic leech! Too bad Rocket doesn't
-*		do the work for you anymore :]
-*/
 #include "\x\cba\addons\main\script_mod.hpp"
 #include "\x\cba\addons\main\script_macros.hpp"
 #define PREFIX asff
 
 dayz_versionNo = getText(configFile >> "CfgMods" >> "DayZ" >> "version");
 dayz_hiveVersionNo = 1;
-diag_log("SERVER VERSION: Sanctuary v2.3.2");
+diag_log("SERVER VERSION: Sanctuary v2.4");
 if ((count playableUnits == 0) and !isDedicated) then {
 	isSinglePlayer = true;
 	diag_log("SERVER: SINGLEPLAYER DETECTED!");

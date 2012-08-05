@@ -9,9 +9,18 @@ _key = _result select 1;
 switch (_key) do
 {
 	case "103":{
-		//Save Login
-		//diag_log("SAVELOGIN:103");
-		//"Arma2Net.Unmanaged" callExtension format ["Arma2NETMySQL ['dayz','saveLogin', '[myid=%1]']", _result select 2];
+		//Save Login/Logout
+		diag_log("SAVELOGINOUT:103");
+		_action = _result select 4;
+		//Logged in
+		if (_action == "0") then {
+			"Arma2Net.Unmanaged" callExtension format ["Arma2NETMySQL ['dayz','logLogin', '[unique_id=%1]']", _result select 2];
+		} else {
+			//Logged out
+			if (_action == "2") then {
+				"Arma2Net.Unmanaged" callExtension format ["Arma2NETMySQL ['dayz','logLogout', '[unique_id=%1]']", _result select 2];
+			}
+		}	
 	};
 	case "201":{
 		//Player Update
@@ -91,4 +100,3 @@ switch (_key) do
 		"Arma2Net.Unmanaged" callExtension format ["Arma2NETMySQL ['dayz','delO','[myuid=%1]']",_uid];
 	};
 };
-

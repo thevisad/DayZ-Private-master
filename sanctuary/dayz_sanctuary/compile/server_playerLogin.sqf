@@ -12,7 +12,7 @@ if (count _this > 2) then {
 waitUntil{allowConnection};
 
 //Variables
-_inventory =	initialLoadout;
+_inventory =	[];
 _backpack = 	[];
 _items = 		[];
 _magazines = 	[];
@@ -106,6 +106,7 @@ if (!_isNew) then {
 	//get loadout
 	if(str(initialLoadout)!="[]")then
 	{
+		_inventory = initialLoadout;
 		_inventory2 = _inventory;
 	};
 	//Wait for HIVE to be free
@@ -122,6 +123,10 @@ if (_hiveVer >= dayz_hiveVersionNo) then {
 diag_log ("SERVER RESULT: " + str("X") + " " + str(dayz_hiveVersionNo));
 
 //Server publishes variable to clients and WAITS
-_playerObj setVariable ["publish",[_charID,_inventory,_backpack,_survival,_isNew,dayz_versionNo,_model,_isHiveOk,_newPlayer],true];
+//_playerObj setVariable ["publish",[_charID,_inventory,_backpack,_survival,_isNew,dayz_versionNo,_model,_isHiveOk,_newPlayer],true];
+
+_clientID = owner _playerObj;
+dayzPlayerLogin = [_charID,_inventory,_backpack,_survival,_isNew,dayz_versionNo,_model,_isHiveOk,_newPlayer];
+_clientID publicVariableClient "dayzPlayerLogin";
 
 //_playerObj enableSimulation false;
