@@ -1,3 +1,7 @@
+alter table objects change inventory varchar(2048) not null default '[]';
+alter table main change inventory varchar(2048) not null default '[]';
+alter table main change backpack varchar(2048) not null default '[]';
+
 create table if not exists log_code (
 	id int(11) unsigned not null auto_increment,
 	name varchar(50) not null,

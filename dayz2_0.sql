@@ -56,7 +56,7 @@ CREATE TABLE `objects` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `uid` varchar(50) NOT NULL DEFAULT '0' COMMENT 'Object game generated ID',
   `pos` varchar(255) NOT NULL DEFAULT '[]' COMMENT 'Postition of the object',
-  `inventory` varchar(1024) NOT NULL DEFAULT '[]' COMMENT 'Loot stored in the object',
+  `inventory` varchar(2048) NOT NULL DEFAULT '[]' COMMENT 'Loot stored in the object',
   `health` varchar(1024) NOT NULL DEFAULT '[]' COMMENT 'Broken parts of the object',
   `fuel` double NOT NULL DEFAULT '0' COMMENT 'Ammount of fuel. 0-1',
   `damage` double NOT NULL DEFAULT '0' COMMENT 'Overall damage value. 0-1',
@@ -140,8 +140,8 @@ CREATE TABLE `main` (
   `uid` varchar(128) NOT NULL COMMENT 'Player ID generated from CDKEY used for identification',
   `name` varchar(32) NOT NULL DEFAULT 'GI Joe' COMMENT 'Name of the player',
   `pos` varchar(255) NOT NULL DEFAULT '[]' COMMENT 'Position of the player. [] means random at the beach',
-  `inventory` varchar(1024) NOT NULL DEFAULT '[]' COMMENT 'Inventory string of the player.',
-  `backpack` varchar(1024) NOT NULL DEFAULT '["DZ_Patrol_Pack_EP1"|[[]|[]]|[[]|[]]]' COMMENT 'Backpack of the player. [] means deafult starting backpack',
+  `inventory` varchar(2048) NOT NULL DEFAULT '[]' COMMENT 'Inventory string of the player.',
+  `backpack` varchar(2048) NOT NULL DEFAULT '["DZ_Patrol_Pack_EP1"|[[]|[]]|[[]|[]]]' COMMENT 'Backpack of the player. [] means deafult starting backpack',
   `medical` varchar(255) NOT NULL DEFAULT '[false|false|false|false|false|false|false|12000|[]|[0|0]|0]' COMMENT 'Medical values of the player. [] means defaults',
   `death` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT 'Is player dead? 0 for alive, 1 for dead',
   `model` varchar(128) NOT NULL DEFAULT 'Survivor2_DZ' COMMENT 'Model of the player',
@@ -443,7 +443,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-/*!50003 CREATE*/ /*!50020 DEFINER=`dayz`@`localhost`*/ /*!50003 PROCEDURE `update`(IN myid INT, IN mypos VARCHAR(1024), IN myinv VARCHAR(1024), IN myback VARCHAR(1024), IN mymed VARCHAR(1024), IN myate INT, IN mydrank INT, IN mytime INT, IN mymod VARCHAR(255), IN myhum INT,IN myk INT, IN myhs INT, IN myhk INT,IN mybk INT,IN mystate VARCHAR(255))
+/*!50003 CREATE*/ /*!50020 DEFINER=`dayz`@`localhost`*/ /*!50003 PROCEDURE `update`(IN myid INT, IN mypos VARCHAR(255), IN myinv VARCHAR(2048), IN myback VARCHAR(2048), IN mymed VARCHAR(1024), IN myate INT, IN mydrank INT, IN mytime INT, IN mymod VARCHAR(255), IN myhum INT,IN myk INT, IN myhs INT, IN myhk INT,IN mybk INT,IN mystate VARCHAR(255))
 BEGIN
 
       UPDATE main SET kills=kills+myk,hs=hs+myhs,bkills=bkills+mybk,hkills=hkills+myhk,
@@ -491,7 +491,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-/*!50003 CREATE*/ /*!50020 DEFINER=`dayz`@`localhost`*/ /*!50003 PROCEDURE `updII`(IN myid INT,IN myinv VARCHAR(1024))
+/*!50003 CREATE*/ /*!50020 DEFINER=`dayz`@`localhost`*/ /*!50003 PROCEDURE `updII`(IN myid INT,IN myinv VARCHAR(2048))
 BEGIN
       UPDATE objects SET inventory=myinv WHERE id=myid;
 END */;;
@@ -529,7 +529,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-/*!50003 CREATE*/ /*!50020 DEFINER=`dayz`@`localhost`*/ /*!50003 PROCEDURE `updUI`(IN myuid VARCHAR(50),IN myinv VARCHAR(1024))
+/*!50003 CREATE*/ /*!50020 DEFINER=`dayz`@`localhost`*/ /*!50003 PROCEDURE `updUI`(IN myuid VARCHAR(50),IN myinv VARCHAR(2048))
 BEGIN
       UPDATE objects SET inventory=myinv WHERE uid=myuid;
 END */;;
