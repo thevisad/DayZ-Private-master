@@ -49,6 +49,17 @@ Installation
 
 **NOTE**: This installation guide is a work in progress.
 
+Known Bugs
+==========
+
+All items can become desynchronized when a server is shut down. If players have been on the server within 5 minutes, you should not shut it down to avoid these issues.
+
+All vehicles and tents should be saved using the "Save <Object>" scroll menu item, especially if preparing for a server shutdown.
+
+At present, you cannot save a tent's inventory unless the server has been restarted after placing the tent.
+
+Any bug present in the official client or server will probably also exist in this solution.
+
 Common Issues
 =============
 
