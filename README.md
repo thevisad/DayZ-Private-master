@@ -39,7 +39,7 @@ Installation
 		grant all privileges on dayz.* to 'dayz'@'localhost';
 
 6. Ensure that the username and password in **ArmA2**\\databases.txt match the user created in the previous step.
-7. Adjust server name/passwords in **ArmA2**\\Sanctuary\\server.cfg
+7. Adjust server name/passwords in **ArmA2**\\Sanctuary\\config.cfg
 8. Adjust the **timezone** field in the instances table for instance 1. This is an offset applied to the time on your server. Therefore, if your Windows clock says 5:00 PM / 17:00 and your timezone is set to -5, it will be noon on your server. 
 9. Adjust the **loadout** field in the instances table for instance 1. Some options:
 	- Default DayZ loadout - **[]**
