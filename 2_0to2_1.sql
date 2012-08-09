@@ -1,6 +1,6 @@
-alter table objects change inventory varchar(2048) not null default '[]';
-alter table main change inventory varchar(2048) not null default '[]';
-alter table main change backpack varchar(2048) not null default '[]';
+alter table objects modify inventory varchar(2048) not null default '[]';
+alter table main modify inventory varchar(2048) not null default '[]';
+alter table main modify backpack varchar(2048) not null default '[]';
 
 create table if not exists log_code (
 	id int(11) unsigned not null auto_increment,
@@ -27,6 +27,7 @@ insert ignore into log_code (id, name, description) values (3, 'Ban', 'Player wa
 insert ignore into log_code (id, name, description) values (4, 'Connect', 'Player has connected');
 insert ignore into log_code (id, name, description) values (5, 'Disconnect', 'Player has disconnected');
 
+delimiter //
 drop procedure if exists `logLogin`;
 create procedure `logLogin`(in unique_id varchar(50))
 begin
@@ -34,6 +35,7 @@ begin
     log_entry (profile_id, log_code_id)
   values (unique_id, 1); --
 end;
+//
 
 drop procedure if exists `logLogout`;
 create procedure `logLogout`(in unique_id varchar(50))
@@ -42,3 +44,6 @@ begin
     log_entry (profile_id, log_code_id)
   values (unique_id, 2); --
 end;
+//
+
+delimiter ;
