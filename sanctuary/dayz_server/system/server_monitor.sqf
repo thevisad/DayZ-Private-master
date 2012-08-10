@@ -7,56 +7,53 @@ waitUntil{!isnil "bis_fnc_init"};
 dayz_versionNo = getText(configFile >> "CfgMods" >> "DayZ" >> "version");
 dayz_hiveVersionNo = 1;
 diag_log("SERVER VERSION: Sanctuary v2.4");
+
 if ((count playableUnits == 0) and !isDedicated) then {
 	isSinglePlayer = true;
 	diag_log("SERVER: SINGLEPLAYER DETECTED!");
 };
 waitUntil{initialized};
-//GET instance settings;
+
+//Get scheduler tasks
 _result = "Arma2Net.Unmanaged" callExtension format ["Arma2NETMySQL ['dayz','getTasks','[myinstance=%1]']",dayz_instance];
 _result = [_result,"|",","] call CBA_fnc_replace;
 _result = call compile _result;
 _result = _result select 0;
-_result = _result select 0;
 taskList = [];
-diag_log("SERVER: Scheduler populating task list!");
-_end = (count _result)/4 - 1;
+_taskCount = 0;
+_end = (count _result);
+diag_log("SERVER: Got task count of " + str(_end));
 for "_i" from 0 to _end do {
-	_x = _i*4;
-	_data=[];
-	while {_x<(_i*4+4)} do
-	{
-		if(_x==((_i*4)+2) || _x==((_i*4)+3))then
-		{
-			_data set [count _data, call compile (_result select _x)];
-		}else
-		{
-			_data set [count _data, _result select _x];
-		};
-		INC(_x);
-	};
-	diag_log("Task added: "+str(_data));
-	taskList set [count taskList,_data];
+	_item = _result select _i;
+	_item set [2, (call compile (_item select 2))];
+	_item set [3, (call compile (_item select 3))];
+	taskList set [count taskList, _item];
+	_taskCount = _taskCount + 1;
+	diag_log("Task added: " + str(_item));
 };
-diag_log("SERVER: Task list populated! ");
+diag_log("SERVER: Added " + str(_taskCount) + " tasks!");
+
+//Get initial loadout
 _result = "Arma2Net.Unmanaged" callExtension format ["Arma2NETMySQL ['dayz','getLoadout','[myinstance=%1]']",dayz_instance];
 _result = [_result,"|",","] call CBA_fnc_replace;
 _result = call compile _result;
 _result = _result select 0;
 initialLoadout = call compile ((_result select 0) select 0);
-diag_log("SERVER: Initial Loadout "+str(initialLoadout));
-//GET OBJECT COUNT
+diag_log("SERVER: Got initial loadout of " + str(initialLoadout));
+
+//Get object count
 _result = "Arma2Net.Unmanaged" callExtension format ["Arma2NETMySQL ['dayz','getOC','[myinstance=%1]']",dayz_instance];
 _result = call compile _result;
 _result = _result select 0;
 _val = call compile ((_result select 0) select 0);
 diag_log("SERVER: Got object count of " + str(_val));
-//Stream Objects
-_myArray = [];
-if(_val>0) then 
+
+//Load objects
+_objList = [];
+if(_val > 0) then 
 {
 	_part = 0; //paging, compile doesnt work on too big arrays
-	_streamCount = 0;
+	_objCount = 0;
 	while {_part < _val} do
 	{
 		_result = "Arma2Net.Unmanaged" callExtension format ["Arma2NETMySQL ['dayz','getO','[myinstance=%1,page=%2]']", dayz_instance, _part];
@@ -66,18 +63,19 @@ if(_val>0) then
 		_end = (count _result);
 		for "_i" from 0 to _end do {
 			_item = _result select _i;
-			_myArray set [count _myArray, _item];
-			_streamCount = _streamCount + 1;
+			_objList set [count _objList, _item];
+			_objCount = _objCount + 1;
 		};
 		_part = _part + 10;
 	};
-	diag_log ("SERVER: Streamed " + str(_streamCount) + " objects");
+	diag_log ("SERVER: Fetched " + str(_objCount) + " objects");
 };
+
 _countr = 0;
 {
 	//Parse individual vehicle row
-	diag_log(_x);
 	_countr = _countr + 1;
+
 	_idKey = call compile (_x select 0);
 	_type = _x select 1;
 	_ownerID = _x select 2;
@@ -175,7 +173,7 @@ _countr = 0;
 		//_object enableSimulation false;
 		dayz_serverObjectMonitor set [count dayz_serverObjectMonitor,_object];
 	};
-} forEach _myArray;
+} forEach _objList;
 
 //TIME
 _key = "CHILD:307:";
@@ -189,7 +187,7 @@ if (_outcome == "PASS") then {
 		publicVariable "dayzSetDate";
 	};
 
-	diag_log("SERVER: Local Time set to " + str(_date));
+	diag_log("SERVER: Set local time to " + str(_date));
 };
 	
 createCenter civilian;
@@ -201,6 +199,7 @@ hiveInUse = false;
 if (isDedicated) then {
 	_id = [] execFSM "\z\addons\dayz_server\system\server_cleanup.fsm";
 };
+
 allowConnection = true;
 
 //Spawn crashed helos
