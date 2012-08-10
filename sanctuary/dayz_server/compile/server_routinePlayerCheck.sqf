@@ -7,7 +7,7 @@ if (isSinglePlayer) then {
 };
 {
 	if (!isNull _x) then {
-		diag_log ("SERVER: Routine Player Check: " + str(_x));
+		//diag_log ("SERVER: Routine Player Check: " + str(_x));
 		_handle = _x spawn server_updatePlayer;
 		waitUntil{scriptDone _handle};
 	};

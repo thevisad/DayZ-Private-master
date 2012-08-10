@@ -10,13 +10,10 @@ if (vehicle _object != _object) then {
 
 diag_log ("DISCONNECT START (i): " + _playerName + " (" + str(_playerID) + ") Object: " + str(_object) );
 
-_object setVariable["medForceUpdate",true];
-_object setVariable["updatePlayer",[true,true,true,false,false]];
 [_object,[],true] call server_playerSync;
 
 _id = [_playerID,_characterID,2] spawn dayz_recordLogin;
 
-//Delete group
 if (!isNull _object) then {
 	if (alive _object) then {
 		_myGroup = group _object;

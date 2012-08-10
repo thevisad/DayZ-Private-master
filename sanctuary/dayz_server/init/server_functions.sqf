@@ -35,6 +35,21 @@ eh_localCleanup =			{
 	}];
 };
 
+server_characterSync = {
+	//dayzCharDisco = [_characterID,_playerPos,[_weapons,_magazines],[typeOf _backpack,getWeaponCargo _backpack,getMagazineCargo _backpack],_medical,_currentState,_currentModel];
+	_characterID = 	_this select 0;	
+	_playerPos =	_this select 1;
+	_playerGear =	_this select 2;
+	_playerBackp =	_this select 3;
+	_medical = 		_this select 4;
+	_currentState =	_this select 5;
+	_currentModel = _this select 6;
+	
+	_key = format["CHILD:201:%1:%2:%3:%4:%5:%6:%7:%8:%9:%10:%11:%12:%13:%14:%15:%16:",_characterID,_playerPos,_playerGear,_playerBackp,_medical,false,false,0,0,0,0,_currentState,0,0,_currentModel,0];
+	//diag_log ("HIVE: WRITE: "+ str(_key) + " / " + _characterID);
+	_key call server_hiveWrite;
+};
+
 //was missing for server
 fnc_buildWeightedArray = 	compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\fn_buildWeightedArray.sqf";		//Checks which actions for nearby casualty
 

@@ -1,7 +1,7 @@
 private["_int","_characterID","_doLoop","_newModel","_wait","_playerID","_playerObj","_randomSpot","_publishTo","_primary","_secondary","_key","_result","_charID","_playerObj","_playerName","_finished","_spawnPos","_spawnDir","_items","_counter","_magazines","_weapons","_group","_backpack","_worldspace","_direction","_newUnit","_score","_position","_pos","_isIsland","_isNew","_inventory","_backpack","_medical","_survival","_stats","_state"];
 //Set Variables
 //Wait for HIVE to be free
-diag_log ("SETUP: attempted with " + str(_this));
+//diag_log ("SETUP: attempted with " + str(_this));
 
 _characterID = _this select 0;
 _playerObj = _this select 1;
@@ -43,7 +43,7 @@ if (isNull _playerObj or !isPlayer _playerObj) exitWith {
 };
 
 //Wait for HIVE to be free
-diag_log ("SETUP: RESULT: Successful with " + str(_primary));
+//diag_log ("SETUP: RESULT: Successful with " + str(_primary));
 
 _medical =		_primary select 1;
 _stats =		_primary select 2;
@@ -54,7 +54,7 @@ _humanity =		_primary select 5;
 //Set position
 _randomSpot = false;
 
-diag_log ("WORLDSPACE: " + str(_worldspace));
+//diag_log ("WORLDSPACE: " + str(_worldspace));
 
 if (count _worldspace > 0) then {
 	_direction =	_worldspace select 0;
@@ -80,7 +80,7 @@ if (count _worldspace > 0) then {
 	_randomSpot = true;
 };
 
-diag_log ("LOGIN: Location: " + str(_worldspace) + " doRnd?: " + str(_randomSpot));
+//diag_log ("LOGIN: Location: " + str(_worldspace) + " doRnd?: " + str(_randomSpot));
 
 //set medical values
 if (count _medical > 0) then {
@@ -181,7 +181,7 @@ if (_randomSpot) then {
 			_position = ([(getMarkerPos _mkr),0,1500,10,0,2000,1] call BIS_fnc_findSafePos);
 			_isNear = count (_position nearEntities ["Man",100]) == 0;
 			_isZero = ((_position select 0) == 0) and ((_position select 1) == 0);
-			//Island Check		//TeeChange
+		//Island Check		//TeeChange
 			_pos 		= _position;
 			_isIsland	= false;		//Can be set to true during the Check
 			for [{_w=0},{_w<=150},{_w=_w+2}] do {
@@ -211,9 +211,13 @@ dayz_players set [count dayz_players,_playerObj];
 _playerObj setVariable["characterID",_characterID,true];
 _playerObj setVariable["humanity",_humanity,true];
 _playerObj setVariable["humanity_CHK",_humanity];
-_playerObj setVariable["worldspace",_worldspace,true];
-_playerObj setVariable["state",_state,true];
+//_playerObj setVariable["worldspace",_worldspace,true];
+//_playerObj setVariable["state",_state,true];
 _playerObj setVariable["lastPos",getPosATL _playerObj];
+
+dayzPlayerLogin2 = [_worldspace,_state];
+_clientID = owner _playerObj;
+_clientID publicVariableClient "dayzPlayerLogin2";
 
 //record time started
 _playerObj setVariable ["lastTime",time];
@@ -234,7 +238,7 @@ if (!(isNull myObj)) then {
 //Record player for management
 myObj = _playerObj;
 call compile format["player%1 = myObj;",_playerID];
-diag_log (format["player%1 = myObj",_playerID]);
+//diag_log (format["player%1 = myObj",_playerID]);
 //dayz_players set [count dayz_players,_playerObj];
 
 dayzLogin = null;

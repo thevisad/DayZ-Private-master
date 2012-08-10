@@ -1,12 +1,12 @@
 private["_characterID","_currentModelCheck","_temp","_isSync","_currentWpn","_currentMag","_magazines","_force","_qty","_qtyT","_val","_isNewPos","_isNewBackp","_humanity","_isNewGear","_doUpdate","_currentModel","_modelChk","_playerPos","_playerGear","_playerBackp","_backpack","_updates","_killsB","_killsH","_medical","_isNewMed","_character","_timeSince","_charPos","_isInVehicle","_justAte","_justDrank","_distanceFoot","_lastPos","_legs","_arms","_kills","_headShots","_killsCHK","_headShotsCHK","_timeGross","_timeLeft","_onLadder","_isTerminal"];
 //[player,array]
-diag_log ("UPDATE: " + str(_this) );
+//diag_log ("UPDATE: " + str(_this) );
 
 //waituntil {(typeName(_this) == "ARRAY");sleep 0.01;};	//seems to cause often infinite waits (but not for first n players)
 
 if ( typeName(_this) == "OBJECT" ) then {
 	_this = [_this,[],true];
-	diag_log ("DW_DEBUG: #manual fix _this: " + str(_this));
+	//diag_log ("DW_DEBUG: #manual fix _this: " + str(_this));
 };
 
 //correct
@@ -181,7 +181,7 @@ if (_characterID != "0") then {
 				//Wait for HIVE to be free
 				//Send request
 				_key = format["CHILD:201:%1:%2:%3:%4:%5:%6:%7:%8:%9:%10:%11:%12:%13:%14:%15:%16:",_characterID,_playerPos,_playerGear,_playerBackp,_medical,false,false,_kills,_headShots,_distanceFoot,_timeSince,_currentState,_killsH,_killsB,_currentModel,_humanity];
-				diag_log ("HIVE: WRITE: "+ str(_key) + " / " + _characterID);
+				//diag_log ("HIVE: WRITE: "+ str(_key) + " / " + _characterID);
 				_key call server_hiveWrite;
 			};
 		};

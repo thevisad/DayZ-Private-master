@@ -28,7 +28,7 @@ switch (_type) do {
 		_previous = str(_object getVariable["lastInventory",[]]);
 		if (str(_inventory) != _previous) then {
 			_object setVariable["lastInventory",_inventory];
-			if (str(_objectID) == "0") then {
+			if (_objectID == "0") then {
 				_key = format["CHILD:309:%1:%2:",_uid,_inventory];
 			} else {
 				_key = format["CHILD:303:%1:%2:",_objectID,_inventory];
@@ -67,7 +67,7 @@ switch (_type) do {
 		_previous = str(_object getVariable["lastInventory",[]]);
 		if (str(_inventory) != _previous) then {
 			_object setVariable["lastInventory",_inventory];
-			if (str(_objectID) == "0") then {
+			if (_objectID == "0") then {
 				_key = format["CHILD:309:%1:%2:",_uid,_inventory];
 			} else {
 				_key = format["CHILD:303:%1:%2:",_objectID,_inventory];

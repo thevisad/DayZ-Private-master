@@ -59,7 +59,7 @@ _isNew = 		count _primary < 6; //_result select 1;
 _charID = 		_primary select 2;
 _randomSpot = false;
 
-diag_log ("LOGIN RESULT: " + str(_primary));
+//diag_log ("LOGIN RESULT: " + str(_primary));
 
 /* PROCESS */
 _hiveVer = 0;
@@ -71,6 +71,11 @@ if (!_isNew) then {
 	_survival =		_primary select 6;
 	_model =		_primary select 7;
 	_hiveVer =		_primary select 8;
+	
+	if (!(_model in ["SurvivorW2_DZ","Survivor2_DZ","Sniper1_DZ","Soldier1_DZ","Camo1_DZ","Bandit1_DZ","SurvivorW2_DZ"])) then {
+		_model = "Survivor2_DZ";
+	};
+	
 } else {
 	_model =		_primary select 3;
 	_hiveVer =		_primary select 4;
@@ -81,36 +86,21 @@ if (!_isNew) then {
 			_model = "Survivor2_DZ";
 		};
 	};
-	if (_model != "SurvivorW2_DZ") then {
-		_model = "Survivor2_DZ";
-	};
-	
-	if (_model == "Sniper1_DZ") then {
-		_model = "Survivor2_DZ";
-	};
-	
-	if (_model == "Soldier1_DZ") then {
-		_model = "Survivor2_DZ";
-	};
-	
-	if (_model == "Camo1_DZ") then {
-		_model = "Survivor2_DZ";
-	};
+
 	//Record initial inventory
 	_config = (configFile >> "CfgSurvival" >> "Inventory" >> "Default");
 	_mags = getArray (_config >> "magazines");
 	_wpns = getArray (_config >> "weapons");
 	_bcpk = getText (_config >> "backpack");
 	_randomSpot = true;
-	_inventory2 = [_wpns,_mags];
-	//get loadout
-	if(str(initialLoadout)!="[]")then
-	{
-		_inventory = initialLoadout;
-		_inventory2 = _inventory;
-	};
+	//Override config default loadout with value from database
+	if (str(initialLoadout) != "[]") then {
+		_loadout = initialLoadout;
+	} else {
+		_loadout = [_wpns,_mags];
+	}
 	//Wait for HIVE to be free
-	_key = format["CHILD:203:%1:%2:%3:",_charID,_inventory2,[_bcpk,[],[]]];
+	_key = format["CHILD:203:%1:%2:%3:",_charID,_loadout,[_bcpk,[],[]]];
 	_key spawn server_hiveWrite;
 	
 };
@@ -120,7 +110,7 @@ _isHiveOk = false;	//EDITED
 if (_hiveVer >= dayz_hiveVersionNo) then {
 	_isHiveOk = true;
 };
-diag_log ("SERVER RESULT: " + str("X") + " " + str(dayz_hiveVersionNo));
+//diag_log ("SERVER RESULT: " + str("X") + " " + str(dayz_hiveVersionNo));
 
 //Server publishes variable to clients and WAITS
 //_playerObj setVariable ["publish",[_charID,_inventory,_backpack,_survival,_isNew,dayz_versionNo,_model,_isHiveOk,_newPlayer],true];
