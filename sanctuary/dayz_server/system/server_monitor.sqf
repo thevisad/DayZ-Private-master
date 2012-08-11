@@ -21,7 +21,7 @@ _result = call compile _result;
 _result = _result select 0;
 taskList = [];
 _taskCount = 0;
-_end = (count _result);
+_end = ((count _result) - 1);
 diag_log("SERVER: Got task count of " + str(_end));
 for "_i" from 0 to _end do {
 	_item = _result select _i;
