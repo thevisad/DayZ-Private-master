@@ -93,16 +93,14 @@ if (!_isNew) then {
 	_wpns = getArray (_config >> "weapons");
 	_bcpk = getText (_config >> "backpack");
 	_randomSpot = true;
+	_inventory = [_wpns,_mags];
 	//Override config default loadout with value from database
 	if (str(initialLoadout) != "[]") then {
-		_loadout = initialLoadout;
-	} else {
-		_loadout = [_wpns,_mags];
-	}
+		_inventory = initialLoadout;
+	};
 	//Wait for HIVE to be free
-	_key = format["CHILD:203:%1:%2:%3:",_charID,_loadout,[_bcpk,[],[]]];
+	_key = format["CHILD:203:%1:%2:%3:",_charID,_inventory,[_bcpk,[],[]]];
 	_key spawn server_hiveWrite;
-	
 };
 diag_log ("LOGIN LOADED: " + str(_playerObj) + " Type: " + (typeOf _playerObj));
 
