@@ -17,6 +17,7 @@ Prerequisites
  - MySQL Server 5.x with TCP/IP Networking enabled
  - Microsoft Visual C++ 2010 Redistributable (http://www.microsoft.com/en-us/download/details.aspx?id=8328)
  - Microsoft .NET Framework 4 Client Profile (http://www.microsoft.com/download/en/details.aspx?id=24872)
+ - The decimal separator on the server running MySQL MUST BE a period. If it is a comma, vehicle spawning (at least) will not work correctly.
 
 Directories
 =====
@@ -55,7 +56,6 @@ To add vehicles, you will need a working Perl installation. Strawberry Perl (htt
 Once you have access to Perl from the command-line, run "perl vehicles.pl" to get help information on how to invoke the script.
 
 Vehicles added via database manipulation are only available after a server restart.
-
 
 Gotchas / Known Bugs
 ==========
