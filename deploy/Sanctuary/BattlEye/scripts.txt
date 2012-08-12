@@ -29,7 +29,7 @@
 1 onPlayerDisconnected !"\"OnPlayerDisconnected\","
 1 publicVariable !"\"publicVariable\"," !"publicVariableClient" !"publicVariableServer" !"publicVariable \"dayzDiscoRem\";" !"publicVariable \"dayzPlayerSave\";" !"publicVariable _playerObjName;" !"publicVariable \"BIS_MPF_logic\";" !"publicVariable \"usecEpi\";" !"publicVariable \"remExFP\";" !"publicVariable \"dayzLogin\";" !"publicVariable \"dayzLogin2\";" !"publicVariable \"dayzHitV\";" !"\"drn_DynamicWeather_DebugTextEventArgs\" addPublicVariableEventHandler {" !"publicVariable \"dayzUpdateVehicle\";"
 1 publicVariableClient !"\"publicVariableClient\"," !"_clientID publicVariableClient \"dayzPlayerLogin\";"
-1 publicVariableServer !"\"publicVariableServer\"," !"publicVariableServer \"dayzPlayerSave\";" !"publicVariableServer \"dayzDiscoRem\";" !"publicVariableServer \"dayzLogin\";" !"publicVariableServer \"dayzLoginRecord\";" 
+1 publicVariableServer !"\"publicVariableServer\"," !"publicVariableServer \"dayzPlayerSave\";" !"publicVariableServer \"dayzDiscoRem\";" !"publicVariableServer \"dayzLogin\";" !"publicVariableServer \"dayzLoginRecord\";" !"edical,_currentState,_currentModel];\npublicVariableServer \"\"dayzCharDisco\"\";\nif (isServer) then {"
 1 removeAllEventHandlers !"\"removeAllEventHandlers\","
 1 sendTask !"\"sendTask\","
 1 serverCommand !"\"serverCommand\"," !"serverCommandAvailable"
@@ -62,7 +62,7 @@
 5 onMapSingleClick !"\"onMapSingleClick\","
 5 onTeamSwitch !"\"onTeamSwitch\","
 5 openDSInterface !"\"openDSinterface\"," !"if (_lbselected == \"DSInterface\") then {openDSInterface;};"
-1 processInitCommands !"\"processInitCommands\"," !"processInitCommands; \n};\nif (_v iskindof \"tank\"" !"Effects_AirDestructionStage2\",_int, _t];\nprocessInitCommands" "_v setVehicleInit format [\"[this, %1, %2,false,true]spawn BIS_Effects_Burn\",_int, _t];\nprocessInitCommands;"
+1 processInitCommands !"\"processInitCommands\"," !"processInitCommands; \n};\nif (_v iskindof \"tank\"" !"Effects_AirDestructionStage2\",_int, _t];\nprocessInitCommands" !"_v setVehicleInit format [\"[this, %1, %2,false,true]spawn BIS_Effects_Burn\",_int, _t];\nprocessInitCommands;"
 5 setAmmoCargo !"\"setAmmoCargo\","
 5 setFSMVariable !"\"setFSMvariable\","
 5 SetFuelCargo !"\"setFuelCargo\","
@@ -223,4 +223,4 @@
 5 Gerk
 5 Troopman
 5 Troopmon
-5 Alexenderpack
+5 Alexenderpackk
