@@ -14,25 +14,6 @@ if ((count playableUnits == 0) and !isDedicated) then {
 };
 waitUntil{initialized};
 
-//Get scheduler tasks
-_result = "Arma2Net.Unmanaged" callExtension format ["Arma2NETMySQL ['dayz','getTasks','[myinstance=%1]']",dayz_instance];
-_result = [_result,"|",","] call CBA_fnc_replace;
-_result = call compile _result;
-_result = _result select 0;
-taskList = [];
-_taskCount = 0;
-_end = ((count _result) - 1);
-diag_log("SERVER: Got task count of " + str(_end));
-for "_i" from 0 to _end do {
-	_item = _result select _i;
-	_item set [2, (call compile (_item select 2))];
-	_item set [3, (call compile (_item select 3))];
-	taskList set [count taskList, _item];
-	_taskCount = _taskCount + 1;
-	diag_log("Task added: " + str(_item));
-};
-diag_log("SERVER: Added " + str(_taskCount) + " tasks!");
-
 //Get initial loadout
 _result = "Arma2Net.Unmanaged" callExtension format ["Arma2NETMySQL ['dayz','getLoadout','[myinstance=%1]']",dayz_instance];
 _result = [_result,"|",","] call CBA_fnc_replace;
@@ -41,36 +22,62 @@ _result = _result select 0;
 initialLoadout = call compile ((_result select 0) select 0);
 diag_log("SERVER: Got initial loadout of " + str(initialLoadout));
 
-//Get object count
-_result = "Arma2Net.Unmanaged" callExtension format ["Arma2NETMySQL ['dayz','getOC','[myinstance=%1]']",dayz_instance];
+//Get task page count
+_result = "Arma2Net.Unmanaged" callExtension format ["Arma2NETMySQL ['dayz','getTC','[myinstance=%1]']",dayz_instance];
 _result = call compile _result;
 _result = _result select 0;
-_val = call compile ((_result select 0) select 0);
-diag_log("SERVER: Got object count of " + str(_val));
+_pageCount = call compile ((_result select 0) select 0);
+diag_log("SERVER: Got " + str(_pageCount) + " pages of tasks...");
 
-//Load objects
-_objList = [];
-if(_val > 0) then 
-{
-	_part = 0; //paging, compile doesnt work on too big arrays
-	_objCount = 0;
-	while {_part < _val} do
-	{
-		_result = "Arma2Net.Unmanaged" callExtension format ["Arma2NETMySQL ['dayz','getO','[myinstance=%1,page=%2]']", dayz_instance, _part];
+//Load tasks
+taskList = [];
+if (_pageCount > 0) then {
+	_taskCount = 0;
+	for "_page" from 0 to _pageCount do {
+		_result = "Arma2Net.Unmanaged" callExtension format ["Arma2NETMySQL ['dayz','getTasks','[myinstance=%1,page=%2]']", dayz_instance, _page];
 		_result = [_result,"|",","] call CBA_fnc_replace;
 		_result = call compile _result;
 		_result = _result select 0;
-		_end = (count _result);
+		_end = ((count _result) - 1);
+		for "_i" from 0 to _end do {
+			_item = _result select _i;
+			_item set [2, (call compile (_item select 2))];
+			_item set [3, (call compile (_item select 3))];
+			taskList set [count taskList, _item];
+			_taskCount = _taskCount + 1;
+			diag_log("DEBUG: Added task " + str(_item));
+		};
+	};
+	diag_log("SERVER: Added " + str(_taskCount) + " tasks!");
+};
+
+//Get object page count
+_result = "Arma2Net.Unmanaged" callExtension format ["Arma2NETMySQL ['dayz','getOC','[myinstance=%1]']", dayz_instance];
+_result = call compile _result;
+_result = _result select 0;
+_pageCount = call compile ((_result select 0) select 0);
+diag_log("SERVER: Got " + str(_pageCount) + " pages of objects...");
+
+//Load objects
+_objList = [];
+if(_pageCount > 0) then {
+	_objCount = 0;
+	for "_page" from 0 to _pageCount do {
+		_result = "Arma2Net.Unmanaged" callExtension format ["Arma2NETMySQL ['dayz','getO','[myinstance=%1,page=%2]']", dayz_instance, _page];
+		_result = [_result,"|",","] call CBA_fnc_replace;
+		_result = call compile _result;
+		_result = _result select 0;
+		_end = ((count _result) - 1);
 		for "_i" from 0 to _end do {
 			_item = _result select _i;
 			_objList set [count _objList, _item];
 			_objCount = _objCount + 1;
 		};
-		_part = _part + 10;
 	};
-	diag_log ("SERVER: Fetched " + str(_objCount) + " objects");
+	diag_log ("SERVER: Fetched " + str(_objCount) + " objects!");
 };
 
+//Spawn objects
 _countr = 0;
 {
 	//Parse individual vehicle row
