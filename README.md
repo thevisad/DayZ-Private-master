@@ -4,8 +4,7 @@ DayZ Bliss Private Server
 This is a private server project for DayZ.
 This code is currently compatible with DayZ 1.7.2.5 and ArmA 2 OA beta patch build 95883.
 
-This would not be possible without the work of Rocket
-and Guru Abdul.
+This would not be possible without the work of Rocket and Guru Abdul. We also use the fantastic cPBO from Kegetys (www.kegetys.fi) and wget for Windows by the GnuWin32 team (gnuwin32.sourceforge.net).
 
 **NOTE**: No support is implied or offered for pirated copies of ArmA 2.
 
