@@ -35,6 +35,7 @@ Installation
 3. Copy all files from **Repository**\\deploy into **ArmA2**\\
 4. Run **Repository**\\dayz2_0.sql on your MySQL server as the **root** user. Do **NOT** use MySQL Workbench to run the SQL queries, it will not work. I recommend "TOAD for MySQL," but every user will have their own preference.
 5. Run **Repository**\\2_0to2_1.sql on your MySQL server as the **root** user.
+6. Run **Repository**\\2_1to2_2.sql on your MySQL server as the **root** user.
 6. Run the following SQL code as the **root** user (be **sure** to change the password from CHANGEME):  
 
 		create user 'dayz'@'localhost' identified by 'CHANGEME';  
