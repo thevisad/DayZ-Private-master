@@ -2,7 +2,7 @@ DayZ Bliss Private Server
 =========================
 
 This is a private server project for DayZ.
-The latest release is compatible with DayZ 1.7.2.5.
+This code is currently compatible with DayZ 1.7.2.5 and ArmA 2 OA beta patch build 95883.
 
 This would not be possible without the work of Rocket
 and Guru Abdul.
@@ -13,11 +13,11 @@ Prerequisites
 =============
 
  - Windows (tested with 7 and Server 2008)
- - A working ArmA 2 Combined Ops dedicated server with latest beta patch installed (http://www.arma2.com/beta-patch.php)
+ - A working ArmA 2 Combined Ops dedicated server with recommended beta patch installed (http://www.arma2.com/beta-patch.php)
  - MySQL Server 5.x with TCP/IP Networking enabled
  - Microsoft Visual C++ 2010 Redistributable (http://www.microsoft.com/en-us/download/details.aspx?id=8328)
  - Microsoft .NET Framework 4 Client Profile (http://www.microsoft.com/download/en/details.aspx?id=24872)
- - The decimal separator on the server running MySQL MUST BE a period. If it is a comma, vehicle spawning (at least) will not work correctly.
+ - The decimal separator on your server MUST BE a period. If it is a comma, vehicle spawning (at least) will not work correctly.
 
 Directories
 =====
