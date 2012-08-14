@@ -38,4 +38,11 @@ begin
 end;
 //
 
+drop procedure if exists `updUI`;
+create procedure `updUI`(in myuid varchar(50), in myinv varchar(2048))
+begin
+  update objects set inventory = myinv where uid not like '%.%' and convert(uid, unsigned integer) between (convert(myuid, unsigned integer) - 2) and (convert(myuid, unsigned integer) + 2);
+end;
+//
+
 delimiter ;
