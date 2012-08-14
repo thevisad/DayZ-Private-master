@@ -1,1 +1,6 @@
-1 "" !"this enableSimulation false;this allowDammage false;this disableAI 'FSM';this disableAI 'ANIM';this disableAI 'MOVE';"
+1 !"this enableSimulation false;this allowDammage false;this disableAI 'FSM';this disableAI 'ANIM';this disableAI 'MOVE';"
+5 "dayz_serverObjectMonitor set [count dayz_serverObjectMonitor, _object];"
+5 "_xcompiled"
+5 "loadFile"
+5 "removeAllWeapons"
+5 "removeAllItems"
