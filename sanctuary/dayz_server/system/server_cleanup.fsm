@@ -334,15 +334,6 @@ class FSM
        "   		(vehicle _x) setDamage 1;" \n
        "   		_x setDamage 1;" \n
        "	 };" \n
-       "	//Check for client cheat messages" \n
-       "	_cheat = _x getVariable [""cheat"",""legit""];" \n
-       "	if(_cheat!=""legit"") then" \n
-       "	{" \n
-       "		[nil, nil, rSPAWN, [_crier, _cheat], { (_this select 0) globalChat (_this select 1) }] call RE;" \n
-       "		_x setDamage 1;" \n
-       "		diag_log(_cheat);" \n
-       "		_x setVariable [""cheat"",""legit"",true];" \n
-       "	};" \n
        " } forEach allUnits;" \n
        "" \n
        "/*" \n
