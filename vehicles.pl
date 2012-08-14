@@ -31,7 +31,7 @@ my @vehicleLimits = (4,3,3,3,10,3,3,3,3,4,1,1,2,4,1,3,1);
 my @chances = (0.65,0.7,0.65,0.7,0.95,0.25,0.55,0.55,0.75,0.55,0.55,0.55,0.55,0.75,0.55,0.55,0.45);
 my $n=0;
 my $do=0;
-$sth = $dbh->prepare('SELECT COUNT(*) FROM objects WHERE instance=?') or die;
+$sth = $dbh->prepare("SELECT COUNT(*) FROM objects WHERE instance=? AND otype NOT IN ('TentStorage','Hedgehog_DZ','Wire_cat1')") or die;
 $sth->execute($dbinstance) or die;
 my $globalVehicleCount;
 my @d =$sth->fetchrow_array();
@@ -60,8 +60,8 @@ for (my $i=0;$i<scalar @vehicles;$i++)
 	}
 	print "Generating ".$spawnCount." vehicles of type: ".$vehicle."\n";
 	print "Fetching random spawn points\n";
-	my $sts = $dbh->prepare('SELECT * FROM spawns WHERE otype like ? AND NOT uuid IN (SELECT uid FROM objects) ORDER BY RAND() LIMIT ?') or die;
-	$sts->execute($vehicle,$spawnCount) or die;
+	my $sts = $dbh->prepare('SELECT * FROM spawns WHERE otype like ? AND NOT uuid IN (SELECT uid FROM objects WHERE instance = ?) ORDER BY RAND() LIMIT ?') or die;
+	$sts->execute($vehicle,$dbinstance,$spawnCount) or die;
 	while ((@data = $sts->fetchrow_array())&&$globalVehicleCount+$n<$globalLimit)
 	{
 		print "Generating vehicle parts damage!\n";
