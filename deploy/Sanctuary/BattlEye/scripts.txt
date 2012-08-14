@@ -97,7 +97,7 @@
 1 hideObject !"\"hideObject\"" !"rhideObject = 'hideObject'" !"rhideObjectcode = compile PreprocessFile (BIS_PathMPscriptCommands + 'hideObject.sqf')"
 1 JIPexec !"\"JIPexec\"," !"rJIPexec = 'JIPexec'" !"rJIPrequestcode = compile PreprocessFile (BIS_PathMPscriptCommands + 'JIPrequest.sqf')"
 1 JIPrequest !"\"JIPrequest\"," !"rJIPrequest = 'JIPrequest'" !"rJIPexeccode = compile PreprocessFile (BIS_PathMPscriptCommands + 'JIPexec.sqf')"
-5 setCaptive !"\"setCaptive\"," !"rsetCaptive = 'setCaptive'" !"rsetCaptivecode = compile PreprocessFile (BIS_PathMPscriptCommands + 'setCaptive.sqf')"
+5 setCaptive !"\"setCaptive\"," !"rsetCaptive = 'setCaptive'" !"rsetCaptivecode = compile PreprocessFile (BIS_PathMPscriptCommands + 'setCaptive.sqf')" !"sleep 1;\n_unit setCaptive true;\n_unit setVariable [\"NORRN_unconscious\", true, true];"
 1 clearMagazineCargo !"\"clearMagazineCargo\"," !"rclearMagazineCargo = 'clearMagazineCargo'" !"rclearMagazineCargocode = compile PreprocessFile (BIS_PathMPscriptCommands + 'clearMagazineCargo.sqf"
 1 clearWeaponCargo !"\"clearWeaponCargo\"," !"rclearWeaponCargo = 'clearWeaponCargo'" !"rclearWeaponCargocode = compile PreprocessFile (BIS_PathMPscriptCommands + 'clearWeaponCargo.sqf')"
 5 onDoubleClick !"\"onDoubleClick\"," 
