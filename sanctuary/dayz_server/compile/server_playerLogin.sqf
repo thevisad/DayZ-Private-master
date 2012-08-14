@@ -12,7 +12,7 @@ if (count _this > 2) then {
 waitUntil{allowConnection};
 
 //Variables
-_inventory =	[];
+_inventory =	initialLoadout;
 _backpack = 	[];
 _items = 		[];
 _magazines = 	[];
@@ -89,14 +89,13 @@ if (!_isNew) then {
 
 	//Record initial inventory
 	_config = (configFile >> "CfgSurvival" >> "Inventory" >> "Default");
-	_mags = getArray (_config >> "magazines");
-	_wpns = getArray (_config >> "weapons");
 	_bcpk = getText (_config >> "backpack");
 	_randomSpot = true;
-	_inventory = [_wpns,_mags];
-	//Override config default loadout with value from database
-	if (str(initialLoadout) != "[]") then {
-		_inventory = initialLoadout;
+	//Use default if loadout is not specified
+	if (str(initialLoadout) == "[]") then {
+		_mags = getArray (_config >> "magazines");
+		_wpns = getArray (_config >> "weapons");
+		_inventory = [_wpns,_mags];
 	};
 	//Wait for HIVE to be free
 	_key = format["CHILD:203:%1:%2:%3:",_charID,_inventory,[_bcpk,[],[]]];
