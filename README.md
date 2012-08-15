@@ -14,6 +14,7 @@ Prerequisites
  - Windows (tested with 7 and Server 2008)
  - A working ArmA 2 Combined Ops dedicated server with recommended beta patch installed (http://www.arma2.com/beta-patch.php)
  - MySQL Server 5.x with TCP/IP Networking enabled
+ - Connector/Net 6.5.x (http://www.mysql.com/downloads/connector/net)
  - Microsoft Visual C++ 2010 Redistributable (http://www.microsoft.com/en-us/download/details.aspx?id=8328)
  - Microsoft .NET Framework 4 Client Profile (http://www.microsoft.com/download/en/details.aspx?id=24872)
  - The decimal separator on your server MUST BE a period. If it is a comma, vehicle spawning (at least) will not work correctly.
