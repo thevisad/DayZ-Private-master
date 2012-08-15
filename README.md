@@ -61,13 +61,17 @@ Vehicles added via database manipulation are only available after a server resta
 Gotchas / Known Bugs
 ==========
 
-All items can become desynchronized when a server is shut down. If players have been on the server within 5 minutes, you should not shut it down to avoid these issues.
+Character data can become desynchronized if the player was connected within several minutes of server shutdown. We strongly recommend that you wait 5 minutes after all players have disconnected before shutting down a public server.
 
 All vehicles and tents must be saved using the "Save <Object>" scroll menu item, especially if preparing for a server shutdown.
 
-At present, you cannot save a tent's inventory unless the server has been restarted after placing the tent.
+Some tents will not be removed from the database when they are repacked. This means that a "duplicate" tent will be created and on server restart the repacked tent will appear once again.
 
-Any bug present in the official client or server will probably also exist in this solution.
+Any bug present in the official client or server will probably also exist in this solution. This includes:
+
+ - Texture issues / graphical corruption / artifacts
+ - Loss of backpack on model change (due to bandit morphing) or on respawn
+ - Spawning in debug plains or in the ocean
 
 Common Issues
 =============
