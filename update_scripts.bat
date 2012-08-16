@@ -1,5 +1,6 @@
 @echo off
-cd deploy\Sanctuary\BattlEye
-..\..\..\util\wget.exe -N http://dl.dropbox.com/u/18463425/DayZserver/scripts.txt
-..\..\..\util\wget.exe -N http://dl.dropbox.com/u/18463425/DayZserver/remoteexec.txt
-..\..\..\util\wget.exe -N http://dl.dropbox.com/u/18463425/DayZserver/createvehicle.txt
+cd deploy\Bliss\BattlEye
+..\..\..\util\wget.exe -N http://dayz-community-banlist.googlecode.com/git/bans/bans.txt
+..\..\..\util\wget.exe -N http://dayz-community-banlist.googlecode.com/git/filters/scripts.txt
+..\..\..\util\wget.exe -N http://dayz-community-banlist.googlecode.com/git/filters/remoteexec.txt
+..\..\..\util\wget.exe -N http://dayz-community-banlist.googlecode.com/git/filters/createvehicle.txt

@@ -1,1 +1,1 @@
-"Expansion\beta\arma2oaserver.exe" -port=2302 "-config=Sanctuary\config.cfg" "-cfg=Sanctuary\basic.cfg" "-profiles=Sanctuary" -name=Sanctuary "-mod=@CBA;@CBA_A2;@CBA_OA;@Arma2NET;@DayZ;@Sanctuary;" -cpuCount=2 -maxMem=1578
+"Expansion\beta\arma2oaserver.exe" -port=2302 "-config=Bliss\config.cfg" "-cfg=Bliss\basic.cfg" "-profiles=Bliss" -name=Bliss "-mod=@CBA;@CBA_A2;@CBA_OA;@Arma2NET;@DayZ;@Bliss;" -cpuCount=2 -maxMem=1578

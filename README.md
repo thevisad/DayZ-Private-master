@@ -31,7 +31,7 @@ Installation
 ============
 
 1. Download DayZ 1.7.2.5 and place the PBO files in **Repository**\\@DayZ\\Addons.
-2. Enter **Repository**\\Sanctuary and run **repack.bat**.
+2. Enter **Repository** and run **repack.bat**.
 3. Copy all files from **Repository**\\deploy into **ArmA2**\\
 4. Run **Repository**\\dayz2_0.sql on your MySQL server as the **root** user. Do **NOT** use MySQL Workbench to run the SQL queries, it will not work. I recommend "TOAD for MySQL," but every user will have their own preference.
 5. Run **Repository**\\2_0to2_1.sql on your MySQL server as the **root** user.
@@ -42,7 +42,7 @@ Installation
 		grant all privileges on dayz.* to 'dayz'@'localhost';
 
 7. Ensure that the username and password in **ArmA2**\\databases.txt match the user created in the previous step.
-8. Adjust server name/passwords in **ArmA2**\\Sanctuary\\config.cfg
+8. Adjust server name/passwords in **ArmA2**\\Bliss\\config.cfg
 9. Adjust the **timezone** field in the instances table for instance 1. This is an offset applied to the time on your server. Therefore, if your Windows clock says 5:00 PM / 17:00 and your timezone is set to -5, it will be noon on your server. 
 10. Adjust the **loadout** field in the instances table for instance 1. Some options:
 	- Default DayZ loadout - **[]**
@@ -83,7 +83,7 @@ Common Issues
 **Solution**: Ensure that the DLL files in **ArmA2**\\@Arma2NET are not "blocked" by Windows by right-clicking on them and selecting **Properties**. If you see an Unblock button, click it and do the same for all DLLs in this directory.
 
 **Problem**: Kicked from the game when using non-DayZ weapons/vehicles  
-**Solution**: Disable BattlEye by setting battleye=0 in **ArmA2**\\Sanctuary\\server.cfg, but note that this opens your server to hackers/griefers.
+**Solution**: Disable BattlEye by setting battleye=0 in **ArmA2**\\Bliss\\config.cfg, but note that this opens your server to hackers/griefers.
 
 **Problem**: Server not listed on GameSpy in-game server list  
 **Solution**: Change reportingIP to **arma2oapc.master.gamespy.com** and ensure the game ports (default 2302 - 2305 UDP) are forwarded properly.

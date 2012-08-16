@@ -1,5 +1,6 @@
 #!/bin/bash
-cd deploy/Sanctuary/BattlEye/
-wget -N http://dl.dropbox.com/u/18463425/DayZserver/scripts.txt
-wget -N http://dl.dropbox.com/u/18463425/DayZserver/remoteexec.txt
-wget -N http://dl.dropbox.com/u/18463425/DayZserver/createvehicle.txt
+cd deploy/Bliss/BattlEye/
+wget -N http://dayz-community-banlist.googlecode.com/git/bans/bans.txt
+wget -N http://dayz-community-banlist.googlecode.com/git/filters/scripts.txt
+wget -N http://dayz-community-banlist.googlecode.com/git/filters/remoteexec.txt
+wget -N http://dayz-community-banlist.googlecode.com/git/filters/createvehicle.txt
