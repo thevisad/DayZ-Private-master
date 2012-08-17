@@ -114,15 +114,15 @@ if (_hiveVer >= dayz_hiveVersionNo) then {
 
 _clientID = owner _playerObj;
 if (((_primary select 0) == "DELAY") || (_playerID in botPlayers)) then {
-	_delay = true
+	_delay = true;
 } else {
-	_delay = false
+	_delay = false;
 };
 
 if ((_primary select 0) == "BLOCKED") then {
-	_blocked = true
+	_blocked = true;
 } else {
-	_blocked = false
+	_blocked = false;
 };
 
 dayzPlayerLogin = [_charID,_inventory,_backpack,_survival,_isNew,dayz_versionNo,_model,_isHiveOk,_newPlayer,_blocked,_delay];
