@@ -11,8 +11,11 @@ if (vehicle _object != _object) then {
 diag_log ("DISCONNECT START (i): " + _playerName + " (" + str(_playerID) + ") Object: " + str(_object) );
 
 if (_characterID != "0") then {
+	if (alive _object) then {
+		[_playerID,_characterID,typeof _object,_object] spawn player_discoMorph;
+	};
 	[_object,[],true] call server_playerSync;
-	_id = [_playerID,_characterID,2] spawn dayz_recordLogin;
+	_id = [_playerID, _characterID, 2] spawn dayz_recordLogin;
 };
 
 if (!isNull _object) then {
