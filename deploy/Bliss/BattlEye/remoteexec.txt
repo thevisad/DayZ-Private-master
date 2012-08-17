@@ -38,5 +38,10 @@
 5 "chat"
 5 "vehicleinit"
 5 "processinit"
-5 "addMPeventHandler"
+5 "addMPEventHandler"
+5 "addAction"
+5 "addEventHandler"
+5 "playMove"
+5 "playAction"
+5 "switchMove"
 
