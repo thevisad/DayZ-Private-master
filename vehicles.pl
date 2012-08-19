@@ -14,6 +14,7 @@ my %args = ();
 GetOptions(
 	\%args,
 	'instance|index|i=s',
+	'limit|l=s',
 	'hostname|host|dbhost|h=s',
 	'username|user|dbuser|u=s',
 	'password|pass|dbpass|p=s',
