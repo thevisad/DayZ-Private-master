@@ -20,6 +20,8 @@ GetOptions(
 	'password|pass|dbpass|p=s',
 	'database|dbname|d=s',
 	'port|dbport=s',
+	'world|map|w|m=s',
+	'cleanup',
 	'help'
 );
 
@@ -30,12 +32,14 @@ my %db = (
 	'user' => $args{'username'} ? $args{'username'} : 'dayz',
 	'pass' => $args{'password'} ? $args{'password'} : 'dayz',
 	'name' => $args{'database'} ? $args{'database'} : 'dayz',
-	'port' => $args{'port'} ? $args{'port'} : '3306'
+	'port' => $args{'port'} ? $args{'port'} : '3306',
+	'world' => $args{'world'} ? $args{'world'} : 'chernarus'
 );
 
 my $dsn = "dbi:mysql:$db{'name'}:$db{'host'}:$db{'port'}";
 print "Generating vehicles for instance: ".$db{'instance'}." , with user: ".$db{'user'}."\n";
 my $dbh = DBI->connect($dsn, $db{'user'}, $db{'pass'}) or die "Couldn't connect to db: ".DBI->errstr;
+
 #Cleanup various objects
 print "INFO: Cleaning up damaged or old objects\n";
 my $sth = $dbh->prepare("delete from objects using objects inner join main on objects.oid = main.id and main.death = 0 where objects.otype = 'TentStorage' and objects.lastupdate < now() - interval 4 day") or die;
@@ -50,6 +54,33 @@ $sth = $dbh->prepare("delete from objects where otype='Sandbag1_DZ' and lastupda
 $sth->execute() or die "Couldn't cleanup sandbags";
 $sth = $dbh->prepare("delete from objects where otype='TrapBear' and lastupdate < now() - interval 5 day") or die;
 $sth->execute() or die "Couldn't cleanup beartraps";
+
+#Remove out-of-bounds vehicles
+if ($args{'cleanup'}) {
+	print "INFO: Starting boundary check for objects\n";
+	$sth = $dbh->prepare("select id,pos from objects");
+	$sth->execute() or die "Couldn't get list of object positions";
+	while (my $row = $sth->fetchrow_hashref()) {
+		$row->{pos} =~ s/[\[|\]|\s]//g;
+		my @pos = split(',', $row->{pos});
+		my $isValid = 1;
+		my $x = $pos[1];
+		my $y = $pos[2];
+		if ($db{'world'} eq 'chernarus') {
+			if ($x > 14700 || $y > 15360) {
+				$isValid = 0;
+			}
+		} else {
+			print "Cannot check valid bounds for the world $db{'world'}";
+		}
+
+		if ($isValid == 0) {
+			$delSth = $dbh->prepare("delete from objects where id = $row->{id}");
+			$delSth->execute() or die "Failed while deleting an out-of-bounds object";
+			print "Vehicle at $x, $y was OUT OF BOUNDS and was deleted\n";
+		}
+	}
+}
 
 my $numGenerated=0;#counter for the number of generated vehicles
 my @vehicles = ("UAZ%","ATV%","Skoda%","TT650%","Old_bike%","UH1H%","hilux%","Ikarus%","Tractor","S1203%","V3S_Civ","UralCivil","car%","%boat%","PBX","Volha%","SUV%");
