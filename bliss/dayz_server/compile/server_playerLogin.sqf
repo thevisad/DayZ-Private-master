@@ -92,7 +92,7 @@ if (!_isNew) then {
 	_bcpk = getText (_config >> "backpack");
 	_randomSpot = true;
 	//Use default if loadout is not specified
-	if (str(initialLoadout) == "[]") then {
+	if (str(_inventory) == "[]") then {
 		_mags = getArray (_config >> "magazines");
 		_wpns = getArray (_config >> "weapons");
 		_inventory = [_wpns,_mags];
