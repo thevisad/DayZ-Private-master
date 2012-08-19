@@ -45,4 +45,12 @@ begin
 end;
 //
 
+drop procedure if exists `delO`;
+create procedure `delO`(in myuid varchar(50))
+begin
+  delete from objects where uid = myuid;
+  delete from objects where uid not like '%.%' and convert(uid, unsigned integer) between (convert(myuid, unsigned integer) - 2) and (convert(myuid, unsigned integer) + 2);
+end;
+//
+
 delimiter ;
