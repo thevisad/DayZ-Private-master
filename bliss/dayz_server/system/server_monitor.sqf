@@ -27,7 +27,7 @@ _result = "Arma2Net.Unmanaged" callExtension format ["Arma2NETMySQL ['dayz','get
 _result = call compile _result;
 _result = _result select 0;
 _pageCount = call compile ((_result select 0) select 0);
-diag_log("SERVER: Got " + str(_pageCount) + " pages of tasks...");
+diag_log("SERVER: Got " + str(_pageCount + 1) + " pages of tasks...");
 
 //Load tasks
 taskList = [];
@@ -54,7 +54,7 @@ _result = "Arma2Net.Unmanaged" callExtension format ["Arma2NETMySQL ['dayz','get
 _result = call compile _result;
 _result = _result select 0;
 _pageCount = call compile ((_result select 0) select 0);
-diag_log("SERVER: Got " + str(_pageCount) + " pages of objects...");
+diag_log("SERVER: Got " + str(_pageCount + 1) + " pages of objects...");
 
 //Load objects
 _objList = [];
