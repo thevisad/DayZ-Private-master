@@ -36,8 +36,21 @@ my %db = (
 my $dsn = "dbi:mysql:$db{'name'}:$db{'host'}:$db{'port'}";
 print "Generating vehicles for instance: ".$db{'instance'}." , with user: ".$db{'user'}."\n";
 my $dbh = DBI->connect($dsn, $db{'user'}, $db{'pass'}) or die "Couldn't connect to db: ".DBI->errstr;
-my $sth = $dbh->prepare('DELETE FROM objects WHERE damage>=0.95 OR (lastupdate<DATE_SUB(NOW(),INTERVAL 5 DAY) AND NOT otype="TentStorage");') or die;
-$sth->execute() or die "Couldn't execute statement" . $sth->errstr;#Clean dead vehicles
+#Cleanup various objects
+print "INFO: Cleaning up damaged or old objects\n";
+my $sth = $dbh->prepare("delete from objects using objects inner join main on objects.oid = main.id and main.death = 0 where objects.otype = 'TentStorage' and objects.lastupdate < now() - interval 4 day") or die;
+$sth->execute() or die "Couldn't cleanup tents for dead characters";
+$sth = $dbh->prepare("delete from objects where damage >= 0.95") or die;
+$sth->execute() or die "Couldn't cleanup destroyed vehicles";
+$sth = $dbh->prepare("delete from objects where otype='Wire_cat1' and lastupdate < now() - interval 3 day") or die;
+$sth->execute() or die "Couldn't cleanup wire fence";
+$sth = $dbh->prepare("delete from objects where otype='Hedgehog_DZ' and lastupdate < now() - interval 4 day") or die;
+$sth->execute() or die "Couldn't cleanup tank traps";
+$sth = $dbh->prepare("delete from objects where otype='Sandbag1_DZ' and lastupdate < now() - interval 8 day") or die;
+$sth->execute() or die "Couldn't cleanup sandbags";
+$sth = $dbh->prepare("delete from objects where otype='TrapBear' and lastupdate < now() - interval 5 day") or die;
+$sth->execute() or die "Couldn't cleanup beartraps";
+
 my $numGenerated=0;#counter for the number of generated vehicles
 my @vehicles = ("UAZ%","ATV%","Skoda%","TT650%","Old_bike%","UH1H%","hilux%","Ikarus%","Tractor","S1203%","V3S_Civ","UralCivil","car%","%boat%","PBX","Volha%","SUV%");
 my @vehicleLimits = (4,3,3,3,10,3,3,3,3,4,1,1,2,4,1,3,1);
