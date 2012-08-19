@@ -37,7 +37,7 @@ my %db = (
 );
 
 my $dsn = "dbi:mysql:$db{'name'}:$db{'host'}:$db{'port'}";
-print "Generating vehicles for instance: ".$db{'instance'}." , with user: ".$db{'user'}."\n";
+print "INFO: Instance ".$db{'instance'}.", user is ".$db{'user'}.", database is ".$db{'name'}."\n";
 my $dbh = DBI->connect($dsn, $db{'user'}, $db{'pass'}) or die "Couldn't connect to db: ".DBI->errstr;
 
 #Cleanup various objects
@@ -144,7 +144,7 @@ for (my $i=0;$i<scalar @vehicles;$i++)
 			@parts = ('["palivo",1]','["motor",1]','["karoserie",1]','["wheel_1_1_steering",1]','["wheel_1_2_steering",1]','["wheel_2_1_steering",1]','["wheel_2_2_steering",1]');
 			$health = genDamage(@parts);
 		}
-		print "INFO: Damaged parts are ".$health."\n";
+		#print "INFO: Damaged parts are ".$health."\n";
 		#add
 		#uid,pos,health,damage,otype,instance
 		if($first==0)
