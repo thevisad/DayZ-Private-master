@@ -20,7 +20,7 @@ Prerequisites
  - The decimal separator on your server MUST BE a period. If it is a comma, vehicle spawning (at least) will not work correctly.
 
 Directories
-=====
+===========
 
 When you see the following names in bold, substitute in the appropriate path as described.
 
@@ -57,6 +57,30 @@ To add vehicles, you will need a working Perl installation. Strawberry Perl (htt
 Once you have access to Perl from the command-line, run "perl vehicles.pl" to get help information on how to invoke the script.
 
 Vehicles added via database manipulation are only available after a server restart.
+
+Scheduler
+=========
+
+By inserting rows into the scheduler table, you can set up custom messages displayed ingame over several chat channels. You can also make script calls. The mvisibility value you choose must be the same as the visibility field in the instances table for the messages to be displayed on that instance. The looptime and mstart fields should be given in seconds.
+
+Mtype field:
+<table>
+  <tr>
+    <td>Type</td><td>Name</td>
+  </tr>
+  <tr>
+    <td>l</td><td>Local</td>
+  </tr>
+  <tr>
+    <td>m</td><td>Side</td>
+  </tr>
+  <tr>
+    <td>g</td><td>Global</td>
+  </tr>
+  <tr>
+    <td>s</td><td>Script</td>
+  </tr>
+</table>
 
 Gotchas / Known Bugs
 ==========
