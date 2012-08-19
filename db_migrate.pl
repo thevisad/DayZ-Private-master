@@ -45,6 +45,12 @@ my $m = DBIx::Migration::Directories->new(
 	dbh                     => $dbh
 );
 
+if ($m->get_current_version()) {
+	printf("INFO: Current schema version is %.2f\n", $m->get_current_version());
+} else {
+	print "INFO: Did not find an existing schema\n";
+}
+
 $m->migrate or die "FATAL: Database migration failed!\n";
 
 print "INFO: Completed the migration to version $version\n";
