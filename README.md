@@ -36,6 +36,7 @@ Installation
 3. Copy all files from **Repository**\\deploy into **ArmA2**\\  
 4. Run the following SQL code as the **root** user (be **sure** to change the password from CHANGEME):  
 
+		create database dayz;
 		create user 'dayz'@'localhost' identified by 'CHANGEME';  
 		grant all privileges on dayz.* to 'dayz'@'localhost';
 
