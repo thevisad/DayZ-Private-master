@@ -17,9 +17,6 @@ GetOptions(
 	'help'
 );
 
-# Now die if we are missing options
-# exit pod2usage
-
 my %db = (
 	'host' => $args{'hostname'} ? $args{'hostname'} : 'localhost',
 	'user' => $args{'username'} ? $args{'username'} : 'dayz',
@@ -29,11 +26,11 @@ my %db = (
 );
 
 if ($args{'help'}) {
-	print "usage: db_migrate.pl [--host --user --pass --name --port --version]\n";
+	print "usage: db_migrate.pl [--host <hostname>] [--user <username>] [--pass <password>] [--name <dbname>] [--port <port>] [--version <version>]\n";
 	exit;
 }
 
-my $version = $args{'version'} ? $args{'version'} : "0.01";
+my $version = $args{'version'} ? $args{'version'} : "0.03";
 
 print "INFO: Trying to connect to $db{'host'}, database $db{'name'} as $db{'user'}\n";
 
