@@ -18,6 +18,7 @@ Prerequisites
  - Microsoft Visual C++ 2010 Redistributable (http://www.microsoft.com/en-us/download/details.aspx?id=8328)
  - Microsoft .NET Framework 4 Client Profile (http://www.microsoft.com/download/en/details.aspx?id=24872)
  - The decimal separator on your server MUST BE a period. If it is a comma, vehicle spawning (at least) will not work correctly.
+ - A working Perl interpreter - Strawberry Perl is recommended (http://strawberryperl.com/)
 
 Directories
 ===========
@@ -33,22 +34,20 @@ Installation
 1. Download DayZ 1.7.2.5 and place the PBO files in **Repository**\\@DayZ\\Addons.
 2. Enter **Repository** and run **repack.bat**.
 3. Copy all files from **Repository**\\deploy into **ArmA2**\\
-4. Run **Repository**\\dayz2_0.sql on your MySQL server as the **root** user. Do **NOT** use MySQL Workbench to run the SQL queries, it will not work. I recommend "TOAD for MySQL," but every user will have their own preference.
-5. Run **Repository**\\2_0to2_1.sql on your MySQL server as the **root** user.
-6. Run **Repository**\\2_1to2_2.sql on your MySQL server as the **root** user.
-6. Run the following SQL code as the **root** user (be **sure** to change the password from CHANGEME):  
+4. Run the following SQL code as the **root** user (be **sure** to change the password from CHANGEME):  
 
 		create user 'dayz'@'localhost' identified by 'CHANGEME';  
 		grant all privileges on dayz.* to 'dayz'@'localhost';
 
-7. Ensure that the username and password in **ArmA2**\\databases.txt match the user created in the previous step.
-8. Adjust server name/passwords in **ArmA2**\\Bliss\\config.cfg
-9. Adjust the **timezone** field in the instances table for instance 1. This is an offset applied to the time on your server. Therefore, if your Windows clock says 5:00 PM / 17:00 and your timezone is set to -5, it will be noon on your server. 
-10. Adjust the **loadout** field in the instances table for instance 1. Some options:
+5. Run `perl -w db_migrate.pl`. Use the `--help` flag to get information on how to use this utility.
+6. Ensure that the username and password in **ArmA2**\\databases.txt match the user created in the previous step.
+7. Adjust server name/passwords in **ArmA2**\\Bliss\\config.cfg
+8. Adjust the **timezone** field in the instances table for instance 1. This is an offset applied to the time on your server. Therefore, if your Windows clock says 5:00 PM / 17:00 and your timezone is set to -5, it will be noon on your server. 
+9. Adjust the **loadout** field in the instances table for instance 1. Some options:
 	- Default DayZ loadout - **[]**
 	- Survival loadout - **[["ItemMap","ItemCompass","ItemMatchbox","FoodCanBakedBeans","ItemKnife","FoodCanBakedBeans"],["ItemTent","ItemBandage","ItemBandage"]]**
 	- PvP loadout - **[["Mk_48_DZ","NVGoggles","Binocular_Vector","M9SD","ItemGPS","ItemToolbox","ItemEtool","ItemCompass","ItemMatchbox","FoodCanBakedBeans","ItemKnife","ItemMap","ItemWatch"],[["100Rnd_762x51_M240",47],"ItemPainkiller","ItemBandage","15Rnd_9x19_M9SD","100Rnd_762x51_M240","ItemBandage","ItemBandage","15Rnd_9x19_M9SD","15Rnd_9x19_M9SD","15Rnd_9x19_M9SD","ItemMorphine","PartWoodPile"]]**
-11. Run **ArmA2**\\server.bat to start the server.
+10. Run **ArmA2**\\server.bat to start the server.
 
 Vehicles
 ========
