@@ -66,7 +66,7 @@ if ($args{'cleanup'}) {
 		my @pos = split(',', $row->{pos});
 		my $valid = 1;
 		if ($db{'world'} eq 'chernarus') {
-			if ($pos[1] > 14700 || $pos[2] > 15360) {
+			if ($pos[1] < 0 || $pos[2] < 0 || $pos[1] > 14700 || $pos[2] > 15360) {
 				$valid = 0;
 			}
 		} else {
