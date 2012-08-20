@@ -61,20 +61,19 @@ if ($args{'cleanup'}) {
 	$sth = $dbh->prepare("select id,pos from objects");
 	$sth->execute() or die "Couldn't get list of object positions\n";
 	while (my $row = $sth->fetchrow_hashref()) {
-		$row->{pos} =~ s/[\[|\]|\s]//g;
+		$row->{pos} =~ s/[\[\]\s]//g;
+		$row->{pos} =~ s/\|/,/g;
 		my @pos = split(',', $row->{pos});
-		my $isValid = 1;
-		my $x = $pos[1];
-		my $y = $pos[2];
+		my $valid = 1;
 		if ($db{'world'} eq 'chernarus') {
-			if ($x > 14700 || $y > 15360) {
-				$isValid = 0;
+			if ($pos[1] > 14700 || $pos[2] > 15360) {
+				$valid = 0;
 			}
 		} else {
 			print "Cannot check valid bounds for the world $db{'world'}\n";
 		}
 
-		if ($isValid == 0) {
+		if ($valid == 0) {
 			$delSth = $dbh->prepare("delete from objects where id = $row->{id}");
 			$delSth->execute() or die "Failed while deleting an out-of-bounds object";
 			print "Vehicle at $pos[1], $pos[2] was OUT OF BOUNDS and was deleted\n";
