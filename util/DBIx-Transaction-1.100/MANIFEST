@@ -1,0 +1,12 @@
+Changes
+lib/DBIx/Transaction.pm
+lib/DBIx/Transaction.pod
+lib/DBIx/Transaction/db.pm
+lib/DBIx/Transaction/st.pm
+Makefile.PL
+MANIFEST			This list of files
+README
+t/DBI_RootClass.t
+t/DBIx-Transaction.t
+t/Makefile.t.disabled
+t/tlib/DBIx/Transaction/Test.pm

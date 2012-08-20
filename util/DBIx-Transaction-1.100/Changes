@@ -1,0 +1,65 @@
+Revision history for Perl extension DBIx-Transaction.
+
+1.100   2009/09/17
+        - New feature: Ability to re-run a transaction if it fails
+          (really, ability to re-run a transaction whenever you want...)
+        - Updated most errors to use DBI's errstr() system instead of
+          croaking. The only exception is this new retry feature, becuase
+          DBI like's to wipe out it's error condition when the rollback
+          happens...
+
+1.003   2009/08/19
+        - Apply a patch from Toru Yamaguchi (http://search.cpan.org/~zigorou/)
+          to support DBI's "RootClass" attribute.
+
+1.002   2008/01/22
+        - Return errors from the perspective of the caller.
+
+1.001   2008/01/17
+        - Retain the error string as well as the caller if there is an error.
+
+1.000   2008/01/17
+        - Make "execute()" log who called it if there is an error.
+
+0.008   2006/03/13
+        - Get rid of our META.yml. It's confusing too many automated
+          testers!
+
+0.007   2006/02/24
+        - Got rid of Test::CPANpm test for now, we need a better
+          system to detect automated testing, etc.
+        - Perl 5.6.1 always returns a scalar value for do();
+          changed test_opts.ph to be compatible with that.
+        - When a transaction error or subtransaction rollback
+          occurs, then a commit happens later, make the error that
+          comes from commit() display the file name and line number
+          of the original error.
+
+0.006   2006/01/16
+        - Added debugging to Makefile.t to see why our AUTOMATED_TESTING
+          variable isn't being passed along.
+
+0.005   2006/01/13
+        - After discussion on <dbi-users@perl.org> and <perl-qa@perl.org>,
+          switch to only depending on DBD::SQLite2 if AUTOMATED_TESTING
+          is set: that way, smoke testers need it to get a green light on
+          testers.cpan.org, but end users don't.
+
+0.004   2006/01/11
+        - Use DBI_DSN for the default testing DSN, if available
+        - Make automated testing more reliable by depending on DBD::SQLite2
+          if we're testing against it, since it's the default.
+
+0.003   2005/12/30
+        - Added a new "transaction()" convienence method which
+          runs a block of code inside a transaction. (db.pm)
+
+0.002   2005/11/30
+        - Made do() and execute() poison a transaction if there is an
+          error. This is the "lowest common denominator" DBMS behaviour
+          so enforcing it here makes all DBMS have the same error behaviour
+          (one error ruins the whole transaction) when running under
+          DBIx::Transaction.
+
+0.001   2005/11/25
+        - Initial public release

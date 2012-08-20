@@ -1,0 +1,136 @@
+=pod
+=head1 NAME
+
+DBIx::Transaction - Allow transactions to be nested in DBI
+
+=head1 SYNOPSIS
+
+  use DBIx::Transaction;
+
+  my $dbh = DBIx::Transaction->connect(
+    'DBI:mysql:database=foo', $user, $pass
+  );
+  
+  sub do_something {
+    my($dbh, $num) = @_;
+    return $dbh->transaction(sub {
+        $dbh->do("DO SOMETHING IN SQL WHERE num = $num");
+    });
+  }
+  
+  my $good = 1;
+  $dbh->begin_work;
+  for my $i (1 .. 10) {
+    $good = 0 unless do_something($dbh, $i);
+  }
+  
+  if($good) {
+    $dbh->commit;
+    print "Every nested transaction worked and the database has been saved.\n";
+  } else {
+    $dbh->rollback;
+    print "A nested transaction rolled back, so nothing happened.\n";
+  }
+
+=head1 DESCRIPTION
+
+C<DBIx::Transaction> is a wrapper around DBI that helps you manage your database
+transactions. It pays attention to nested transactions (having a
+begin_work/commit..rollback inside if another begin_work/commit..rollback)
+and the AutoCommit attribute of your database handle, making your code simpler
+and more resistant to different database drivers and options.
+
+=head1 USAGE
+
+Let's say you are writing an authentication system that manages cookies,
+sessions, user passwords, etc. You want to provide methods that reset a
+user's password, return a session cookie, and create a new user. You want
+each of these methods to be atomic database operations that occur within
+a transaction.
+
+But creating a new user involves not only adding the user record, but also
+resetting their password, and creating a session ID to send back to the
+client. If any one of those steps fail, you don't want any changes to your
+database to take place.
+
+This is where DBIx::Transaction comes in. Just code each of your methods 
+as if they were a single transaction. Then code
+a method that starts a transaction, calls those methods, then commits if
+they are successful, or rolls back if they are not. C<DBIx::Transaction>
+will only start one transaction on the database for this big method; if
+you roll back the big transaction, every "nested" transaction below it will
+be rolled back with it.
+
+This way, you can safely have big operations be
+atomic, when they in fact run a bunch of smaller operations that can also
+be atomic on their own, without duplicating code all over the place or
+having to keep an eye on the transaction state yourself.
+
+Also, what if your module is intended for general public use? You're accepting
+a database handle as an initializer, and it's up to the developer using your
+module to decide if "AutoCommit" is turned on. DBI only likes the begin_work()
+method if "AutoCommit" is turned on, which results in this idiom being
+sprinkled in code everywhere:
+
+  $dbh->begin_work if $dbh->{AutoCommit};
+  
+With DBIx::Transaction, you don't have to worry about that. It watched what
+AutoCommit was set to when a connect method was called and takes care of that
+for you.
+
+=head1 METHODS
+
+DBIx::Transaction overrides some of DBI's core methods to make them behave
+slightly differently. Below is a description of each class method that is
+overridden in the DBIx::Transaction package. Also check
+L<DBIx::Transaction::db> for descriptions of object methods that are overridden
+on database handles. There is also one convienence method for setting up
+nested transactions: see
+L<the "transaction" method in DBIx::Transaction::db|DBIx::Transaction::db/item_transaction>.
+
+=head2 Overridden Methods
+
+=over
+
+=item connect
+
+Connect to the database as described in L<DBI/connect>. Also sets up the
+resulting database handle for use with DBIx::Transaction.
+
+=item connect_cached
+
+Connect to the database as described in L<DBI/connect_cached>. Also sets
+up the resulting database handle for use with DBIx::Transaction.
+
+=back
+
+=head2 Other Methods
+
+=over
+
+=item connect_method($method, [$method's arguments])
+
+Use the method named in C<$method> to connect to the database. If the
+connection is successful, set up the resulting database handle for use
+with DBIx::Transaction.
+
+This method is not intended to be called directly; it is used by the
+L<connect|/item_connect> and L<connect_cached|/item_connect_cached> methods described above.
+
+=back
+
+=head1 SEE ALSO
+
+L<DBI>, L<DBIx::Transaction::db>
+
+=head1 AUTHOR
+
+Tyler "Crackerjack" MacDonald <japh@crackerjack.net>
+
+=head1 LICENSE
+
+Copyright 2008 Tyler MacDonald.
+
+This is free software; you may redistribute it under the same terms as perl itself.
+
+=cut
