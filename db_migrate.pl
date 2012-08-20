@@ -28,6 +28,11 @@ my %db = (
 	'port' => $args{'port'} ? $args{'port'} : '3306'
 );
 
+if ($args{'help'}) {
+	print "usage: db_migrate.pl [--host --user --pass --name --port --version]\n";
+	exit;
+}
+
 my $version = $args{'version'} ? $args{'version'} : "0.01";
 
 print "INFO: Trying to connect to $db{'host'}, database $db{'name'} as $db{'user'}\n";
