@@ -38,28 +38,28 @@ my %db = (
 
 my $dsn = "dbi:mysql:$db{'name'}:$db{'host'}:$db{'port'}";
 print "INFO: Instance ".$db{'instance'}.", user is ".$db{'user'}.", database is ".$db{'name'}."\n";
-my $dbh = DBI->connect($dsn, $db{'user'}, $db{'pass'}) or die "Couldn't connect to db: ".DBI->errstr;
+my $dbh = DBI->connect($dsn, $db{'user'}, $db{'pass'}) or die "Couldn't connect to db: ".DBI->errstr."\n";
 
 #Cleanup various objects
 print "INFO: Cleaning up damaged or old objects\n";
 my $sth = $dbh->prepare("delete from objects using objects inner join main on objects.oid = main.id and main.death = 0 where objects.otype = 'TentStorage' and objects.lastupdate < now() - interval 4 day") or die;
-$sth->execute() or die "Couldn't cleanup tents for dead characters";
+$sth->execute() or die "Couldn't cleanup tents for dead characters\n";
 $sth = $dbh->prepare("delete from objects where damage >= 0.95") or die;
-$sth->execute() or die "Couldn't cleanup destroyed vehicles";
+$sth->execute() or die "Couldn't cleanup destroyed vehicles\n";
 $sth = $dbh->prepare("delete from objects where otype='Wire_cat1' and lastupdate < now() - interval 3 day") or die;
-$sth->execute() or die "Couldn't cleanup wire fence";
+$sth->execute() or die "Couldn't cleanup wire fence\n";
 $sth = $dbh->prepare("delete from objects where otype='Hedgehog_DZ' and lastupdate < now() - interval 4 day") or die;
-$sth->execute() or die "Couldn't cleanup tank traps";
+$sth->execute() or die "Couldn't cleanup tank traps\n";
 $sth = $dbh->prepare("delete from objects where otype='Sandbag1_DZ' and lastupdate < now() - interval 8 day") or die;
-$sth->execute() or die "Couldn't cleanup sandbags";
+$sth->execute() or die "Couldn't cleanup sandbags\n";
 $sth = $dbh->prepare("delete from objects where otype='TrapBear' and lastupdate < now() - interval 5 day") or die;
-$sth->execute() or die "Couldn't cleanup beartraps";
+$sth->execute() or die "Couldn't cleanup beartraps\n";
 
 #Remove out-of-bounds vehicles
 if ($args{'cleanup'}) {
 	print "INFO: Starting boundary check for objects\n";
 	$sth = $dbh->prepare("select id,pos from objects");
-	$sth->execute() or die "Couldn't get list of object positions";
+	$sth->execute() or die "Couldn't get list of object positions\n";
 	while (my $row = $sth->fetchrow_hashref()) {
 		$row->{pos} =~ s/[\[|\]|\s]//g;
 		my @pos = split(',', $row->{pos});
@@ -71,13 +71,13 @@ if ($args{'cleanup'}) {
 				$isValid = 0;
 			}
 		} else {
-			print "Cannot check valid bounds for the world $db{'world'}";
+			print "Cannot check valid bounds for the world $db{'world'}\n";
 		}
 
 		if ($isValid == 0) {
 			$delSth = $dbh->prepare("delete from objects where id = $row->{id}");
 			$delSth->execute() or die "Failed while deleting an out-of-bounds object";
-			print "Vehicle at $x, $y was OUT OF BOUNDS and was deleted\n";
+			print "Vehicle at $pos[1], $pos[2] was OUT OF BOUNDS and was deleted\n";
 		}
 	}
 }
@@ -166,12 +166,12 @@ $sth = $dbh->prepare($query);
 if($do==1)
 {
 	print $query."\n";
-	$sth->execute() or die "Insert query failed";
-	print "INFO: Spawed $n randomly damaged vehicles!";
+	$sth->execute() or die "Insert query failed\n";
+	print "INFO: Spawed $n randomly damaged vehicles!\n";
 }
 else
 {
-	print "ERROR: Reached maximum vehicle limit for these types of vehicles! Not spawning any vehicles...";
+	print "ERROR: Reached maximum vehicle limit for these types of vehicles! Not spawning any vehicles...\n";
 }
 sub genDamage
 {
