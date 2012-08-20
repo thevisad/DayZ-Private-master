@@ -35,7 +35,7 @@ my $version = $args{'version'} ? $args{'version'} : "0.03";
 print "INFO: Trying to connect to $db{'host'}, database $db{'name'} as $db{'user'}\n";
 
 my $dbh = DBIx::Transaction->connect(
-	"dbi:mysql:$db{'name'}:$db{'host'}",
+	"dbi:mysql:$db{'name'}:$db{'host'}:$db{'port'}",
 	$db{'user'},
 	$db{'pass'}
 ) or die "FATAL: Could not connect to MySQL - " . DBI->errstr . "\n";
