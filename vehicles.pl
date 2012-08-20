@@ -87,7 +87,7 @@ my @vehicleLimits = (4,3,3,3,10,3,3,3,3,4,1,1,2,4,1,3,1);
 my @chances = (0.65,0.7,0.65,0.7,0.95,0.25,0.55,0.55,0.75,0.55,0.55,0.55,0.55,0.75,0.55,0.55,0.45);
 my $n=0;
 my $do=0;
-$sth = $dbh->prepare("SELECT COUNT(*) FROM objects WHERE instance=? AND otype NOT IN ('TentStorage','Hedgehog_DZ','Wire_cat1')") or die;
+$sth = $dbh->prepare("SELECT COUNT(*) FROM objects WHERE instance=? AND otype NOT IN ('TentStorage','Hedgehog_DZ','Wire_cat1','Sandbag1_DZ','TrapBear')") or die;
 $sth->execute($db{'instance'}) or die;
 my $globalVehicleCount;
 my @d =$sth->fetchrow_array();
