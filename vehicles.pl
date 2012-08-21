@@ -42,7 +42,7 @@ my $dbh = DBI->connect($dsn, $db{'user'}, $db{'pass'}) or die "Couldn't connect 
 
 #Cleanup various objects
 print "INFO: Cleaning up damaged or old objects\n";
-my $sth = $dbh->prepare("delete from objects using objects inner join main on objects.oid = main.id and main.death = 0 where objects.otype = 'TentStorage' and objects.lastupdate < now() - interval 4 day") or die;
+my $sth = $dbh->prepare("delete from objects using objects inner join main on objects.oid = main.id and main.death = 1 where objects.otype = 'TentStorage' and objects.lastupdate < now() - interval 4 day") or die;
 $sth->execute() or die "Couldn't cleanup tents for dead characters\n";
 $sth = $dbh->prepare("delete from objects where damage >= 0.95") or die;
 $sth->execute() or die "Couldn't cleanup destroyed vehicles\n";
