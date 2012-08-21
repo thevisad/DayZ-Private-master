@@ -36,8 +36,7 @@
 5 "enable" !"this enableSimulation false;this allowDammage false;this disableAI 'FSM';this disableAI 'ANIM';this disableAI 'MOVE';"
 5 "spawn" !"spawn BIS_Effects_AirDestruction" !"spawn BIS_Effects_AirDestructionStage2" !"spawn BIS_Effects_Burn"
 5 "for"
-1 "this" !"this enableSimulation false;this allowDammage false;this disableAI 'FSM';this disableAI 'ANIM';this disableAI 'MOVE';" !"_v setVehicleInit format [\"[this, %1, %2,false,true]spawn BIS_Effects_Burn\",_int, _t];" 
-!"_v setVehicleInit \"[this] spawn BIS_Effects_AirDestruction\";"
+1 "this" !"this enableSimulation false;this allowDammage false;this disableAI 'FSM';this disableAI 'ANIM';this disableAI 'MOVE';" !"_v setVehicleInit format [\"[this, %1, %2,false,true]spawn BIS_Effects_Burn\",_int, _t];" !"_v setVehicleInit \"[this] spawn BIS_Effects_AirDestruction\";"
 //all below detected already by above
 //5 "dayz_serverObjectMonitor set [count dayz_serverObjectMonitor, _object];"
 5 "beeeh"

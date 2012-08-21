@@ -1,6 +1,12 @@
 deadbeefdeadbeefdeadbeefdeadbeef -1 Community Banfile
 d34db33fd34db33fd34db33fd34db33f -1 #########################################
 deaddeaddeaddeaddeaddeaddeaddead -1 #########################################
+2b3b8f7898b322baf196af8f1d454df9 -1 W 4d9b2182 0x0f44d938
+1ed92d0ccc51febb1d852994ff8fc3d8 -1 W 4d9b2182 0x0f44d938
+2417562a8d7d2340e82a5be427df1609 -1 W 4d9b2182 0x0f44d938
+167fc51bec1da815ca9e67b3b73edb23 -1 W 4d9b2182 0x0f44d938
+de43366379499e7d6cdc418772ad9bdf -1 W 4d9b2182 0x0f44d938
+119663bd470dba77d01f8d34f61b4497 -1 W 4d9b2182 0x0f44d938
 0041c1cc885e9d3d88b6aea1d957d4e9 -1 W 4d9b2182 0x0f44d938
 004840065fcf9c7f0273f6e85f6b86d5 -1 W 4d9b2182 0x0f44d938
 00a9edc04f198e4d60afc7f47406f0d0 -1 W 4d9b2182 0x0f44d938
@@ -483,7 +489,6 @@ deaddeaddeaddeaddeaddeaddeaddead -1 #########################################
 87d1e2a6486d18ea9926d7bca498de85 -1 W 4d9b2182 0x0f44d938
 87e158d5022dcb80f5f4f19dc4a05cb3 -1 W 91d9cb59 0xDEADBEEF
 8809858936b6eecabca8570cab6b6af3 -1 W 91d9cb59 0xDEADBEEF
-882dbd168d283aa2d6f8d1a4ce94c52c -1 W 4d9b2182 0x0f44d938
 882fb01ed3b766a33a78c5442f305b8d -1 W 4d9b2182 0x0f44d938
 886e50aff2beb52cb8c54fea0a26d3c6 -1 W 4d9b2182 0x0f44d938
 8889b1db6bfc88a8bfae0f9f9a2048da -1 W 4d9b2182 0x0f44d938
@@ -958,3 +963,4 @@ fe58edbba830d44063bfafd08a267a42 -1 W 4d9b2182 0x0f44d938
 ff00afb58cadde624fb7bd4eb30fbb1f -1 W b670e92e 0x228c70bf
 ff7c99d8f1f9f560c9ad9cf2b0b69163 -1 W 91d9cb59 0xDEADBEEF
 ffdf4cfaa25375f870b5da523c2253b9 -1 W 4d9b2182 0x0f44d938
+
