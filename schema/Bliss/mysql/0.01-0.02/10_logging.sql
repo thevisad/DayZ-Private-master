@@ -1,3 +1,4 @@
+drop table if exists log_code;
 create table if not exists log_code (
 	id int(11) unsigned not null auto_increment,
 	name varchar(50) not null,
@@ -7,6 +8,7 @@ create table if not exists log_code (
 	constraint uq_log_code unique key (name)
 ) character set utf8 engine=MyISAM;
 
+drop table if exists log_entry;
 create table if not exists log_entry (
 	id int(11) unsigned not null auto_increment,
 	profile_id int(11) unsigned not null,
