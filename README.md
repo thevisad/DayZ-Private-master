@@ -51,6 +51,16 @@ Installation
 	- PvP loadout - **[["Mk_48_DZ","NVGoggles","Binocular_Vector","M9SD","ItemGPS","ItemToolbox","ItemEtool","ItemCompass","ItemMatchbox","FoodCanBakedBeans","ItemKnife","ItemMap","ItemWatch"],[["100Rnd_762x51_M240",47],"ItemPainkiller","ItemBandage","15Rnd_9x19_M9SD","100Rnd_762x51_M240","ItemBandage","ItemBandage","15Rnd_9x19_M9SD","15Rnd_9x19_M9SD","15Rnd_9x19_M9SD","ItemMorphine","PartWoodPile"]]**
 10. Run **ArmA2**\\server.bat to start the server.
 
+Upgrading
+=========
+
+If you are on a previous version, use the following information to guide you on the path to a painless upgrade. Look in the commit log when you update to the latest version of the repository.  
+If you see that SQL files or db_migrate.pl have changed, then you **must** run `perl -w db_migrate.pl` (with appropriate options, run it with `--help` for more information) to upgrade your database to the latest version.  
+If SQF files (game script) has changed, then you **must** run repack.bat and copy the **Repo**\\deploy\\@Bliss directory into **ArmA 2** and overwrite dayz_server.pbo.  
+If configuration files and BattlEye anti-cheat files have changed, you will need to backup and overwrite your existing versions of these files. Take care to change any default server names, passwords or similar back to their customized values after copying the new versions into your **ArmA2** directory.
+
+If you have a change that can make this process easier without adding bloat to the repository, the team would be happy to hear from you. Open an issue or see the Support section below.
+
 Vehicles
 ========
 
