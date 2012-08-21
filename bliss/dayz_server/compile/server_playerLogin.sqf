@@ -12,7 +12,7 @@ if (count _this > 2) then {
 waitUntil{allowConnection};
 
 //Variables
-_inventory =	initialLoadout;
+_inventory =	[];
 _backpack = 	[];
 _items = 		[];
 _magazines = 	[];
@@ -89,16 +89,16 @@ if (!_isNew) then {
 
 	//Record initial inventory
 	_config = (configFile >> "CfgSurvival" >> "Inventory" >> "Default");
+	_mags = getArray (_config >> "magazines");
+	_wpns = getArray (_config >> "weapons");
 	_bcpk = getText (_config >> "backpack");
 	_randomSpot = true;
-	//Use default if loadout is not specified
-	if (str(_inventory) == "[]") then {
-		_mags = getArray (_config >> "magazines");
-		_wpns = getArray (_config >> "weapons");
-		_inventory = [_wpns,_mags];
+	_dbLoadout = [_wpns,_mags];
+	if (str(initialLoadout) != "[]") then {
+		_dbLoadout = initialLoadout;
 	};
 	//Wait for HIVE to be free
-	_key = format["CHILD:203:%1:%2:%3:",_charID,_inventory,[_bcpk,[],[]]];
+	_key = format["CHILD:203:%1:%2:%3:",_charID,_dbLoadout,[_bcpk,[],[]]];
 	_key spawn server_hiveWrite;
 };
 diag_log ("LOGIN LOADED: " + str(_playerObj) + " Type: " + (typeOf _playerObj));
