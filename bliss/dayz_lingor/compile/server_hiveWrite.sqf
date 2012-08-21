@@ -100,4 +100,3 @@ switch (_key) do
 		"Arma2Net.Unmanaged" callExtension format ["Arma2NETMySQL ['dayz','delO','[myuid=%1]']",_uid];
 	};
 };
-
