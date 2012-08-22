@@ -64,10 +64,9 @@ If you have a change that can make this process easier without adding bloat to t
 Vehicles
 ========
 
-To add vehicles, you will need a working Perl installation. Strawberry Perl (http://strawberryperl.com) is a Windows Perl environment with a simple installer.
-Once you have access to Perl from the command-line, run "perl vehicles.pl" to get help information on how to invoke the script.
+Run `perl vehicles.pl` to get help information on how to invoke the vehicle spawn script correctly. You will need to run the vehicle script and point it to your database to get vehicles to spawn in-game. You **MUST** set the correct world when running vehicles.pl, if you leave the world unspecified the default is Chernarus which will not work correctly if you are running Lingor island. The script can be run periodically - it will not delete all vehicles every time it runs. It will clean up user-deployed objects (wire fence, tents, tank traps, etc) in the same way that official DayZ does. If you run vehicles.pl with the `--cleanup` argument, it will also check for out-of-bounds objects and delete them.
 
-Vehicles added via database manipulation are only available after a server restart.
+**NOTE:** Vehicles added via database manipulation are only available after a server restart.
 
 Scheduler
 =========

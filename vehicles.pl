@@ -7,8 +7,6 @@ use DBI;
 use DBD::mysql;
 use Getopt::Long;
 
-print "INFO: Started vehicle insertion.\n";
-
 my %args = ();
 
 GetOptions(
@@ -36,8 +34,15 @@ my %db = (
 	'world' => $args{'world'} ? $args{'world'} : 'chernarus'
 );
 
+if ($args{'help'}) {
+	print "usage: vehicles.pl [--host hostname] [--user username] [--pass password] [--port port] [--limit limit] [--world chernarus|lingor]\n";
+	print "       If you run a Lingor island server, you MUST run vehicles.pl with \"--world lingor\" or vehicles will not spawn correctly\n";
+	exit;
+}
+
 my $dsn = "dbi:mysql:$db{'name'}:$db{'host'}:$db{'port'}";
-print "INFO: Instance ".$db{'instance'}.", user is ".$db{'user'}.", database is ".$db{'name'}."\n";
+print "INFO: Instance $db{'instance'}, user is $db{'user'}, database is $db{'name'}\n";
+print "INFO: World is $db{'world'}\n";
 my $dbh = DBI->connect($dsn, $db{'user'}, $db{'pass'}) or die "Couldn't connect to db: ".DBI->errstr."\n";
 
 #Cleanup various objects
@@ -115,8 +120,8 @@ for (my $i=0;$i<scalar @vehicles;$i++)
 		#print "ModChance: ".$chance."\n";
 	}
 	print "INFO: Generating ".$spawnCount." vehicles of type: ".$vehicle."\n";
-	my $sts = $dbh->prepare('SELECT * FROM spawns WHERE otype like ? AND NOT uuid IN (SELECT uid FROM objects WHERE instance = ?) ORDER BY RAND() LIMIT ?') or die;
-	$sts->execute($vehicle,$db{'instance'},$spawnCount) or die;
+	my $sts = $dbh->prepare('SELECT * FROM spawns WHERE otype like ? AND world = ? AND NOT uuid IN (SELECT uid FROM objects WHERE instance = ?) ORDER BY RAND() LIMIT ?') or die;
+	$sts->execute($vehicle,$db{'world'},$db{'instance'},$spawnCount) or die;
 	while ((@data = $sts->fetchrow_array())&&$globalVehicleCount+$n<$db{'limit'})
 	{
 		print "Generating vehicle parts damage!\n";
