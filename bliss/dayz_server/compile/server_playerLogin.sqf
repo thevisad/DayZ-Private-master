@@ -95,7 +95,8 @@ if (!_isNew) then {
 	_randomSpot = true;
 	_dbLoadout = [_wpns,_mags];
 	if (str(initialLoadout) != "[]") then {
-		_dbLoadout = initialLoadout;
+		_inventory = initialLoadout;
+		_dbLoadout = _inventory;
 	};
 	//Wait for HIVE to be free
 	_key = format["CHILD:203:%1:%2:%3:",_charID,_dbLoadout,[_bcpk,[],[]]];
