@@ -54,10 +54,12 @@ Installation
 Upgrading
 =========
 
-If you are on a previous version, use the following information to guide you on the path to a painless upgrade. Look in the commit log when you update to the latest version of the repository.  
+Depending on what has changed since you deployed your server, you may need to perform one or more steps to do a clean upgrade to the latest code. Look for the following in the commit log (specifically, the files that were changed) when you update to the latest version of the repository:
 If you see that SQL files or db_migrate.pl have changed, then you **must** run `perl -w db_migrate.pl` (with appropriate options, run it with `--help` for more information) to upgrade your database to the latest version.  
 If SQF files (game script) has changed, then you **must** run repack.bat and copy the **Repo**\\deploy\\@Bliss directory into **ArmA 2** and overwrite dayz_server.pbo.  
 If configuration files and BattlEye anti-cheat files have changed, you will need to backup and overwrite your existing versions of these files. Take care to change any default server names, passwords or similar back to their customized values after copying the new versions into your **ArmA2** directory.
+
+These are the areas you will need to inspect to ensure a smooth upgrade. If database and code changes were not made at the same time and you do not read the history thoroughly, you may miss important changes and skip vital steps. It will save you frustration in the long run if you repack and redeploy @Bliss, run `perl -w db_migrate.pl` and check for any new or changed files in **Repo**\\Deploy whenever you would like to update.
 
 If you have a change that can make this process easier without adding bloat to the repository, the team would be happy to hear from you. Open an issue or see the Support section below.
 
@@ -98,8 +100,6 @@ Gotchas / Known Bugs
 Character data can become desynchronized if the player was connected within several minutes of server shutdown. We strongly recommend that you wait 5 minutes after all players have disconnected before shutting down a public server.
 
 All vehicles and tents must be saved using the "Save <Object>" scroll menu item, especially if preparing for a server shutdown.
-
-Some tents will not be removed from the database when they are repacked. This means that a "duplicate" tent will be created and on server restart the repacked tent will appear once again.
 
 Any bug present in the official client or server will probably also exist in this solution. This includes:
 
