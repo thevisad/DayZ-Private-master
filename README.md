@@ -37,7 +37,7 @@ Installation
 4. Run the following SQL code as the **root** user (be **sure** to change the password from CHANGEME):  
 
 		create database dayz;
-		create user 'dayz'@'localhost' identified by 'CHANGEME';  
+		create user 'dayz'@'localhost' identified by 'CHANGEME';
 		grant all privileges on dayz.* to 'dayz'@'localhost';
 
 4. Run `setup_perl.bat`. This will install necessary modules for you.  
@@ -99,10 +99,7 @@ Gotchas / Known Bugs
 
 Character data can become desynchronized if the player was connected within several minutes of server shutdown. We strongly recommend that you wait 5 minutes after all players have disconnected before shutting down a public server.
 
-All vehicles and tents must be saved using the "Save <Object>" scroll menu item, especially if preparing for a server shutdown.
-
-Any bug present in the official client or server will probably also exist in this solution. This includes:
-
+Any bug present in the official client or server will probably also exist in this solution. Please do **not** report these as issues on GitHub. Some of the official bugs:
  - Texture issues / graphical corruption / artifacts
  - Loss of backpack on model change (due to bandit morphing) or on respawn
  - Spawning in debug plains or in the ocean
