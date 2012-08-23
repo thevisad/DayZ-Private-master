@@ -39,7 +39,7 @@ switch (_key) do
 		if(_mmodel == "") then { _mmodel = "any" };
 		_mhumanity = _result select 17;
 		if(_mhumanity == "0") then { _mhumanity = 0 };
-		"blisshive" callExtension format ["execute,call update(%1, '%2', '%3', '%4', '%5', %6, %7, %8, '%9', %10, %11, %12, %13, %14, '%15')", _mid,_result select 3,_result select 4,_result select 5,_result select 6,_mate,_mdrank,_mtime,_mmodel,_mhumanity,_result select 9,_result select 10,_result select 14,_result select 15,_result select 13];
+		"blisshive" callExtension format ["execute,call `update`(%1, '%2', '%3', '%4', '%5', %6, %7, %8, '%9', %10, %11, %12, %13, %14, '%15')", _mid,_result select 3,_result select 4,_result select 5,_result select 6,_mate,_mdrank,_mtime,_mmodel,_mhumanity,_result select 9,_result select 10,_result select 14,_result select 15,_result select 13];
 	};
 	case "202":{
 		//Character Death
@@ -49,7 +49,7 @@ switch (_key) do
 	case "203":{
 		//Player Update
 		//diag_log("PLAYERUPDATE:203");
-		"blisshive" callExtension format ["execute,call update(%1, '[]', '%2', '%3', '[]', -1, -1, 0, 'any', 0, 0, 0, 0, 0, '[""""|""aidlpercmstpsnonwnondnon_player_idlesteady04""|36]')", _result select 2,_result select 3, _result select 4];
+		"blisshive" callExtension format ["execute,call `update`(%1, '[]', '%2', '%3', '[]', -1, -1, 0, 'any', 0, 0, 0, 0, 0, '[""""|""aidlpercmstpsnonwnondnon_player_idlesteady04""|36]')", _result select 2,_result select 3, _result select 4];
 	};
 	case "301": {
 		//Create Object
