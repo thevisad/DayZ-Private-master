@@ -1,0 +1,124 @@
+class Difficulties
+{
+	class Recruit
+	{
+		class Flags
+		{
+			Armor=1;
+			FriendlyTag=1;
+			EnemyTag=1;
+			HUD=1;
+			HUDPerm=1;
+			HUDWp=1;
+			HUDWpPerm=1;
+			WeaponCursor=1;
+			AutoAim=1;
+			AutoGuideAT=1;
+			3rdPersonView=1;
+			ClockIndicator=1;
+			Map=1;
+			Tracers=1;
+			AutoSpot=1;
+			UltraAI=0;
+			DeathMessages=1;
+			NetStats=1;
+			VonID=1;
+		};
+		skillFriendly=0.34999999;
+		skillEnemy=0.34999999;
+		precisionFriendly=0.2;
+		precisionEnemy=0.2;
+	};
+	class Regular
+	{
+		class Flags
+		{
+			Armor=1;
+			FriendlyTag=1;
+			EnemyTag=0;
+			HUD=0;
+			HUDPerm=0;
+			HUDWp=0;
+			HUDWpPerm=0;
+			WeaponCursor=1;
+			AutoAim=0;
+			AutoGuideAT=0;
+			3rdPersonView=1;
+			ClockIndicator=1;
+			Map=0;
+			Tracers=1;
+			AutoSpot=0;
+			UltraAI=0;
+			DeathMessages=1;
+			NetStats=1;
+			VonID=1;
+		};
+		skillFriendly=0.44999999;
+		skillEnemy=0.44999999;
+		precisionFriendly=0.34999999;
+		precisionEnemy=0.34999999;
+	};
+	class Veteran
+	{
+		class Flags
+		{
+			Armor=1;
+			FriendlyTag=0;
+			EnemyTag=0;
+			HUD=1;
+			HUDPerm=0;
+			HUDWp=1;
+			HUDWpPerm=0;
+			WeaponCursor=1;
+			AutoAim=0;
+			AutoGuideAT=0;
+			3rdPersonView=1;
+			ClockIndicator=0;
+			Map=0;
+			Tracers=1;
+			AutoSpot=0;
+			UltraAI=0;
+			DeathMessages=0;
+			NetStats=1;
+			VonID=1;
+		};
+		skillFriendly=0.75;
+		skillEnemy=0.75;
+		precisionFriendly=0.75;
+		precisionEnemy=0.75;
+	};
+	class Expert
+	{
+		class Flags
+		{
+			Armor=0;
+			FriendlyTag=0;
+			EnemyTag=0;
+			HUD=1;
+			HUDPerm=0;
+			HUDWp=1;
+			HUDWpPerm=1;
+			WeaponCursor=0;
+			AutoAim=0;
+			AutoGuideAT=0;
+			3rdPersonView=0;
+			ClockIndicator=1;
+			Map=0;
+			Tracers=1;
+			AutoSpot=0;
+			UltraAI=0;
+			DeathMessages=0;
+			NetStats=1;
+			VonID=0;
+		};
+		skillFriendly=0.94999999;
+		skillEnemy=0.94999999;
+		precisionFriendly=0.94999999;
+		precisionEnemy=0.94999999;
+	};
+};
+sceneComplexity=300000;
+shadingQuality=7;
+shadowQuality=3;
+viewDistance=2000;
+terrainGrid=25.0;
