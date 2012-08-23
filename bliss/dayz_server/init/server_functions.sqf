@@ -21,6 +21,8 @@ zombie_findOwner =			compile preprocessFileLineNumbers "\z\addons\dayz_server\co
 server_hiveWrite =			compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\server_hiveWrite.sqf";
 server_hiveReadWrite =		compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\server_hiveReadWrite.sqf";
 
+server_updateNearbyObjects =	compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\server_updateNearbyObjects.sqf";
+
 //event Handlers
 eh_localCleanup =			{
 	_object = _this select 0;

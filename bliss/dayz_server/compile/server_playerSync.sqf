@@ -186,6 +186,7 @@ if (_characterID != "0") then {
 			};
 		};
 
+		[_charPos] call server_updateNearbyObjects;
 		//Reset timer
 		if (_timeSince > 0) then {
 			_character setVariable ["lastTime",(time - _timeLeft)];
