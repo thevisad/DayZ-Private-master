@@ -13,10 +13,12 @@ my $baseDir = "./bliss/missions";
 
 # Determine how to invoke cpbo
 my $repackCmd;
+my $editOpts = "";
 if ($^O eq "linux") {
 	$repackCmd = "wine util/cpbo.exe";
 } elsif ($^O eq "MSWin32") {
 	$repackCmd = "util/cpbo.exe";
+	$editOpts = ".bak";
 }
 
 # Pack the server files
@@ -34,7 +36,7 @@ foreach my $dir (@missions) {
 	if (-d $path) {	
 		if ($dir =~ /dayz_([0-9]{1,}).*/) {
 			my $id = $1;
-			system("perl -pi -e 's/dayZ_instance\\s=\\s[0-9]*/dayZ_instance = ${id}/' ${path}/init.sqf");
+			system("perl -pi${editOpts} -e \"s/dayZ_instance\\s=\\s[0-9]*/dayZ_instance = ${id}/\" ${path}/init.sqf");
 			print "Set instance id to ${id} for ${path}/init.sqf\n";
 		}
 		system("${repackCmd} -y -p ${path} ./deploy/MPMissions/${dir}.pbo");
