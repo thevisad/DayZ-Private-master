@@ -1,8 +1,9 @@
 private ["_args","_mhumanity" , "_mmodel", "_mate", "_mdrank", "_mid", "_mtime", "_result","_uid","_fuel","_damage"];
 
 //diag_log ("Entered hiveWrite with " + _this);
-_result = [_result, ":"] call CBA_fnc_split;
-_mid = [_result select 2,"""",""] call CBA_fnc_replace;
+_args = _this;
+_result = [_args, ":"] call fnc_split;
+_mid = [_result select 2,"""",""] call fnc_replace;
 _key = _result select 1;
 
 switch (_key) do
@@ -94,7 +95,7 @@ switch (_key) do
 		//Delete Object
 		//diag_log("DELOBJ:310");
 		//format["CHILD:310:%1:",_uid];
-		_uid = [_result select 2, "."] call CBA_fnc_split;
+		_uid = [_result select 2, "."] call fnc_split;
 		_uid = _uid select 0;
 		"blisshive" callExtension format ["execute,call delO('%1')", _uid];
 	};

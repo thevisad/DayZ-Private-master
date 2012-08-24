@@ -1,7 +1,5 @@
 waitUntil{!isnil "bis_fnc_init"};
 
-#include "\x\cba\addons\main\script_mod.hpp"
-#include "\x\cba\addons\main\script_macros.hpp"
 #define PREFIX asff
 
 dayz_versionNo = getText(configFile >> "CfgMods" >> "DayZ" >> "version");
