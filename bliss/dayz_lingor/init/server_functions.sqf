@@ -23,6 +23,10 @@ disco_handler = 			compile preprocessFileLineNumbers "\z\addons\dayz_server\comp
 server_hiveWrite =			compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\server_hiveWrite.sqf";
 server_hiveReadWrite =		compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\server_hiveReadWrite.sqf";
 
+fnc_join =			compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\fnc_join.sqf";
+fnc_split = 			compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\fnc_split.sqf";
+fnc_replace =			compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\fnc_replace.sqf";
+
 dayz_maxLocalZombies = 50;
 if(isNil "botPlayers") then { botPlayers = [] };
 publicvariable "dayz_maxLocalZombies";
