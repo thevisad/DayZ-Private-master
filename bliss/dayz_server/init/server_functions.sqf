@@ -23,6 +23,10 @@ server_hiveReadWrite =		compile preprocessFileLineNumbers "\z\addons\dayz_server
 
 server_updateNearbyObjects =	compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\server_updateNearbyObjects.sqf";
 
+fnc_join =			compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\fnc_join.sqf";
+fnc_split = 			compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\fnc_split.sqf";
+fnc_replace =			compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\fnc_replace.sqf";
+
 //event Handlers
 eh_localCleanup =			{
 	_object = _this select 0;
