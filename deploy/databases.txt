@@ -1,5 +1,0 @@
-# Put each database connection you want on a separate line
-# For an example, see the following
-#databasename,ipaddress,port,username,password
-##arma,127.0.0.1,3306,armausername,secret
-dayz,127.0.0.1,3306,dayz,password
