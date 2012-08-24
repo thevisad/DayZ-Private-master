@@ -1,7 +1,6 @@
 private ["_args","_mhumanity" , "_mmodel", "_mate", "_mdrank", "_mid", "_mtime", "_result","_uid","_fuel","_damage"];
 
 //diag_log ("Entered hiveWrite with " + _this);
-_result = [_this,",","|"] call CBA_fnc_replace;
 _result = [_result, ":"] call CBA_fnc_split;
 _mid = [_result select 2,"""",""] call CBA_fnc_replace;
 _key = _result select 1;

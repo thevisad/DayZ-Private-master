@@ -16,7 +16,6 @@ waitUntil{initialized};
 
 //Get initial loadout
 _result = "blisshive" callExtension format ["query,call getLoadout(%1)", dayz_instance];
-_result = [_result,"|",","] call CBA_fnc_replace;
 _result = call compile _result;
 initialLoadout = call compile ((_result select 0) select 0);
 diag_log("SERVER: Got initial loadout of " + str(initialLoadout));
@@ -32,7 +31,6 @@ taskList = [];
 _taskCount = 0;
 for "_page" from 0 to _pageCount do {
 	_result = "blisshive" callExtension format ["query,call getTasks(%1, %2)", dayz_instance, _page];
-	_result = [_result,"|",","] call CBA_fnc_replace;
 	_result = call compile _result;
 	_end = ((count _result) - 1);
 	for "_i" from 0 to _end do {
@@ -57,7 +55,6 @@ _objList = [];
 _objCount = 0;
 for "_page" from 0 to _pageCount do {
 	_result = "blisshive" callExtension format ["query,call getO(%1, %2)", dayz_instance, _page];
-	_result = [_result,"|",","] call CBA_fnc_replace;
 	_result = call compile _result;
 	_end = ((count _result) - 1);
 	for "_i" from 0 to _end do {

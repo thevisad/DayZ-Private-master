@@ -9,7 +9,6 @@ switch (_result select 1) do
 		//Setup
 		//diag_log("SETUP:102");
 		_qresult = "blisshive" callExtension format ["query,call selMPSSH(%1)", _muid];
-		_qresult = [_qresult,"|",","] call CBA_fnc_replace;
 		_qresult = call compile _qresult;
 		_qresult = _qresult select 0;
 		_ret = ["",call compile (_qresult select 0),[call compile (_qresult select 2),call compile (_qresult select 5),call compile (_qresult select 6),call compile (_qresult select 7)],call compile ([_qresult select 3,"["",","["""","] call CBA_fnc_replace),call compile (_qresult select 1),call compile (_qresult select 4)];
@@ -18,7 +17,6 @@ switch (_result select 1) do
 		//Login
 		//diag_log("LOGIN:101");
 		_qresult = "blisshive" callExtension format ["query,call selIIBSM('%1')", _muid];
-		_qresult = [_qresult,"|",","] call CBA_fnc_replace;
 		if (_qresult=="[[]]") then
 		{
 			_qresult = "blisshive" callExtension format ["query,call insUNselI('%1', '%2')", _muid, _result select 4];
