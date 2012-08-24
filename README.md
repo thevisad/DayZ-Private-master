@@ -31,7 +31,7 @@ When you see the following names in bold, substitute in the appropriate path as 
 Installation
 ============
 
-1. Download DayZ 1.7.2.5 and place the PBO files in **Repository**\\@DayZ\\Addons.  
+1. Download DayZ 1.7.2.5 and place the PBO files in **ArmA2**\\@DayZ\\Addons.  
 2. Enter **Repository** and run **repack.bat**.  
 3. Copy all files from **Repository**\\deploy into **ArmA2**\\  
 4. Run the following SQL code as the **root** user (be **sure** to change the password from CHANGEME):  
