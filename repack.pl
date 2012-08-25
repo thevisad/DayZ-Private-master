@@ -39,6 +39,11 @@ foreach my $dir (@missions) {
 			system("perl -pi${editOpts} -e \"s/dayZ_instance\\s=\\s[0-9]*/dayZ_instance = ${id}/\" ${path}/init.sqf");
 			print "Set instance id to ${id} for ${path}/init.sqf\n";
 		}
+		# Clean up init.sqf.bak in Windows only
+		if ($^O eq "MSWin32") {
+			(my $winPath = $path) =~ s/\//\\/g;
+			system("del \"${winPath}\\init.sqf.bak\"");
+		}
 		system("${repackCmd} -y -p ${path} ./deploy/MPMissions/${dir}.pbo");
 	}
 }
