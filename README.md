@@ -53,7 +53,7 @@ Upgrading
 
 Depending on what has changed since you deployed your server, you may need to perform one or more steps to do a clean upgrade to the latest code. Look for the following in the commit log (specifically, the files that were changed) when you update to the latest version of the repository:
 If you see that SQL files or db_migrate.pl have changed, then you **must** run `perl -w db_migrate.pl` (with appropriate options, run it with `--help` for more information) to upgrade your database to the latest version.  
-If SQF files (game script) has changed, then you **must** run repack.bat and copy the **Repo**\\deploy\\@Bliss directory into **ArmA 2** and overwrite dayz_server.pbo.  
+If SQF files (game script) has changed, then you **must** run repack.pl and copy the **Repo**\\deploy\\@Bliss directory into **ArmA 2** and overwrite dayz_server.pbo.  
 If configuration files and BattlEye anti-cheat files have changed, you will need to backup and overwrite your existing versions of these files. Take care to change any default server names, passwords or similar back to their customized values after copying the new versions into your **ArmA2** directory.
 
 These are the areas you will need to inspect to ensure a smooth upgrade. If database and code changes were not made at the same time and you do not read the history thoroughly, you may miss important changes and skip vital steps. It will save you frustration in the long run if you repack and redeploy @Bliss, run `perl -w db_migrate.pl` and check for any new or changed files in **Repo**\\Deploy whenever you would like to update.
