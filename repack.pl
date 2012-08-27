@@ -11,13 +11,17 @@ make_path(
 
 my $baseDir = "./bliss/missions";
 
-# Determine how to invoke cpbo
-my $repackCmd;
+# Set OS-specific options and copy blisshive.dll into place
+my $repackCmd, $copyCmd;
 my $editOpts = "";
 if ($^O eq "linux") {
 	$repackCmd = "wine util/cpbo.exe";
+	system("cp ./util/blisshive.dll ./deploy/\@Bliss");
+	system("cp ./util/blisshive.dll ./deploy/\@BlissLingor");
 } elsif ($^O eq "MSWin32") {
 	$repackCmd = "util/cpbo.exe";
+	system("cp .\\util\\blisshive.dll .\\deploy\\\@Bliss");
+	system("cp .\\util\\blisshive.dll .\\deploy\\\@BlissLingor");
 	$editOpts = ".bak";
 }
 
