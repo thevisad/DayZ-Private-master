@@ -39,7 +39,7 @@ Installation
 		grant all privileges on dayz.* to 'dayz'@'localhost';
 
 6. Run `perl db_migrate.pl --password CHANGEME`. Replace `CHANGEME` with the password you chose in the previous step. Use the `--help` flag to get more information on how to set the hostname, username, or database name to suit your needs.  
-7. Ensure that the username and password in **ArmA2**\\databases.txt match the one you used in the previous step.  
+7. Ensure that the database information in **ArmA2**\\bliss.ini match the values you used in the previous step.  
 8. Adjust server name/passwords in `config.cfg`, located in **ArmA2**\\Bliss\\ for Chernarus and **ArmA2**\\BlissLingor\\ for Lingor Island.  
 9. Adjust the **timezone** field in the instances table for instance 1. This is an offset applied to the system time on your server. Therefore, if your Windows clock reads 5:00 PM / 17:00 and your timezone is set to -5, it will be noon on your server.  
 10. Adjust the **loadout** field in the instances table for instance 1. Some options:  
