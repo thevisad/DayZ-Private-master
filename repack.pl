@@ -20,8 +20,8 @@ if ($^O eq "linux") {
 	system("cp ./util/blisshive.dll ./deploy/\@BlissLingor");
 } elsif ($^O eq "MSWin32") {
 	$repackCmd = "util/cpbo.exe";
-	system("cp .\\util\\blisshive.dll .\\deploy\\\@Bliss");
-	system("cp .\\util\\blisshive.dll .\\deploy\\\@BlissLingor");
+	system("copy .\\util\\blisshive.dll .\\deploy\\\@Bliss");
+	system("copy .\\util\\blisshive.dll .\\deploy\\\@BlissLingor");
 	$editOpts = ".bak";
 }
 
