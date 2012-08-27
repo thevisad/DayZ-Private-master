@@ -36,11 +36,13 @@ for "_page" from 0 to _pageCount do {
 	_end = ((count _result) - 1);
 	for "_i" from 0 to _end do {
 		_item = _result select _i;
-		_item set [2, (call compile (_item select 2))];
-		_item set [3, (call compile (_item select 3))];
-		taskList set [count taskList, _item];
-		_taskCount = _taskCount + 1;
-		diag_log("DEBUG: Added task " + str(_item));
+		if (count _item > 0) then {
+			_item set [2, (call compile (_item select 2))];
+			_item set [3, (call compile (_item select 3))];
+			taskList set [count taskList, _item];
+			_taskCount = _taskCount + 1;
+			//diag_log("DEBUG: Added task " + str(_item));
+		};
 	};
 };
 diag_log("SERVER: Added " + str(_taskCount) + " tasks!");
@@ -60,8 +62,11 @@ for "_page" from 0 to _pageCount do {
 	_end = ((count _result) - 1);
 	for "_i" from 0 to _end do {
 		_item = _result select _i;
-		_objList set [count _objList, _item];
-		_objCount = _objCount + 1;
+		if (count _item > 0) then {
+			_objList set [count _objList, _item];
+			_objCount = _objCount + 1;
+			//diag_log("DEBUG: Added object " + _item);
+		};
 	};
 };
 diag_log ("SERVER: Fetched " + str(_objCount) + " objects!");
