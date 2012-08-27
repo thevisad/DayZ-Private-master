@@ -13,7 +13,7 @@ Prerequisites
 
  - Windows (tested with 7 and Server 2008)
  - A working ArmA 2 Combined Ops dedicated server with recommended beta patch installed (http://www.arma2.com/beta-patch.php)
- - MySQL Server 5.x with TCP/IP Networking enabled **NOTE:** If you get MySQL from anywhere other than the official MySQL installer, you will need Connector/C 6.0.2 (http://dev.mysql.com/get/Downloads/Connector-C/mysql-connector-c-6.0.2-win32.msi/from/http://cdn.mysql.com/)
+ - MySQL Server 5.x with TCP/IP Networking enabled **NOTE:** You **must** use the official MySQL installer, not XAMPP (http://www.mysql.com/get/Downloads/MySQLInstaller/mysql-installer-community-5.5.27.2.msi/from/http://cdn.mysql.com/)
  - The decimal separator on your server MUST BE a period. If it is a comma, vehicle spawning (at least) will not work correctly. **NOTE:** If you use FireDaemon to start your server, you must re-create the service if you change the comma separator in Windows.
  - A working Perl interpreter - Strawberry Perl is recommended (http://strawberryperl.com/)
 
@@ -104,28 +104,26 @@ Any bug present in the official client or server will probably also exist in thi
 Common Issues
 =============
 
-**Problem**: You get errors referring to MSVCR100.dll when the first player connects  
-**Solution**: Install MSVC++ 2010 Redist (see Prerequisites for URL)
+**Problem**: You get errors referring to libmysql.dll when the first player connects  
+**Solution**: Install Connector/C (see Prerequisites for URL)
 
 **Problem**: Server crashes when the first player connects  
-**Solution**: Ensure that the DLL files in **ArmA2**\\@Arma2NET are not "blocked" by Windows by right-clicking on them and selecting **Properties**. If you see an Unblock button, click it and do the same for all DLLs in this directory.
+**Solution**: Ensure that you have blisshive.dll in your **ArmA2**\\@Bliss directory.
 
 **Problem**: Kicked from the game when using non-DayZ weapons/vehicles  
 **Solution**: Disable BattlEye by setting battleye=0 in **ArmA2**\\Bliss\\config.cfg, but note that this opens your server to hackers/griefers.
 
 **Problem**: Server not listed on GameSpy in-game server list  
-**Solution**: Change reportingIP to **arma2oapc.master.gamespy.com** and ensure the game ports (default 2302 - 2305 UDP) are forwarded properly.
+**Solution**: Ensure the game ports (default 2302 - 2305 UDP) are forwarded properly and that the GameSpy master server is up and running.  
 
 **Problem**: "Bad CD Key" messages  
 **Solution**: Buy the game.
 
 **Problem**: Error Zero divisor in **arma2oaserver.rpt**  
-**Solution**: Ensure you have a MySQL user called **'dayz'@'localhost'** and that you can run the following when logged in to MySQL as that user:  
+**Solution**: Ensure you have a MySQL user, have run db_migrate.pl successfully, have set all options correctly in **ArmA2**\\bliss.ini and that you can run the following when logged in to MySQL:  
 
 	use dayz;
 	call getTime(1);
-
-If that procedure does not exist, use a tool other than MySQL Workbench to import the database.
 
 Support
 =======
