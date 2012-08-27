@@ -49,7 +49,7 @@ switch (_key) do
 	case "203":{
 		//Player Update
 		//diag_log("PLAYERUPDATE:203");
-		"blisshive" callExtension format ["execute,call `update`(%1, '[]', '%2', '%3', '[]', -1, -1, 0, 'any', 0, 0, 0, 0, 0, '[""""|""aidlpercmstpsnonwnondnon_player_idlesteady04""|36]')", _result select 2,_result select 3, _result select 4];
+		"blisshive" callExtension format ["execute,call `update`(%1, '[]', '%2', '%3', '[]', -1, -1, 0, 'any', 0, 0, 0, 0, 0, '["""",""aidlpercmstpsnonwnondnon_player_idlesteady04"",36]')", _result select 2,_result select 3, _result select 4];
 	};
 	case "301": {
 		//Create Object
