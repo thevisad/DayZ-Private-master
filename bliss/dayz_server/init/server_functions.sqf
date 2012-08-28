@@ -27,6 +27,11 @@ fnc_join =			compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\fn
 fnc_split = 			compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\fnc_split.sqf";
 fnc_replace =			compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\fnc_replace.sqf";
 
+//Get instance name (e.g. dayz_1.chernarus)
+fnc_instanceName = {
+	"dayz_" + str(dayz_instance) + "." + worldName
+};
+
 //event Handlers
 eh_localCleanup =			{
 	_object = _this select 0;

@@ -13,13 +13,13 @@ if ((count playableUnits == 0) and !isDedicated) then {
 waitUntil{initialized};
 
 //Get initial loadout
-_result = "blisshive" callExtension format ["query,call getLoadout(%1)", dayz_instance];
+_result = "blisshive" callExtension format ["Q:%1:call getLoadout(%2)", (call fnc_instanceName), dayz_instance];
 _result = call compile _result;
 initialLoadout = call compile ((_result select 0) select 0);
 diag_log("SERVER: Got initial loadout of " + str(initialLoadout));
 
 //Get task page count
-_result = "blisshive" callExtension format ["query,call getTC(%1)", dayz_instance];
+_result = "blisshive" callExtension format ["Q:%1:call getTC(%2)", (call fnc_instanceName), dayz_instance];
 _result = call compile _result;
 _pageCount = call compile ((_result select 0) select 0);
 diag_log("SERVER: Got " + str(_pageCount + 1) + " pages of tasks...");
@@ -28,7 +28,7 @@ diag_log("SERVER: Got " + str(_pageCount + 1) + " pages of tasks...");
 taskList = [];
 _taskCount = 0;
 for "_page" from 0 to _pageCount do {
-	_result = "blisshive" callExtension format ["query,call getTasks(%1, %2)", dayz_instance, _page];
+	_result = "blisshive" callExtension format ["Q:%1:call getTasks(%2, %3)", (call fnc_instanceName), dayz_instance, _page];
 	_result = call compile _result;
 	_end = ((count _result) - 1);
 	for "_i" from 0 to _end do {
@@ -45,7 +45,7 @@ for "_page" from 0 to _pageCount do {
 diag_log("SERVER: Added " + str(_taskCount) + " tasks!");
 
 //Get object page count
-_result = "blisshive" callExtension format ["query,call getOC(%1)", dayz_instance];
+_result = "blisshive" callExtension format ["Q:%1:call getOC(%2)", (call fnc_instanceName), dayz_instance];
 _result = call compile _result;
 _pageCount = call compile ((_result select 0) select 0);
 diag_log("SERVER: Got " + str(_pageCount + 1) + " pages of objects...");
@@ -54,7 +54,7 @@ diag_log("SERVER: Got " + str(_pageCount + 1) + " pages of objects...");
 _objList = [];
 _objCount = 0;
 for "_page" from 0 to _pageCount do {
-	_result = "blisshive" callExtension format ["query,call getO(%1, %2)", dayz_instance, _page];
+	_result = "blisshive" callExtension format ["Q:%1:call getO(%2, %3)", (call fnc_instanceName), dayz_instance, _page];
 	_result = call compile _result;
 	_end = ((count _result) - 1);
 	for "_i" from 0 to _end do {
