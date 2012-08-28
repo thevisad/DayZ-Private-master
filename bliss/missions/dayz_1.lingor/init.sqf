@@ -20,6 +20,10 @@ progressLoadingScreen 1.0;
 if (isServer) then {
 	hiveInUse = true;
 	_serverMonitor = [] execVM "\z\addons\dayz_server\system\server_monitor.sqf";
+	_helis = allMissionObjects "UH1Wreck_DZ";
+	{
+		nul = [_x, 2, time, false, false] spawn BIS_Effects_Burn;
+	} forEach _helis;
 };
 if (!isDedicated) then {
 	0 fadeSound 0;
