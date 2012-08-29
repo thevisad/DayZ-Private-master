@@ -2,7 +2,7 @@ DayZ Bliss Private Server
 =========================
 
 This is a private server project for DayZ.
-This code is currently compatible with DayZ 1.7.2.5 and ArmA 2 OA beta patch build 95883.
+This code is currently compatible with DayZ 1.7.2.5 and ArmA 2 OA beta patch build 96061.
 
 This would not be possible without the work of Rocket and Guru Abdul. We also use the fantastic cPBO from Kegetys (www.kegetys.fi) and wget for Windows by the GnuWin32 team (gnuwin32.sourceforge.net).
 
@@ -29,7 +29,7 @@ Installation
 ============
 
 1. Download DayZ 1.7.2.5 and place the PBO files in **ArmA2**\\@DayZ\\Addons. 
-2. Run `setup_perl.bat`. If you are prompted Yes/No to run tests, type "n" and press Enter.  
+2. Run `setup_perl.bat`. If you are prompted to provide a schema path, press enter to continue. If you are prompted Yes/No to run tests, type "n" and press Enter.  
 3. Run `perl repack.pl` in **Repository**.  
 4. Copy all files from **Repository**\\deploy into **ArmA2**\\  
 5. Run the following SQL code as the **root** user (be **sure** to change the password from CHANGEME):  
@@ -66,6 +66,22 @@ Vehicles
 Run `perl vehicles.pl` to get help information on how to invoke the vehicle spawn script correctly. You will need to run the vehicle script and point it to your database to get vehicles to spawn in-game. You **MUST** set the correct world when running vehicles.pl, if you leave the world unspecified the default is Chernarus which will not work correctly if you are running Lingor island. The script can be run periodically - it will not delete all vehicles every time it runs. It will clean up user-deployed objects (wire fence, tents, tank traps, etc) in the same way that official DayZ does. If you run vehicles.pl with the `--cleanup` argument, it will also check for out-of-bounds objects and delete them.
 
 **NOTE:** Vehicles added via database manipulation are only available after a server restart.
+
+Multiple Instances
+==================
+
+You can run multiple server instances connected to the same database to provide a private cluster of servers all using the same player information. This can be done with Chernarus and Lingor Island, but you cannot mix players from one map with players from the other. If you did this, the characters positions would be wildly different and players would end up in the ocean or dead under the ground.
+
+1. Determine what world you will be creating a new instance for. Duplicate either dayz_1.chernarus or dayz_1.lingor in **Repo**\\bliss\\missions. Rename it, replacing the "1" with the new instance ID you intend to use.  
+2. Run `perl repack.pl` from the **Repo** directory.  
+3. Copy all PBOs in **Repo**\\deploy\\MPMissions to **ArmA2**\\MPMissions.  
+4. Duplicate the **ArmA2**\\Bliss (or BlissLingor) directory and server.bat (or server_lingor.bat). Rename them so it is clear what instance ID they are for.  
+5. Edit the new server.bat so that it points to the new profile directory you created in step 4.  
+6. Edit the config.cfg file in the profile directory created in step 4 so that the mission template refers to the new instance ID (e.g. change dayz_1.chernarus to dayz_2.chernarus).  
+7. Edit **ArmA2**\\bliss.ini and add a new section for your instance. Change the section header so that it refers to the new instance ID and make sure the database configuration options are correct.
+8. Run the new server.bat file you created in step 4.
+
+Care must be taken to ensure that all paths and options have been set correctly. With this system you can run as many instances as your server can support simultaneously.
 
 Scheduler
 =========
