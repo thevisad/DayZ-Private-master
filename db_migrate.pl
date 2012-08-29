@@ -11,7 +11,7 @@ GetOptions(
 	'hostname|host|h=s',
 	'username|user|u=s',
 	'password|pass|p=s',
-	'database|name|db|dbname|d=s',
+	'database|name|dbname|d=s',
 	'port=s',
 	'version|v=s',
 	'help'

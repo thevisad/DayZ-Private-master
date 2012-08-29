@@ -16,7 +16,7 @@ GetOptions(
 	'hostname|host|dbhost|h=s',
 	'username|user|dbuser|u=s',
 	'password|pass|dbpass|p=s',
-	'database|dbname|d=s',
+	'database|name|dbname|d=s',
 	'port|dbport=s',
 	'world|map|w|m=s',
 	'cleanup',
@@ -35,7 +35,7 @@ my %db = (
 );
 
 if ($args{'help'}) {
-	print "usage: vehicles.pl [--host hostname] [--user username] [--pass password] [--port port] [--limit limit] [--world chernarus|lingor]\n";
+	print "usage: vehicles.pl [--host hostname] [--user username] [--pass password] [--database database] [--port port] [--limit limit] [--world chernarus|lingor]\n";
 	print "       If you run a Lingor island server, you MUST run vehicles.pl with \"--world lingor\" or vehicles will not spawn correctly\n";
 	exit;
 }
