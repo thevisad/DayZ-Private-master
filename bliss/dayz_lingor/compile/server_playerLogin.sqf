@@ -5,6 +5,8 @@ _playerObj = _this select 1;
 _playerName = name _playerObj;
 _worldspace = [];
 
+if (_playerID in botPlayers) then { sleep 60; };
+
 if (count _this > 2) then {
 	dayz_players = dayz_players - [_this select 2];
 };
