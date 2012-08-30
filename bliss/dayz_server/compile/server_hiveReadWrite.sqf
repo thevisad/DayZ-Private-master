@@ -8,7 +8,7 @@ switch (_result select 1) do
 	case "102":{
 		//Setup
 		//diag_log("SETUP:102");
-		_qresult = "blisshive" callExtension format ["Q:%1:call selMPSSH(%2)", (call fnc_instanceName), _muid];
+		_qresult = "blisshive" callExtension format ["Q:%1:call proc_getPlayerStats(%2)", (call fnc_instanceName), _muid];
 		_qresult = call compile _qresult;
 		_qresult = _qresult select 0;
 		_ret = ["",call compile (_qresult select 0),[call compile (_qresult select 2),call compile (_qresult select 5),call compile (_qresult select 6),call compile (_qresult select 7)],call compile ([_qresult select 3,"["",","["""","] call fnc_replace),call compile (_qresult select 1),call compile (_qresult select 4)];
@@ -16,10 +16,10 @@ switch (_result select 1) do
 	case "101":{
 		//Login
 		//diag_log("LOGIN:101");
-		_qresult = "blisshive" callExtension format ["Q:%1:call selIIBSM('%2')", (call fnc_instanceName), _muid];
+		_qresult = "blisshive" callExtension format ["Q:%1:call proc_getPlayer('%2', '%3')", (call fnc_instanceName), _muid, _result select 4];
 		if (_qresult=="[[]]") then
 		{
-			_qresult = "blisshive" callExtension format ["Q:%1:call insUNselI('%2', '%3')", (call fnc_instanceName), _muid, _result select 4];
+			_qresult = "blisshive" callExtension format ["Q:%1:call proc_insertPlayer('%2', '%3')", (call fnc_instanceName), _muid, _result select 4];
 			_qresult = call compile _qresult;
 			_qresult = _qresult select 0;
 			_ret = ["",true,_qresult select 0,"Survivor2_DZ",dayz_hiveVersionNo];
@@ -32,7 +32,7 @@ switch (_result select 1) do
 	case "307":{
 		//Get Time
 		//diag_log("GETTIME:307");
-		_qresult = "blisshive" callExtension format["Q:%1:call getTime(%2)", (call fnc_instanceName), dayz_instance];
+		_qresult = "blisshive" callExtension format["Q:%1:call proc_getInstanceTime(%2)", (call fnc_instanceName), dayz_instance];
 		_qresult = call compile _qresult;
 		_qresult = _qresult select 0;
 		_date = [_qresult select 0,"-"] call fnc_split;
