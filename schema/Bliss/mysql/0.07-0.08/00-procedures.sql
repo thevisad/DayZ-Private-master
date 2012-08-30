@@ -137,7 +137,7 @@ END;
 
 
 DROP PROCEDURE IF EXISTS `selIIBSM`;
-CREATE PROCEDURE `proc_getPlayer`(IN `param_PlayerUniqueId` varchar(128), IN `param_PlayerName` INT)
+CREATE PROCEDURE `proc_getPlayer`(IN `param_PlayerUniqueId` varchar(128), IN `param_PlayerName` VARCHAR(128))
 	LANGUAGE SQL
 	NOT DETERMINISTIC
 	CONTAINS SQL
@@ -147,6 +147,7 @@ BEGIN
 	UPDATE main SET name = param_PlayerName WHERE uid = param_PlayerUniqueId;
 	SELECT id, inventory, backpack, FLOOR(TIME_TO_SEC(TIMEDIFF(NOW(), survival))/60), model, late, ldrank FROM main WHERE uid = param_PlayerUniqueId AND death = 0;
 END;
+
 
 
 DROP PROCEDURE IF EXISTS `selMPSSH`;
