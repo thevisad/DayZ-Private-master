@@ -39,7 +39,7 @@ switch (_key) do
 		if(_mmodel == "") then { _mmodel = "any" };
 		_mhumanity = _result select 17;
 		if(_mhumanity == "0") then { _mhumanity = 0 };
-		"blisshive" callExtension format ["E:%1:call `update`(%2, '%3', '%4', '%5', '%6', %7, %8, %9, '%10', %11, %12, %13, %14, %15, '%16')", dayz_instance, _mid,_result select 3,_result select 4,_result select 5,_result select 6,_mate,_mdrank,_mtime,_mmodel,_mhumanity,_result select 9,_result select 10,_result select 14,_result select 15,_result select 13];
+		"blisshive" callExtension format ["E:%1:call `update`(%2, '%3', '%4', '%5', '%6', %7, %8, %9, '%10', %11, %12, %13, %14, %15, '%16')", (call fnc_instanceName), _mid,_result select 3,_result select 4,_result select 5,_result select 6,_mate,_mdrank,_mtime,_mmodel,_mhumanity,_result select 9,_result select 10,_result select 14,_result select 15,_result select 13];
 	};
 	case "202":{
 		//Character Death
