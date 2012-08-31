@@ -20,14 +20,16 @@ progressLoadingScreen 1.0;
 if (isServer) then {
 	hiveInUse = true;
 	_serverMonitor = [] execVM "\z\addons\dayz_server\system\server_monitor.sqf";
-	_helis = allMissionObjects "UH1Wreck_DZ";
-	{
-		nul = [_x, 2, time, false, false] spawn BIS_Effects_Burn;
-	} forEach _helis;
 };
 if (!isDedicated) then {
 	0 fadeSound 0;
 	0 cutText [(localize "STR_AUTHENTICATING"), "BLACK FADED",60];
 	_id = player addEventHandler ["Respawn", {_id = [] spawn player_death;}];
 	_playerMonitor = 	[] execVM "\z\addons\dayz_code\system\player_monitor.sqf";
+
+	//Create burn effect for each helicopter wreck
+	_helis = allMissionObjects "UH1Wreck_DZ";
+	{
+		nul = [_x, 2, time, false, false] spawn BIS_Effects_Burn;
+	} forEach _helis;
 };
