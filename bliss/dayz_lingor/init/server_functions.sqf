@@ -76,6 +76,7 @@ spawn_heliCrash = {
 	waitUntil{!isNil "BIS_fnc_selectRandom"};
 	if (isDedicated) then {
 	_position = [getMarkerPos "center",0,4000,10,0,2000,0] call BIS_fnc_findSafePos;
+	diag_log("DEBUG: Spawning a crashed helicopter at " + str(_position));
 	_veh = createVehicle ["UH1Wreck_DZ",_position, [], 0, "CAN_COLLIDE"];
 	dayz_serverObjectMonitor set [count dayz_serverObjectMonitor,_veh];
 	_veh setVariable ["ObjectID",1,true];
