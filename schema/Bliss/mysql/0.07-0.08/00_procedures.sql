@@ -1,6 +1,5 @@
 DROP PROCEDURE IF EXISTS `delO`;
 CREATE PROCEDURE `proc_deleteObject`(IN `p_UniqueId` VARCHAR(50))
-	COMMENT ''
 BEGIN
       DELETE FROM objects WHERE uid=p_UniqueId; --
 END;
@@ -8,7 +7,6 @@ END;
 
 DROP PROCEDURE IF EXISTS `getLoadout`;
 CREATE PROCEDURE `proc_getInstanceLoadout`(IN `p_InstanceId` INT)
-	COMMENT ''
 BEGIN
    SELECT loadout FROM instances WHERE instance = p_InstanceId; --
 END;
@@ -16,7 +14,6 @@ END;
 
 DROP PROCEDURE IF EXISTS `getO`;
 CREATE PROCEDURE `proc_getObjects`(IN `p_InstanceId` int, IN `p_CurrentPage` int)
-	COMMENT ''
 BEGIN
 	DECLARE itemsPerPage INT DEFAULT 5; -- Must match proc_getObjectPageCount
 	DECLARE currentOffset INT DEFAULT (itemsPerPage * p_CurrentPage); --
@@ -26,7 +23,6 @@ END;
 
 DROP PROCEDURE IF EXISTS `getOC`;
 CREATE PROCEDURE `proc_getObjectPageCount`(IN `p_InstanceId` int)
-	COMMENT ''
 BEGIN
 	DECLARE itemsPerPage INT DEFAULT 5; -- Must match proc_getObjects
 	SELECT FLOOR(COUNT(*) / itemsPerPage) from objects WHERE instance = p_InstanceId; --
@@ -35,7 +31,6 @@ END;
 
 DROP PROCEDURE IF EXISTS `getTasks`;
 CREATE PROCEDURE `proc_getSchedulerTasks`(IN `p_InstanceId` int, IN `p_CurrentPage` int)
-	COMMENT ''
 BEGIN
 	DECLARE itemsPerPage INT DEFAULT 10; -- Must match proc_getSchedulerTaskPageCount
 	DECLARE currentOffset INT DEFAULT (itemsPerPage * p_CurrentPage); --
@@ -45,7 +40,6 @@ END;
 
 DROP PROCEDURE IF EXISTS `getTC`;
 CREATE PROCEDURE `proc_getSchedulerTaskPageCount`(IN `p_InstanceId` int)
-	COMMENT ''
 BEGIN
 	DECLARE itemsPerPage INT DEFAULT 10; -- Must match proc_getSchedulerTasks
 	SELECT FLOOR(COUNT(*) / itemsPerPage) FROM scheduler JOIN instances ON instances.mvisibility = scheduler.visibility WHERE instances.instance = p_InstanceId; --
@@ -70,16 +64,14 @@ END;
 
 DROP PROCEDURE IF EXISTS `insUNselI`;
 CREATE PROCEDURE `proc_insertPlayer`(IN `p_PlayerUniqueId` varchar(128), IN `p_PlayerName` varchar(255))
-	COMMENT ''
 BEGIN
-	INSERT INTO players (unique_id, name) VALUES (p_PlayerUniqueId, p_PlayerName) ON DUPLICATE KEY UPDATE name=p_PlayerName, id=LAST_INSERT_ID(id); --
-	INSERT INTO survivals (player_id, survival_time) VALUES (LAST_INSERT_ID(), NOW()); --
+	INSERT INTO profile (unique_id, name) VALUES (p_PlayerUniqueId, p_PlayerName) ON DUPLICATE KEY UPDATE name=p_PlayerName, id=LAST_INSERT_ID(id); --
+	INSERT INTO character (player_id, survival_time) VALUES (LAST_INSERT_ID(), NOW()); --
 	SELECT LAST_INSERT_ID(); --
 END;
 
 DROP PROCEDURE IF EXISTS `logLogin`;
 CREATE PROCEDURE `proc_logLogin`(IN `p_PlayerUniqueId` varchar(50))
-	COMMENT ''
 BEGIN
 	INSERT INTO log_entry (profile_id, log_code_id) VALUES (p_PlayerUniqueId, 1); --
 END;
@@ -87,7 +79,6 @@ END;
 
 DROP PROCEDURE IF EXISTS `logLogout`;
 CREATE PROCEDURE `proc_logLogout`(IN `p_PlayerUniqueId` varchar(50))
-	COMMENT ''
 BEGIN
 	INSERT INTO log_entry (profile_id, log_code_id) VALUES (p_PlayerUniqueId, 2); --
 END;
@@ -97,39 +88,36 @@ DROP PROCEDURE IF EXISTS `selIIBSM`;
 CREATE PROCEDURE `proc_getPlayer`(IN `p_PlayerUniqueId` varchar(128), IN `p_PlayerName` VARCHAR(128))
 	COMMENT 'Select ID, Inventory, Backpack, Survival Time and Model.'
 BEGIN 
-	UPDATE players SET name = p_PlayerName WHERE unique_id = p_PlayerUniqueId; --
-	SELECT survivals.id, inventory, backpack, FLOOR(TIME_TO_SEC(TIMEDIFF(NOW(), start_time))/60), model, last_ate, last_drank FROM survivals JOIN players ON players.id = survivals.player_id WHERE players.unique_id = p_PlayerUniqueId AND is_dead = 0; --
+	UPDATE profile SET name = p_PlayerName WHERE unique_id = p_PlayerUniqueId; --
+	SELECT character.id, inventory, backpack, FLOOR(TIME_TO_SEC(TIMEDIFF(NOW(), start_time))/60), model, last_ate, last_drank FROM character JOIN profile ON profile.id = character.player_id WHERE profile.unique_id = p_PlayerUniqueId AND is_dead = 0; --
 END;
 
 
 DROP PROCEDURE IF EXISTS `selMPSSH`;
 CREATE PROCEDURE `proc_getPlayerStats`(IN `p_SurvivorId` INT)
-	COMMENT ''
 BEGIN
-      SELECT medical, position, zombie_kills, state, humanity, headshots, survivor_kills, bandit_kills FROM survivals WHERE id = p_SurvivorId AND is_dead=0; --
+      SELECT medical, position, zombie_kills, state, humanity, headshots, survivor_kills, bandit_kills FROM character WHERE id = p_SurvivorId AND is_dead=0; --
 END;
 
 
 DROP PROCEDURE IF EXISTS `setCD`;
 CREATE PROCEDURE `proc_setPlayerDead`(IN `p_SurvivorId` INT)
-	COMMENT ''
 BEGIN
-		UPDATE survivals SET is_dead=1 WHERE id=p_SurvivorId; --
-		UPDATE players LEFT JOIN survivals ON survivals.player_id = players.id SET
+		UPDATE character SET is_dead=1 WHERE id=p_SurvivorId; --
+		UPDATE profile LEFT JOIN character ON character.player_id = profile.id SET
       	survival_attempts=survival_attempts+1,
 			total_survivor_kills=total_survivor_kills+survivor_kills,
 			total_bandit_kills=total_bandit_kills+bandit_kills,
 			total_zombie_kills=total_zombie_kills+zombie_kills,
 			total_headshots=total_headshots+headshots,
 			total_survival_time=total_survival_time+survival_time
-		WHERE survivals.id=p_SurvivorId; --
+		WHERE character.id=p_SurvivorId; --
 END;
 
 DROP PROCEDURE IF EXISTS `update`;
 CREATE PROCEDURE `proc_updatePlayer`(IN `p_SurvivorId` int, IN `p_PlayerPositon` varchar(1024), IN `p_PlayerInventory` varchar(2048), IN `p_PlayerBackpack` varchar(2048), IN `p_PlayerMedicalStatus` varchar(1024), IN `p_PlayerLastAte` int, IN `p_PlayerLastDrank` int, IN `p_PlayerSurvivalTime` int, IN `p_PlayerModel` varchar(255), IN `p_PlayerHumanity` int, IN `p_PlayerZombieKills` int, IN `p_PlayerHeadshots` int, IN `p_PlayerMurders` int, IN `p_PlayerBanditKills` int, IN `p_PlayerState` varchar(255))
-	COMMENT ''
 BEGIN
-	UPDATE survivals SET
+	UPDATE character SET
 		zombie_kills=zombie_kills+p_PlayerZombieKills,
 		headshots=headshots+p_PlayerHeadshots,
 		bandit_kills=bandit_kills+p_PlayerBanditKills,
@@ -149,7 +137,6 @@ END;
 
 DROP PROCEDURE IF EXISTS `updIH`;
 CREATE PROCEDURE `proc_updateObjectHealth`(IN `p_ObjectId` INT, IN `p_ObjectHealth` VARCHAR(1024), IN `p_ObjectDamage` DOUBLE)
-	COMMENT ''
 BEGIN
 	UPDATE objects SET health=p_ObjectHealth,damage=p_ObjectDamage WHERE id=p_ObjectId; --
 END;
@@ -157,7 +144,6 @@ END;
 
 DROP PROCEDURE IF EXISTS `updII`;
 CREATE PROCEDURE `proc_updateObjectInventory`(IN `p_ObjectId` int, IN `p_ObjectInventory` varchar(1024))
-	COMMENT ''
 BEGIN
 	UPDATE objects SET inventory=p_ObjectInventory WHERE id = p_ObjectId; --
 END;
@@ -165,7 +151,6 @@ END;
 
 DROP PROCEDURE IF EXISTS `updIPF`;
 CREATE PROCEDURE `proc_updateObjectPosition`(IN `p_ObjectId` INT, IN `p_ObjectPosition` VARCHAR(255), IN `p_ObjectFuel` DOUBLE)
-	COMMENT ''
 BEGIN
 	UPDATE objects SET pos=if(p_ObjectPosition='[]', pos, p_ObjectPosition),fuel=p_ObjectFuel WHERE id = p_ObjectId; --
 END;
@@ -173,7 +158,6 @@ END;
 
 DROP PROCEDURE IF EXISTS `updUI`;
 CREATE PROCEDURE `proc_updateObjectInventoryByUID`(IN `p_ObjectUniqueId` varchar(50), IN `p_ObjectInventory` varchar(8192))
-	COMMENT ''
 BEGIN
 	UPDATE objects SET inventory = p_ObjectInventory WHERE uid NOT LIKE '%.%' AND (CONVERT(uid, UNSIGNED INTEGER) BETWEEN (CONVERT(p_ObjectUniqueId, UNSIGNED INTEGER) - 2) AND (CONVERT(p_ObjectUniqueId, UNSIGNED INTEGER) + 2)); --
 END;
@@ -181,7 +165,6 @@ END;
 
 DROP PROCEDURE IF EXISTS `updV`;
 CREATE PROCEDURE `proc_updateObject`(IN `p_ObjectUniqueId` VARCHAR(50), IN `p_ObjectType` VARCHAR(255) , IN `p_ObjectPosition` VARCHAR(255), IN `p_ObjectHealth` VARCHAR(1024))
-	COMMENT ''
 BEGIN
 	UPDATE objects SET otype=if(p_ObjectType='',otype,p_ObjectType),health=p_ObjectHealth,pos=if(p_ObjectPosition='[]', pos, p_ObjectPosition) WHERE uid=p_ObjectUniqueId; --
 END;

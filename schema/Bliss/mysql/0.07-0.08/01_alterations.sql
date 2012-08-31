@@ -1,7 +1,7 @@
 ALTER TABLE `objects` ADD INDEX `instance` (`instance`);
 
 ALTER TABLE `main`
-	RENAME TO `survivals`,
+	RENAME TO `character`,
 	CHANGE COLUMN `pos` `position` VARCHAR(255) NOT NULL DEFAULT '[]' AFTER `player_id`,
 	CHANGE COLUMN `death` `is_dead` INT(1) UNSIGNED NOT NULL DEFAULT '0' AFTER `medical`,
 	CHANGE COLUMN `humanity` `humanity` INT(5) NOT NULL DEFAULT '2500' AFTER `state`,
@@ -17,11 +17,11 @@ ALTER TABLE `main`
 	ADD INDEX `is_dead` (`is_dead`); --
 
 
-ALTER TABLE `survivals`
+ALTER TABLE `character`
 	ADD COLUMN `player_id` INT(8) NOT NULL AFTER `id`,
 	ADD INDEX `player_id` (`player_id`); --
 	
-CREATE TABLE `players` (
+CREATE TABLE `profile` (
 	`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
 	`unique_id` INT UNSIGNED NOT NULL,
 	`name` VARCHAR(64) NOT NULL DEFAULT 'NONAME',
@@ -40,7 +40,7 @@ COLLATE='utf8_general_ci'
 ENGINE=InnoDB; --
 
 SET @id=0;
-INSERT IGNORE INTO players 
+INSERT IGNORE INTO profile 
 	SELECT
 		@id:=@id+1 AS id, 
 		uid as unique_id, 
@@ -52,12 +52,12 @@ INSERT IGNORE INTO players
 		SUM(zombie_kills) as total_zombie_kills, 	
 		SUM(headshots) as total_headshots, 	
 		SUM(humanity) as total_humanity 	
-	FROM survivals 
+	FROM character 
 	GROUP BY uid 
 	ORDER BY start_time DESC; --
 	
-UPDATE survivals SET player_id = (SELECT id FROM players WHERE survivals.uid=players.unique_id);
+UPDATE character SET player_id = (SELECT id FROM profile WHERE character.uid=profile.unique_id);
 
-ALTER TABLE `survivals`
+ALTER TABLE `character`
 	DROP COLUMN `uid`,
 	DROP COLUMN `name`;
