@@ -83,6 +83,20 @@ You can run multiple server instances connected to the same database to provide 
 
 Care must be taken to ensure that all paths and options have been set correctly. With this system you can run as many instances as your server can support simultaneously.
 
+Customization
+=============
+
+Here are the most common customization requests with instructions.
+
+**Request**: I would like to change the available chat channels.
+**Solution**: Go into **Repository**\\bliss\\missions\\dayz_1.chernarus (or .lingor for Lingor Island) and edit `description.ext`. Refer to http://community.bistudio.com/wiki/Description.ext#disableChannels for a mapping of channel names to numbers.
+
+**Request**: I would like to change the server timezone.
+**Solution**: Use the MySQL command-line interface or a GUI tool (HeidiSQL, TOAD for MySQL) to connect to your database. Then, modify the value of the `timezone` field in the `instances` table for the instance in question. This will apply a positive or negative offset (in hours) to the system time, which is checked when the server starts up.
+
+**Request**: I would like to have constant daylight (or moonlight) on my server.
+**Solution**: There is no easy solution for this. There is no way to halt the progression of time using SQF. If you *really* want to do this, you would have to modify the getTime procedure to always return a constant time and then schedule automatic restarts such that before the sun sets (or rises) you are restarting/resetting the server back to the static starting time.
+
 Scheduler
 =========
 
@@ -116,30 +130,32 @@ Any bug present in the official client or server will probably also exist in thi
  - Texture issues / graphical corruption / artifacts
  - Loss of backpack on model change (due to bandit morphing) or on respawn
  - Spawning in debug plains or in the ocean
+ - Day / night cycle desync
+ - Vehicle damage not persisting / vehicles repairing themselves
 
 Common Issues
 =============
 
-**Problem**: You get errors referring to libmysql.dll when the first player connects  
-**Solution**: Install Connector/C (see Prerequisites for URL)
+**Problem**: Stuck at Loading / Wait for Host or Error Zero divisor in **arma2oaserver.rpt**  
+**Solution**: Look in `blisshive.log` for MySQL connection errors (Google these to find troubleshooting steps). Ensure you have a valid MySQL user created, have run db_migrate.pl successfully, have set all options correctly in **ArmA2**\\bliss.ini and that you can run the following when logged in to MySQL:  
+
+	call getTime(1);
+
+**Problem**: You get errors referring to `libmysql_.dll` or see errors indicating a missing `DBD/mysql.pm` or `DBD::mysql` when running db_migrate.pl or vehicles.pl.  
+**Solution**: Use Strawberry Perl instead of ActivePerl. If that does not resolve the issue, try running `cpan DBD::mysql` in a command prompt or adding your Perl bin directory to the PATH environment variable.
 
 **Problem**: Server crashes when the first player connects  
-**Solution**: Ensure that you have blisshive.dll in your **ArmA2**\\@Bliss directory.
+**Solution**: Ensure that you have blisshive.dll in your **ArmA2**\\@Bliss or **ArmA2\\@BlissLingor directory and that you have a valid and well-formed **ArmA2**\\bliss.ini.
 
 **Problem**: Kicked from the game when using non-DayZ weapons/vehicles  
 **Solution**: Disable BattlEye by setting battleye=0 in **ArmA2**\\Bliss\\config.cfg, but note that this opens your server to hackers/griefers.
 
-**Problem**: Server not listed on GameSpy in-game server list  
+**Problem**: Server not listed on GameSpy in-game server list or third-party server lists 
 **Solution**: Ensure the game ports (default 2302 - 2305 UDP) are forwarded properly and that the GameSpy master server is up and running.  
 
 **Problem**: "Bad CD Key" messages  
 **Solution**: Buy the game.
 
-**Problem**: Error Zero divisor in **arma2oaserver.rpt**  
-**Solution**: Ensure you have a MySQL user, have run db_migrate.pl successfully, have set all options correctly in **ArmA2**\\bliss.ini and that you can run the following when logged in to MySQL:  
-
-	use dayz;
-	call getTime(1);
 
 Support
 =======
