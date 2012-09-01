@@ -52,8 +52,9 @@ Upgrading
 =========
 
 Depending on what has changed since you deployed your server, you may need to perform one or more steps to do a clean upgrade to the latest code. Look for the following in the commit log (specifically, the files that were changed) when you update to the latest version of the repository:
-If you see that SQL files or db_migrate.pl have changed, then you **must** run `perl -w db_migrate.pl` (with appropriate options, run it with `--help` for more information) to upgrade your database to the latest version.  
-If SQF files (game script) has changed, then you **must** run repack.pl and copy the **Repo**\\deploy\\@Bliss directory into **ArmA 2** and overwrite dayz_server.pbo.  
+
+If you see that SQL files or db_migrate.pl have changed, then you **must** run `perl -w db_migrate.pl` (with appropriate options, run it with `--help` for more information) to upgrade your database to the latest version.
+If SQF files (game script) has changed, then you **must** run repack.pl and copy the **Repository**\\deploy\\@Bliss directory into **ArmA 2** and overwrite dayz_server.pbo.
 If configuration files and BattlEye anti-cheat files have changed, you will need to backup and overwrite your existing versions of these files. Take care to change any default server names, passwords or similar back to their customized values after copying the new versions into your **ArmA2** directory.
 
 These are the areas you will need to inspect to ensure a smooth upgrade. If database and code changes were not made at the same time and you do not read the history thoroughly, you may miss important changes and skip vital steps. It will save you frustration in the long run if you repack and redeploy @Bliss, run `perl -w db_migrate.pl` and check for any new or changed files in **Repo**\\Deploy whenever you would like to update.
@@ -65,7 +66,7 @@ Vehicles
 
 Run `perl vehicles.pl` to get help information on how to invoke the vehicle spawn script correctly. You will need to run the vehicle script and point it to your database to get vehicles to spawn in-game. You **MUST** set the correct world when running vehicles.pl, if you leave the world unspecified the default is Chernarus which will not work correctly if you are running Lingor island. The script can be run periodically - it will not delete all vehicles every time it runs. It will clean up user-deployed objects (wire fence, tents, tank traps, etc) in the same way that official DayZ does. If you run vehicles.pl with the `--cleanup` argument, it will also check for out-of-bounds objects and delete them.
 
-**NOTE:** Vehicles added via database manipulation are only available after a server restart.
+**NOTE:** Vehicles added/updated via database manipulation are only available after a server restart.
 
 Multiple Instances
 ==================
@@ -88,13 +89,13 @@ Customization
 
 Here are the most common customization requests with instructions.
 
-**Request**: I would like to change the available chat channels.
+**Request**: I would like to change the available chat channels.  
 **Solution**: Go into **Repository**\\bliss\\missions\\dayz_1.chernarus (or .lingor for Lingor Island) and edit `description.ext`. Refer to http://community.bistudio.com/wiki/Description.ext#disableChannels for a mapping of channel names to numbers.
 
-**Request**: I would like to change the server timezone.
+**Request**: I would like to change the server timezone.  
 **Solution**: Use the MySQL command-line interface or a GUI tool (HeidiSQL, TOAD for MySQL) to connect to your database. Then, modify the value of the `timezone` field in the `instances` table for the instance in question. This will apply a positive or negative offset (in hours) to the system time, which is checked when the server starts up.
 
-**Request**: I would like to have constant daylight (or moonlight) on my server.
+**Request**: I would like to have constant daylight (or moonlight) on my server.  
 **Solution**: There is no easy solution for this. There is no way to halt the progression of time using SQF. If you *really* want to do this, you would have to modify the getTime procedure to always return a constant time and then schedule automatic restarts such that before the sun sets (or rises) you are restarting/resetting the server back to the static starting time.
 
 Scheduler
