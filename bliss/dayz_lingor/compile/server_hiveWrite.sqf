@@ -39,25 +39,23 @@ switch (_key) do
 		if(_mmodel == "") then { _mmodel = "any" };
 		_mhumanity = _result select 17;
 		if(_mhumanity == "0") then { _mhumanity = 0 };
-		
-		"blisshive" callExtension format ["E:%1:call `proc_updatePlayer`(%2, '%3', '%4', '%5', '%6', %7, %8, %9, '%10', %11, %12, %13, %14, %15, '%16')", (call fnc_instanceName), _mid,_result select 3,_result select 4,_result select 5,_result select 6,_mate,_mdrank,_mtime,_mmodel,_mhumanity,_result select 9,_result select 10,_result select 14,_result select 15,_result select 13];
-
+		"blisshive" callExtension format ["E:%1:call proc_updateSurvivor(%2, '%3', '%4', '%5', '%6', %7, %8, %9, '%10', %11, %12, %13, %14, %15, '%16')", (call fnc_instanceName), _mid,_result select 3,_result select 4,_result select 5,_result select 6,_mate,_mdrank,_mtime,_mmodel,_mhumanity,_result select 9,_result select 10,_result select 14,_result select 15,_result select 13];
 	};
 	case "202":{
 		//Character Death
 		//diag_log("CHARDEATH:202");
-		"blisshive" callExtension format ["E:%1:call proc_setPlayerDead(%2)", (call fnc_instanceName), _mid];
+		"blisshive" callExtension format ["E:%1:call proc_killSurvivor(%2)", (call fnc_instanceName), _mid];
 	};
 	case "203":{
 		//Player Update
 		//diag_log("PLAYERUPDATE:203");
-		"blisshive" callExtension format ["E:%1:call `proc_updatePlayer`(%2, '[]', '%3', '%4', '[]', -1, -1, 0, 'any', 0, 0, 0, 0, 0, '["""",""aidlpercmstpsnonwnondnon_player_idlesteady04"",36]')", (call fnc_instanceName), _result select 2,_result select 3, _result select 4];
+		"blisshive" callExtension format ["E:%1:call proc_updateSurvivor(%2, '[]', '%3', '%4', '[]', -1, -1, 0, 'any', 0, 0, 0, 0, 0, '["""",""aidlpercmstpsnonwnondnon_player_idlesteady04"",36]')", (call fnc_instanceName), _result select 2,_result select 3, _result select 4];
 	};
 	case "301": {
 		//Create Object
 		//diag_log("MKOBJ:301");
 		//61-120:format["CHILD:301:%1:%2:%3:%4:%5:%6:%7:%8:",_x, _class, 0 , 0, _worldspace, [], _array, 0];
-		"blisshive" callExtension format ["E:%1:call updV(%2, '%3', '%4', '%5')", (call fnc_instanceName), _result select 2, _result select 3, _result select 6, _result select 8];
+		"blisshive" callExtension format ["E:%1:call proc_updateObject(%2, '%3', '%4', '%5')", (call fnc_instanceName), _result select 2, _result select 3, _result select 6, _result select 8];
 	};
 	case "303":{
 		//Update Object Inventory (ID)
