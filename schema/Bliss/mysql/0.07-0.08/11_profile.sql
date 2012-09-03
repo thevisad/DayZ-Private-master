@@ -2,7 +2,7 @@ create table profile (
   id int(11) unsigned not null auto_increment,
   unique_id varchar(128) not null,
   name varchar(64) not null default '',
-  humanity int(6) not null,
+  humanity int(6) not null default 2500,
   survival_attempts int(3) unsigned not null,
   total_survival_time int(5) unsigned not null,
   total_survivor_kills int(4) unsigned not null,
