@@ -16,7 +16,7 @@ switch (_result select 1) do
 	case "101":{
 		//Login
 		//diag_log("LOGIN:101");
-		_qresult = "blisshive" callExtension format ["Q:%1:call proc_loginSurvivor('%2')", (call fnc_instanceName), _muid];
+		_qresult = "blisshive" callExtension format ["Q:%1:call proc_loginSurvivor('%2', '%3')", (call fnc_instanceName), _muid, _result select 4];
 		if (_qresult=="[[]]") then
 		{
 			_qresult = "blisshive" callExtension format ["Q:%1:call proc_insertSurvivor('%2', '%3')", (call fnc_instanceName), _muid, _result select 4];
