@@ -14,11 +14,11 @@ switch (_key) do
 		_action = _result select 4;
 		//Logged in
 		if (_action == "0") then {
-			"blisshive" callExtension format ["E:%1:call proc_logLogin('%2')", (call fnc_instanceName), _result select 2];
+			"blisshive" callExtension format ["E:%1:call proc_logLogin('%2', %3)", (call fnc_instanceName), _result select 2, dayz_instance];
 		} else {
 			//Logged out
 			if (_action == "2") then {
-				"blisshive" callExtension format ["E:%1:call proc_logLogout('%2')", (call fnc_instanceName), _result select 2];
+				"blisshive" callExtension format ["E:%1:call proc_logLogout('%2', %3)", (call fnc_instanceName), _result select 2, dayz_instance];
 			}
 		}	
 	};

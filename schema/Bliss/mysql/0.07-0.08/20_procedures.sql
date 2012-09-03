@@ -77,17 +77,17 @@ end;
 
 drop procedure if exists `loglogin`;
 drop procedure if exists `proc_logLogin`;
-create procedure `proc_loglogin`(in `p_uniqueId` varchar(128))
+create procedure `proc_loglogin`(in `p_uniqueId` varchar(128), in `p_instanceId` int)
 begin
-  insert into log_entry (unique_id, log_code_id) values (p_uniqueId, 1); --
+  insert into log_entry (unique_id, instance_id, log_code_id) values (p_uniqueId, p_instanceId, 1); --
 end;
 
 
 drop procedure if exists `loglogout`;
 drop procedure if exists `proc_logLogout`;
-create procedure `proc_loglogout`(in `p_uniqueId` varchar(128))
+create procedure `proc_loglogout`(in `p_uniqueId` varchar(128), in `p_instanceId` int)
 begin
-  insert into log_entry (unique_id, log_code_id) values (p_uniqueId, 2); --
+  insert into log_entry (unique_id, instance_id, log_code_id) values (p_uniqueId, p_instanceId, 2); --
 end;
 
 
