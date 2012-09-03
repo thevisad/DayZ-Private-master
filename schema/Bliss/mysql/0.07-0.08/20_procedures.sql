@@ -68,7 +68,7 @@ begin
     (p_uniqueId, p_playerName)
   on duplicate key update name = p_playerName; --
   insert into survivor
-    (unique_id, survival_time)
+    (unique_id, start_time)
   values
     (p_uniqueId, now()); --
   select last_insert_id(); --
@@ -147,24 +147,24 @@ begin
     profile p
     inner join survivor s on s.unique_id = p.unique_id
   set
-    humanity = if(p_humanity = 0, humanity, p_humanity)
+    p.humanity = if(p_humanity = 0, humanity, p_humanity)
   where
     s.id = p_survivorId; --
 
   update survivor set
-    zombie_kills = zombie_kills+p_zombieKills,
-    headshots = headshots+p_headshots,
-    bandit_kills = bandit_kills+p_banditKills,
-    survivor_kills = survivor_kills+p_murders,
+    zombie_kills = zombie_kills + p_zombieKills,
+    headshots = headshots + p_headshots,
+    bandit_kills = bandit_kills + p_banditKills,
+    survivor_kills = survivor_kills + p_murders,
     state = p_state,
-    model = if(p_playermodel='any',model,p_model),
-    last_ate = if(p_playerlastate=-1,0,last_ate+p_lastAte),
-    last_drank = if(p_playerlastdrank<-1,0,last_drank+p_lastDrank),
-    survival_time = survival_time+p_survivalTime,
-    position = if(p_playerpositon='[]', position, p_position),
-    medical = if(p_playermedicalstatus='[]', medical, p_medical),
-    backpack = if(p_playerbackpack='[]', backpack, p_backpack),
-    inventory = if(p_playerinventory='[]', inventory, p_inventory)
+    model = if(p_model='any', model, p_model),
+    last_ate = if(p_lastAte = -1, 0, last_ate + p_lastAte),
+    last_drank = if(p_lastDrank < -1, 0, last_drank + p_lastDrank),
+    survival_time = survival_time + p_survivalTime,
+    position = if(p_positon='[]', position, p_position),
+    medical = if(p_medical='[]', medical, p_medical),
+    backpack = if(p_backpack='[]', backpack, p_backpack),
+    inventory = if(p_inventory='[]', inventory, p_inventory)
   where
     id = p_survivorId; --
 end;
@@ -240,3 +240,5 @@ begin
     uid not like '%.%'
     and (convert(uid, unsigned integer) between (convert(p_uniqueId, unsigned integer) - 2) and (convert(p_uniqueId, unsigned integer) + 2)); --
 end;
+
+drop procedure if exists `selIPIBMSSS`;
