@@ -27,4 +27,4 @@ insert ignore into profile
     sum(zombie_kills) total_zombie_kills,
     sum(headshots) total_headshots
   from main
-  group by uid;
+  group by unique_id;
