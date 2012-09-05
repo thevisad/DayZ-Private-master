@@ -85,6 +85,10 @@ if ($args{'cleanup'}) {
 			if ($pos[1] < 0 || $pos[2] < 0 || $pos[1] > 14700 || $pos[2] > 15360) {
 				$valid = 0;
 			}
+		} elsif ($db{'world'} eq 'lingor') {
+			if ($pos[1] < 0 || $pos[2] < 0 || $pos[1] > 10000 || $pos[2] > 10000) {
+				$valid = 0;
+			}
 		} else {
 			print "Cannot check valid bounds for the world $db{'world'}\n";
 		}
