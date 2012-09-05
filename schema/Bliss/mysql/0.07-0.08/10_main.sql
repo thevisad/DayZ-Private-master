@@ -1,6 +1,5 @@
 alter table main
   change uid unique_id varchar(128) not null after id,
-  change pos position varchar(255) not null default '[]' after unique_id,
   change death is_dead int(1) unsigned not null default '0' after medical,
   change humanity humanity int(5) not null default '2500' after state,
   change hkills survivor_kills int(3) unsigned not null default '0' after humanity,

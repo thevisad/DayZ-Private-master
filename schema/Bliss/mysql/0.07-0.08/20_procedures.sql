@@ -110,7 +110,7 @@ drop procedure if exists `proc_getSurvivorStats`;
 create procedure `proc_getSurvivorStats`(in `p_survivorId` int)
 begin
   select
-    medical, position, zombie_kills, state, p.humanity, headshots, survivor_kills, bandit_kills
+    medical, pos, zombie_kills, state, p.humanity, headshots, survivor_kills, bandit_kills
   from
     survivor s
     inner join profile p on s.unique_id = p.unique_id
@@ -157,12 +157,12 @@ begin
     bandit_kills = bandit_kills + p_banditKills,
     survivor_kills = survivor_kills + p_murders,
     state = p_state,
-    model = if(p_model='any', model, p_model),
+    model = if(p_model = 'any', model, p_model),
     last_ate = if(p_lastAte = -1, 0, last_ate + p_lastAte),
     last_drank = if(p_lastDrank < -1, 0, last_drank + p_lastDrank),
     survival_time = survival_time + p_survivalTime,
-    position = if(p_positon='[]', position, p_position),
-    medical = if(p_medical='[]', medical, p_medical),
+    pos = if(p_position = '[]', pos, p_position),
+    medical = if(p_medical = '[]', medical, p_medical),
     backpack = if(p_backpack='[]', backpack, p_backpack),
     inventory = if(p_inventory='[]', inventory, p_inventory)
   where
