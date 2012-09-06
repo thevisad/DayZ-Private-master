@@ -19,7 +19,7 @@ drop procedure if exists `proc_getObjects`;
 create procedure `proc_getObjects`(in `p_instanceId` int, in `p_currentPage` int)
 begin
   set @instance = p_instanceId; --
-  set @page = p_currentPage; --
+  set @page = (p_currentPage * 5); --
   prepare stmt from 'select id,otype,oid,pos,inventory,health,fuel,damage from objects where instance = ? limit ?, 5'; --
   execute stmt using @instance, @page; --
   deallocate prepare stmt; --
@@ -38,7 +38,7 @@ drop procedure if exists `proc_getSchedulerTasks`;
 create procedure `proc_getSchedulerTasks`(in `p_instanceId` int, in `p_currentPage` int)
 begin
   set @instance = p_instanceId; --
-  set @page = p_currentPage; --
+  set @page = (p_currentPage * 10); --
   prepare stmt from 'select message,mtype,looptime,mstart from scheduler s join instances i on i.mvisiblity = s.visibility where i.instance = ? limit ?, 10'; --
   execute stmt using @instance, @page; -- 
   deallocate prepare stmt; --
