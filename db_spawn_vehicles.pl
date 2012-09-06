@@ -20,6 +20,7 @@ GetOptions(
 	'database|dbname|d=s',
 	'port|dbport=s',
 	'world|map|w|m=s',
+	'limit|l=s',
 	'cleanup',
 	'help'
 );
@@ -154,8 +155,8 @@ while (my $vehicle = $spawns->fetchrow_hashref) {
 	$sth->execute($vehicle->{otype});
 	my $count = $sth->fetchrow_hashref;
 
-	# Skip this spawn if the spawn chance did not occur
-	if (rand() < $vehicle->{chance}) {
+	# Skip this spawn if the spawn chance was not met
+	if (int(rand(100)) > ($vehicle->{chance} * 100)) {
 		next;
 	}
 
@@ -175,7 +176,7 @@ while (my $vehicle = $spawns->fetchrow_hashref) {
 	} else {
 		@parts = ('["palivo",1]','["motor",1]','["karoserie",1]','["wheel_1_1_steering",1]','["wheel_1_2_steering",1]','["wheel_2_1_steering",1]','["wheel_2_2_steering",1]');
 	}
-
+	
 	if (scalar(@parts) > 0) {
 		$health = genDamage(@parts);
 	}
@@ -220,5 +221,5 @@ sub genDamage
 			$damCount++;
 		}
 	}
-	return $h;
+	return "[${h}]";
 }
