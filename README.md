@@ -12,7 +12,7 @@ Prerequisites
 =============
 
  - Windows (tested with 7 and Server 2008)
- - A working ArmA 2 Combined Ops dedicated server with recommended beta patch installed (http://www.arma2.com/beta-patch.php)
+ - A working ArmA 2 Combined Ops dedicated server (Steam users must merge ArmA2 and ArmA2 OA directories) with recommended beta patch installed (http://www.arma2.com/beta-patch.php)
  - MySQL Server 5.x with TCP/IP Networking enabled **NOTE:** You **must** use the official MySQL installer, not XAMPP (http://www.mysql.com/get/Downloads/MySQLInstaller/mysql-installer-community-5.5.27.2.msi/from/http://cdn.mysql.com/)
  - The decimal separator on your server MUST BE a period. If it is a comma, vehicle spawning (at least) will not work correctly. **NOTE:** If you use FireDaemon to start your server, you must re-create the service if you change the comma separator in Windows.
  - A working Perl interpreter - Strawberry Perl is recommended (http://strawberryperl.com/)
@@ -146,7 +146,7 @@ Common Issues
 **Solution**: Use Strawberry Perl instead of ActivePerl. If that does not resolve the issue, try running `cpan DBD::mysql` in a command prompt or adding your Perl bin directory to the PATH environment variable.
 
 **Problem**: Server crashes when the first player connects  
-**Solution**: Ensure that you have blisshive.dll in your **ArmA2**\\@Bliss or **ArmA2\\@BlissLingor directory and that you have a valid and well-formed **ArmA2**\\bliss.ini.
+**Solution**: Ensure that you have blisshive.dll in your **ArmA2**\\@Bliss or **ArmA2**\\@BlissLingor directory and that you have a valid and well-formed **ArmA2**\\bliss.ini.
 
 **Problem**: Kicked from the game when using non-DayZ weapons/vehicles  
 **Solution**: Disable BattlEye by setting battleye=0 in **ArmA2**\\Bliss\\config.cfg, but note that this opens your server to hackers/griefers.
