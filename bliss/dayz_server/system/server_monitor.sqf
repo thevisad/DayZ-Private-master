@@ -27,7 +27,7 @@ diag_log("SERVER: Got " + str(_pageCount + 1) + " pages of tasks...");
 //Load tasks
 taskList = [];
 _taskCount = 0;
-for "_page" from 0 to _pageCount do {
+for "_page" from 1 to _pageCount do {
 	_result = "blisshive" callExtension format ["Q:%1:call proc_getSchedulerTasks(%2, %3)", (call fnc_instanceName), dayz_instance, _page];
 	_result = call compile _result;
 	_end = ((count _result) - 1);
@@ -53,7 +53,7 @@ diag_log("SERVER: Got " + str(_pageCount + 1) + " pages of objects...");
 //Load objects
 _objList = [];
 _objCount = 0;
-for "_page" from 0 to _pageCount do {
+for "_page" from 1 to _pageCount do {
 	_result = "blisshive" callExtension format ["Q:%1:call proc_getObjects(%2, %3)", (call fnc_instanceName), dayz_instance, _page];
 	_result = call compile _result;
 	_end = ((count _result) - 1);
