@@ -3,5 +3,8 @@ cd util\DBIx-Transaction-1.100
 perl Makefile.PL
 dmake
 dmake install
-cpan -f -i DBIx::Migration::Directories
+cd ..\DBIx-Migration-Directories-0.11
+perl Makefile.PL
+dmake
+dmake install
 cd ..\..
