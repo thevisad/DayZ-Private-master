@@ -39,7 +39,7 @@ create procedure `proc_getSchedulerTasks`(in `p_instanceId` int, in `p_currentPa
 begin
   set @instance = p_instanceId; --
   set @page = (p_currentPage * 10); --
-  prepare stmt from 'select message,mtype,looptime,mstart from scheduler s join instances i on i.mvisiblity = s.visibility where i.instance = ? limit ?, 10'; --
+  prepare stmt from 'select message,mtype,looptime,mstart from scheduler s join instances i on i.mvisibility = s.visibility where i.instance = ? limit ?, 10'; --
   execute stmt using @instance, @page; -- 
   deallocate prepare stmt; --
 end;
