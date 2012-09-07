@@ -2,7 +2,7 @@ DayZ Bliss Private Server
 =========================
 
 This is a private server project for DayZ.
-This code is currently compatible with DayZ 1.7.2.5 and ArmA 2 OA beta patch build 96061.
+This code is currently compatible with DayZ 1.7.2.6 and ArmA 2 OA beta patch build 96584.
 
 This would not be possible without the work of Rocket and Guru Abdul. We also use the fantastic cPBO from Kegetys (www.kegetys.fi) and wget for Windows by the GnuWin32 team (gnuwin32.sourceforge.net).
 
@@ -28,7 +28,7 @@ When you see the following names in bold, substitute in the appropriate path as 
 Installation
 ============
 
-1. Download DayZ 1.7.2.5 and place the PBO files in **ArmA2**\\@DayZ\\Addons. 
+1. Download DayZ 1.7.2.6 and place the PBO files in **ArmA2**\\@DayZ\\Addons. 
 2. Run `setup_perl.bat`. If you are prompted to provide a schema path, press enter to continue. If you are prompted Yes/No to run tests, type "n" and press Enter.  
 3. Run `perl repack.pl` in **Repository**.  
 4. Copy all files from **Repository**\\deploy into **ArmA2**\\  
@@ -96,7 +96,7 @@ Here are the most common customization requests with instructions.
 **Solution**: Use the MySQL command-line interface or a GUI tool (HeidiSQL, TOAD for MySQL) to connect to your database. Then, modify the value of the `timezone` field in the `instances` table for the instance in question. This will apply a positive or negative offset (in hours) to the system time, which is checked when the server starts up.
 
 **Request**: I would like to have constant daylight (or moonlight) on my server.  
-**Solution**: There is no easy solution for this. There is no way to halt the progression of time using SQF. If you *really* want to do this, you would have to modify the getTime procedure to always return a constant time and then schedule automatic restarts such that before the sun sets (or rises) you are restarting/resetting the server back to the static starting time.
+**Solution**: There is no easy solution for this. There is no way to halt the progression of time using SQF. If you *really* want to do this, you would have to modify the proc_getInstanceTime procedure to always return a constant time and then schedule automatic restarts such that before the sun sets (or rises) you are restarting/resetting the server back to the static starting time.
 
 Scheduler
 =========
