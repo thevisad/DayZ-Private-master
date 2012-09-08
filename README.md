@@ -130,7 +130,9 @@ Bliss is optionally capable of only allowing whitelisted players on your server.
 1. Using a MySQL administration utility, set the whitelist field to 1 for your instance (in the instances table).  
 2. Set the is_whitelisted column to 1 for any row in the profile table that you would like to be whitelisted.  
 
-A server restart is not required for whitelist changes to take effect. If you would like to whitelist players who have not logged in yet, you will need to insert a row into profile with is_whitelisted set to 1 before they connect.
+A server restart is not required for whitelist changes to take effect. If you would like to whitelist players who have not logged in yet, you will need to insert a row into profile with is_whitelisted set to 1 before they connect. An example query to accomplish this:
+
+> insert into profile (unique_id, name, is_whitelisted) values ('12345678', 'DemoPlayer', 1);
 
 The whitelist is completely independent of server password or any firewall you may be using to control access. Players who are not whitelisted will be stuck at "Loading" when they try to connect.
 
