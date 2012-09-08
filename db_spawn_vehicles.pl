@@ -142,8 +142,8 @@ $spawns->execute($db{'instance'}, $db{'world'});
 
 my $insert = $dbh->prepare(<<EndSQL
 INSERT INTO
-  objects (uid, pos, health, damage, otype, instance)
-VALUES (?, ?, ?, ?, ?, ?)
+  objects (uid, pos, health, damage, otype, instance, created)
+VALUES (?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP())
 EndSQL
 ) or die "FATAL: SQL Error - " . DBI->errstr . "\n";
 
