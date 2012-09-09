@@ -77,7 +77,7 @@
 5 setVehicleAmmo !"\"setVehicleAmmo\","
 5 setVehicleArmor !"\"setVehicleArmor\","
 5 setVehicleLock !"\"setVehicleLock\","
-5 setVehiclePos !"\"setVehiclePos\","
+5 setVehiclePosition !"\"setVehiclePosition\","
 5 setViewDistance !"\"setViewDistance\"," 
 5 setWeaponReloadingTime !"\"setWeaponReloadingTime\","
 5 setWeaponState !"\"setWeaponState\"," 
