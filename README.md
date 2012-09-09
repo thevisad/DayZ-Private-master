@@ -90,7 +90,7 @@ Customization
 Here are the most common customization requests with instructions.
 
 **Request**: I would like to change the available chat channels.  
-**Solution**: Go into **Repository**\\bliss\\missions\\dayz_1.chernarus (or .lingor for Lingor Island) and edit `description.ext`. Refer to http://community.bistudio.com/wiki/Description.ext#disableChannels for a mapping of channel names to numbers.
+**Solution**: Go into **Repository**\\bliss\\missions\\dayz_1.chernarus (or .lingor for Lingor Island) and edit `description.ext`. Refer to http://community.bistudio.com/wiki/Description.ext#disableChannels for a mapping of channel names to numbers. Then run `repack.pl` and redeploy the files in **Repository**\\deploy\\MPMissions.
 
 **Request**: I would like to change the server timezone.  
 **Solution**: Use the MySQL command-line interface or a GUI tool (HeidiSQL, TOAD for MySQL) to connect to your database. Then, modify the value of the `timezone` field in the `instances` table for the instance in question. This will apply a positive or negative offset (in hours) to the system time, which is checked when the server starts up.
@@ -142,9 +142,8 @@ Gotchas / Known Bugs
 Character data can become desynchronized if the player was connected within several minutes of server shutdown. We strongly recommend that you wait 5 minutes after all players have disconnected before shutting down a public server.
 
 Any bug present in the official client or server will probably also exist in this solution. Please do **not** report these as issues on GitHub. Some of the official bugs:
- - Texture issues / graphical corruption / artifacts
- - Loss of backpack on model change (due to bandit morphing) or on respawn
- - Spawning in debug plains or in the ocean
+ - Loss of backpack due to bandit morphing or on respawn
+ - Spawning in debug areas (plains / ocean)
  - Day / night cycle desync
  - Vehicle damage not persisting / vehicles repairing themselves
 
