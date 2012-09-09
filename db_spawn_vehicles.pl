@@ -160,6 +160,23 @@ while (my $vehicle = $spawns->fetchrow_hashref) {
 	$sth->execute($vehicle->{otype});
 	my $count = $sth->fetchrow_hashref;
 
+	my $limit = 0;
+	if ($vehicle->{otype} =~ m/Old_bike.*/) {
+		$limit = 10;
+	} elsif ($vehicle->{otype} =~ m/UAZ.*|S1203.*|.*boat.*/) {
+		$limit = 4;
+	} elsif ($vehicle->{otype} =~ m/ATV.*|Skoda.*|TT650.*|UH1H.*|hilux.*|Ikarus.*|Tractor|Volha.*/) {
+		$limit = 3;
+	} elsif ($vehicle->{otype} =~ m/V3S.*|Ural.*|PBX|SUV.*/) {
+		$limit = 1;
+	}
+
+	# Skip this spawn if the vehicle is over its per-type limit
+	if ($limit > 0 && $count >= $limit) {
+		print "INFO: Vehicle $vehicle->{otype} is at its limit of $limit spawns\n";
+		next;
+	}
+
 	# Skip this spawn if the spawn chance was not met
 	if (int(rand(100)) > ($vehicle->{chance} * 100)) {
 		next;
