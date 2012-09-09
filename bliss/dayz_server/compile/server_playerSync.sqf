@@ -186,6 +186,9 @@ if (_characterID != "0") then {
 			};
 		};
 
+		dayz_myBackpack = unitBackpack _character;
+		(owner _character) publicVariableClient "dayz_myBackpack";
+
 		[_charPos] call server_updateNearbyObjects;
 		//Reset timer
 		if (_timeSince > 0) then {
