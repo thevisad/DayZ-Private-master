@@ -153,7 +153,7 @@ while (my $vehicle = $spawns->fetchrow_hashref) {
 	}
 
 	# Determine count for this vehicle type
-	my $count = $dbh->selectrow_array("SELECT COUNT(*) FROM objects WHERE otype = ?", undef, $vehicle->{otype});
+	my $count = $dbh->selectrow_array("SELECT COUNT(*) FROM objects WHERE instance = ? and otype = ?", undef, ($db{'instance'}, $vehicle->{otype}));
 
 	my $limit = 0;
 	if ($vehicle->{otype} =~ /Old_bike.*/) {
