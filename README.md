@@ -98,6 +98,9 @@ Here are the most common customization requests with instructions.
 **Request**: I would like to have constant daylight (or moonlight) on my server.  
 **Solution**: There is no easy solution for this. There is no way to halt the progression of time using SQF. If you *really* want to do this, you would have to modify the proc_getInstanceTime procedure to always return a constant time and then schedule automatic restarts such that before the sun sets (or rises) you are restarting/resetting the server back to the static starting time.
 
+**Request**: I would like to alter difficulty options (3rd-person, crosshairs, name tags, etc).
+**Solution**: Edit **ArmA2**\\Bliss\\Users\\Bliss\\Bliss.ArmA2OAProfile. An explanation of the options is available at http://community.bistudio.com/wiki/server.armaprofile. You must restart the server for these changes to take effect.
+
 Scheduler
 =========
 
