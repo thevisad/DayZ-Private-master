@@ -138,8 +138,8 @@ class FSM
           priority = 0.000000;
           to="cleanup_objects";
           precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
-          condition=/*%FSM<CONDITION""">*/"(time - _timeNem) > 10"/*%FSM</CONDITION""">*/;
-          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+          condition=/*%FSM<CONDITION""">*/"(time - _timeNem) > 300"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/"_timeNem = time;"/*%FSM</ACTION""">*/;
         };
         /*%FSM</LINK>*/
       };
@@ -252,6 +252,7 @@ class FSM
        "{" \n
        "	if (local _x) then {" \n
        "		_keep = _x getVariable [""permaLoot"",false];" \n
+       "		_keep = (_keep && (({isPlayer _x} count (_x nearEntities [[""CAManBase""], 100])) > 0));" \n
        "		if (!_keep) then {" \n
        "			deleteVehicle _x;" \n
        "			_delQty = _delQty + 1;" \n

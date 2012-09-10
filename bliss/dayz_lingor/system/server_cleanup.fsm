@@ -252,6 +252,7 @@ class FSM
        "{" \n
        "	if (local _x) then {" \n
        "		_keep = _x getVariable [""permaLoot"",false];" \n
+       "		_keep = (_keep && (({isPlayer _x} count (_x nearEntities [[""CAManBase""], 50])) > 0));" \n
        "		if (!_keep) then {" \n
        "			deleteVehicle _x;" \n
        "			_delQty = _delQty + 1;" \n
