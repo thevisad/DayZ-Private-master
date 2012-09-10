@@ -108,17 +108,14 @@ if ($args{'cleanup'}) {
 }
 
 # Determine if we are over the vehicle limit
-$sth = $dbh->prepare(<<EndSQL
-SELECT COUNT(*) AS count
+my $vehicleCount = $dbh->selectrow_array(<<EndSQL
+SELECT COUNT(*)
 FROM objects
 WHERE
   instance = ?
   AND otype NOT IN ('TentStorage', 'Wire_cat1', 'Hedgehog_DZ', 'Sandbag1_DZ', 'Hedgehog_DZ', 'TrapBear')
 EndSQL
-) or die "FATAL: SQL Error - " . DBI->errstr . "\n";
-$sth->execute($db{'instance'}) or die "FATAL: Could not count vehicles - " . $sth->errstr . "\n";
-my $row = $sth->fetchrow_hashref;
-my $vehicleCount = $row->{count};
+, undef, $db{'instance'}) or die "FATAL: SQL Error - " . DBI->errstr . "\n";
 if ($vehicleCount > $db{'limit'}) {
 	die "FATAL: Count of $vehicleCount is greater than limit of $db{'limit'}\n";
 }
@@ -156,9 +153,7 @@ while (my $vehicle = $spawns->fetchrow_hashref) {
 	}
 
 	# Determine count for this vehicle type
-	$sth = $dbh->prepare("SELECT COUNT(*) FROM objects WHERE otype LIKE ?") or die "FATAL - SQL Error " . DBI->errstr . "\n";
-	$sth->execute($vehicle->{otype});
-	my $count = $sth->fetchrow_hashref;
+	my $count = $dbh->selectrow_array("SELECT COUNT(*) FROM objects WHERE otype = ?", undef, $vehicle->{otype});
 
 	my $limit = 0;
 	if ($vehicle->{otype} =~ m/Old_bike.*/) {
