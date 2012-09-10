@@ -182,6 +182,19 @@
 //1 "titleText" !"\"titleText\"," !"rtitleText = 'titleText'" !"rtitleTextcode = compile PreprocessFile (BIS_PathMPscriptCommands + 'titleText.sqf')" !"if (_isDead) then {\nTitleText[\"Pulse is extremely weak\",\"PLAIN DOWN\",3];" !"if (_isCardiac) then {\nTitleText[\"Pulse is weak\",\"PLAIN DOWN\",3];\n} else {\nTitleText[\"Pulse is strong\",\"PLAIN DOWN\",3];" //#+10
 //1 "cutText" //#+11
 1 "createTrigger" !"\"createTrigger\"," !"_t=createTrigger[\"EmptyDetector\",(_player modelToWorld[0,0,0])];" 
+1 "_fnc" !"BIS_fnc" !"BIS_SSM_fnc" !"BIS_GITA_fnc" !"BIS_ALICE_fnc" !"BIS_EW_fnc !"BIS_PMC_fnc" !"drn_fnc_DynamicWeather_ShowDebugTextLocal" 
+1 "BIS_fnc" !"if (isnil 'BIS_fnc" !"BIS_fnc_createmenu" !"BIS_fnc_sceneSetPosFormation" !"BIS_Fnc_dirTo" !"BIS_fnc_invAdd" !"BIS_fnc_invCodeToArray" !"BIS_fnc_halo" !"BIS_fnc_invSlotsEmpty" !"BIS_fnc_invSlotType" !"BIS_fnc_vectorDiff" !"BIS_fnc_findSafePos" !"BIS_fnc_isPosBlacklisted" !"BIS_fnc_inTrigger" !"BIS_fnc_selectRandom" !"BIS_fnc_infoText" !"bis_fnc_init" !"BIS_fnc_arrayFindDeep" !"Error: BIS_FNC" !"BIS_FNC Error:" !"bis_fnc_flies" !"BIS_fnc_relativeDirTo"
+1 "BIS_SSM_fnc" !"if (isnil 'BIS_SSM_fnc"
+1 "BIS_GITA_fnc" !"if (isnil 'BIS_GITA_fnc" !"if (isnil 'BIS_GITA_fnc_createMarkers' || false) then {" 
+1 "BIS_ALICE_fnc" !"if (isnil 'BIS_ALICE_fnc"
+1 "BIS_EW_fnc" !"if (isnil 'BIS_EW_fnc"
+1 "BIS_PMC_fnc" !"if (isnil 'BIS_PMC_fnc"
+1 "BIS_fnc_destroyCity" !"if (isnil 'BIS_fnc_destroycity"
+1 "BIS_fnc_spawnVehicle" !"if (isnil 'BIS_fnc_spawnVehicle"
+1 "BIS_fnc_halo" !"if (isnil 'BIS_fnc_halo"
+1 "BIS_fnc_sceneSetPosFormation" !"if (isnil 'BIS_fnc_scenesetposformation"
+1 "BIS_fnc_invAdd" !"if (isnil 'BIS_fnc_invAdd" !"_isOk = [player,_config] call BIS_fnc_invAdd;" !"_isOk = [player,_config2] call BIS_fnc_invAdd;" !"_result = [player,\"PartWoodPile\"] call BIS_fnc_invAdd;" !"INV_ Error: BIS_FNC_invAdd"
+1 "BIS_fnc_infoText" !"if (isnil 'BIS_fnc_infoText" !"_first = [_x select 0,_x select 1] spawn BIS_fnc_infoText;" !"_first = [_world,_town,localize (\"str_player_06\") + \" \" + str(_days)] spawn BIS_fnc_infoText;"
 //little tries //#+12
 1 "player action"
 1 "vehicle player setPos"
