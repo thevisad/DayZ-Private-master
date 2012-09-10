@@ -115,7 +115,7 @@ WHERE
   instance = ?
   AND otype NOT IN ('TentStorage', 'Wire_cat1', 'Hedgehog_DZ', 'Sandbag1_DZ', 'Hedgehog_DZ', 'TrapBear')
 EndSQL
-, undef, $db{'instance'}) or die "FATAL: SQL Error - " . DBI->errstr . "\n";
+, undef, $db{'instance'});
 if ($vehicleCount > $db{'limit'}) {
 	die "FATAL: Count of $vehicleCount is greater than limit of $db{'limit'}\n";
 }
@@ -156,13 +156,13 @@ while (my $vehicle = $spawns->fetchrow_hashref) {
 	my $count = $dbh->selectrow_array("SELECT COUNT(*) FROM objects WHERE otype = ?", undef, $vehicle->{otype});
 
 	my $limit = 0;
-	if ($vehicle->{otype} =~ m/Old_bike.*/) {
+	if ($vehicle->{otype} =~ /Old_bike.*/) {
 		$limit = 10;
-	} elsif ($vehicle->{otype} =~ m/UAZ.*|S1203.*|.*boat.*/) {
+	} elsif ($vehicle->{otype} =~ /UAZ.*|S1203.*|.*boat.*/) {
 		$limit = 4;
-	} elsif ($vehicle->{otype} =~ m/ATV.*|Skoda.*|TT650.*|UH1H.*|hilux.*|Ikarus.*|Tractor|Volha.*/) {
+	} elsif ($vehicle->{otype} =~ /ATV.*|Skoda.*|TT650.*|UH1H.*|hilux.*|Ikarus.*|Tractor|Volha.*/) {
 		$limit = 3;
-	} elsif ($vehicle->{otype} =~ m/V3S.*|Ural.*|PBX|SUV.*/) {
+	} elsif ($vehicle->{otype} =~ /V3S.*|Ural.*|PBX|SUV.*/) {
 		$limit = 1;
 	}
 
