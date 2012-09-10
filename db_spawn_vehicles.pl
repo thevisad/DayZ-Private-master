@@ -179,24 +179,23 @@ while (my $vehicle = $spawns->fetchrow_hashref) {
 
 	# Generate random damage value
 	my $damage = rand(0.75);
-	if ($damage <= 0.05) {
+	if ($damage <= 0.05 or $vehicle->{otype} =~ /Old_bike.*/) {
 		$damage = 0;
 	}
 
 	# Generate random parts damage
 	my $health = '';
-	if($vehicle eq "Old_bike%") {
-	} elsif($vehicle eq "TT650%"||$vehicle eq "%boat%"||$vehicle eq "PBX") {
+	if ($vehicle->{otype} =~ /Old_bike.*/) {
+		@parts = ();
+	} elsif ($vehicle->{otype} =~ /TT650.*|.*boat.*|PBX/) {
 		@parts = ('["motor",1]');
-	} elsif($vehicle eq "UH1H%") {
+	} elsif ($vehicle->{otype} =~ /UH1H.*/) {
 		@parts = ('["motor",1]','["elektronika",1]','["mala vrtule",1]','["velka vrtule",1]');
 	} else {
 		@parts = ('["palivo",1]','["motor",1]','["karoserie",1]','["wheel_1_1_steering",1]','["wheel_1_2_steering",1]','["wheel_2_1_steering",1]','["wheel_2_2_steering",1]');
 	}
 	
-	if (scalar(@parts) > 0) {
-		$health = genDamage(@parts);
-	}
+	$health = genDamage(@parts);
 
 	# Execute insert
 	$spawnCount++;
