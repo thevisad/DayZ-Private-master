@@ -164,7 +164,8 @@ _countr = 0;
 				_position = ([(getPosATL _object),0,100,10,0,500,0] call BIS_fnc_findSafePos);
 				_object setPosATL _position;
 			};
-			_id = _object spawn fnc_vehicleEventHandler;				
+			_object addEventHandler ["HandleDamage", { _this call vehicle_handleDamage }];
+			_object addEventHandler ["Killed", { _this call vehicle_handleKilled }];
 		};
 
 		//Monitor the object

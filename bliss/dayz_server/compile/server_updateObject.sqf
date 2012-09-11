@@ -41,17 +41,6 @@ switch (_type) do {
 			diag_log ("HIVE: WRITE: "+ str(_key));
 			_key call server_hiveWrite;
 		};
-		_hitpoints = _object call vehicle_getHitpoints;
-		_array = [];
-		_dam = 1;
-		{
-			_hit = [_object,_x] call object_getHit;
-			_selection = getText (configFile >> "CfgVehicles" >> (typeOf _object) >> "HitPoints" >> _x >> "name");
-			if (_hit > 0) then {_array set [count _array,[_selection,_hit]]};
-		} forEach _hitpoints;
-		_key = format["CHILD:306:%1:%2:%3:",_objectID,_array,_damage];
-		diag_log ("HIVE: WRITE: "+ str(_key));
-		_key call server_hiveWrite;
 	};
 	case "position": {
 		_position = getPosATL _object;
@@ -86,17 +75,37 @@ switch (_type) do {
 		};
 	};
 	case "damage": {
-		if ((time - _lastUpdate) > 5) then {
-			_hitpoints = _object call vehicle_getHitpoints;
-			_array = [];
-			_dam = 1;
-			{
-				_hit = [_object,_x] call object_getHit;
-				_selection = getText (configFile >> "CfgVehicles" >> (typeOf _object) >> "HitPoints" >> _x >> "name");
-				if (_hit > 0) then {_array set [count _array,[_selection,_hit]]};
-			} forEach _hitpoints;
-			_key = format["CHILD:306:%1:%2:%3:",_objectID,_array,_damage];
-			diag_log ("HIVE: WRITE: "+ str(_key));
+		_hitPoints = _object call vehicle_getHitpoints;
+		_array = [];
+		_partCount = 1;
+		_dam = 1;
+		_avgDamage = 0;
+
+		if (_object isKindOf "Car") then { _partCount = 11 };
+		if (_object isKindOf "Boat") then { _partCount = 1 };
+		if (typeof _object == "Ikarus") then { _partCount = 15 };
+		if (typeof _object == "Old_bike_TK_CIV_EP1") then {_partCount = 2 };
+		if (typeof _object == "ATV_US_EP1") then { _partCount = 7 };
+		if (typeof _object == "TT650_TK_CIV_EP1") then { _partCount = 5 };
+		if (typeof _object == "S1203_TK_CIV_EP1") then { _partCount = 10 };
+		if (typeof _object == "UH1H_DZ") then { _partCount = 9 };
+
+		{
+			_hit = [_object, _x] call object_getHit;
+			_selection = getText (configFile >> "CfgVehicles" >> (typeOf _object) >> "HitPoints" >> _x >> "name");
+			if (_hit > 0) then { _array set [count _array, [_selection, _hit]] };
+			//diag_log("PART:" + str(_selection) + ":" + str(_hit));
+			_avgDamage = _avgDamage + _hit;
+		} forEach _hitPoints;
+		_avgDamage = _avgDamage / _partCount;
+
+		if (_object == objNull) then { _avgDamage = 1.0 };
+		if (_avgDamage >= 0.98) then { _avgDamage = 1.0 };
+		_damage = _avgDamage;
+
+		if (_lastUpdate == 0 || (time - _lastUpdate) > 5) then {
+			_key = format["CHILD:306:%1:%2:%3:", _objectID, _array, _avgDamage];
+			diag_log("HIVE:WRITE:" + str(_key));
 			_key call server_hiveWrite;
 		};
 	};
