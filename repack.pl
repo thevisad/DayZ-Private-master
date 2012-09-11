@@ -1,6 +1,10 @@
 #!/usr/bin/perl
 
+use File::Copy;
 use File::Path qw(make_path);
+use Digest::SHA1 qw(sha1_hex);
+use Time::HiRes qw(time);
+use List::Util qw(max min);
 
 # Ensure required directories exist
 make_path(
@@ -23,6 +27,22 @@ if ($^O eq "linux") {
 	system("copy .\\util\\blisshive.dll .\\deploy\\\@Bliss");
 	system("copy .\\util\\blisshive.dll .\\deploy\\\@BlissLingor");
 	$editOpts = ".bak";
+}
+
+# If the profile directories have not been obfuscated
+my @profiles = ('./deploy/Bliss', './deploy/BlissLingor');
+foreach $dir (@profiles) {
+	if (-d $dir && -f "$dir/basic.cfg" && -f "$dir/config.cfg") {
+		my $start = int(rand(32));
+		my $hash = substr(sha1_hex(time()), $start, 8);
+		rename("$dir/config.cfg", "${dir}/config_$hash.cfg");
+		if ($dir =~ /Lingor/) {
+			system("perl -pi${editOpts} -e 's/config=BlissLingor\\\\config_[0-9a-fA-F]{8}\\.cfg/config=BlissLingor\\\\config_${hash}.cfg/' ./deploy/server_lingor.bat\n");
+		} else {
+			system("perl -pi${editOpts} -e 's/config=Bliss\\\\config_[0-9a-fA-F]{8}\\.cfg/config=Bliss\\\\config_${hash}.cfg/' ./deploy/server.bat\n");
+		}
+		print "INFO: Suffixing key $hash for $dir\n";
+	}
 }
 
 # Pack the server files
