@@ -156,7 +156,7 @@ Common Issues
 **Problem**: Stuck at Loading / Wait for Host or Error Zero divisor in **arma2oaserver.rpt**  
 **Solution**: Look in `blisshive.log` for MySQL connection errors (Google these to find troubleshooting steps). Ensure you have a valid MySQL user created, have run db_migrate.pl successfully, have set all options correctly in **ArmA2**\\bliss.ini and that you can run the following when logged in to MySQL:  
 
-	call getTime(1);
+	call proc_getInstanceTime(1);
 
 **Problem**: You get errors referring to `libmysql_.dll` or see errors indicating a missing `DBD/mysql.pm` or `DBD::mysql` when running db_migrate.pl or db_spawn_vehicles.pl.  
 **Solution**: Use Strawberry Perl instead of ActivePerl. If that does not resolve the issue, try running `cpan DBD::mysql` in a command prompt or adding your Perl bin directory to the PATH environment variable.
