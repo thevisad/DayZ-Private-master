@@ -154,7 +154,7 @@ Common Issues
 =============
 
 **Problem**: Stuck at Loading / Wait for Host or Error Zero divisor in **arma2oaserver.rpt**  
-**Solution**: Look in `blisshive.log` for MySQL connection errors (Google these to find troubleshooting steps). Ensure you have a valid MySQL user created, have run db_migrate.pl successfully, have set all options correctly in **ArmA2**\\bliss.ini and that you can run the following when logged in to MySQL:  
+**Solution**: Look in `blisshive.log` for MySQL connection errors (Google these to find troubleshooting steps). If you do not have a `blisshive.log` in your server directory, right-click on `blisshive.dll` in `@Bliss` (`@BlissLingor` for Lingor servers) and select Properties. If you see an Unblock button, click it and hit OK. Ensure you have a valid MySQL user created, have run db_migrate.pl successfully, have set all options correctly in **ArmA2**\\bliss.ini and that you can run the following when logged in to MySQL:  
 
 	call proc_getInstanceTime(1);
 
