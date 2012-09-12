@@ -72,8 +72,6 @@ class FSM
     {
       name = "waiting";
       init = /*%FSM<STATEINIT""">*/"//diag_log ""CLEANUP: Waiting for next task"";" \n
-       "_numDead = {local _x} count allDead;" \n
-       "_timeNem = time;" \n
        "//Scheduler loop" \n
        "private [""_msg"",""_type"",""_loop"",""_mtime""];" \n
        "{" \n
@@ -108,8 +106,8 @@ class FSM
           priority = 2.000000;
           to="cleanup_dead";
           precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
-          condition=/*%FSM<CONDITION""">*/"(_numDead > 300)"/*%FSM</CONDITION""">*/;
-          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+          condition=/*%FSM<CONDITION""">*/"((time - _lastCleanup) > 300)"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/"_lastCleanup = time;"/*%FSM</ACTION""">*/;
         };
         /*%FSM</LINK>*/
         /*%FSM<LINK "time_sync">*/
@@ -149,10 +147,9 @@ class FSM
     class cleanup_dead
     {
       name = "cleanup_dead";
-      init = /*%FSM<STATEINIT""">*/"diag_log (""CLEANUP: TOO MANY DEAD BODIES"");" \n
+      init = /*%FSM<STATEINIT""">*/"diag_log (""CLEANUP: PERFORMING BODY CLEANUP"");" \n
        "" \n
-       "diag_log (""CLEANUP: PERFORMING BODY CLEANUP ON "" + str(_numDead) + "" BODIES"");" \n
-       "" \n
+       "_delQtyP = 0;" \n
        "_delQtyZ = 0;" \n
        "_numZombie = {_x isKindOf ""zZombie_Base""} count allDead;" \n
        "{" \n
@@ -161,32 +158,22 @@ class FSM
        "			deleteVehicle _x;" \n
        "			_delQtyZ = _delQtyZ + 1;" \n
        "		} else {" \n
-       "			_exists = _x in _deadBodies;" \n
-       "			if(!_exists) then {" \n
-       "				_deadBodies set [count _deadBodies,_x];" \n
+       "			if(!isNil ""_x"") then {" \n
+       "				if (_x isKindOf ""CAManBase"") then {" \n
+       "					if (({isPlayer _x} count (_x nearEntities [[""CAManBase""], 100])) == 0) then {" \n
+       "						_pos = getPosATL _x;" \n
+       "						_sfx = nearestObject [_pos,""Sound_Flies""];" \n
+       "						if (!(isNull _sfx)) then {" \n
+       "							deleteVehicle _sfx;" \n
+       "						};" \n
+       "						deleteVehicle _x;" \n
+       "						_delQtyP = _delQtyP + 1;" \n
+       "					};" \n
+       "				};" \n
        "			};" \n
        "		};" \n
        "	};" \n
        "} forEach allDead;" \n
-       "" \n
-       "//Cleanup players" \n
-       "_body = objNull;" \n
-       "_delQtyP = 0;" \n
-       "_delDo = _numDead - _numZombie;" \n
-       "_delDo = ((_delDo min (count _deadBodies)) -1);" \n
-       "if (_delDo<1) then {_delDo=1};" \n
-       "for ""_i"" from 0 to _delDo do {" \n
-       "	_body = _deadBodies select _i;" \n
-       "	if(!isNil ""_body"") then {" \n
-       "		_pos = getPosATL _body;" \n
-       "		_sfx = nearestObject [_pos,""Sound_Flies""];" \n
-       "		if (!(isNull _sfx)) then {" \n
-       "			deleteVehicle _sfx;" \n
-       "		};" \n
-       "		deleteVehicle _body;" \n
-       "		_delQtyP = _delQtyP + 1;" \n
-       "	};" \n
-       "	_deadBodies set [_i,""DEL""];" \n
        "" \n
        "//Let's move this into the body removal sequence so uncontrolled flies are removed only if corpses are cleaned" \n
        "//Check Flies" \n
@@ -220,7 +207,6 @@ class FSM
        "} forEach allMissionObjects ""Land_Fire_DZ"";" \n
        "" \n
        "};" \n
-       "_deadBodies = _deadBodies - [""DEL""];" \n
        "" \n
        "diag_log (""CLEANUP: DELETED "" + str(_delQtyP) + "" PLAYER BODIES AND "" + str(_delQtyZ) + "" BODIES"");" \n
        ""/*%FSM</STATEINIT""">*/;
@@ -384,7 +370,9 @@ class FSM
 		"" \n
        "_safety = dayz_serverObjectMonitor;" \n
        "" \n
-       "_deadBodies = [];" \n
+       "_lastUpdate = time;" \n
+       "_lastCleanup = time;" \n
+       "_timeNem = time;" \n
        "_maxBodies = 15;" \n
        "_taskList = taskList;" \n
        "_mlogic = Creategroup sideLogic;" \n
