@@ -17,8 +17,6 @@ GetOptions(
 	'instance|index|i=s',
 	'port=s',
 	'help',
-	'timezone|tzoffset|offset|tz|t=s',
-	'whitelist|w'
 );
 
 my %db = (
@@ -33,8 +31,9 @@ my %db = (
 if ($args{'help'}) {
 	print "usage: db_settings.pl [--instance <id>] [--host <hostname>] [--user <username>] [--pass <password>] [--name <database-name>] [--port <port>] [command]\n";
 	print "  command is one of:\n";
+	print "    cleandead <days>    - delete dead survivors who were last updated more than <days> days ago\n";
 	print "    tzoffset <offset> - set server time to system time minus <offset> hours\n";
-	print "    loadout <value> - set loadout to <value> (default is [])\n";
+	print "    loadout <value>   - set loadout to <value> (default is [])\n";
 	print "    whitelist [on|off|add|rem] [<profile_id>] - turns the whitelist protection on/off, or adds/removes a profile ID from the whitelist\n";
 	exit;
 }
@@ -52,7 +51,14 @@ $dbh->{AutoCommit} = 0;
 
 my $command = shift(@ARGV);
 defined $command or die "FATAL: No command supplied\n";
-if ($command eq 'tzoffset') {
+if ($command eq 'cleandead') {
+	my $days = shift(@ARGV);
+	defined $days or die "FATAL: Invalid arguments\n";
+	my $sth = $dbh->prepare("delete from survivor where is_dead = 1 and last_update < now() - interval ? day");
+	$sth->execute($days);
+	print "INFO: Removed " . $sth->rows . " rows from the survivor table\n";
+	$sth->finish();
+} elsif ($command eq 'tzoffset') {
 	my $offset = shift(@ARGV);
 	defined $offset or die "FATAL: Invalid arguments\n";
 	$dbh->do("update instances set offset = ? where instance = ?", undef, ($offset, $db{'instance'}));
