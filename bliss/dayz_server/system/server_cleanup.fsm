@@ -116,8 +116,8 @@ class FSM
           priority = 1.000000;
           to="sync_the_time";
           precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
-          condition=/*%FSM<CONDITION""">*/"((time - _lastUpdate) > 300)"/*%FSM</CONDITION""">*/;
-          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+          condition=/*%FSM<CONDITION""">*/"((time - _lastUpdate) > 1800)"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/"_lastUpdate = time;"/*%FSM</ACTION""">*/;
         };
         /*%FSM</LINK>*/
         /*%FSM<LINK "true">*/
@@ -206,8 +206,6 @@ class FSM
        "	};" \n
        "} forEach allMissionObjects ""Land_Fire_DZ"";" \n
        "" \n
-       "};" \n
-       "" \n
        "diag_log (""CLEANUP: DELETED "" + str(_delQtyP) + "" PLAYER BODIES AND "" + str(_delQtyZ) + "" BODIES"");" \n
        ""/*%FSM</STATEINIT""">*/;
       precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
@@ -283,7 +281,6 @@ class FSM
        "" \n
        "	diag_log (""TIME SYNC: Local Time set to "" + str(_date));" \n
        "};" \n
-       "_lastUpdate = time;" \n
        ""/*%FSM</STATEINIT""">*/;
       precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
       class Links
@@ -354,7 +351,7 @@ class FSM
           to="waiting";
           precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
           condition=/*%FSM<CONDITION""">*/"true"/*%FSM</CONDITION""">*/;
-          action=/*%FSM<ACTION""">*/"_lastUpdate = time;"/*%FSM</ACTION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
         };
         /*%FSM</LINK>*/
       };
@@ -367,7 +364,7 @@ class FSM
       init = /*%FSM<STATEINIT""">*/"private [""_safety"",""_taskList""]; " \n
        "diag_log (""CLEANUP: INITIALIZING!"");" \n
        "diag_log(""SCHEDULER: INITIALIZING CLEANUP SCRIPT"");" \n
-		"" \n
+       "" \n
        "_safety = dayz_serverObjectMonitor;" \n
        "" \n
        "_lastUpdate = time;" \n
@@ -391,7 +388,7 @@ class FSM
           to="waiting";
           precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
           condition=/*%FSM<CONDITION""">*/"true"/*%FSM</CONDITION""">*/;
-          action=/*%FSM<ACTION""">*/"_lastUpdate = time;"/*%FSM</ACTION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
         };
         /*%FSM</LINK>*/
       };
