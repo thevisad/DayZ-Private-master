@@ -147,8 +147,8 @@ Character data can become desynchronized if the player was connected within seve
 Any bug present in the official client or server will probably also exist in this solution. Please do **not** report these as issues on GitHub. Some of the official bugs:
  - Loss of backpack due to bandit morphing or on respawn
  - Spawning in debug areas (plains / ocean)
- - Day / night cycle desync
- - Vehicle damage not persisting / vehicles repairing themselves
+ - Debug monitor issues
+ - Humanity not updating correctly
 
 Common Issues
 =============
@@ -167,7 +167,7 @@ Common Issues
 **Problem**: Kicked from the game when using non-DayZ weapons/vehicles  
 **Solution**: Disable BattlEye by setting battleye=0 in **ArmA2**\\Bliss\\config.cfg, but note that this opens your server to hackers/griefers.
 
-**Problem**: Server not listed on GameSpy in-game server list or third-party server lists 
+**Problem**: Server not listed on GameSpy in-game server list or third-party server lists  
 **Solution**: Ensure the game ports (default 2302 - 2305 UDP) are forwarded properly and that the GameSpy master server is up and running.  
 
 **Problem**: "Bad CD Key" messages  
@@ -177,4 +177,4 @@ Common Issues
 Support
 =======
 
-**IRC**: irc.thekreml.in #dayz
+**IRC**: irc.thekreml.in #bliss
