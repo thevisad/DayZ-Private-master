@@ -51,7 +51,27 @@ $dbh->{AutoCommit} = 0;
 
 my $command = shift(@ARGV);
 defined $command or die "FATAL: No command supplied\n";
-if ($command eq 'cleandead') {
+if ($command eq 'cleanitem') {
+	my $classname = shift(@ARGV);
+	defined $classname or die "FATAL: Invalid arguments\n";
+	die "FATAL: Invalid classname" unless ($classname =~ m/^[a-zA-Z0-9_]+$/);
+	my $sth = $dbh->prepare("select id, inventory, backpack from survivor");
+	my $updSth = $dbh->prepare("update survivor set inventory = ?, backpack = ? where id = ?");
+	my $rowCnt = 0, my $itemCnt = 0;
+	$sth->execute();
+	while (my $row = $sth->fetchrow_hashref()) {
+		my $changed = $row->{'inventory'} =~ s/"$classname"[,]*//gi;
+		$changed += $row->{'backpack'} =~ s/"$classname"[,]*//gi;
+		if ($changed > 0) {
+			$rowCnt++;
+			$itemCnt += $changed;
+			$updSth->execute($row->{'inventory'}, $row->{'backpack'}, $row->{'id'});
+		}
+	}
+	$sth->finish();
+	$updSth->finish();
+	print "INFO: Removed $itemCnt items from $rowCnt players!\n";
+} elsif ($command eq 'cleandead') {
 	my $days = shift(@ARGV);
 	defined $days or die "FATAL: Invalid arguments\n";
 	my $sth = $dbh->prepare("delete from survivor where is_dead = 1 and last_update < now() - interval ? day");
