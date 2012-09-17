@@ -20,18 +20,7 @@ if (!isNull _object) then {
 		deleteVehicle _object;
 		deleteGroup _myGroup;
 	};
-};
 
-/*
-//Update Vehicle
-if (!isNull _object) then {
-	_nearVeh = nearestObjects [_object, ["AllVehicles","TentStorage"], 20];
-	{
-		[_x,"gear"] call server_updateObject;
-		if (_x isKindOf "AllVehicles") then {
-			[_x,"repair"] call server_updateObject;
-			[_x,"position"] call server_updateObject;
-		};
-	} forEach _nearVeh;
+	_charPos = getPosATL _object;
+	[_charPos] call server_updateNearbyObjects;
 };
-*/

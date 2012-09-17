@@ -82,7 +82,7 @@ switch (_type) do {
 		_avgDamage = 0;
 
 		if (_object isKindOf "Car") then { _partCount = 11 };
-		if (_object isKindOf "Boat") then { _partCount = 1 };
+		if (_object isKindOf "Ship") then { _partCount = 1 };
 		if (typeof _object == "Ikarus") then { _partCount = 15 };
 		if (typeof _object == "Old_bike_TK_CIV_EP1") then {_partCount = 2 };
 		if (typeof _object == "ATV_US_EP1") then { _partCount = 7 };
@@ -103,7 +103,7 @@ switch (_type) do {
 		if (_avgDamage >= 0.98) then { _avgDamage = 1.0 };
 		_damage = _avgDamage;
 
-		if (_lastUpdate == 0 || (time - _lastUpdate) > 5) then {
+		if (_lastUpdate == 0 || (time - _lastUpdate) > 1) then {
 			_key = format["CHILD:306:%1:%2:%3:", _objectID, _array, _avgDamage];
 			diag_log("HIVE:WRITE:" + str(_key));
 			_key call server_hiveWrite;
