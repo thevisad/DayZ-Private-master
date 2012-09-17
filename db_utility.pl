@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 
-use Getopt::Long;
+use Getopt::Long qw(:config pass_through);
 use DBIx::Transaction;
 use DBI;
 
