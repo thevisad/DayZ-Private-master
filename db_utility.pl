@@ -29,7 +29,7 @@ my %db = (
 );
 
 if ($args{'help'}) {
-	print "usage: db_settings.pl [--instance <id>] [--host <hostname>] [--user <username>] [--pass <password>] [--name <database-name>] [--port <port>] [command]\n";
+	print "usage: db_utility.pl <command> [arguments] [--instance <id>] [--host <hostname>] [--user <username>] [--pass <password>] [--name <database-name>] [--port <port>]\n";
 	print "  command is one of:\n";
 	print "    cleandead <days>    - delete dead survivors who were last updated more than <days> days ago\n";
 	print "    tzoffset <offset> - set server time to system time minus <offset> hours\n";

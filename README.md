@@ -41,8 +41,8 @@ Installation
 6. Run `perl db_migrate.pl --password CHANGEME`. Replace `CHANGEME` with the password you chose in the previous step. Use the `--help` flag to get more information on how to set the hostname, username, or database name to suit your needs.  
 7. Ensure that the database information in **ArmA2**\\bliss.ini match the values you used in the previous step.  
 8. Adjust server name/passwords in `ArmA2\\Bliss\\config_deadbeef.cfg`, (`BlissLingor` for Lingor Island) where `deadbeef` is some random value generated when running repack.pl.  
-9. If you would like to customize the server time, run `perl db_settings.pl tzoffset <offset>`, replacing `<offset>` with an integer number of hours (positive or negative). Please note that the default instance ID is 1; if you use another instance ID, you will need to run `perl db_settings.pl --instance X tzoffset <offset>`, replacing `X` with your instance ID.  
-10. If you would like to customize the starting loadout, run `perl db_settings.pl loadout <loadout>`, replacing `<loadout>` with a valid loadout string. Some examples:  
+9. If you would like to customize the server time, run `perl db_utility.pl tzoffset <offset>`, replacing `<offset>` with an integer number of hours (positive or negative). Please note that the default instance ID is 1; if you use another instance ID, you will need to run `perl db_utility.pl --instance X tzoffset <offset>`, replacing `X` with your instance ID.  
+10. If you would like to customize the starting loadout, run `perl db_utility.pl loadout <loadout>`, replacing `<loadout>` with a valid loadout string. Some examples:  
 	- Default DayZ loadout - **[]**
 	- Survival loadout - **[["ItemMap","ItemCompass","ItemMatchbox","FoodCanBakedBeans","ItemKnife","FoodCanBakedBeans"],["ItemTent","ItemBandage","ItemBandage"]]**
 	- PvP loadout - **[["Mk_48_DZ","NVGoggles","Binocular_Vector","M9SD","ItemGPS","ItemToolbox","ItemEtool","ItemCompass","ItemMatchbox","FoodCanBakedBeans","ItemKnife","ItemMap","ItemWatch"],[["100Rnd_762x51_M240",47],"ItemPainkiller","ItemBandage","15Rnd_9x19_M9SD","100Rnd_762x51_M240","ItemBandage","ItemBandage","15Rnd_9x19_M9SD","15Rnd_9x19_M9SD","15Rnd_9x19_M9SD","ItemMorphine","PartWoodPile"]]**
@@ -93,7 +93,7 @@ Here are the most common customization requests with instructions.
 **Solution**: Go into **Repository**\\bliss\\missions\\dayz_1.chernarus (or .lingor for Lingor Island) and edit `description.ext`. Refer to http://community.bistudio.com/wiki/Description.ext#disableChannels for a mapping of channel names to numbers. Then run `repack.pl` and redeploy the files in **Repository**\\deploy\\MPMissions.
 
 **Request**: I would like to change the server timezone.  
-**Solution**: Run `perl db_settings.pl --instance X tzoffset <offset>`, replacing `X` with your instance ID (default is 1) and `<offset>` with an integer. This will set the positive or negative offset applied (in hours) to the system time, which is checked when the server starts up.
+**Solution**: Run `perl db_utility.pl --instance X tzoffset <offset>`, replacing `X` with your instance ID (default is 1) and `<offset>` with an integer. This will set the positive or negative offset applied (in hours) to the system time, which is checked when the server starts up.
 
 **Request**: I would like to have constant daylight (or moonlight) on my server.  
 **Solution**: There is no easy solution for this. There is no way to halt the progression of time using SQF. If you *really* want to do this, you would have to modify the proc_getInstanceTime procedure to always return a constant time and then schedule automatic restarts such that before the sun sets (or rises) you are restarting/resetting the server back to the static starting time.
@@ -133,7 +133,7 @@ Bliss is optionally capable of only allowing whitelisted players on your server.
 1. Using a MySQL administration utility, set the whitelist field to 1 for your instance (in the instances table).  
 2. Set the is_whitelisted column to 1 for any row in the profile table that you would like to be whitelisted.  
 
-A server restart is not required for whitelist changes to take effect. If you would like to whitelist players who have not logged in yet, you will need to insert a row into profile with is_whitelisted set to 1 before they connect. You can do this programmatically by running `perl db_settings.pl whitelist add <profile_id>`, replacing `<profile_id>` with a profile ID (also known as a UID but **not** a BE GUID). Alternatively, you can use this example query if you are building an application that has native SQL capability:
+A server restart is not required for whitelist changes to take effect. If you would like to whitelist players who have not logged in yet, you will need to insert a row into profile with is_whitelisted set to 1 before they connect. You can do this programmatically by running `perl db_utility.pl whitelist add <profile_id>`, replacing `<profile_id>` with a profile ID (also known as a UID but **not** a BE GUID). Alternatively, you can use this example query if you are building an application that has native SQL capability:
 
 > insert into profile (unique_id, name, is_whitelisted) values ('12345678', 'DemoPlayer', 1);
 
