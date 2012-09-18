@@ -18,3 +18,6 @@ if (isServer) then {
 } else {
 	publicVariable "dayzUpdateVehicle";
 };
+
+_unit removeAllEventHandlers "HandleDamage";
+_unit removeAllEventHandlers "Killed";
