@@ -31,9 +31,10 @@ my %db = (
 if ($args{'help'}) {
 	print "usage: db_utility.pl <command> [arguments] [--instance <id>] [--host <hostname>] [--user <username>] [--pass <password>] [--name <database-name>] [--port <port>]\n";
 	print "  command is one of:\n";
-	print "    cleandead <days>    - delete dead survivors who were last updated more than <days> days ago\n";
-	print "    tzoffset <offset> - set server time to system time minus <offset> hours\n";
-	print "    loadout <value>   - set loadout to <value> (default is [])\n";
+	print "    cleanitem <classname> - remove comma-separated list of classnames from all survivor inventories";
+	print "    cleandead <days>      - delete dead survivors who were last updated more than <days> days ago\n";
+	print "    tzoffset <offset>     - set server time to system time minus <offset> hours\n";
+	print "    loadout <value>       - set loadout to <value> (default is [])\n";
 	print "    whitelist [on|off|add|rem] [<profile_id>] - turns the whitelist protection on/off, or adds/removes a profile ID from the whitelist\n";
 	exit;
 }
@@ -52,25 +53,29 @@ $dbh->{AutoCommit} = 0;
 my $command = shift(@ARGV);
 defined $command or die "FATAL: No command supplied\n";
 if ($command eq 'cleanitem') {
-	my $classname = shift(@ARGV);
-	defined $classname or die "FATAL: Invalid arguments\n";
-	die "FATAL: Invalid classname" unless ($classname =~ m/^[a-zA-Z0-9_]+$/);
-	my $sth = $dbh->prepare("select id, inventory, backpack from survivor");
-	my $updSth = $dbh->prepare("update survivor set inventory = ?, backpack = ? where id = ?");
-	my $rowCnt = 0, my $itemCnt = 0;
-	$sth->execute();
-	while (my $row = $sth->fetchrow_hashref()) {
-		my $changed = $row->{'inventory'} =~ s/"$classname"[,]*//gi;
-		$changed += $row->{'backpack'} =~ s/"$classname"[,]*//gi;
-		if ($changed > 0) {
-			$rowCnt++;
-			$itemCnt += $changed;
-			$updSth->execute($row->{'inventory'}, $row->{'backpack'}, $row->{'id'});
+	my $classes = shift(@ARGV);
+	defined $classes or die "FATAL: Invalid arguments\n";
+	my @classnames = split(/,/, $classes);
+	foreach my $classname (@classnames) {
+		die "FATAL: Invalid classname" unless ($classname =~ m/^[a-zA-Z0-9_]+$/);
+		my $sth = $dbh->prepare("select id, inventory, backpack, state from survivor");
+		my $updSth = $dbh->prepare("update survivor set inventory = ?, backpack = ?, state = ? where id = ?");
+		my $rowCnt = 0, my $itemCnt = 0;
+		$sth->execute();
+		while (my $row = $sth->fetchrow_hashref()) {
+			my $changed = $row->{'inventory'} =~ s/"$classname"[,]*//gi;
+			$changed += $row->{'backpack'} =~ s/"$classname"[,]*//gi;
+			$row->{'state'} =~ s/\["$classname","amovpknlmstpsraswrfldnon",42\]/["","aidlpercmstpsnonwnondnon_player_idlesteady04",36]/;
+			if ($changed > 0) {
+				$rowCnt++;
+				$itemCnt += $changed;
+				$updSth->execute($row->{'inventory'}, $row->{'backpack'}, $row->{'state'}, $row->{'id'});
+			}
 		}
+		$sth->finish();
+		$updSth->finish();
+		print "INFO: Removed $itemCnt instances of $classname from $rowCnt players!\n";
 	}
-	$sth->finish();
-	$updSth->finish();
-	print "INFO: Removed $itemCnt items from $rowCnt players!\n";
 } elsif ($command eq 'cleandead') {
 	my $days = shift(@ARGV);
 	defined $days or die "FATAL: Invalid arguments\n";
