@@ -15,12 +15,12 @@ diag_log ("DISCONNECT START (i): " + _playerName + " (" + str(_playerID) + ") Ob
 _id = [_playerID,_characterID,2] spawn dayz_recordLogin;
 
 if (!isNull _object) then {
+	_charPos = getPosATL _object;
+	[_charPos] call server_updateNearbyObjects;
+
 	if (alive _object) then {
 		_myGroup = group _object;
 		deleteVehicle _object;
 		deleteGroup _myGroup;
 	};
-
-	_charPos = getPosATL _object;
-	[_charPos] call server_updateNearbyObjects;
 };
