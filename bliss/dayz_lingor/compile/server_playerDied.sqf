@@ -17,15 +17,13 @@ diag_log ("DW_DEBUG: _newObject: " + str(_newObject));
 */
 
 if !(isnil "_characterID") then {
-	
-if (_characterID != "0") then {
-	_key = format["CHILD:202:%1:%2:",_characterID,_minutes];
-	//diag_log ("HIVE: WRITE: "+ str(_key));
-	_key call server_hiveWrite;
-} else {
-	deleteVehicle _newObject;
-};
-
+	if (_characterID != "0") then {
+		_key = format["CHILD:202:%1:%2:",_characterID,_minutes];
+		//diag_log ("HIVE: WRITE: "+ str(_key));
+		_key call server_hiveWrite;
+	} else {
+		deleteVehicle _newObject;
+	};
 } else {
 	deleteVehicle _newObject;
 };
