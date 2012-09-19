@@ -31,12 +31,6 @@ player_useMeds          = compile preprocessFileLineNumbers "fixes\player_useMed
 player_wearClothes      = compile preprocessFileLineNumbers "fixes\player_wearClothes.sqf";
 player_tentPitch        = compile preprocessFileLineNumbers "fixes\tent_pitch.sqf";
 player_fillWater        = compile preprocessFileLineNumbers "fixes\water_fill.sqf";
-player_switchModel      = compile preprocessFileLineNumbers "fixes\player_switchModel.sqf";
-
-// Sync hooks
-player_humanityMorph    = compile preprocessFileLineNumbers "fixes\player_humanityMorph.sqf";
-player_updateGui        = compile preprocessFileLineNumbers "fixes\player_updateGui.sqf";
-player_countmagazines   = compile preprocessFileLineNumbers "fixes\player_countMagazines.sqf";
 
 // Original functions being overridden
 player_build_orig       = compile preprocessFileLineNumbers "\z\addons\dayz_code\actions\player_build.sqf";
