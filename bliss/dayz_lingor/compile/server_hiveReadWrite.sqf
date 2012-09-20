@@ -14,12 +14,14 @@ switch (_result select 1) do
 		_ret = ["",call compile (_qresult select 0),[call compile (_qresult select 2),call compile (_qresult select 5),call compile (_qresult select 6),call compile (_qresult select 7)],call compile ([_qresult select 3,"["",","["""","] call fnc_replace),call compile (_qresult select 1),call compile (_qresult select 4)];
 	};
 	case "101":{
+		_name = [_result select 4, ":", ""] call fnc_replace;
 		//Login
 		//diag_log("LOGIN:101");
-		_qresult = "blisshive" callExtension format ["Q:%1:call proc_loginSurvivor('%2', '%3')", (call fnc_instanceName), _muid, _result select 4];
+		_qresult = "blisshive" callExtension format ["Q:%1:call proc_loginSurvivor('%2', '%3')", (call fnc_instanceName), _muid, _name];
 		if (_qresult=="[[]]") then
 		{
-			_qresult = "blisshive" callExtension format ["Q:%1:call proc_insertSurvivor('%2', '%3')", (call fnc_instanceName), _muid, _result select 4];
+
+			_qresult = "blisshive" callExtension format ["Q:%1:call proc_insertSurvivor('%2', '%3')", (call fnc_instanceName), _muid, _name];
 			_qresult = call compile _qresult;
 			_qresult = _qresult select 0;
 			_ret = ["",true,_qresult select 0,"Survivor2_DZ",dayz_hiveVersionNo];
