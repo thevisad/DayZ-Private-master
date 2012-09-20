@@ -21,3 +21,7 @@ if (isServer) then {
 
 _unit removeAllEventHandlers "HandleDamage";
 _unit removeAllEventHandlers "Killed";
+if (isServer) then {
+	_unit removeAllEventHandlers "GetOut";
+	_unit removeAllEventHandlers "GetIn";
+};

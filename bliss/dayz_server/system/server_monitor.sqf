@@ -166,6 +166,8 @@ _countr = 0;
 			};
 			_object addEventHandler ["HandleDamage", { _this call vehicle_handleDamage }];
 			_object addEventHandler ["Killed", { _this call vehicle_handleKilled }];
+			_object addEventHandler ["GetOut", { [_this select 0] call server_updateNearbyObjects }];
+			_object addEventHandler ["GetIn", { [_this select 0] call server_updateNearbyObjects }];
 		};
 
 		//Monitor the object
