@@ -63,8 +63,8 @@ if ($command eq 'cleanitem') {
 		my $rowCnt = 0, my $itemCnt = 0;
 		$sth->execute();
 		while (my $row = $sth->fetchrow_hashref()) {
-			my $changed = $row->{'inventory'} =~ s/"$classname"[,]*//gi;
-			$changed += $row->{'backpack'} =~ s/"$classname"[,]*//gi;
+			my $changed = $row->{'inventory'} =~ s/,{0,1}"$classname",{0,1}//gi;
+			$changed += $row->{'backpack'} =~ s/,{0,1}"$classname",{0,1}//gi;
 			$row->{'state'} =~ s/\["$classname","amovpknlmstpsraswrfldnon",42\]/["","aidlpercmstpsnonwnondnon_player_idlesteady04",36]/;
 			if ($changed > 0) {
 				$rowCnt++;
