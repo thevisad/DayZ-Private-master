@@ -31,7 +31,8 @@ my %db = (
 if ($args{'help'}) {
 	print "usage: db_utility.pl <command> [arguments] [--instance <id>] [--host <hostname>] [--user <username>] [--pass <password>] [--name <database-name>] [--port <port>]\n";
 	print "  command is one of:\n";
-	print "    cleanitem <classname> - remove comma-separated list of classnames from all survivor inventories";
+	print "    itemdistr             - look at all live player inventories and show counts of each item in descending order\n";
+	print "    cleanitem <classname> - remove comma-separated list of classnames from all survivor inventories\n";
 	print "    cleandead <days>      - delete dead survivors who were last updated more than <days> days ago\n";
 	print "    tzoffset <offset>     - set server time to system time minus <offset> hours\n";
 	print "    loadout <value>       - set loadout to <value> (default is [])\n";
@@ -51,21 +52,52 @@ my $dbh = DBI->connect(
 $dbh->{AutoCommit} = 0;
 
 my $command = shift(@ARGV);
-defined $command or die "FATAL: No command supplied\n";
-if ($command eq 'cleanitem') {
+defined $command or die "FATAL: No command supplied, try --help for usage information\n";
+if ($command eq 'itemdistr') {
+	my $sth = $dbh->prepare("select inventory, backpack from survivor where is_dead = 0");
+	$sth->execute();
+	my %counts = ();
+	while (my $row = $sth->fetchrow_hashref()) {
+		my $itemStr = $row->{'inventory'} . $row->{'backpack'};
+		# Clean up partially filled magazines
+		$itemStr =~ s/("[a-zA-Z0-9_]+"),[0-9]+/$1/g;
+		# Remove all extraneous characters
+		$itemStr =~ s/[\[\]"]//g;
+		my @items = split(/,/, $itemStr);
+		foreach my $item (@items) {
+			# If the item is an empty string, skip it
+			next unless $item;
+			# Either set or increment the count for this item
+			if (defined $counts{$item}) {
+				$counts{$item}++;
+			} else {
+				$counts{$item} = 1;
+			}
+		}
+	}
+
+	print "Listing item counts\n";
+	# Sort keys by value (descending) and print results
+	foreach my $item (sort { $counts{$b} <=> $counts{$a} } keys %counts) {
+		print "$counts{$item} - $item\n";
+	}
+} elsif ($command eq 'cleanitem') {
 	my $classes = shift(@ARGV);
 	defined $classes or die "FATAL: Invalid arguments\n";
 	my @classnames = split(/,/, $classes);
 	foreach my $classname (@classnames) {
 		die "FATAL: Invalid classname" unless ($classname =~ m/^[a-zA-Z0-9_]+$/);
+		# Fetch all player inventories and states
 		my $sth = $dbh->prepare("select id, inventory, backpack, state from survivor");
 		my $updSth = $dbh->prepare("update survivor set inventory = ?, backpack = ?, state = ? where id = ?");
 		my $rowCnt = 0, my $itemCnt = 0;
 		$sth->execute();
 		while (my $row = $sth->fetchrow_hashref()) {
+			# Remove all instances of the current classname from inventory, backpack, and state
 			my $changed = $row->{'inventory'} =~ s/,{0,1}"$classname",{0,1}//gi;
 			$changed += $row->{'backpack'} =~ s/,{0,1}"$classname",{0,1}//gi;
 			$row->{'state'} =~ s/\["$classname","amovpknlmstpsraswrfldnon",42\]/["","aidlpercmstpsnonwnondnon_player_idlesteady04",36]/;
+			# Iff an item was removed, update the row
 			if ($changed > 0) {
 				$rowCnt++;
 				$itemCnt += $changed;
