@@ -201,6 +201,10 @@
 1 "BIS_fnc_sceneSetPosFormation" !"if (isnil 'BIS_fnc_scenesetposformation"
 1 "BIS_fnc_invAdd" !"if (isnil 'BIS_fnc_invAdd" !"_isOk = [player,_config] call BIS_fnc_invAdd;" !"_isOk = [player,_config2] call BIS_fnc_invAdd;" !"_result = [player,\"PartWoodPile\"] call BIS_fnc_invAdd;" !"INV_ Error: BIS_FNC_invAdd"
 1 "BIS_fnc_infoText" !"if (isnil 'BIS_fnc_infoText" !"_first = [_x select 0,_x select 1] spawn BIS_fnc_infoText;" !"_first = [_world,_town,localize (\"str_player_06\") + \" \" + str(_days)] spawn BIS_fnc_infoText;"
+1 "AttachObject" !"\"AttachObject\"," !"lightAttachObject" !"triggerAttachObject" !"waypointAttachObject"
+1 "lightAttachObject" !"\"lightAttachObject\"," !"_lightArea lightAttachObject [_flare, [0,0,0]];" !"_lightSpark lightAttachObject [_flare, [0,0,0]];" !"_li lightAttachObject [_flare, [0,0,0]];" !"_li lightAttachObject [_v, [0,0,0]];"
+1 "triggerAttachObject" !"\"triggerAttachObject\"," 
+1 "waypointAttachObject" !"\"waypointAttachObject\"," 
 //little tries //#+12
 1 "player action"
 1 "vehicle player setPos"

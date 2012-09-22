@@ -9,3 +9,4 @@
 1 "JIPrequest"
 1 "dayzDeath" 
 //1 "player"
+1 "alive"

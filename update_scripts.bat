@@ -2,21 +2,22 @@
 cd deploy\Bliss\BattlEye
 echo Changed to Bliss directory
 ..\..\..\util\wget.exe --quiet -N https://dayz-community-banlist.googlecode.com/git/filters/scripts.txt
-echo Updated scripts.txt
 ..\..\..\util\wget.exe --quiet -N https://dayz-community-banlist.googlecode.com/git/filters/remoteexec.txt
-echo Updated remoteexec.txt
 ..\..\..\util\wget.exe --quiet -N https://dayz-community-banlist.googlecode.com/git/filters/createvehicle.txt
-echo Updated createvehicle.txt
 ..\..\..\util\wget.exe --quiet -N https://dayz-community-banlist.googlecode.com/git/filters/publicvariable.txt
-echo Updated publicvariable.txt
+..\..\..\util\wget.exe --quiet -N https://dayz-community-banlist.googlecode.com/git/filters/publicvariableval.txt
+..\..\..\util\wget.exe --quiet -N https://dayz-community-banlist.googlecode.com/git/filters/publicvariablevar.txt
+..\..\..\util\wget.exe --quiet -N https://dayz-community-banlist.googlecode.com/git/filters/setpos.txt
+echo Updated scripts
 
 cd ..\..\BlissLingor\BattlEye
 echo Changed to BlissLingor directory
 ..\..\..\util\wget.exe --quiet -N https://dayz-community-banlist.googlecode.com/git/filters/scripts.txt
-echo Updated scripts.txt
 ..\..\..\util\wget.exe --quiet -N https://dayz-community-banlist.googlecode.com/git/filters/remoteexec.txt
-echo Updated remoteexec.txt
 ..\..\..\util\wget.exe --quiet -N https://dayz-community-banlist.googlecode.com/git/filters/createvehicle.txt
-echo Updated createvehicle.txt
 ..\..\..\util\wget.exe --quiet -N https://dayz-community-banlist.googlecode.com/git/filters/publicvariable.txt
-echo Updated publicvariable.txt
+..\..\..\util\wget.exe --quiet -N https://dayz-community-banlist.googlecode.com/git/filters/publicvariableval.txt
+..\..\..\util\wget.exe --quiet -N https://dayz-community-banlist.googlecode.com/git/filters/publicvariablevar.txt
+..\..\..\util\wget.exe --quiet -N https://dayz-community-banlist.googlecode.com/git/filters/setpos.txt
+echo Updated scripts
+
