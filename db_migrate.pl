@@ -30,7 +30,7 @@ if ($args{'help'}) {
 	exit;
 }
 
-my $version = $args{'version'} ? $args{'version'} : "0.17";
+my $version = $args{'version'} ? $args{'version'} : "0.18";
 
 print "INFO: Trying to connect to $db{'host'}, database $db{'name'} as $db{'user'}\n";
 
