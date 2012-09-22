@@ -32,6 +32,9 @@ player_wearClothes      = compile preprocessFileLineNumbers "fixes\player_wearCl
 player_tentPitch        = compile preprocessFileLineNumbers "fixes\tent_pitch.sqf";
 player_fillWater        = compile preprocessFileLineNumbers "fixes\water_fill.sqf";
 
+// Right-click error fix
+player_selectSlot           = compile preprocessFileLineNumbers "fixes\ui_selectSlot.sqf";
+
 // Original functions being overridden
 player_build_orig       = compile preprocessFileLineNumbers "\z\addons\dayz_code\actions\player_build.sqf";
 player_cook_orig        = compile preprocessFileLineNumbers "\z\addons\dayz_code\actions\cook.sqf";
