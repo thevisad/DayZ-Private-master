@@ -32,6 +32,13 @@ fnc_instanceName = {
 	"dayz_" + str(dayz_instance) + "." + worldName
 };
 
+vehicle_handleInteract = {
+	private["_object"];
+	_object = _this select 0;
+	[_object, "all"] call server_updateObject;
+	[_object, "damage"] call server_updateObject;
+};
+
 //event Handlers
 eh_localCleanup =			{
 	_object = _this select 0;

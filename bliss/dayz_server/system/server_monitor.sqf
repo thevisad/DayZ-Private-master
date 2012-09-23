@@ -165,9 +165,9 @@ _countr = 0;
 				_object setPosATL _position;
 			};
 			_object addEventHandler ["HandleDamage", { _this call vehicle_handleDamage }];
-			_object addEventHandler ["Killed", { _this call vehicle_handleKilled }];
-			_object addEventHandler ["GetOut", { [_this select 0] call server_updateNearbyObjects }];
-			_object addEventHandler ["GetIn", { [_this select 0] call server_updateNearbyObjects }];
+			_object addEventHandler ["Killed", { [_this select 0, "killed"] call server_updateObject }];
+			_object addEventHandler ["GetOut", { _this call vehicle_handleInteract }];
+			_object addEventHandler ["GetIn", { _this call vehicle_handleInteract }];
 		};
 
 		//Monitor the object
