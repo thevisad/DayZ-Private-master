@@ -250,7 +250,8 @@ class FSM
        "_outcome = _result select 0;" \n
        "if(_outcome == ""PASS"") then {" \n
        "	_date = _result select 1; " \n
-       "	if(isDedicated) then {" \n
+       "	_dateDiff = abs((dateToNumber(_date) - dateToNumber(date)) * 365 * 24 * 60);" \n
+       "	if (_dateDiff > 5) then {" \n
        "		setDate _date;" \n
        "		dayzSetDate = _date;" \n
        "		publicVariable ""dayzSetDate"";" \n
