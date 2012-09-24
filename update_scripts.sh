@@ -8,6 +8,7 @@ wget --quiet -N https://dayz-community-banlist.googlecode.com/git/filters/public
 wget --quiet -N https://dayz-community-banlist.googlecode.com/git/filters/publicvariableval.txt
 wget --quiet -N https://dayz-community-banlist.googlecode.com/git/filters/publicvariablevar.txt
 wget --quiet -N https://dayz-community-banlist.googlecode.com/git/filters/setpos.txt
+wget --quiet -N https://dayz-community-banlist.googlecode.com/git/filters/mpeventhandler.txt
 
 cd ../../BlissLingor/BattlEye/
 echo "Changed directory to BlissLingor"
@@ -18,4 +19,6 @@ wget --quiet -N https://dayz-community-banlist.googlecode.com/git/filters/public
 wget --quiet -N https://dayz-community-banlist.googlecode.com/git/filters/publicvariableval.txt
 wget --quiet -N https://dayz-community-banlist.googlecode.com/git/filters/publicvariablevar.txt
 wget --quiet -N https://dayz-community-banlist.googlecode.com/git/filters/setpos.txt
+wget --quiet -N https://dayz-community-banlist.googlecode.com/git/filters/mpeventhandler.txt
 
+echo "Updated BE files!"

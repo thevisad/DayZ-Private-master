@@ -7,8 +7,7 @@ echo Changed to Bliss directory
 ..\..\..\util\wget.exe --quiet -N https://dayz-community-banlist.googlecode.com/git/filters/publicvariable.txt
 ..\..\..\util\wget.exe --quiet -N https://dayz-community-banlist.googlecode.com/git/filters/publicvariableval.txt
 ..\..\..\util\wget.exe --quiet -N https://dayz-community-banlist.googlecode.com/git/filters/publicvariablevar.txt
-..\..\..\util\wget.exe --quiet -N https://dayz-community-banlist.googlecode.com/git/filters/setpos.txt
-echo Updated scripts
+..\..\..\util\wget.exe --quiet -N https://dayz-community-banlist.googlecode.com/git/filters/mpeventhandler.txt
 
 cd ..\..\BlissLingor\BattlEye
 echo Changed to BlissLingor directory
@@ -19,5 +18,6 @@ echo Changed to BlissLingor directory
 ..\..\..\util\wget.exe --quiet -N https://dayz-community-banlist.googlecode.com/git/filters/publicvariableval.txt
 ..\..\..\util\wget.exe --quiet -N https://dayz-community-banlist.googlecode.com/git/filters/publicvariablevar.txt
 ..\..\..\util\wget.exe --quiet -N https://dayz-community-banlist.googlecode.com/git/filters/setpos.txt
-echo Updated scripts
+..\..\..\util\wget.exe --quiet -N https://dayz-community-banlist.googlecode.com/git/filters/mpeventhandler.txt
 
+echo Updated BE files!
