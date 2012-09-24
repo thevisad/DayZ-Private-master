@@ -6,6 +6,7 @@ use POSIX;
 use DBI;
 use DBD::mysql;
 use Getopt::Long;
+use List::Util qw(min max);
 
 print "INFO: Started vehicle insertion.\n";
 
@@ -139,8 +140,8 @@ $spawns->execute($db{'instance'}, $db{'world'});
 
 my $insert = $dbh->prepare(<<EndSQL
 INSERT INTO
-  objects (uid, pos, health, damage, otype, instance, created)
-VALUES (?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP())
+  objects (uid, pos, health, damage, fuel, otype, instance, created)
+VALUES (?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP())
 EndSQL
 ) or die "FATAL: SQL Error - " . DBI->errstr . "\n";
 
@@ -198,10 +199,13 @@ while (my $vehicle = $spawns->fetchrow_hashref) {
 	
 	$health = genDamage(@parts);
 
+	# Generate random fuel value between 0.2 and 0.8
+	my $fuel = ($vehicle->{otype} =~ m/Old_bike/) ? 0 : sprintf("%.3f", min(max(rand(), 0.2), 0.8));
+
 	# Execute insert
 	$spawnCount++;
-	$insert->execute($vehicle->{uuid}, $vehicle->{pos}, $health, $damage, $vehicle->{otype}, $db{'instance'});
-	print "Called insert with ($vehicle->{uuid}, $vehicle->{pos}, $health, $damage, $vehicle->{otype}, $db{'instance'})\n";
+	$insert->execute($vehicle->{uuid}, $vehicle->{pos}, $health, $damage, $fuel, $vehicle->{otype}, $db{'instance'});
+	print "Called insert with ($vehicle->{uuid}, $vehicle->{pos}, $health, $damage, $fuel, $vehicle->{otype}, $db{'instance'})\n";
 }
 
 $sth->finish();
