@@ -158,13 +158,13 @@ while (my $vehicle = $spawns->fetchrow_hashref) {
 	my $count = $dbh->selectrow_array("SELECT COUNT(*) FROM objects WHERE instance = ? and otype like ?", undef, ($db{'instance'}, $className));
 
 	my $limit = 0;
-	if ($vehicle->{otype} =~ /Old_bike.*/) {
+	if ($vehicle->{otype} =~ m/Old_bike/) {
 		$limit = 10;
-	} elsif ($vehicle->{otype} =~ /UAZ.*|S1203.*|.*boat.*/) {
+	} elsif ($vehicle->{otype} =~ m/UAZ|S1203|boat/) {
 		$limit = 4;
-	} elsif ($vehicle->{otype} =~ /ATV.*|Skoda.*|TT650.*|UH1H.*|hilux.*|Ikarus.*|Tractor|Volha.*/) {
+	} elsif ($vehicle->{otype} =~ m/ATV|Skoda|TT650|UH1H|hilux|Ikarus|Tractor|Volha/) {
 		$limit = 3;
-	} elsif ($vehicle->{otype} =~ /V3S.*|Ural.*|PBX|SUV.*/) {
+	} elsif ($vehicle->{otype} =~ m/V3S|Ural|PBX|SUV/) {
 		$limit = 1;
 	}
 
@@ -180,18 +180,18 @@ while (my $vehicle = $spawns->fetchrow_hashref) {
 	}
 
 	# Generate random damage value
-	my $damage = rand(0.75);
-	if ($damage <= 0.05 or $vehicle->{otype} =~ /Old_bike.*/) {
+	my $damage = ($vehicle->{otype} =~ m/Old_bike/) ? 0 : sprintf("%.3f", rand(0.75));
+	if ($damage <= 0.05) {
 		$damage = 0;
 	}
 
 	# Generate random parts damage
 	my $health = '';
-	if ($vehicle->{otype} =~ /Old_bike.*/) {
+	if ($vehicle->{otype} =~ m/Old_bike/) {
 		@parts = ();
-	} elsif ($vehicle->{otype} =~ /TT650.*|.*boat.*|PBX/) {
+	} elsif ($vehicle->{otype} =~ m/TT650|boat|PBX/) {
 		@parts = ('["motor",1]');
-	} elsif ($vehicle->{otype} =~ /UH1H.*/) {
+	} elsif ($vehicle->{otype} =~ m/UH1H_DZ/) {
 		@parts = ('["motor",1]','["elektronika",1]','["mala vrtule",1]','["velka vrtule",1]');
 	} else {
 		@parts = ('["palivo",1]','["motor",1]','["karoserie",1]','["wheel_1_1_steering",1]','["wheel_1_2_steering",1]','["wheel_2_1_steering",1]','["wheel_2_2_steering",1]');
