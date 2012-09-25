@@ -33,6 +33,7 @@ player_useMeds          = compile preprocessFileLineNumbers "fixes\player_useMed
 player_wearClothes      = compile preprocessFileLineNumbers "fixes\player_wearClothes.sqf";
 player_tentPitch        = compile preprocessFileLineNumbers "fixes\tent_pitch.sqf";
 player_fillWater        = compile preprocessFileLineNumbers "fixes\water_fill.sqf";
+player_reloadMag        = compile preprocessFileLineNumbers "fixes\player_reloadMags.sqf";
 
 // Original functions being overridden
 player_build_orig       = compile preprocessFileLineNumbers "\z\addons\dayz_code\actions\player_build.sqf";
