@@ -98,15 +98,17 @@ Here are the most common customization requests with instructions.
 **Request**: I would like to have constant daylight (or moonlight) on my server.  
 **Solution**: There is no easy solution for this. There is no way to halt the progression of time using SQF. If you *really* want to do this, you would have to modify the proc_getInstanceTime procedure to always return a constant time and then schedule automatic restarts such that before the sun sets (or rises) you are restarting/resetting the server back to the static starting time.
 
-**Request**: I would like to alter difficulty options (3rd-person, crosshairs, name tags, etc).
+**Request**: I would like to alter difficulty options (3rd-person, crosshairs, name tags, etc).  
 **Solution**: Edit **ArmA2**\\Bliss\\Users\\Bliss\\Bliss.ArmA2OAProfile. An explanation of the options is available at http://community.bistudio.com/wiki/server.armaprofile. You must restart the server for these changes to take effect.
 
 Scheduler
 =========
 
-By inserting rows into the scheduler table, you can set up custom messages displayed ingame over several chat channels. You can also make script calls. The mvisibility value you choose must be the same as the visibility field in the instances table for the messages to be displayed on that instance. The looptime and mstart fields should be given in seconds.
+By inserting rows into the scheduler table, you can set up custom messages displayed ingame over several chat channels. You can also make script calls. Be sure you understand what each field does before inserting a row.
 
-Mtype field:
+The mvisibility value you choose must be the same as the visibility field in the instances table for the messages to be displayed on that instance. By default, all instances have a visibility of 0, so use 0 for a message that is to be displayed on all instances. You will need to customize this to suit your setup if you have multiple instances and you would like distinct messages for each of them. The looptime and mstart fields should be given in seconds. The mstart field is a delay between the first player connecting to the server and the first time your message is displayed. If looptime is greater than zero, the message will repeat at the specified interval.
+
+The mtype field determines what chat channel is used to send the message. A table of possible values follows:
 <table>
   <tr>
     <td>Type</td><td>Name</td>
@@ -124,6 +126,8 @@ Mtype field:
     <td>s</td><td>Script</td>
   </tr>
 </table>
+
+**NOTE:** Any changes to the scheduler table will only take effect after a server restart.
 
 Whitelist
 =========
