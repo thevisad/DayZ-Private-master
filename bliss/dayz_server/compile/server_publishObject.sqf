@@ -22,7 +22,7 @@ _key = format["CHILD:308:%1:%2:%3:%4:%5:%6:%7:%8:%9:",dayZ_instance, _class, 0 ,
 //diag_log ("HIVE: WRITE: "+ str(_key));
 _key call server_hiveWrite;
 
-_object setVariable ["ObjectUID", _uid];
+_object setVariable ["ObjectUID", _uid, true];
 
 dayz_serverObjectMonitor set [count dayz_serverObjectMonitor,_object];
 

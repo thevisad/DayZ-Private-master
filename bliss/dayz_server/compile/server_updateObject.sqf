@@ -1,7 +1,7 @@
 private["_objectID","_object","_updates","_uGear","_key","_result","_position","_speed","_crew","_canDo","_uid","_type","_previous","_force"];
 _object = 	_this select 0;
-_objectID =	_object getVariable ["ObjectID",0];
-_uid = 		_object call dayz_objectUID;
+_objectID =	_object getVariable ["ObjectID", 0];
+_uid =		_object getVariable ["ObjectUID", "0"];
 _type = 	_this select 1;
 _speed = speed _object;
 _crew = driver _object;

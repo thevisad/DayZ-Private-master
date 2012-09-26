@@ -12,7 +12,7 @@ server_updatePlayer	=		compile preprocessFileLineNumbers "\z\addons\dayz_server\
 server_playerStat =			compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\server_playerStat.sqf";
 server_publishObj = 		compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\server_publishObject.sqf";
 local_publishObj = 			compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\local_publishObj.sqf";		//Creates the object in DB
-local_deleteObj = 			compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\local_deleteObj.sqf";		//Creates the object in DB
+local_deleteObj = 			compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\local_deleteObj.sqf";		//Creates the object in DB
 local_createObj = 			compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\local_createObj.sqf";		//Creates the object in DB
 server_playerSync =			compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\server_playerSync.sqf";
 //zombie_initialize =			compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\zombie_initialize.sqf";
@@ -157,14 +157,14 @@ dayz_objectUID = {
 	_p1 = round((_position select 0) * 10);
 	_p2 = round((_position select 1) * 10);
 	_p3 = round((_position select 2) * 10);
-	_dir = round(direction _object);
+	_dir = round(getDir _object);
 	_key = format["%1%2%3%4",_p1,_p2,_p3,_dir];
 	_key
 };
 
 dayz_objectUID2 = {
 	private["_position","_p1","_p2","_p3","_dir","_key"];
-	_dir = _this select 0;
+	_dir = round(_this select 0);
 	_position = _this select 1;
 	_p1 = round((_position select 0) * 10);
 	_p2 = round((_position select 1) * 10);
