@@ -1,4 +1,4 @@
-private["_objectID","_object","_updates","_uGear","_key","_result","_position","_speed","_crew","_canDo","_uid","_type","_previous"];
+private["_objectID","_object","_updates","_uGear","_key","_result","_position","_speed","_crew","_canDo","_uid","_type","_previous","_force"];
 _object = 	_this select 0;
 _objectID =	_object getVariable ["ObjectID",0];
 _uid = 		_object call dayz_objectUID;
@@ -78,16 +78,30 @@ switch (_type) do {
 		_hitPoints = _object call vehicle_getHitpoints;
 		_array = [];
 		_dam = 1;
-		_damage = _damage / 2;
+		_avgDamage = 0;
 
 		{
 			_hit = [_object, _x] call object_getHit;
 			_selection = getText (configFile >> "CfgVehicles" >> (typeOf _object) >> "HitPoints" >> _x >> "name");
 			if (_hit > 0) then { _array set [count _array, [_selection, _hit]] };
 			_object setHit [_selection, _hit];
+			_avgDamage = _avgDamage + _hit;
 		} forEach _hitPoints;
 
-		if (_lastUpdate == 0 || (time - _lastUpdate) > 1) then {
+		_avgDamage = _avgDamage / (count _hitPoints);
+		if (_damage <= 0.98) then {
+			_damage = _avgDamage * 0.75;
+		} else {
+			_damage = 1.0;
+		};
+
+		if (count _this > 2) then {
+			_force = _this select 2;
+		} else {
+			_force = false;
+		};
+
+		if (_force || _lastUpdate == 0 || (time - _lastUpdate) > 1) then {
 			_key = format["CHILD:306:%1:%2:%3:", _objectID, _array, _damage];
 			diag_log("HIVE:WRITE:" + str(_key));
 			_key call server_hiveWrite;
