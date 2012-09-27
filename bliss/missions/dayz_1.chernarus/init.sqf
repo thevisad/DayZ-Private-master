@@ -20,6 +20,7 @@ progressLoadingScreen 1.0;
 
 // Vehicle damage fix
 vehicle_handleDamage    = compile preprocessFileLineNumbers "fixes\vehicle_handleDamage.sqf";
+vehicle_handleKilled    = compile preprocessFileLineNumbers "fixes\vehicle_handleKilled.sqf";
 
 // Right-click error fix
 player_selectSlot       = compile preprocessFileLineNumbers "fixes\ui_selectSlot.sqf";
@@ -64,5 +65,6 @@ if (!isDedicated) then {
 	// Set event handler
 	{
 		_x addEventHandler ["HandleDamage", { _this call vehicle_handleDamage }];
+		_x addEventHandler ["Killed", { _this call vehicle_handleKilled }];
 	} forEach vehicles;
 };

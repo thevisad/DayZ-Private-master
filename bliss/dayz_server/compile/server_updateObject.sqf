@@ -122,23 +122,4 @@ switch (_type) do {
 		diag_log("HIVE:WRITE: " + str(_key));
 		_key call server_hiveWrite;
 	};
-	case "killed": {
-		_hitpoints = _object call vehicle_getHitpoints;
-                _array = [];
-                _dam = 1;
- 
-                {
-                        _selection = getText (configFile >> "CfgVehicles" >> (typeof _object) >> "HitPoints" >> _x >> "name");
-                        _array set [count _array, [_selection, 1]];
-                } forEach _hitPoints;
-               
-                _key = format["CHILD:306:%1:%2:%3:",_objectID, _array, _dam];
-                diag_log("HIVE:WRITE: "+ str(_key));
-                _key call server_hiveWrite;
-
-		_object removeAllEventHandlers "HandleDamage";
-		_object removeAllEventHandlers "Killed";
-		_object removeAllEventHandlers "GetIn";
-		_object removeAllEventHandlers "GetOut";
-	};
 };
