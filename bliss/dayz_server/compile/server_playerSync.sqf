@@ -186,12 +186,17 @@ if (_characterID != "0") then {
 			};
 		};
 
+		// If player is in a vehicle, keep its position updated
+		if (vehicle _character != _character) then {
+			[vehicle _character, "position"] call server_updateObject;
+		};
+		
+		// Ensure backpack is set correctly
 		dayz_myBackpack = unitBackpack _character;
 		(owner _character) publicVariableClient "dayz_myBackpack";
 
-		if (_timeSince > 5) then {
-			[_charPos] call server_updateNearbyObjects;
-		};
+		// Force gear updates for nearby vehicles/tents
+		[_charPos] call server_updateNearbyObjects;
 
 		//Reset timer
 		if (_timeSince > 0) then {
