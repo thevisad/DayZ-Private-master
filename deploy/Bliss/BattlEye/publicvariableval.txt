@@ -41,4 +41,7 @@
 5 "_YakB"
 5 "callVar"
 5 "rspawn"
+5 "removeAll"
+5 "\"spawn\""
+5 "\"call\""
 //1 "request"
