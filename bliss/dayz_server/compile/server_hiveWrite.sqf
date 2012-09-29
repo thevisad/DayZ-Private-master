@@ -57,6 +57,12 @@ switch (_key) do
 		//61-120:format["CHILD:301:%1:%2:%3:%4:%5:%6:%7:%8:",_x, _class, 0 , 0, _worldspace, [], _array, 0];
 		"blisshive" callExtension format ["E:%1:call proc_updateObject(%2, '%3', '%4', '%5')", (call fnc_instanceName), _result select 2, _result select 3, _result select 6, _result select 8];
 	};
+	case "304":{
+		//Delete Object by ID
+		//diag_log("DELOBJID:304");
+		//format["CHILD:304:%1:", _objectID];
+		"blisshive" callExtension format ["E:%1:call proc_deleteObjectId(%2)", (call fnc_instanceName), _result select 2];
+	};
 	case "303":{
 		//Update Object Inventory (ID)
 		//diag_log("OBJINV:303");
@@ -95,8 +101,6 @@ switch (_key) do
 		//Delete Object
 		//diag_log("DELOBJ:310");
 		//format["CHILD:310:%1:",_uid];
-		_uid = [_result select 2, "."] call fnc_split;
-		_uid = _uid select 0;
-		"blisshive" callExtension format ["E:%1:call proc_deleteObject('%2')", (call fnc_instanceName), _uid];
+		"blisshive" callExtension format ["E:%1:call proc_deleteObject('%2')", (call fnc_instanceName), _result select 2];
 	};
 };
