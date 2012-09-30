@@ -37,6 +37,10 @@ player_fillWater        = compile preprocessFileLineNumbers "fixes\water_fill.sq
 player_reloadMag        = compile preprocessFileLineNumbers "fixes\player_reloadMags.sqf";
 player_packTent         = compile preprocessFileLineNumbers "fixes\player_packTent.sqf";
 
+// Player sync hooks
+player_countmagazines 	= compile preprocessFileLineNumbers "fixes\player_countmagazines.sqf";
+player_humanityMorph 	= compile preprocessFileLineNumbers "fixes\player_humanityMorph.sqf";
+
 // Original functions being overridden
 player_build_orig       = compile preprocessFileLineNumbers "\z\addons\dayz_code\actions\player_build.sqf";
 player_cook_orig        = compile preprocessFileLineNumbers "\z\addons\dayz_code\actions\cook.sqf";
