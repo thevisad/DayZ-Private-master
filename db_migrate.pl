@@ -1,6 +1,7 @@
 #!/usr/bin/perl -w
 
 use Getopt::Long;
+use File::Basename;
 use DBIx::Migration::Directories;
 use DBIx::Transaction;
 use DBI;
@@ -41,7 +42,7 @@ my $dbh = DBIx::Transaction->connect(
 ) or die "FATAL: Could not connect to MySQL - " . DBI->errstr . "\n";
 
 my $m = DBIx::Migration::Directories->new(
-	base                    => 'schema',
+	base                    => dirname(__FILE__) . '/schema',
 	schema                  => 'Bliss',
 	desired_version   	=> $version,
 	dbh                     => $dbh
