@@ -46,7 +46,20 @@ Installation
 	- Default DayZ loadout - **[]**
 	- Survival loadout - **[["ItemMap","ItemCompass","ItemMatchbox","FoodCanBakedBeans","ItemKnife","FoodCanBakedBeans"],["ItemTent","ItemBandage","ItemBandage"]]**
 	- PvP loadout - **[["Mk_48_DZ","NVGoggles","Binocular_Vector","M9SD","ItemGPS","ItemToolbox","ItemEtool","ItemCompass","ItemMatchbox","FoodCanBakedBeans","ItemKnife","ItemMap","ItemWatch"],[["100Rnd_762x51_M240",47],"ItemPainkiller","ItemBandage","15Rnd_9x19_M9SD","100Rnd_762x51_M240","ItemBandage","ItemBandage","15Rnd_9x19_M9SD","15Rnd_9x19_M9SD","15Rnd_9x19_M9SD","ItemMorphine","PartWoodPile"]]**
-11. Run **ArmA2**\\server.bat to start the Chernarus server or **ArmA2**\\server_lingor.bat to start the Lingor server. **NOTE:** You cannot run Chernarus and Lingor using the same MySQL database.
+11. Ensure the required client mods are present in **ArmA2**\\. Refer to the following table for specific information based on your desired world.
+<table>
+  <tr>
+    <td>World</td><td>Mod Folders</td><td>Version</td><td>URL</td>
+  </tr>
+  <tr>
+    <td>Chernarus</td><td>@dayz</td><td>1.7.2.6</td><td>http://dayzmod.com/?Download</td>
+  </tr>
+  <tr>
+    <td>Lingor Island</td><td>@dayz_lingor, @dayz_lingor_island</td><td>0.34</td><td>http://dayzlingor.tk</td>
+  </tr>
+</table>
+
+12. Run **ArmA2**\\server.bat to start the Chernarus server or **ArmA2**\\server_lingor.bat to start the Lingor server. **NOTE:** You cannot run Chernarus and Lingor using the same MySQL database.
 
 Upgrading
 =========
@@ -54,7 +67,7 @@ Upgrading
 Depending on what has changed since you deployed your server, you may need to perform one or more steps to do a clean upgrade to the latest code. Look for the following in the commit log (specifically, the files that were changed) when you update to the latest version of the repository:
 
 If you see that SQL files or db_migrate.pl have changed, then you **must** run `perl -w db_migrate.pl` (with appropriate options, run it with `--help` for more information) to upgrade your database to the latest version.
-If SQF files (game script) has changed, then you **must** run repack.pl and copy the **Repository**\\deploy\\@Bliss directory into **ArmA 2** and overwrite dayz_server.pbo.
+If SQF files (game script) has changed, then you **must** run repack.pl and copy the **Repository**\\deploy\\@Bliss directory into **ArmA2**\\ and overwrite dayz_server.pbo.
 If configuration files and BattlEye anti-cheat files have changed, you will need to backup and overwrite your existing versions of these files. Take care to change any default server names, passwords or similar back to their customized values after copying the new versions into your **ArmA2** directory.
 
 These are the areas you will need to inspect to ensure a smooth upgrade. If database and code changes were not made at the same time and you do not read the history thoroughly, you may miss important changes and skip vital steps. It will save you frustration in the long run if you repack and redeploy @Bliss, run `perl -w db_migrate.pl` and check for any new or changed files in **Repo**\\Deploy whenever you would like to update.
