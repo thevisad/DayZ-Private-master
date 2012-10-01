@@ -166,6 +166,7 @@ Any bug present in the official client or server will probably also exist in thi
  - Spawning in debug areas (plains / ocean)
  - Debug monitor issues
  - Humanity not updating correctly
+ - Sandbags, Tank Traps, and Wire Fence are not always deleted from the database when disassembled
 
 Common Issues
 =============
