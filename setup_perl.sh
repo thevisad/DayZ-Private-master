@@ -1,3 +1,3 @@
 #!/bin/bash
-sudo cpan force install DBIx::Transaction
-sudo cpan force install DBIx::Migration::Directories 
+sudo cpan DBIx::Transaction DBIx::Migration::Directories File::DirCompare Text::Diff Text::Patch
+
