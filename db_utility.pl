@@ -107,6 +107,25 @@ if ($command eq 'itemdistr') {
 		$sth->finish();
 		$updSth->finish();
 		print "INFO: Removed $itemCnt instances of $classname from $rowCnt players!\n";
+
+		# Fetch all object inventories
+		$sth = $dbh->prepare("select id, inventory from objects");
+		$updSth = $dbh->prepare("update objects set inventory = ? where id = ?");
+		$rowCnt = 0, $itemCnt = 0;
+		$sth->execute();
+		while (my $row = $sth->fetchrow_hashref()) {
+			# Remove all instances of the current classname from inventory, backpack, and state
+			my $changed = $row->{'inventory'} =~ s/,{0,1}"$classname",{0,1}//gi;
+			# Iff an item was removed, update the row
+			if ($changed > 0) {
+				$rowCnt++;
+				$itemCnt += $changed;
+				$updSth->execute($row->{'inventory'}, $row->{'id'});
+			}
+		}
+		$sth->finish();
+		$updSth->finish();
+		print "INFO: Removed $itemCnt instances of $classname from $rowCnt objects!\n";
 	}
 } elsif ($command eq 'cleandead') {
 	my $days = shift(@ARGV);
