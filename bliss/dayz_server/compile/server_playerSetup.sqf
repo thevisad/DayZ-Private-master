@@ -25,18 +25,8 @@ _survival =		[0,0,0];
 _tent =			[];
 _state = 		[];
 
-//Do Connection Attempt
-_doLoop = 0;
-while {_doLoop < 5} do {
-	_key = format["CHILD:102:%1:",_characterID];
-	_primary = [_key,false,dayZ_hivePipeAuth] call server_hiveReadWrite;
-	if (count _primary > 0) then {
-		if ((_primary select 0) != "ERROR") then {
-			_doLoop = 9;
-		};
-	};
-	_doLoop = _doLoop + 1;
-};
+_key = format["CHILD:102:%1:",_characterID];
+_primary = [_key,false,dayZ_hivePipeAuth] call server_hiveReadWrite;
 
 if (isNull _playerObj or !isPlayer _playerObj) exitWith {
 	diag_log ("SETUP RESULT: Exiting, player object null: " + str(_playerObj));

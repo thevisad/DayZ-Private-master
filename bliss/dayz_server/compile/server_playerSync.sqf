@@ -191,10 +191,6 @@ if (_characterID != "0") then {
 			[vehicle _character, "position"] call server_updateObject;
 		};
 		
-		// Ensure backpack is set correctly
-		dayz_myBackpack = unitBackpack _character;
-		(owner _character) publicVariableClient "dayz_myBackpack";
-
 		// Force gear updates for nearby vehicles/tents
 		[_charPos] call server_updateNearbyObjects;
 

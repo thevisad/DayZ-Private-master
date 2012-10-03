@@ -47,18 +47,8 @@ if (_result == 0) exitWith {
 endLoadingScreen;
 diag_log ("LOGIN ATTEMPT: " + str(_playerID) + " " + _playerName);
 
-//Do Connection Attempt
-_doLoop = 0;
-while {_doLoop < 5} do {
-	_key = format["CHILD:101:%1:%2:%3:",_playerID,dayZ_instance,_playerName];
-	_primary = [_key,false,dayZ_hivePipeAuth] call server_hiveReadWrite;
-	if (count _primary > 0) then {
-		if ((_primary select 0) != "ERROR") then {
-			_doLoop = 9;
-		};
-	};
-	_doLoop = _doLoop + 1;
-};
+_key = format["CHILD:101:%1:%2:%3:",_playerID,dayZ_instance,_playerName];
+_primary = [_key,false,dayZ_hivePipeAuth] call server_hiveReadWrite;
 
 if (isNull _playerObj or !isPlayer _playerObj) exitWith {
 	diag_log ("LOGIN RESULT: Exiting, player object null: " + str(_playerObj));
