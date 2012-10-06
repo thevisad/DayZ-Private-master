@@ -153,6 +153,7 @@ class FSM
        "_delQtyZ = 0;" \n
        "_delQtyFL = 0;" \n
        "_delQtyFP = 0;" \n
+       "" \n
        "{" \n
        "	if (local _x) then {" \n
        "		if (_x isKindOf ""zZombie_Base"") then {" \n
@@ -162,11 +163,6 @@ class FSM
        "			if (_x isKindOf ""CAManBase"") then {" \n
        "				_deathTime = _x getVariable [""processedDeath"", time];" \n
        "				if (time - _deathTime > 1200) then {" \n
-       "					_pos = getPosATL _x;" \n
-       "					_sfx = nearestObject [_pos,""Sound_Flies""];" \n
-       "					if (!(isNull _sfx)) then {" \n
-       "						deleteVehicle _sfx;" \n
-       "					};" \n
        "					deleteVehicle _x;" \n
        "					_delQtyP = _delQtyP + 1;" \n
        "				};" \n
@@ -176,12 +172,12 @@ class FSM
        "} forEach allDead;" \n
        "" \n
        "{" \n
-       "	if (({!alive _x} count (_x nearEntities [[""CAManBase""], 10])) == 0) then {" \n
+       "	if ({!alive _x} count (nearestObjects [_x, [""CAManBase""], 10]) >= 0) then {" \n
        "		deleteVehicle _x;" \n
        "		_delQtyFL = _delQtyFL + 1;" \n
        "	};" \n
        "} forEach allMissionObjects ""Sound_Flies"";" \n
-       "" \n
+       "" \n 
        "{" \n
        "	if (local _x) then {" \n
        "		deleteVehicle _x;" \n
