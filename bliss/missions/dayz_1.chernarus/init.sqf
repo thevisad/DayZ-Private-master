@@ -40,6 +40,7 @@ player_packTent         = compile preprocessFileLineNumbers "fixes\player_packTe
 // Player sync hooks
 player_countmagazines 	= compile preprocessFileLineNumbers "fixes\player_countmagazines.sqf";
 player_humanityMorph 	= compile preprocessFileLineNumbers "fixes\player_humanityMorph.sqf";
+player_switchModel 	= compile preprocessFileLineNumbers "fixes\player_switchModel.sqf";
 
 // Original functions being overridden
 player_build_orig       = compile preprocessFileLineNumbers "\z\addons\dayz_code\actions\player_build.sqf";
