@@ -18,32 +18,6 @@ _result = call compile _result;
 initialLoadout = call compile ((_result select 0) select 0);
 diag_log("SERVER: Got initial loadout of " + str(initialLoadout));
 
-//Get task page count
-_result = "blisshive" callExtension format ["Q:%1:call proc_getSchedulerTaskPageCount(%2)", (call fnc_instanceName), dayz_instance];
-_result = call compile _result;
-_pageCount = call compile ((_result select 0) select 0);
-diag_log("SERVER: Got " + str(_pageCount + 1) + " pages of tasks...");
-
-//Load tasks
-taskList = [];
-_taskCount = 0;
-for "_page" from 1 to _pageCount do {
-	_result = "blisshive" callExtension format ["Q:%1:call proc_getSchedulerTasks(%2, %3)", (call fnc_instanceName), dayz_instance, _page];
-	_result = call compile _result;
-	_end = ((count _result) - 1);
-	for "_i" from 0 to _end do {
-		_item = _result select _i;
-		if (count _item > 0) then {
-			_item set [2, (call compile (_item select 2))];
-			_item set [3, (call compile (_item select 3))];
-			taskList set [count taskList, _item];
-			_taskCount = _taskCount + 1;
-			//diag_log("DEBUG: Added task " + _item);
-		};
-	};
-};
-diag_log("SERVER: Added " + str(_taskCount) + " tasks!");
-
 //Get object page count
 _result = "blisshive" callExtension format ["Q:%1:call proc_getObjectPageCount(%2)", (call fnc_instanceName), dayz_instance];
 _result = call compile _result;

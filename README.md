@@ -114,48 +114,6 @@ Here are the most common customization requests with instructions.
 **Request**: I would like to alter difficulty options (3rd-person, crosshairs, name tags, etc).  
 **Solution**: Edit **ArmA2**\\Bliss\\Users\\Bliss\\Bliss.ArmA2OAProfile. An explanation of the options is available at http://community.bistudio.com/wiki/server.armaprofile. You must restart the server for these changes to take effect.
 
-Scheduler
-=========
-
-By inserting rows into the scheduler table, you can set up custom messages displayed ingame over several chat channels. You can also make script calls. Be sure you understand what each field does before inserting a row.
-
-The mvisibility value you choose must be the same as the visibility field in the instances table for the messages to be displayed on that instance. By default, all instances have a visibility of 0, so use 0 for a message that is to be displayed on all instances. You will need to customize this to suit your setup if you have multiple instances and you would like distinct messages for each of them. The looptime and mstart fields should be given in seconds. The mstart field is a delay between the first player connecting to the server and the first time your message is displayed. If looptime is greater than zero, the message will repeat at the specified interval.
-
-The mtype field determines what chat channel is used to send the message. A table of possible values follows:
-<table>
-  <tr>
-    <td>Type</td><td>Name</td>
-  </tr>
-  <tr>
-    <td>l</td><td>Local</td>
-  </tr>
-  <tr>
-    <td>m</td><td>Side</td>
-  </tr>
-  <tr>
-    <td>g</td><td>Global</td>
-  </tr>
-  <tr>
-    <td>s</td><td>Script</td>
-  </tr>
-</table>
-
-**NOTE:** Any changes to the scheduler table will only take effect after a server restart.
-
-Whitelist
-=========
-
-Bliss is optionally capable of only allowing whitelisted players on your server. This feature is disabled by default. To enable it, do the following:
-
-1. Using a MySQL administration utility, set the whitelist field to 1 for your instance (in the instances table).  
-2. Set the is_whitelisted column to 1 for any row in the profile table that you would like to be whitelisted.  
-
-A server restart is not required for whitelist changes to take effect. If you would like to whitelist players who have not logged in yet, you will need to insert a row into profile with is_whitelisted set to 1 before they connect. You can do this programmatically by running `perl db_utility.pl whitelist add <profile_id>`, replacing `<profile_id>` with a profile ID (also known as a UID but **not** a BE GUID). Alternatively, you can use this example query if you are building an application that has native SQL capability:
-
-> insert into profile (unique_id, name, is_whitelisted) values ('12345678', 'DemoPlayer', 1);
-
-The whitelist is completely independent of server password or any firewall you may be using to control access. Players who are not whitelisted will be stuck at "Loading" when they try to connect.
-
 Gotchas / Known Bugs
 ==========
 
