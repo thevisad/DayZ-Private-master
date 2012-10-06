@@ -175,7 +175,7 @@ while (my $vehicle = $spawns->fetchrow_hashref) {
 	}
 
 	# Skip this spawn if the spawn chance was not met
-	if (int(rand(100)) > ($vehicle->{chance} * 100)) {
+	if (max(int(rand(100)), 1) > ($vehicle->{chance} * 100)) {
 		next;
 	}
 
