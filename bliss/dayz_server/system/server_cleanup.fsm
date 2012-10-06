@@ -82,7 +82,7 @@ class FSM
           priority = 2.000000;
           to="cleanup_dead";
           precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
-          condition=/*%FSM<CONDITION""">*/"((time - _lastCleanDead) > 600)"/*%FSM</CONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"((time - _lastCleanDead) > 1200)"/*%FSM</CONDITION""">*/;
           action=/*%FSM<ACTION""">*/"_lastCleanDead = time;"/*%FSM</ACTION""">*/;
         };
         /*%FSM</LINK>*/
