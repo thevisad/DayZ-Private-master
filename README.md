@@ -2,7 +2,7 @@ DayZ Bliss Private Server
 =========================
 
 This is a private server project for DayZ.
-This code is currently compatible with DayZ 1.7.2.6 and ArmA 2 OA beta patch build 97448.
+This code is currently compatible with DayZ 1.7.2.6 and ArmA 2 OA beta patch build 97771.
 
 This would not be possible without the work of Rocket and Guru Abdul. We also use the fantastic cPBO from Kegetys (www.kegetys.fi) and wget for Windows by the GnuWin32 team (gnuwin32.sourceforge.net).
 
@@ -15,7 +15,7 @@ Prerequisites
  - A working ArmA 2 Combined Ops dedicated server (Steam users must merge ArmA2 and ArmA2 OA directories) with recommended beta patch installed (http://www.arma2.com/beta-patch.php)
  - MySQL Server 5.x with TCP/IP Networking enabled **NOTE:** You **must** use the official MySQL installer, not XAMPP (http://dev.mysql.com/get/Downloads/MySQL-5.5/mysql-5.5.27-win32.msi/from/http://cdn.mysql.com)
  - The decimal separator on your server MUST BE a period. If it is a comma, vehicle spawning (at least) will not work correctly. **NOTE:** If you use FireDaemon to start your server, you must re-create the service if you change the comma separator in Windows.
- - A working Perl interpreter - Strawberry Perl is recommended (http://strawberryperl.com/)
+ - Strawberry Perl >= 5.16 (http://strawberryperl.com/)
 
 Directories
 ===========
@@ -28,25 +28,24 @@ When you see the following names in bold, substitute in the appropriate path as 
 Installation
 ============
 
-1. Download DayZ 1.7.2.6 and place the PBO files in **ArmA2**\\@DayZ\\Addons. 
-2. Run `setup_perl.bat`. If you are prompted to provide a schema path, press enter to continue. If you are prompted Yes/No to run tests, type "n" and press Enter.  
-3. Run `perl repack.pl` in **Repository**.  
-4. Copy all files from **Repository**\\deploy into **ArmA2**\\  
-5. Run the following SQL code as the **root** user (be **sure** to change the password from CHANGEME):  
+1. Run `setup_perl.bat`. If you are prompted to provide a schema path, press enter to continue. If you are prompted Yes/No to run tests, type "n" and press Enter.  
+2. Run `perl build.pl --world <world> --instance <id>` in **Repository**, replacing `<world>` with a valid world name and `<id>` with an integer representing the instance ID. If you only run one server, you may omit the `--instance` parameter from the command. If --world is omitted, the default is Chernarus. Use `perl build.pl --list` to get a list of available worlds and optional packages and run `perl build.pl --help` for additional information on how to use build.pl.  
+3. Copy all files from **Repository**\\deploy into **ArmA2**\\  
+4. Run the following SQL code as the **root** user (be **sure** to change the password from CHANGEME):  
 
 		create database dayz;
 		create user 'dayz'@'localhost' identified by 'CHANGEME';
 		grant all privileges on dayz.* to 'dayz'@'localhost';
 
-6. Run `perl db_migrate.pl --password CHANGEME`. Replace `CHANGEME` with the password you chose in the previous step. Use the `--help` flag to get more information on how to set the hostname, username, or database name to suit your needs.  
-7. Ensure that the database information in **ArmA2**\\bliss.ini match the values you used in the previous step.  
-8. Adjust server name/passwords in `ArmA2\\Bliss\\config_deadbeef.cfg`, (`BlissLingor` for Lingor Island) where `deadbeef` is some random value generated when running repack.pl.  
-9. If you would like to customize the server time, run `perl db_utility.pl tzoffset <offset>`, replacing `<offset>` with an integer number of hours (positive or negative). Please note that the default instance ID is 1; if you use another instance ID, you will need to run `perl db_utility.pl --instance X tzoffset <offset>`, replacing `X` with your instance ID.  
-10. If you would like to customize the starting loadout, run `perl db_utility.pl loadout <loadout>`, replacing `<loadout>` with a valid loadout string. Some examples:  
+5. Run `perl db_migrate.pl --password CHANGEME` from the **ArmA2** directory. Replace `CHANGEME` with the password you chose in the previous step. Use the `--help` flag to get more information on how to set the hostname, username, or database name to suit your needs.  
+6. Ensure that the database information in **ArmA2**\\bliss.ini match the values you used in the previous step. Ensure that the section header `[dayz_1.chernarus]` matches the world and instance you chose in step 2.  
+7. Adjust server name/passwords in `ArmA2\\Bliss\\config_deadbeef.cfg` where `deadbeef` is some random value generated specifically for your installation when running build.pl.  
+8. If you would like to customize the server time, run `perl db_utility.pl tzoffset <offset>`, replacing `<offset>` with an integer number of hours (positive or negative). Please note that the default instance ID is 1; if you use another instance ID, you will need to run `perl db_utility.pl --instance X tzoffset <offset>`, replacing `X` with your instance ID.  
+9. If you would like to customize the starting loadout, run `perl db_utility.pl loadout <loadout>`, replacing `<loadout>` with a valid loadout string. Some examples:  
 	- Default DayZ loadout - **[]**
 	- Survival loadout - **[["ItemMap","ItemCompass","ItemMatchbox","FoodCanBakedBeans","ItemKnife","FoodCanBakedBeans"],["ItemTent","ItemBandage","ItemBandage"]]**
 	- PvP loadout - **[["Mk_48_DZ","NVGoggles","Binocular_Vector","M9SD","ItemGPS","ItemToolbox","ItemEtool","ItemCompass","ItemMatchbox","FoodCanBakedBeans","ItemKnife","ItemMap","ItemWatch"],[["100Rnd_762x51_M240",47],"ItemPainkiller","ItemBandage","15Rnd_9x19_M9SD","100Rnd_762x51_M240","ItemBandage","ItemBandage","15Rnd_9x19_M9SD","15Rnd_9x19_M9SD","15Rnd_9x19_M9SD","ItemMorphine","PartWoodPile"]]**
-11. Ensure the required client mods are present in **ArmA2**\\. Refer to the following table for specific information based on your desired world.
+10. Ensure the required client mods are present in **ArmA2**\\. Refer to the following table for specific information based on your desired world.
 <table>
   <tr>
     <td>World</td><td>Mod Folders</td><td>Version</td><td>URL</td>
@@ -57,27 +56,32 @@ Installation
   <tr>
     <td>Lingor Island</td><td>@dayz_lingor, @dayz_lingor_island</td><td>0.34</td><td>http://dayzlingor.tk</td>
   </tr>
+  <tr>
+    <td>Takistan</td><td>@dayztakistan</td><td>1.1</td><td>DayZ Commander</td>
+  </tr>
+  <tr>
+    <td>Utes</td><td>@dayz</td><td>1.7.2.6</td><td>http://dayzmod.com/?Download</td>
+  </tr>
+
 </table>
 
-12. Run **ArmA2**\\server.bat to start the Chernarus server or **ArmA2**\\server_lingor.bat to start the Lingor server. **NOTE:** You cannot run Chernarus and Lingor using the same MySQL database.
+11. Run **ArmA2**\\server_<world>_<instance>.bat (where world is the world name and instance is the instance ID) to start the server.
 
 Upgrading
 =========
 
 Depending on what has changed since you deployed your server, you may need to perform one or more steps to do a clean upgrade to the latest code. Look for the following in the commit log (specifically, the files that were changed) when you update to the latest version of the repository:
 
-If you see that SQL files or db_migrate.pl have changed, then you **must** run `perl -w db_migrate.pl` (with appropriate options, run it with `--help` for more information) to upgrade your database to the latest version.
-If SQF files (game script) has changed, then you **must** run repack.pl and copy the **Repository**\\deploy\\@Bliss directory into **ArmA2**\\ and overwrite dayz_server.pbo.
-If configuration files and BattlEye anti-cheat files have changed, you will need to backup and overwrite your existing versions of these files. Take care to change any default server names, passwords or similar back to their customized values after copying the new versions into your **ArmA2** directory.
+If you see that SQL files or db_migrate.pl have changed, then you **must** run `db_migrate.pl` (with appropriate options, run it with `--help` for more information) to upgrade your database to the latest version.
+If SQF files (game script) has changed, then you **must** run `build.pl` and copy the **Repository**\\deploy\\@Bliss\\ directory into **ArmA2**\\.
+If configuration files and BattlEye anti-cheat files have changed in **Repository**\\deploy\\, you will need to backup and overwrite your existing versions of these files. Take care to change any default server names, passwords or similar back to their customized values after copying the new versions into your **ArmA2** directory.
 
-These are the areas you will need to inspect to ensure a smooth upgrade. If database and code changes were not made at the same time and you do not read the history thoroughly, you may miss important changes and skip vital steps. It will save you frustration in the long run if you repack and redeploy @Bliss, run `perl -w db_migrate.pl` and check for any new or changed files in **Repo**\\Deploy whenever you would like to update.
-
-If you have a change that can make this process easier without adding bloat to the repository, the team would be happy to hear from you. Open an issue or see the Support section below.
+These are the areas you will need to inspect to ensure a smooth upgrade. If database and code changes were not made at the same time and you do not read the history thoroughly, you may miss important changes and skip vital steps. It will save you frustration in the long run if you rebuild and redeploy, run `db_migrate.pl` and check for any new or changed files in **Repository**\\deploy\\ whenever you would like to update.
 
 Vehicles
 ========
 
-Run `perl db_spawn_vehicles.pl` to get help information on how to invoke the vehicle spawn script correctly. You will need to run the vehicle script and point it to your database to get vehicles to spawn in-game. You **MUST** set the correct world when running db_spawn_vehicles.pl, if you leave the world unspecified the default is Chernarus which will not work correctly if you are running Lingor island. The script can be run periodically - it will not delete all vehicles every time it runs. It will clean up user-deployed objects (wire fence, tents, tank traps, etc) in the same way that official DayZ does. If you run db_spawn_vehicles.pl with the `--cleanup` argument, it will also check for out-of-bounds objects and delete them.
+Run `perl db_spawn_vehicles.pl` to get help information on how to invoke the vehicle spawn script correctly. You will need to run the vehicle script and point it to your database to get vehicles to spawn in-game. You **MUST** set the correct world when running `db_spawn_vehicles.pl`, if you leave the world unspecified the default is Chernarus which will not work correctly if you are running Lingor island. The script can be run periodically - it will not delete all vehicles every time it runs. It will clean up user-deployed objects (wire fence, tents, tank traps, etc) in the same way that official DayZ does. If you run db_spawn_vehicles.pl with the `--cleanup` argument, it will also check for out-of-bounds objects and delete them.
 
 **NOTE:** Vehicles added/updated via database manipulation are only available after a server restart.
 
@@ -86,14 +90,10 @@ Multiple Instances
 
 You can run multiple server instances connected to the same database to provide a private cluster of servers all using the same player information. This can be done with Chernarus and Lingor Island, but you cannot mix players from one map with players from the other. If you did this, the characters positions would be wildly different and players would end up in the ocean or dead under the ground.
 
-1. Determine what world you will be creating a new instance for. Duplicate either dayz_1.chernarus or dayz_1.lingor in **Repo**\\bliss\\missions. Rename it, replacing the "1" with the new instance ID you intend to use.  
-2. Run `perl repack.pl` from the **Repo** directory.  
-3. Copy all PBOs in **Repo**\\deploy\\MPMissions to **ArmA2**\\MPMissions.  
-4. Duplicate the **ArmA2**\\Bliss (or BlissLingor) directory and server.bat (or server_lingor.bat). Rename them so it is clear what instance ID they are for.  
-5. Edit the new server.bat so that it points to the new profile directory you created in step 4.  
-6. Edit the config.cfg file in the profile directory created in step 4 so that the mission template refers to the new instance ID (e.g. change dayz_1.chernarus to dayz_2.chernarus).  
-7. Edit **ArmA2**\\bliss.ini and add a new section for your instance. Change the section header so that it refers to the new instance ID and make sure the database configuration options are correct.
-8. Run the new server.bat file you created in step 4.
+1. Run `perl build.pl --world WORLD --instance ID` from the **Repo** directory, replacing WORLD with a valid world name and ID with a valid instance ID (the default is 1, so 2 would be sensible for a second instance).  
+2. Copy all new directories and files from **Repository**\\deploy\\ to **ArmA2**\\.  
+3. Edit **ArmA2**\\bliss.ini and add a new section for your instance. Change the section header so that it refers to the new instance ID and make sure the database configuration options are correct.
+4. Run the new server.bat file for your instance.
 
 Care must be taken to ensure that all paths and options have been set correctly. With this system you can run as many instances as your server can support simultaneously.
 
@@ -103,13 +103,13 @@ Customization
 Here are the most common customization requests with instructions.
 
 **Request**: I would like to change the available chat channels.  
-**Solution**: Go into **Repository**\\bliss\\missions\\dayz_1.chernarus (or .lingor for Lingor Island) and edit `description.ext`. Refer to http://community.bistudio.com/wiki/Description.ext#disableChannels for a mapping of channel names to numbers. Then run `repack.pl` and redeploy the files in **Repository**\\deploy\\MPMissions.
+**Solution**: Go into **Repository**\\pkg\\missions\\chernarus (or the correct world name if you are building for another world) and edit `description.ext`. Refer to http://community.bistudio.com/wiki/Description.ext#disableChannels for a mapping of channel names to numbers. Then run `build.pl` and redeploy the files in **Repository**\\deploy\\MPMissions.
 
 **Request**: I would like to change the server timezone.  
 **Solution**: Run `perl db_utility.pl --instance X tzoffset <offset>`, replacing `X` with your instance ID (default is 1) and `<offset>` with an integer. This will set the positive or negative offset applied (in hours) to the system time, which is checked when the server starts up.
 
 **Request**: I would like to have constant daylight (or moonlight) on my server.  
-**Solution**: There is no easy solution for this. There is no way to halt the progression of time using SQF. If you *really* want to do this, you would have to modify the proc_getInstanceTime procedure to always return a constant time and then schedule automatic restarts such that before the sun sets (or rises) you are restarting/resetting the server back to the static starting time.
+**Solution**: There is no easy solution for this. There is no way to halt the progression of time using SQF. If you *really* want to do this, you would have to modify the proc_getInstanceTime procedure to always return a constant time.
 
 **Request**: I would like to alter difficulty options (3rd-person, crosshairs, name tags, etc).  
 **Solution**: Edit **ArmA2**\\Bliss\\Users\\Bliss\\Bliss.ArmA2OAProfile. An explanation of the options is available at http://community.bistudio.com/wiki/server.armaprofile. You must restart the server for these changes to take effect.
@@ -122,8 +122,8 @@ Character data can become desynchronized if the player was connected within seve
 Any bug present in the official client or server will probably also exist in this solution. Please do **not** report these as issues on GitHub. Some of the official bugs:
  - Loss of backpack due to bandit morphing or on respawn
  - Spawning in debug areas (plains / ocean)
- - Debug monitor issues
- - Humanity not updating correctly
+ - Debug monitor issues (the debug monitor is being removed and is no longer supported)
+ - Humanity not updating correctly / reset on death
  - Sandbags, Tank Traps, and Wire Fence are not always deleted from the database when disassembled
 
 Common Issues
@@ -149,8 +149,8 @@ Common Issues
 **Problem**: "Bad CD Key" messages  
 **Solution**: Buy the game.
 
-
 Support
 =======
 
+**HTTP**: http://dayzprivate.com/forum/
 **IRC**: irc.thekreml.in #bliss
