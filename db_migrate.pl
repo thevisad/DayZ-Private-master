@@ -14,6 +14,7 @@ GetOptions(
 	'password|pass|p=s',
 	'database|name|dbname|d=s',
 	'port=s',
+	'schema|s=s',
 	'version|v=s',
 	'help'
 );
@@ -27,10 +28,13 @@ my %db = (
 );
 
 if ($args{'help'}) {
-	print "usage: db_migrate.pl [--host <hostname>] [--user <username>] [--pass <password>] [--name <dbname>] [--port <port>] [--version <version>]\n";
+	print "usage: db_migrate.pl [--host <hostname>] [--user <username>] [--pass <password>] [--name <dbname>] [--port <port>] [--schema <schema>] [--version <version>]\n";
 	exit;
 }
 
+die "FATAL: Schema version must be specified for non-standard schema!\n" if ($args{'schema'} && !defined $args{'version'});
+
+my $schema  = $args{'schema'} ? $args{'schema'} : "Bliss";
 my $version = $args{'version'} ? $args{'version'} : "0.20";
 
 print "INFO: Trying to connect to $db{'host'}, database $db{'name'} as $db{'user'}\n";
@@ -43,15 +47,15 @@ my $dbh = DBIx::Transaction->connect(
 
 my $m = DBIx::Migration::Directories->new(
 	base                    => dirname(__FILE__) . '/schema',
-	schema                  => 'Bliss',
+	schema                  => $schema,
 	desired_version   	=> $version,
 	dbh                     => $dbh
 );
 
 if ($m->get_current_version()) {
-	printf("INFO: Current schema version is %.2f\n", $m->get_current_version());
+	printf("INFO: Current $schema version is %.2f\n", $m->get_current_version());
 } else {
-	print "INFO: Did not find an existing schema\n";
+	print "INFO: Did not find an existing schema for $schema\n";
 }
 
 $m->migrate or die "FATAL: Database migration failed!\n";
