@@ -44,4 +44,5 @@
 5 "removeAll"
 5 "\"spawn\""
 5 "\"call\""
+5 "call compile"
 //1 "request"
