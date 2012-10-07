@@ -82,12 +82,7 @@ if (count _medical > 0) then {
 	_playerObj setVariable["USEC_isCardiac",(_medical select 5),true];
 	_playerObj setVariable["USEC_lowBlood",(_medical select 6),true];
 	_playerObj setVariable["USEC_BloodQty",(_medical select 7),true];
-	if (_playerID in dayz_disco) then {
-		_playerObj setVariable["NORRN_unconscious",true, true];
-		_playerObj setVariable["unconsciousTime",300,true];
-	} else {
-		_playerObj setVariable["unconsciousTime",(_medical select 10),true];
-	};
+	_playerObj setVariable["unconsciousTime",(_medical select 10),true];
 	
 	//Add Wounds
 	{
