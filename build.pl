@@ -39,9 +39,13 @@ my $src_dir   = "$base_dir/util/dayz_server";
 my $dst_dir   = "$base_dir/deploy";
 
 if ($args{'help'}) {
-	print "usage: build.pl --world <world> [--with-<option>] [--clean]\n";
+	print "usage: build.pl [--world <world>] [--instance <id>] [--with-<option>] [--clean] [--list]\n";
+	print "    --world <world>: build an instance for the specified map/world\n";
+	print "    --instance <id>: build an instance with the specified integer instance id\n";
+	print "\n";
 	print "    --with-<package>: merge in changes from ./pkg/<package>/ during build\n";
 	print "    --clean: remove all files in ./tmp/ and perform no further action\n";
+	print "    --list: lists all available worlds and packages\n";
 	exit;
 } elsif ($args{'list'}) {
 	opendir (my $dh, $world_dir);
