@@ -22,8 +22,9 @@ Directories
 
 When you see the following names in bold, substitute in the appropriate path as described.
 
- - **ArmA2** - this is the root directory of your ArmA 2 installation
- - **Repository** - this is the directory you have extracted (or cloned) these private server files to
+ - **ArmA2** - this is the root directory of your ArmA 2 installation.
+ - **Repository** - this is the directory you have extracted (or cloned) these private server files to.
+ - **Config** - this is a directory called `dayz_<id>.<world>` created during deployment. Replace `<id>` with the instance ID and `<world>` with the world you specified when running build.pl.
 
 Installation
 ============
@@ -39,7 +40,7 @@ Installation
 
 5. Run `perl db_migrate.pl --password CHANGEME` from the **ArmA2** directory. Replace `CHANGEME` with the password you chose in the previous step. Use the `--help` flag to get more information on how to set the hostname, username, or database name to suit your needs.  
 6. Ensure that the database information in **ArmA2**\\bliss.ini match the values you used in the previous step. Ensure that the section header `[dayz_1.chernarus]` matches the world and instance you chose in step 2.  
-7. Adjust server name/passwords in `ArmA2\\Bliss\\config_deadbeef.cfg` where `deadbeef` is some random value generated specifically for your installation when running build.pl.  
+7. Adjust server name/passwords in **Config**\\config_deadbeef.cfg, where `deadbeef` is some random value generated specifically for your installation.  
 8. If you would like to customize the server time, run `perl db_utility.pl tzoffset <offset>`, replacing `<offset>` with an integer number of hours (positive or negative). Please note that the default instance ID is 1; if you use another instance ID, you will need to run `perl db_utility.pl --instance X tzoffset <offset>`, replacing `X` with your instance ID.  
 9. If you would like to customize the starting loadout, run `perl db_utility.pl loadout <loadout>`, replacing `<loadout>` with a valid loadout string. Some examples:  
 	- Default DayZ loadout - **[]**
@@ -68,10 +69,12 @@ Installation
 Upgrading
 =========
 
+**NOTE**: Users upgrading to the new **build.pl** script will need to run the latest **setup_perl.bat** to install new modules required by the new build system.
+
 Depending on what has changed since you deployed your server, you may need to perform one or more steps to do a clean upgrade to the latest code. Look for the following in the commit log (specifically, the files that were changed) when you update to the latest version of the repository:
 
-If you see that SQL files or db_migrate.pl have changed, then you **must** run `db_migrate.pl` (with appropriate options, run it with `--help` for more information) to upgrade your database to the latest version.
-If SQF files (game script) has changed, then you **must** run `build.pl` and copy the **Repository**\\deploy\\@Bliss\\ directory into **ArmA2**\\.
+If you see that SQL files or `db_migrate.pl` have changed, then you **must** run `db_migrate.pl` (with appropriate options, run it with `--help` for more information) to upgrade your database to the latest version.
+If SQF files (game script) has changed, then you **must** run `build.pl` and copy the `**Repository**\\deploy\\@bliss_<id>.<world>\\` directory into **ArmA2**\\ (where `<id>` and `<world>` are the values you specified when running build.pl).
 If configuration files and BattlEye anti-cheat files have changed in **Repository**\\deploy\\, you will need to backup and overwrite your existing versions of these files. Take care to change any default server names, passwords or similar back to their customized values after copying the new versions into your **ArmA2** directory.
 
 These are the areas you will need to inspect to ensure a smooth upgrade. If database and code changes were not made at the same time and you do not read the history thoroughly, you may miss important changes and skip vital steps. It will save you frustration in the long run if you rebuild and redeploy, run `db_migrate.pl` and check for any new or changed files in **Repository**\\deploy\\ whenever you would like to update.
@@ -110,7 +113,7 @@ Here are the most common customization requests with instructions.
 **Solution**: There is no easy solution for this. There is no way to halt the progression of time using SQF. If you *really* want to do this, you would have to modify the proc_getInstanceTime procedure to always return a constant time.
 
 **Request**: I would like to alter difficulty options (3rd-person, crosshairs, name tags, etc).  
-**Solution**: Edit **ArmA2**\\Bliss\\Users\\Bliss\\Bliss.ArmA2OAProfile. An explanation of the options is available at http://community.bistudio.com/wiki/server.armaprofile. You must restart the server for these changes to take effect.
+**Solution**: Edit **Config**\\Users\\Bliss\\Bliss.ArmA2OAProfile. An explanation of the options is available at http://community.bistudio.com/wiki/server.armaprofile. You must restart the server for these changes to take effect.
 
 Gotchas / Known Bugs
 ==========
