@@ -163,7 +163,7 @@ if (_randomSpot) then {
 		_counter = 0;
 		while {_counter < 20 and _findSpot} do {
 			_mkr = "spawn" + str(round(random 4));
-			_position = ([(getMarkerPos _mkr),0,1500,10,0,2000,1] call BIS_fnc_findSafePos);
+			_position = ([(getMarkerPos _mkr),0,1500,10,0,2000,0] call BIS_fnc_findSafePos);
 			_isNear = count (_position nearEntities ["Man",100]) == 0;
 			_isZero = ((_position select 0) == 0) and ((_position select 1) == 0);
 		//Island Check		//TeeChange
