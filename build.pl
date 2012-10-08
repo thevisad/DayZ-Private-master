@@ -26,7 +26,7 @@ GetOptions(
 );
 
 # Set defaults if options are not specified
-$args{'world'} = 'chernarus' unless $args{'world'};
+$args{'world'} = ($args{'world'}) ? lc($args{'world'}) : 'chernarus';
 $args{'instance'} = '1' unless $args{'instance'};
 
 # Initialize paths
@@ -192,8 +192,8 @@ sub pack_pbo {
 	my ($dir, $pbo) = @_;
 	die "FATAL: PBO directory $dir does not exist\n" unless (-d $dir);
 
-	my $cmd = (($^O =~ m/MSWin32/) ? '' : 'wine ') . 'util/cpbo.exe';
-	system("$cmd -y -p $dir $pbo");
+	my $cmd = (($^O =~ m/MSWin32/) ? '' : 'wine ') . 'util/cpbo.exe -y -p';
+	system("$cmd \"$dir\" \"$pbo\"");
 }
 
 # Peform three-way merge of source code with world changes into output dir
@@ -299,7 +299,7 @@ sub replace_text {
 sub copy_dir {
 	my ($src, $dst) = @_;
 	my $cmd = (($^O =~ m/MSWin32/) ? 'xcopy /s /q /y' : 'cp -r');
-	my $path = " $src $dst";
-	$path =~ s/\//\\/ if ($^O =~ m/MSWin32/);
+	my $path = "\"$src\" \"$dst\/\"";
+	$path =~ s/\//\\/g if ($^O =~ m/MSWin32/);
 	system("$cmd $path");
 }
