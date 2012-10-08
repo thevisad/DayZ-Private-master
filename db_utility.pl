@@ -36,7 +36,6 @@ if ($args{'help'}) {
 	print "    cleandead <days>      - delete dead survivors who were last updated more than <days> days ago\n";
 	print "    tzoffset <offset>     - set server time to system time minus <offset> hours\n";
 	print "    loadout <value>       - set loadout to <value> (default is [])\n";
-	print "    whitelist [on|off|add|rem] [<profile_id>] - turns the whitelist protection on/off, or adds/removes a profile ID from the whitelist\n";
 	exit;
 }
 
@@ -145,38 +144,6 @@ if ($command eq 'itemdistr') {
 	die "FATAL: Invalid loadout\n" unless ($loadout =~ /\[(\[.+?\],{0,1})+\]/);
 	$dbh->do("update instances set loadout = ? where instance = ?", undef, ($loadout, $db{'instance'}));
 	print "INFO: Set loadout to \"${loadout}\" for instance $db{'instance'}\n";
-} elsif ($command eq 'whitelist') {
-	my $switch = shift(@ARGV);
-	defined $switch or die "FATAL: Invalid arguments\n";
-	my $unique_id = shift(@ARGV);
-	
-	my $sql = '';
-	my @params = ();
-	if ($switch eq 'on' || $switch eq 'off') {
-		$sql = "update instances set whitelist = " . (($switch eq 'on') ? 1 : 0) . " where instance = ?";
-		@params = ($db{'instance'});
-		print "INFO: Set whitelist ${switch} for instance $db{'instance'}\n";
-	} elsif ($switch eq 'add') {
-		defined $unique_id or die "FATAL: Invalid arguments\n";
-		my $count = $dbh->selectrow_array("select count(*) from profile where unique_id = ?", undef, $unique_id);
-		if ($count == 0) {
-			$sql = "insert ignore into profile (unique_id, is_whitelisted) values (?, 1)";
-			print "INFO: Inserting profile ID ${unique_id} and whitelisting it\n";
-		} else {
-			$sql = "update profile set is_whitelisted = 1 where unique_id = ?";
-			print "INFO: Added profile ID ${unique_id} to whitelist\n";
-		}
-		@params = ($unique_id);
-	} elsif ($switch eq 'rem') {
-		defined $unique_id or die "FATAL: Invalid arguments\n";
-		$sql = "update profile set is_whitelisted = 0 where unique_id = ?";
-		@params = ($unique_id);
-		print "INFO: Removed profile ID ${unique_id} from whitelist\n";
-	} else {
-		die "FATAL: Invalid arguments\n";
-	}
-
-	$dbh->do($sql, undef, @params);
 } else {
 	die "FATAL: Unrecognized command.\n";
 }
