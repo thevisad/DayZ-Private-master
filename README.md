@@ -45,7 +45,7 @@ Installation
 	- Default DayZ loadout - **[]**
 	- Survival loadout - **[["ItemMap","ItemCompass","ItemMatchbox","FoodCanBakedBeans","ItemKnife","FoodCanBakedBeans"],["ItemTent","ItemBandage","ItemBandage"]]**
 	- PvP loadout - **[["Mk_48_DZ","NVGoggles","Binocular_Vector","M9SD","ItemGPS","ItemToolbox","ItemEtool","ItemCompass","ItemMatchbox","FoodCanBakedBeans","ItemKnife","ItemMap","ItemWatch"],[["100Rnd_762x51_M240",47],"ItemPainkiller","ItemBandage","15Rnd_9x19_M9SD","100Rnd_762x51_M240","ItemBandage","ItemBandage","15Rnd_9x19_M9SD","15Rnd_9x19_M9SD","15Rnd_9x19_M9SD","ItemMorphine","PartWoodPile"]]**
-10. Ensure the required client mods are present in **ArmA2**\\. Refer to the following table for specific information based on your desired world.
+10. Ensure the required client mods are present in **ArmA2**\\. Refer to the following table for specific information based on your desired world.  
 <table>
   <tr>
     <td>World</td><td>Mod Folders</td><td>Version</td><td>URL</td>
@@ -62,10 +62,8 @@ Installation
   <tr>
     <td>Utes</td><td>@dayz</td><td>1.7.2.6</td><td>http://dayzmod.com/?Download</td>
   </tr>
-
 </table>
-
-11. Run **ArmA2**\\server_<world>_<instance>.bat (where world is the world name and instance is the instance ID) to start the server.
+11. Run **ArmA2**\\server_<world>_<instance>.bat (where world is the world name and instance is the instance ID) to start the server.  
 
 Upgrading
 =========
