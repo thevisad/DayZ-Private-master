@@ -59,10 +59,13 @@ Installation
     <td>Lingor Island</td><td>@dayz_lingor, @dayz_lingor_island</td><td>0.34</td><td>http://dayzlingor.tk</td>
   </tr>
   <tr>
-    <td>Takistan</td><td>@dayztakistan</td><td>1.1</td><td>DayZ Commander</td>
+    <td>Takistan</td><td>@dayztakistan</td><td>1.3</td><td>ftp://dayzcommander:dayzcommander@94.242.227.3/DayZTakistan-1.3.rar</td>
   </tr>
   <tr>
     <td>Utes</td><td>@dayz</td><td>1.7.2.6</td><td>http://dayzmod.com/?Download</td>
+  </tr>
+  <tr>
+    <td>Panthera</td><td>@dayzpanthera</td><td>1.1</td><td>ftp://dayzcommander:dayzcommander@94.242.227.3/DayZPanthera-1.1.rar</td>
   </tr>
 </table>
 11. Run **ArmA2**\\server_<world>_<instance>.bat (where world is the world name and instance is the instance ID) to start the server.  
