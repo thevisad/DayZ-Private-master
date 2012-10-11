@@ -62,10 +62,17 @@ _countr = 0;
 	if (_damage < 1) then {
 		diag_log("Spawned: " + str(_idKey) + " " + _type);
 		
-		//Create it
 		_object = createVehicle [_type, _pos, [], 0, "CAN_COLLIDE"];
 		_object setVariable ["lastUpdate",time];
-		_object setVariable ["ObjectID", _idKey, true];
+
+		// Don't set objects for tents to ensure proper inventory updates
+		if (!(_object isKindOf "TentStorage")) then {
+			_object setVariable ["ObjectID", _idKey, true];
+		} else {
+			_worldspace = call compile (_x select 3);
+			_object setVariable ["ObjectUID", _worldspace call dayz_objectUID2, true];
+		};
+
 		_object setVariable ["CharacterID", _ownerID, true];
 		
 		clearWeaponCargoGlobal  _object;

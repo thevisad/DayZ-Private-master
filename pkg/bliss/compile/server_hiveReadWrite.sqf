@@ -17,11 +17,11 @@ switch (_result select 1) do
 		_name = [_result select 4, ":", ""] call fnc_replace;
 		//Login
 		//diag_log("LOGIN:101");
-		_qresult = "blisshive" callExtension format ["Q:%1:call proc_loginSurvivor('%2', '%3')", (call fnc_instanceName), _muid, _name];
+		_qresult = "blisshive" callExtension format ["Q:%1:call proc_loginSurvivor('%2', '%3', '%4')", (call fnc_instanceName), _muid, _name, worldName];
 		if (_qresult=="[[]]") then
 		{
 
-			_qresult = "blisshive" callExtension format ["Q:%1:call proc_insertSurvivor('%2', '%3')", (call fnc_instanceName), _muid, _name];
+			_qresult = "blisshive" callExtension format ["Q:%1:call proc_insertSurvivor('%2', '%3', '%4')", (call fnc_instanceName), _muid, _name, worldName];
 			_qresult = call compile _qresult;
 			_qresult = _qresult select 0;
 			_ret = ["",true,_qresult select 0,"Survivor2_DZ",dayz_hiveVersionNo];

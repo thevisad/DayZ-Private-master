@@ -51,23 +51,17 @@ switch (_key) do
 		//diag_log("PLAYERUPDATE:203");
 		"blisshive" callExtension format ["E:%1:call proc_updateSurvivor(%2, '[]', '%3', '%4', '[]', -1, -1, 0, 'any', 0, 0, 0, 0, 0, '["""",""aidlpercmstpsnonwnondnon_player_idlesteady04"",36]')", (call fnc_instanceName), _result select 2,_result select 3, _result select 4];
 	};
-	case "301": {
-		//Create Object
-		//diag_log("MKOBJ:301");
-		//61-120:format["CHILD:301:%1:%2:%3:%4:%5:%6:%7:%8:",_x, _class, 0 , 0, _worldspace, [], _array, 0];
-		"blisshive" callExtension format ["E:%1:call proc_updateObject(%2, '%3', '%4', '%5')", (call fnc_instanceName), _result select 2, _result select 3, _result select 6, _result select 8];
+	case "303":{
+		//Update Object Inventory (ID)
+		//diag_log("OBJINV:303");
+		//format["CHILD:303:%1:%2:", _objectID, _inventory];
+		"blisshive" callExtension format ["E:%1:call proc_updateObjectInventory(%2, '%3')", (call fnc_instanceName), _result select 2, _result select 3];
 	};
 	case "304":{
 		//Delete Object by ID
 		//diag_log("DELOBJID:304");
 		//format["CHILD:304:%1:", _objectID];
 		"blisshive" callExtension format ["E:%1:call proc_deleteObjectId(%2)", (call fnc_instanceName), _result select 2];
-	};
-	case "303":{
-		//Update Object Inventory (ID)
-		//diag_log("OBJINV:303");
-		//format["CHILD:303:%1:%2:", _objectID, _inventory];
-		"blisshive" callExtension format ["E:%1:call proc_updateObjectInventory(%2, '%3')", (call fnc_instanceName), _result select 2, _result select 3];
 	};
 	case "305": {
 		//Update Object Position and Fuel
@@ -88,8 +82,8 @@ switch (_key) do
 	case "308":{
 		//Publish Object
 		//diag_log("PUBOBJ:308");
-		//format["CHILD:308:%1:%2:%3:%4:%5:%6:%7:%8:%9:",dayZ_instance, _class, 0 , _charID, _worldspace, [], [], 0,_uid];
-		"blisshive" callExtension format ["E:%1:call proc_insertObject('%2', '%3', '[]', 0, 0, %4, '%5', %6)", (call fnc_instanceName), _result select 10,_result select 3,_result select 5,_result select 6,dayz_instance];
+		//format["CHILD:308:%1:%2:%3:%4:%5:", dayZ_instance, _class, _charID, _worldspace, _uid];
+		"blisshive" callExtension format ["E:%1:call proc_insertObject('%2', '%3', %4, '%5', %6)", (call fnc_instanceName), _result select 6, _result select 3,_result select 4, _result select 5, _result select 2];
 	};
 	case "309":{
 		//Update Object Inventory (UID)

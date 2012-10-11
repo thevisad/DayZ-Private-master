@@ -108,41 +108,45 @@ if ($command eq 'itemdistr') {
 		print "INFO: Removed $itemCnt instances of $classname from $rowCnt players!\n";
 
 		# Fetch all object inventories
-		$sth = $dbh->prepare("select id, inventory from objects");
-		$updSth = $dbh->prepare("update objects set inventory = ? where id = ?");
+		my @tables = ('instance_vehicle', 'instance_deployable');
 		$rowCnt = 0, $itemCnt = 0;
-		$sth->execute();
-		while (my $row = $sth->fetchrow_hashref()) {
-			# Remove all instances of the current classname from inventory, backpack, and state
-			my $changed = $row->{'inventory'} =~ s/,{0,1}"$classname",{0,1}//gi;
-			# Iff an item was removed, update the row
-			if ($changed > 0) {
-				$rowCnt++;
-				$itemCnt += $changed;
-				$updSth->execute($row->{'inventory'}, $row->{'id'});
+
+		for my $table (@tables) {
+			$sth = $dbh->prepare("select id, inventory from $table");
+			$updSth = $dbh->prepare("update $table set inventory = ? where id = ?");
+			$sth->execute();
+			while (my $row = $sth->fetchrow_hashref()) {
+				# Remove all instances of the current classname from inventory, backpack, and state
+				my $changed = $row->{'inventory'} =~ s/,{0,1}"$classname",{0,1}//gi;
+				# Iff an item was removed, update the row
+				if ($changed > 0) {
+					$rowCnt++;
+					$itemCnt += $changed;
+					$updSth->execute($row->{'inventory'}, $row->{'id'});
+				}
 			}
+			$sth->finish();
+			$updSth->finish();
 		}
-		$sth->finish();
-		$updSth->finish();
 		print "INFO: Removed $itemCnt instances of $classname from $rowCnt objects!\n";
 	}
 } elsif ($command eq 'cleandead') {
 	my $days = shift(@ARGV);
 	defined $days or die "FATAL: Invalid arguments\n";
-	my $sth = $dbh->prepare("delete from survivor where is_dead = 1 and last_update < now() - interval ? day");
+	my $sth = $dbh->prepare("delete from survivor where is_dead = 1 and last_updated < now() - interval ? day");
 	$sth->execute($days);
 	print "INFO: Removed " . $sth->rows . " rows from the survivor table\n";
 	$sth->finish();
 } elsif ($command eq 'tzoffset') {
 	my $offset = shift(@ARGV);
 	defined $offset or die "FATAL: Invalid arguments\n";
-	$dbh->do("update instances set offset = ? where instance = ?", undef, ($offset, $db{'instance'}));
+	$dbh->do("update instance set tz_offset = ? where instance = ?", undef, ($offset, $db{'instance'}));
 	my ($date, $time) = $dbh->selectrow_array("call proc_getInstanceTime(?)", undef, $db{'instance'});
 	print "INFO: Set timezone offset to ${offset} for instance $db{'instance'}, game time will be $date $time after a restart\n";
 } elsif ($command eq 'loadout') {
 	my $loadout = shift(@ARGV);
 	die "FATAL: Invalid loadout\n" unless ($loadout =~ /\[(\[.+?\],{0,1})+\]/);
-	$dbh->do("update instances set loadout = ? where instance = ?", undef, ($loadout, $db{'instance'}));
+	$dbh->do("update instance set inventory = ? where instance = ?", undef, ($loadout, $db{'instance'}));
 	print "INFO: Set loadout to \"${loadout}\" for instance $db{'instance'}\n";
 } else {
 	die "FATAL: Unrecognized command.\n";

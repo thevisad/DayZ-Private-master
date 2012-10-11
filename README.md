@@ -83,18 +83,18 @@ These are the areas you will need to inspect to ensure a smooth upgrade. If data
 Vehicles
 ========
 
-Run `perl db_spawn_vehicles.pl` to get help information on how to invoke the vehicle spawn script correctly. You will need to run the vehicle script and point it to your database to get vehicles to spawn in-game. You **MUST** set the correct world when running `db_spawn_vehicles.pl`, if you leave the world unspecified the default is Chernarus which will not work correctly if you are running Lingor island. The script can be run periodically - it will not delete all vehicles every time it runs. It will clean up user-deployed objects (wire fence, tents, tank traps, etc) in the same way that official DayZ does. If you run db_spawn_vehicles.pl with the `--cleanup` argument, it will also check for out-of-bounds objects and delete them.
+Run `perl db_spawn_vehicles.pl` to get help information on how to invoke the vehicle spawn script correctly. You will need to run the vehicle script and point it to your database to get vehicles to spawn in-game. The script can be run periodically - it will not delete all vehicles every time it runs. It will clean up user-deployed objects (wire fence, tents, tank traps, etc) in the same way that official DayZ does. If you run db_spawn_vehicles.pl with the `--cleanup` argument, it will also check for out-of-bounds objects and delete them.
 
 **NOTE:** Vehicles added/updated via database manipulation are only available after a server restart.
 
 Multiple Instances
 ==================
 
-You can run multiple server instances connected to the same database to provide a private cluster of servers all using the same player information. This can be done with Chernarus and Lingor Island, but you cannot mix players from one map with players from the other. If you did this, the characters positions would be wildly different and players would end up in the ocean or dead under the ground.
-
+You can run multiple server instances connected to the same database to provide a private cluster of servers all using the same player information.
+ 
 1. Run `perl build.pl --world WORLD --instance ID` from the **Repo** directory, replacing WORLD with a valid world name and ID with a valid instance ID (the default is 1, so 2 would be sensible for a second instance).  
 2. Copy all new directories and files from **Repository**\\deploy\\ to **ArmA2**\\.  
-3. Edit **ArmA2**\\bliss.ini and add a new section for your instance. Change the section header so that it refers to the new instance ID and make sure the database configuration options are correct.
+3. Edit **ArmA2**\\bliss.ini and add a new section for your instance. Change the section header so that it refers to the new instance ID and make sure the database configuration options are correct.  
 4. Run the new server.bat file for your instance.
 
 Care must be taken to ensure that all paths and options have been set correctly. With this system you can run as many instances as your server can support simultaneously.
