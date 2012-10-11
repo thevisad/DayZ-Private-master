@@ -38,6 +38,14 @@
 5 "for"
 1 "this" !"this enableSimulation false;this allowDammage false;this disableAI 'FSM';this disableAI 'ANIM';this disableAI 'MOVE';" !"_v setVehicleInit format [\"[this, %1, %2,false,true]spawn BIS_Effects_Burn\",_int, _t];" !"_v setVehicleInit \"[this] spawn BIS_Effects_AirDestruction\";"
 1 "format"
+5 "skip"
+5 "fail"
+5 "force"
+5 "parse"
+5 "terminate"
+5 "start"
+5 "eventhandler"
+5 "loading"
 //5 "dayz_serverObjectMonitor set [count dayz_serverObjectMonitor, _object];"
 1 "BIS_Effects" //kicking not needed anymore, monitoring only
 5 "BIS_" !"BIS_Effects"
@@ -68,6 +76,7 @@
 5 "_MEEWS"
 5 "_SMAW"
 5 "_GRAD"
+5 "_yakB"
 5 "beeeh"
 5 "hreh"
 //all below detected already by above

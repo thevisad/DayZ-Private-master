@@ -53,6 +53,9 @@
 1 "_ep1" !"pack_EP1" !"pouch_EP1" 
 1 "_baf"
 1 "_pmc"
+1 "cz_" !"CZ_VestPouch_EP1"
+5 "_LHD_
+5 "_acr"
 //5 "AmmoBox" !"AmmoBoxSmall_556" !"AmmoBoxSmall_762"
 //5 "WeaponsBox"
 //5 "CacheBox"
