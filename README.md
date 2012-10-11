@@ -102,6 +102,15 @@ You can run multiple server instances connected to the same database to provide 
 
 Care must be taken to ensure that all paths and options have been set correctly. With this system you can run as many instances as your server can support simultaneously.
 
+Messaging / Scheduler
+=====================
+
+You may optionally enable an in-game announcement system for Bliss. To do so, follow these steps:
+
+1. Run `perl db_migrate.pl --schema BlissMessaging --version 0.01`. Be sure to include any parameters needed for your specific database passwords / configuration.  
+2. When building Bliss, you must add `--with-messaging` to your arguments, for example `perl build.pl --with-messaging`.  
+3. Use `perl db_utility.pl --help` to learn how to use the `messages` command to manage your messages without any direct database interaction.  
+
 Customization
 =============
 

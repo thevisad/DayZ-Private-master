@@ -3,6 +3,7 @@
 use strict;
 use warnings;
 
+use List::Util qw(min);
 use Getopt::Long qw(:config pass_through);
 use DBIx::Transaction;
 use DBI;
@@ -30,12 +31,17 @@ my %db = (
 
 if ($args{'help'}) {
 	print "usage: db_utility.pl <command> [arguments] [--instance <id>] [--host <hostname>] [--user <username>] [--pass <password>] [--name <database-name>] [--port <port>]\n";
-	print "  command is one of:\n";
-	print "    itemdistr             - look at all live player inventories and show counts of each item in descending order\n";
-	print "    cleanitem <classname> - remove comma-separated list of classnames from all survivor inventories\n";
-	print "    cleandead <days>      - delete dead survivors who were last updated more than <days> days ago\n";
-	print "    tzoffset <offset>     - set server time to system time minus <offset> hours\n";
-	print "    loadout <value>       - set loadout to <value> (default is [])\n";
+	print "command is one of:\n";
+	print "  itemdistr             - look at all live player inventories and show counts of each item in descending order\n";
+	print "  cleanitem <classname> - remove comma-separated list of classnames from all survivor inventories\n";
+	print "  cleandead <days>      - delete dead survivors who were last updated more than <days> days ago\n";
+	print "  tzoffset <offset>     - set server time to system time minus <offset> hours\n";
+	print "  loadout <value>       - set loadout to <value> (default is [])\n";
+	print "  messages <subcommand> - manage the optional messaging system\n";
+	print "    add <instance_id> <start_delay> <loop_interval> <message> - add a message for <instance_id> with body <message> that first prints <start_delay> seconds and then every <loop_interval> seconds thereafter (use 0 for <loop_interval> for a one-time message)\n";
+	print "    edit <id> <instance_id> <start_delay> <loop_interval> <message> - set the message with <id> to the specified values\n";
+	print "    del <id>\n - delete a message with <id> specified (use 'messages list' to find valid values).\n";
+	print "    list [<search_phrase>]\n - lists current message information, optionally filtered by messages containing a phrase\n";
 	exit;
 }
 
@@ -50,9 +56,48 @@ my $dbh = DBI->connect(
 
 $dbh->{AutoCommit} = 0;
 
-my $command = shift(@ARGV);
-defined $command or die "FATAL: No command supplied, try --help for usage information\n";
-if ($command eq 'itemdistr') {
+my $cmd = shift(@ARGV);
+defined $cmd or die "FATAL: No command supplied, try --help for usage information\n";
+if ($cmd eq 'messages') {
+	my $sth = $dbh->prepare("select count(*) from message") or die "FATAL: Could not prepare SQL statement";
+	my $valid = $sth->execute();
+	$sth->finish();
+	die "FATAL: No message table found. Ensure you have run db_migrate.pl --schema BlissMessaging --version 0.01\n" unless defined $valid;
+
+	my $subcmd = shift(@ARGV);
+	die "FATAL: No subcommand specified, try --help for more info\n" unless defined $subcmd;
+	if ($subcmd eq 'add') {
+		die "FATAL: Invalid argument count for add\n" unless scalar(@ARGV) == 4;
+		$sth = $dbh->prepare('insert into message (instance_id, start_delay, loop_interval, payload) values (?, ?, ?, ?)');
+		$sth->execute(@ARGV);
+		print "INFO: Inserted message with parameters (" . join(', ', @ARGV) .  ")\n";
+	} elsif ($subcmd eq 'edit') {
+		die "FATAL: Invalid argument count for edit\n" unless scalar(@ARGV) == 5;
+		push(@ARGV, shift(@ARGV));
+		$sth = $dbh->prepare('update message set instance_id = ?, start_delay = ?, loop_interval = ?, payload = ? where id = ?');
+		$sth->execute(@ARGV);
+		print "INFO: Inserted message with parameters (" . join(', ', @ARGV) .  ")\n";
+	} elsif ($subcmd eq 'del') {
+		my $id = shift(@ARGV);
+		die "FATAL: No id specified\n" unless defined $id;
+		$dbh->do("delete from message where id = ?", undef, ($id));
+		print "INFO: Deleted message with id $id";
+	} elsif ($subcmd eq 'list') {
+		my $phrase = shift(@ARGV);
+		$phrase = '' unless defined $phrase;
+
+		$sth = $dbh->prepare("select * from message where payload like CONCAT(?, '%')");
+		$sth->execute($phrase);
+		print "Found " . $sth->rows . " message" . (($sth->rows > 1) ? 's' : '') . "\n";
+		print "ID    Instance Delay   Interval Payload\n";
+		print "-----------------------------------------\n";
+		while (my $row = $sth->fetchrow_hashref) {
+			printf "%-6d%-9d%-8d%-9d%s\n", $row->{id}, $row->{instance_id}, $row->{start_delay}, $row->{loop_interval}, substr($row->{payload}, 0, min(length($row->{payload}), 50));
+		}
+	} else {
+		die "FATAL: Invalid subcommand specified\n";
+	}
+} elsif ($cmd eq 'itemdistr') {
 	my $sth = $dbh->prepare("select inventory, backpack from survivor where is_dead = 0");
 	$sth->execute();
 	my %counts = ();
@@ -80,7 +125,7 @@ if ($command eq 'itemdistr') {
 	foreach my $item (sort { $counts{$b} <=> $counts{$a} } keys %counts) {
 		print "$counts{$item} - $item\n";
 	}
-} elsif ($command eq 'cleanitem') {
+} elsif ($cmd eq 'cleanitem') {
 	my $classes = shift(@ARGV);
 	defined $classes or die "FATAL: Invalid arguments\n";
 	my @classnames = split(/,/, $classes);
@@ -130,20 +175,20 @@ if ($command eq 'itemdistr') {
 		}
 		print "INFO: Removed $itemCnt instances of $classname from $rowCnt objects!\n";
 	}
-} elsif ($command eq 'cleandead') {
+} elsif ($cmd eq 'cleandead') {
 	my $days = shift(@ARGV);
 	defined $days or die "FATAL: Invalid arguments\n";
 	my $sth = $dbh->prepare("delete from survivor where is_dead = 1 and last_updated < now() - interval ? day");
 	$sth->execute($days);
 	print "INFO: Removed " . $sth->rows . " rows from the survivor table\n";
 	$sth->finish();
-} elsif ($command eq 'tzoffset') {
+} elsif ($cmd eq 'tzoffset') {
 	my $offset = shift(@ARGV);
 	defined $offset or die "FATAL: Invalid arguments\n";
 	$dbh->do("update instance set tz_offset = ? where instance = ?", undef, ($offset, $db{'instance'}));
 	my ($date, $time) = $dbh->selectrow_array("call proc_getInstanceTime(?)", undef, $db{'instance'});
 	print "INFO: Set timezone offset to ${offset} for instance $db{'instance'}, game time will be $date $time after a restart\n";
-} elsif ($command eq 'loadout') {
+} elsif ($cmd eq 'loadout') {
 	my $loadout = shift(@ARGV);
 	die "FATAL: Invalid loadout\n" unless ($loadout =~ /\[(\[.+?\],{0,1})+\]/);
 	$dbh->do("update instance set inventory = ? where instance = ?", undef, ($loadout, $db{'instance'}));
