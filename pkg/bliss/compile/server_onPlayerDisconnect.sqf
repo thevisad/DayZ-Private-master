@@ -10,7 +10,7 @@ if (vehicle _object != _object) then {
 
 diag_log ("DISCONNECT START (i): " + _playerName + " (" + str(_playerID) + ") Object: " + str(_object) );
 
-[_object,[],true] call server_playerSync;
+[_object, (magazines _object), true] call server_playerSync;
 
 _id = [_playerID,_characterID,2] spawn dayz_recordLogin;
 
