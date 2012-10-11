@@ -81,7 +81,13 @@ die "FATAL: Output dir $dst_dir does not exist\n" unless (-d $dst_dir);
 remove_tree($build_dir) if (-d $build_dir);
 
 # Ensure paths and settings are correct in deploy directory
-configure_deploy($args{'instance'}, $args{'world'}, $dst_dir);
+configure_deploy(
+	$args{'instance'},
+	$args{'world'},
+	"$base_dir/util/server.bat",
+	"$base_dir/util/dayz_config",
+	$dst_dir
+);
 
 # Apply core Bliss changes to build directory
 print "INFO: Merging Bliss code into official server\n";
@@ -117,41 +123,40 @@ print "INFO: Build completed successfully!\n";
 exit;
 
 sub configure_deploy {
-	my ($instance, $world, $dir) = @_;
-	my $conf_dir = "$dir/dayz_1.chernarus";
-	my $bat_file = "$dir/server_chernarus_1.bat";
+	my ($instance, $world, $src_bat, $src, $dst) = @_;
+	my $conf_dir = "$dst/dayz_$instance.$world";
 
 	# Check that required files exist
-	return unless (-d $conf_dir && -f $bat_file);
+	return unless (-d $src && !-d $conf_dir && -f $src_bat);
 
-	if ($instance != 1 || $world ne 'chernarus') {
-		# Copy base config directory to the instance-specific path
-		print "INFO: Creating configuration dayz_$instance.$world\n";
-		copy_dir($conf_dir, "$dir/dayz_$instance.$world");
-		copy($bat_file, "$dir/server_${world}_$instance.bat");
+	# Copy base config directory to the instance-specific path
+	print "INFO: Creating configuration dayz_$instance.$world\n";
+	copy_dir($src, $conf_dir);
 
-		# Update paths to work with
-		$conf_dir = "$dir/dayz_$instance.$world";
-		$bat_file = "$dir/server_${world}_$instance.bat";
-
-		# Ensure proper mission name is specified in config.cfg
-		replace_text("s/template\\s=\\sdayz_[0-9]+.[a-z]+/template = dayz_$instance.$world/", "$conf_dir/config.cfg");
-
-		my $mods = {
-			'lingor'    => '\@dayz_lingor;\@dayz_lingor_island',
-			'takistan'  => '\@dayztakistan',
-			'utes'      => '\@DayZ'
-		};
-
-		# Ensure proper modfolders are specified in .bat file
-		if (defined $mods->{$world}) {
-			$mods->{$world} .= ";\\\@bliss_$instance.$world";
-			replace_text("s/\\\"-mod=.*\\\"/\\\"-mod=$mods->{$world}\\\"/", $bat_file);
-		}
-
-		# Ensure proper profile directory is specified in .bat file
-		replace_text("s/=dayz_1.chernarus/=dayz_$instance.$world/g", $bat_file);
+	# Copy bat file if one does not already exist 
+	my $dst_bat = "$dst/server_${world}_$instance.bat";
+	if ($src_bat ne $dst_bat && !-f $dst_bat) {
+		copy($src_bat, $dst_bat);
+		$src_bat = $dst_bat;
 	}
+
+	# Ensure proper mission name is specified in config.cfg
+	replace_text("s/template\\s=\\sdayz_[0-9]+.[a-z]+/template = dayz_$instance.$world/", "$conf_dir/config.cfg");
+
+	my $mods = {
+		'lingor'    => '\@dayz_lingor;\@dayz_lingor_island',
+		'takistan'  => '\@dayztakistan',
+		'utes'      => '\@DayZ'
+	};
+
+	# Ensure proper modfolders are specified in .bat file
+	if (defined $mods->{$world}) {
+		$mods->{$world} .= ";\\\@bliss_$instance.$world";
+		replace_text("s/\\\"-mod=.*\\\"/\\\"-mod=$mods->{$world}\\\"/", $src_bat);
+	}
+
+	# Ensure proper profile directory is specified in .bat file
+	replace_text("s/=dayz_1.chernarus/=dayz_$instance.$world/g", $src_bat);
 
 	# Obfuscate the configuration/password if not already performed
 	if (-f "$conf_dir/config.cfg") {
@@ -160,10 +165,10 @@ sub configure_deploy {
 		print "INFO: RCon password will be set to $hash\n";
 
 		# Copy config.cfg to secured path, substitute values and update .bat file
-		copy("$conf_dir/config.cfg", "$conf_dir/config_$hash.cfg");
+		rename("$conf_dir/config.cfg", "$conf_dir/config_$hash.cfg");
 		replace_text("s/passwordAdmin\\s=\\s\\\"\\\"/passwordAdmin = \\\"$hash\\\"/", "$conf_dir/config_$hash.cfg");
-		replace_text("s/RConPassword\\sCHANGEME/RConPassword $hash/", "$conf_dir/BattlEye/BEServer.cfg");
-		replace_text("s/config=dayz_$instance.$world\\\\config_[0-9a-fA-F]{8}.cfg/config=dayz_$instance.$world\\\\config_$hash.cfg/", $bat_file);
+		replace_text("s/RConPassword\\s[0-9a-fA-F]{8}/RConPassword $hash/", "$conf_dir/BattlEye/BEServer.cfg");
+		replace_text("s/config=dayz_$instance.$world\\\\config_[0-9a-fA-F]{8}.cfg/config=dayz_$instance.$world\\\\config_$hash.cfg/", $src_bat);
 	}
 }
 
@@ -173,7 +178,7 @@ sub pack_world {
 	print "INFO: Creating dayz_server.pbo\n";
 	make_path($dst) unless (-d $dst);
 	pack_pbo($src, "$dst/dayz_server.pbo");
-	#remove_tree($src);
+	remove_tree($src);
 }
 
 sub pack_mission {
