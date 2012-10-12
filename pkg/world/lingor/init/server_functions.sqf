@@ -12,13 +12,11 @@ server_updatePlayer	=		compile preprocessFileLineNumbers "\z\addons\dayz_server\
 server_playerStat =			compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\server_playerStat.sqf";
 server_publishObj = 		compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\server_publishObject.sqf";
 local_publishObj = 			compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\local_publishObj.sqf";		//Creates the object in DB
-local_deleteObj = 			compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\local_deleteObj.sqf";		//Creates the object in DB
+local_deleteObj = 			compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\local_deleteObj.sqf";		//Creates the object in DB
 local_createObj = 			compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\local_createObj.sqf";		//Creates the object in DB
 server_playerSync =			compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\server_playerSync.sqf";
 //zombie_initialize =			compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\zombie_initialize.sqf";
 zombie_findOwner =			compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\zombie_findOwner.sqf";
-player_discoMorph = 		compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\player_discoMorph.sqf";
-disco_handler = 			compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\disco_functions_med.sqf";
 
 server_hiveWrite =			compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\server_hiveWrite.sqf";
 server_hiveReadWrite =		compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\server_hiveReadWrite.sqf";
@@ -34,9 +32,15 @@ fnc_instanceName = {
 	"dayz_" + str(dayz_instance) + "." + worldName
 };
 
-dayz_maxLocalZombies = 50;
-if(isNil "botPlayers") then { botPlayers = [] };
+dayz_maxLocalZombies = 50; 
 publicvariable "dayz_maxLocalZombies";
+
+vehicle_handleInteract = {
+	private["_object"];
+	_object = _this select 0;
+	[_object, "all"] call server_updateObject;
+	[_object, "damage", true] call server_updateObject;
+};
 
 //event Handlers
 eh_localCleanup =			{

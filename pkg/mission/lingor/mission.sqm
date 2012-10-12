@@ -42,7 +42,7 @@ class Mission
 		startWeather=0.067362607;
 		forecastWeather=0.52341133;
 		year=2008;
-		month=6;
+		month=10;
 		day=1;
 		hour=12;
 	};
