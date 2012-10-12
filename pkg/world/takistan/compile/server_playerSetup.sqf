@@ -55,7 +55,7 @@ if (count _worldspace > 0) then {
 	};
 	_debug = getMarkerpos "respawn_west";
 	_distance = _debug distance _position;
-	if (_distance < 2000) then {
+	if (_distance < 500) then {
 		_randomSpot = true;
 	};
 	
