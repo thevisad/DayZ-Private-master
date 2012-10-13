@@ -139,6 +139,11 @@ class FSM
        "			if (_x isKindOf ""CAManBase"") then {" \n
        "				_deathTime = _x getVariable [""processedDeath"", time];" \n
        "				if (time - _deathTime > 1200) then {" \n
+       "					_flies = nearestObject [_x, ""Sound_Flies""];" \n
+       "					if (!isNull _flies) then {" \n
+       "						deleteVehicle _flies;" \n
+       "						_delQtyFL = _delQtyFL + 1;" \n
+       "					};" \n
        "					deleteVehicle _x;" \n
        "					_delQtyP = _delQtyP + 1;" \n
        "				};" \n
