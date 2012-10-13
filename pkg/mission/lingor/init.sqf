@@ -27,7 +27,6 @@ player_selectSlot       = compile preprocessFileLineNumbers "fixes\ui_selectSlot
 
 // Player action hooks
 player_build            = compile preprocessFileLineNumbers "fixes\player_build.sqf";
-player_cook             = compile preprocessFileLineNumbers "fixes\player_cook.sqf";
 player_drink            = compile preprocessFileLineNumbers "fixes\player_drink.sqf";
 player_eat              = compile preprocessFileLineNumbers "fixes\player_eat.sqf";
 player_useMeds          = compile preprocessFileLineNumbers "fixes\player_useMeds.sqf";
