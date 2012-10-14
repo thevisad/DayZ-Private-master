@@ -22,7 +22,7 @@ diag_log("SERVER: Got initial loadout of " + str(initialLoadout));
 _result = "blisshive" callExtension format ["Q:%1:call proc_getObjectPageCount(%2)", (call fnc_instanceName), dayz_instance];
 _result = call compile _result;
 _pageCount = call compile ((_result select 0) select 0);
-diag_log("SERVER: Got " + str(_pageCount + 1) + " pages of objects...");
+diag_log("SERVER: Got " + str(_pageCount max 1) + " pages of objects...");
 
 //Load objects
 _objList = [];
