@@ -52,9 +52,12 @@ if ($args{'help'}) {
 	my @worlds = readdir $dh;
 	closedir $dh;
 
+	# Append default
+	push(@worlds, 'chernarus');
+
 	print "Available worlds:\n";
 	foreach my $world (@worlds) {
-		print "    $world\n" unless ($world =~ m/^\./ || (!-d "$world_dir/$world"));
+		print "    $world\n" unless ($world =~ m/^\./);
 	}
 	print "\n";
 
