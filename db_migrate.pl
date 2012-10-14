@@ -29,6 +29,9 @@ my %db = (
 
 if ($args{'help'}) {
 	print "usage: db_migrate.pl [--host <hostname>] [--user <username>] [--pass <password>] [--name <dbname>] [--port <port>] [--schema <schema>] [--version <version>]\n";
+	print "\n";
+	print "Use --schema to specify an optional schema (the name should be a directory in schema\\) which has custom schema changes to apply instead of the default \"Bliss\" schema.\n";
+	print "If you specify --schema, you must specify a --version for that schema as well. The starting schema version is always 0.01 for official optional schemas.\n";
 	exit;
 }
 
