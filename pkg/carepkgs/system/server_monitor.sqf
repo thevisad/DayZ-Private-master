@@ -4,7 +4,7 @@ waitUntil{!isnil "bis_fnc_init"};
 
 dayz_versionNo = getText(configFile >> "CfgMods" >> "DayZ" >> "version");
 dayz_hiveVersionNo = 1;
-diag_log("SERVER VERSION: Bliss v3.5");
+diag_log("SERVER VERSION: Bliss v3.6");
 
 if ((count playableUnits == 0) and !isDedicated) then {
 	isSinglePlayer = true;
