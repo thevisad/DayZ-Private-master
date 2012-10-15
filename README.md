@@ -90,6 +90,30 @@ Run `perl db_spawn_vehicles.pl` to get help information on how to invoke the veh
 
 **NOTE:** Vehicles added/updated via database manipulation are only available after a server restart.
 
+Optional Features
+=================
+
+When running `build.pl`, you may specify additional options to merge in optional features. To get a list of optional features, run `perl build.pl --list`.
+
+<table>
+  <tr>
+    <td>Name</td><td>Param</td><td>Description</td>
+  </tr>
+  <tr>
+    <td>Perflib</td><td>-with-perflib</td><td>Improved performance, **NOTE** Overwrite util\\blisshive.dll with util\\blisshive_perflib.dll before building</td>
+  </tr>
+  <tr>
+    <td>Care Packages</td><td>-with-carepkgs</td><td>Drops care packages with various loot types across the map (similar to heli crash sites)</td>
+  </tr>
+  <tr>
+    <td>Kill Messages</td><td>-with-killmsgs</td><td>Shows in-game messages when one player kills another</td>
+  </tr>
+  <tr>
+    <td>Messaging</td><td>-with-messaging</td><td>Replacement for the old scheduler feature, see <b>Messaging/Scheduler</b> below</td>
+  </tr>
+</table> 
+
+
 Multiple Instances
 ==================
 
