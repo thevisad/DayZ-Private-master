@@ -126,7 +126,8 @@ select
   wv.vehicle_id,
   wv.worldspace,
   v.inventory,
-  v.parts,
+  coalesce(v.parts, '') parts,
+  v.limit_max,
   round(least(greatest(rand(), v.damage_min), v.damage_max), 3) damage,
   round(least(greatest(rand(), v.fuel_min), v.fuel_max), 3) fuel
 from
@@ -166,6 +167,10 @@ while (my $vehicle = $spawns->fetchrow_hashref) {
 		print "INFO: Exiting because global limit has been reached\n";
 		last;
 	}
+
+	# If over the per-type limit, skip this spawn
+	my $count = $dbh->selectrow_array("select count(*) from instance_vehicle where instance_id = ? and vehicle_id = ?", undef, ($db{'instance'}, $vehicle->{vehicle_id}));
+	next unless ($count < $vehicle->{limit_max});
 
 	# Generate parts damage
 	my $health = "[" . join(',', map { (sprintf(rand(), "%.3f") > 0.85) ? "[\"$_\",1]" : () } split(/,/, $vehicle->{parts})) . "]";
