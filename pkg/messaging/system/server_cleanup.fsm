@@ -152,6 +152,11 @@ class FSM
        "			if (_x isKindOf ""CAManBase"") then {" \n
        "				_deathTime = _x getVariable [""processedDeath"", time];" \n
        "				if (time - _deathTime > 1200) then {" \n
+       "					_flies = nearestObject [_x, ""Sound_Flies""];" \n
+       "					if (!isNull _flies) then {" \n
+       "						deleteVehicle _flies;" \n
+       "						_delQtyFL = _delQtyFL + 1;" \n
+       "					};" \n
        "					deleteVehicle _x;" \n
        "					_delQtyP = _delQtyP + 1;" \n
        "				};" \n
@@ -197,17 +202,17 @@ class FSM
     {
       name = "cleanup_objects";
       init = /*%FSM<STATEINIT""">*/"_delQty = 0;" \n
-       "{" \n
-       "	if (local _x) then {" \n
-       "		_keep = _x getVariable [""permaLoot"",false];" \n
-       "		_keep = (_keep || (({isPlayer _x} count (_x nearEntities [[""CAManBase""], 100])) > 0));" \n
-       "		if (!_keep) then {" \n
-       "			deleteVehicle _x;" \n
-       "			_delQty = _delQty + 1;" \n
-       "		};" \n
-       "	};" \n
-       "} forEach allMissionObjects ""WeaponHolder"";" \n
-       "diag_log (""CLEANUP: Deleted "" + str(_delQty) + "" loot drops"");" \n
+       "//{" \n
+       "//	if (local _x) then {" \n
+       "//		_keep = _x getVariable [""permaLoot"",false];" \n
+       "//		_keep = (_keep || (({isPlayer _x} count (_x nearEntities [[""CAManBase""], 100])) > 0));" \n
+       "//		if (!_keep) then {" \n
+       "//			deleteVehicle _x;" \n
+       "//			_delQty = _delQty + 1;" \n
+       "//		};" \n
+       "//	};" \n
+       "//} forEach allMissionObjects ""WeaponHolder"";" \n
+       "//diag_log (""CLEANUP: Deleted "" + str(_delQty) + "" loot drops"");" \n
        ""/*%FSM</STATEINIT""">*/;
       precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
       class Links
