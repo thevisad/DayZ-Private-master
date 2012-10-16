@@ -133,6 +133,7 @@ select
 from
   world_vehicle wv 
   inner join vehicle v on wv.vehicle_id = v.id
+  left join instance_vehicle iv on wv.worldspace = iv.worldspace
   left join (
     select
       count(*) as count,
@@ -144,6 +145,7 @@ from
   ) vc on vc.vehicle_id = v.id
 where
   wv.world_id = ?
+  and iv.id is null
   and (rand() > wv.chance)
   and (vc.count is null or vc.count between v.limit_min and v.limit_max)
 EndSQL
@@ -157,7 +159,7 @@ values (?, ?, ?, ?, ?, ?, ?, current_timestamp())
 EndSQL
 ) or die "FATAL: SQL Error - " . DBI->errstr . "\n";
 
-print "INFO: Spawning " . $spawns->rows . " vehicles\n";
+print "INFO: Fetched " . $spawns->rows . " vehicle spawns\n";
 
 my $spawnCount = 0;
 # Loop through each spawn
@@ -180,6 +182,8 @@ while (my $vehicle = $spawns->fetchrow_hashref) {
 	$insert->execute($vehicle->{vehicle_id}, $vehicle->{worldspace}, $vehicle->{inventory}, $health, $vehicle->{damage}, $vehicle->{fuel}, $db{'instance'});
 	print "INFO: Called insert with ($vehicle->{vehicle_id}, $vehicle->{worldspace}, $vehicle->{inventory}, $health, $vehicle->{damage}, $vehicle->{fuel}, $db{'instance'})\n";
 }
+
+print "INFO: Spawned $spawnCount vehicles\n";
 
 $sth->finish();
 $dbh->disconnect();
