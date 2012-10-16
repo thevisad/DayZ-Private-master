@@ -146,7 +146,7 @@ from
 where
   wv.world_id = ?
   and iv.id is null
-  and (rand() > wv.chance)
+  and (rand() < wv.chance)
   and (vc.count is null or vc.count between v.limit_min and v.limit_max)
 EndSQL
 ) or die "FATAL: SQL Error - " . DBI->errstr . "\n";
