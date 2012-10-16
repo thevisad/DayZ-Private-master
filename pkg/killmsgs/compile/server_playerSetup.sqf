@@ -13,7 +13,7 @@ if (isNull _playerObj) exitWith {
 
 //Add MPHit event handler
 diag_log("Adding MPHit EH for " + str(_playerObj));
-_playerObj addMPEventHandler ["MPHit", {_this spawn fnc_playerHit;}];
+_playerObj addMPEventHandler ["MPHit", {_this spawn fnc_plyrHit;}];
 
 if (_playerID == "") then {
 	_playerID = getPlayerUID _playerObj;

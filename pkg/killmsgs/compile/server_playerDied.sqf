@@ -8,7 +8,7 @@ _playerName = 	_this select 4;
 
 //Add MPKilled event handler
 diag_log ("Adding MPKilled EH for " + str(_newObject));
-_newObject addMPEventHandler ["MPKilled", {_this spawn fnc_playerDeath;}];
+_newObject addMPEventHandler ["MPKilled", {_this spawn fnc_plyrDeath;}];
 
 dayz_disco = dayz_disco - [_playerID];
 _newObject setVariable["processedDeath",time];
