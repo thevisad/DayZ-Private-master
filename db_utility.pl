@@ -194,13 +194,13 @@ EndSQL
 } elsif ($cmd eq 'tzoffset') {
 	my $offset = shift(@ARGV);
 	defined $offset or die "FATAL: Invalid arguments\n";
-	$dbh->do("update instance set tz_offset = ? where instance = ?", undef, ($offset, $db{'instance'}));
+	$dbh->do("update instance set tz_offset = ? where id = ?", undef, ($offset, $db{'instance'}));
 	my ($date, $time) = $dbh->selectrow_array("call proc_getInstanceTime(?)", undef, $db{'instance'});
 	print "INFO: Set timezone offset to ${offset} for instance $db{'instance'}, game time will be $date $time after a restart\n";
 } elsif ($cmd eq 'loadout') {
 	my $loadout = shift(@ARGV);
 	die "FATAL: Invalid loadout\n" unless ($loadout =~ /\[(\[.+?\],{0,1})+\]/);
-	$dbh->do("update instance set inventory = ? where instance = ?", undef, ($loadout, $db{'instance'}));
+	$dbh->do("update instance set inventory = ? where id = ?", undef, ($loadout, $db{'instance'}));
 	print "INFO: Set loadout to \"${loadout}\" for instance $db{'instance'}\n";
 } else {
 	die "FATAL: Unrecognized command.\n";
