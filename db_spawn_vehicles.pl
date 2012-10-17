@@ -82,6 +82,8 @@ if ($args{'cleanup'}) {
 	print "INFO: Starting boundary check for objects\n";
 	$sth = $dbh->prepare(<<EndSQL
 select
+  id.id dep_id,
+  0 veh_id,
   id.worldspace,
   w.max_x,
   w.max_y
@@ -91,6 +93,8 @@ from
   inner join world w on i.world_id = w.id
 union
 select
+  0 dep_id,
+  iv.id veh_id,
   iv.worldspace,
   w.max_y,
   w.max_y
@@ -101,7 +105,8 @@ from
 EndSQL
 );
 	$sth->execute() or die "FATAL: Couldn't get list of object positions\n";
-	$delSth = $dbh->prepare("delete from object where id = ?");
+	my $depDelSth = $dbh->prepare("delete from instance_deployable where id = ?");
+	my $vehDelSth = $dbh->prepare("delete from instance_vehicle where id = ?");
 	while (my $row = $sth->fetchrow_hashref()) {
 		$row->{worldspace} =~ s/[\[\]\s]//g;
 		$row->{worldspace} =~ s/\|/,/g;
@@ -110,10 +115,15 @@ EndSQL
 		# Skip valid positions
 		next unless ($pos[1] < 0 || $pos[2] < 0 || $pos[1] > $row->{max_x} || $pos[2] > $row->{max_y});
 
-		$delSth->execute($row->{id}) or die "FATAL: Failed while deleting an out-of-bounds object!";
+		if ($row->{veh_id} == 0) {
+			$depDelSth->execute($row->{dep_id}) or die "FATAL: Error deleting out-of-bounds deployable\n";
+		} else {
+			$vehDelSth->execute($row->{veh_id}) or die "FATAL: Error deleting out-of-bounds vehicle\n";
+		}
 		print "INFO: Object at $pos[1], $pos[2] was OUT OF BOUNDS and was deleted\n";
 	}
-	$delSth->finish();
+	$depDelSth->finish();
+	$vehDelSth->finish();
 }
 
 # Determine if we are over the vehicle limit
