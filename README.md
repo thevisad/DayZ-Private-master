@@ -111,6 +111,9 @@ When running `build.pl`, you may specify additional options to merge in optional
   <tr>
     <td>Messaging</td><td>-with-messaging</td><td>Replacement for the old scheduler feature, see <b>Messaging/Scheduler</b> below</td>
   </tr>
+  <tr>
+    <td>Buildings</td><td>-with-buildings</td><td>Allow spawning of database-defined structures/buildings on the map, see <b>Buildings</b></td>
+  </tr>
 </table> 
 
 
@@ -134,6 +137,15 @@ You may optionally enable an in-game announcement system for Bliss. To do so, fo
 1. Run `perl db_migrate.pl --schema BlissMessaging --version 0.01`. Be sure to include any parameters needed for your specific database passwords / configuration.  
 2. When building Bliss, you must add `--with-messaging` to your arguments, for example `perl build.pl --with-messaging`.  
 3. Use `perl db_utility.pl --help` to learn how to use the `messages` command to manage your messages without any direct database interaction.  
+
+Buildings
+=========
+
+You may optionally enable a system that reads structure information from the database and spawns a set of static structures on the map on each server start. To do so, follow these steps:
+
+1. Run `perl db_migrate.pl --schema BlissBuildings --version 0.01`. Be sure to include any parameters needed for your specific database passwords / configuration.  
+2. When building Bliss, you must add `--with-buildings` to your arguments, for example `perl build.pl --with-buildings`.  
+3. You must manually insert any building class names you wish to use into the building table and then insert the spawn coordinates / associated building IDs into the instance_building table.  
 
 Customization
 =============
