@@ -143,7 +143,7 @@ select
 from
   world_vehicle wv 
   inner join vehicle v on wv.vehicle_id = v.id
-  left join instance_vehicle iv on wv.worldspace = iv.worldspace
+  left join instance_vehicle iv on wv.worldspace = iv.worldspace and iv.instance_id = ?
   left join (
     select
       count(*) as count,
@@ -160,7 +160,7 @@ where
   and (vc.count is null or vc.count between v.limit_min and v.limit_max)
 EndSQL
 ) or die "FATAL: SQL Error - " . DBI->errstr . "\n";
-$spawns->execute($db{'instance'}, $world_id);
+$spawns->execute($db{'instance'}, $db{'instance'}, $world_id);
 
 my $insert = $dbh->prepare(<<EndSQL
 insert into
