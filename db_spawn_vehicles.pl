@@ -59,13 +59,22 @@ delete from
   inner join vehicle v on iv.vehicle_id = v.id
 where
   iv.damage = 1
-  or (v.class_name = 'Wire_cat1' and iv.last_updated < now() - interval 3 day)
-  or (v.class_name = 'Hedgehog_DZ' and iv.last_updated < now() - interval 4 day)
-  or (v.class_name = 'TrapBear' and iv.last_updated < now() - interval 5 day)
-  or (v.class_name = 'Sandbag1_DZ' and iv.last_updated < now() - interval 8 day)
 EndSQL
 ) or die "FATAL: SQL Error - " . DBI->errstr . "\n";
-$sth->execute() or die "FATAL: Could not clean up damaged/old objects - " . $sth->errstr . "\n";
+$sth->execute() or die "FATAL: Could not clean up destroyed vehicles - " . $sth->errstr . "\n";
+
+$sth = $dbh->prepare(<<EndSQL
+delete from
+  id using instance_deployable id
+  inner join deployable d on id.deployable_id = d.id
+where
+  (d.class_name = 'Wire_cat1' and id.last_updated < now() - interval 3 day)
+  or (d.class_name = 'Hedgehog_DZ' and id.last_updated < now() - interval 4 day)
+  or (d.class_name = 'TrapBear' and id.last_updated < now() - interval 5 day)
+  or (d.class_name = 'Sandbag1_DZ' and id.last_updated < now() - interval 8 day)
+EndSQL
+) or die "FATAL: SQL Error - " . DBI->errstr . "\n";
+$sth->execute() or die "FATAL: Could not clean up old deployables - " . $sth->errstr . "\n";
 
 $sth = $dbh->prepare(<<EndSQL
 delete from
@@ -75,7 +84,7 @@ where
   id.last_updated < now() - interval 4 day
 EndSQL
 ) or die "FATAL: SQL Error - " . DBI->errstr . "\n";
-$sth->execute() or die "FATAL: Could not clean up damaged/old objects - " . $sth->errstr . "\n";
+$sth->execute() or die "FATAL: Could not clean up orphaned tents - " . $sth->errstr . "\n";
 
 #Remove out-of-bounds vehicles
 if ($args{'cleanup'}) {
