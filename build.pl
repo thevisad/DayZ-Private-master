@@ -149,8 +149,10 @@ sub configure_deploy {
 	my $mods = {
 		'lingor'    => '\@dayz_lingor;\@dayz_lingor_island',
 		'takistan'  => '\@dayztakistan',
+		'fallujah'  => '\@dayzfallujah',
+		'zargabad'  => '\@dayzzargabad',
 		'utes'      => '\@DayZ',
-		'panthera2'  => '\@dayzpanthera'
+		'panthera2' => '\@dayzpanthera'
 	};
 
 	# Ensure proper modfolders are specified in .bat file
