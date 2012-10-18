@@ -205,6 +205,8 @@
 1 "lightAttachObject" !"\"lightAttachObject\"," !"_lightArea lightAttachObject [_flare, [0,0,0]];" !"_lightSpark lightAttachObject [_flare, [0,0,0]];" !"_li lightAttachObject [_flare, [0,0,0]];" !"_li lightAttachObject [_v, [0,0,0]];"
 1 "triggerAttachObject" !"\"triggerAttachObject\"," 
 1 "waypointAttachObject" !"\"waypointAttachObject\"," 
+5 "remoteControl" !"\"remoteControl\","
+1 "switchCamera" !"\"switchCamera\"," !"rswitchCamera = 'switchCamera'" !"rswitchCameracode = compile PreprocessFile (BIS_PathMPscriptCommands + 'switchCamera.sqf')"
 //little tries //#+12
 1 "rsetTask" !"rsetTaskState = 'setTaskState'" !"rsetTaskStatecode = compile PreprocessFile (BIS_PathMPscriptCommands + 'setTaskState.sqf')"
 1 "player action"

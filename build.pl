@@ -30,13 +30,17 @@ $args{'world'} = ($args{'world'}) ? lc($args{'world'}) : 'chernarus';
 $args{'instance'} = '1' unless $args{'instance'};
 
 # Initialize paths
-my $base_dir  = dirname(__FILE__);
-my $tmp_dir   = "$base_dir/tmp";
-my $world_dir = "$base_dir/pkg/world";
-my $bliss_dir = "$base_dir/pkg/bliss";
-my $build_dir = "$tmp_dir/dayz_server";
-my $src_dir   = "$base_dir/util/dayz_server";
-my $dst_dir   = "$base_dir/deploy";
+my $base_dir = dirname(__FILE__);
+my $tmp_dir  = "$base_dir/tmp";
+my $wld_dir  = "$base_dir/pkg/world";
+my $bls_dir  = "$base_dir/pkg/bliss";
+my $msn_dir  = "$base_dir/mission";
+my $src_dir  = "$base_dir/util/dayz_server";
+my $dst_dir  = "$base_dir/deploy";
+
+my $build_dir     = "$tmp_dir/dayz_server";
+my $msn_build_dir = "$tmp_dir/mission_tmp";
+my $pkg_build_dir = "$tmp_dir/package_tmp";
 
 if ($args{'help'}) {
 	print "usage: build.pl [--world <world>] [--instance <id>] [--with-<option>] [--clean] [--list]\n";
@@ -48,15 +52,12 @@ if ($args{'help'}) {
 	print "    --list: lists all available worlds and packages\n";
 	exit;
 } elsif ($args{'list'}) {
-	opendir (my $dh, $world_dir);
-	my @worlds = readdir $dh;
+	opendir (my $dh, "$msn_dir/world");
+	my @missions = readdir $dh;
 	closedir $dh;
 
-	# Append default
-	push(@worlds, 'chernarus');
-
 	print "Available worlds:\n";
-	foreach my $world (@worlds) {
+	foreach my $world (@missions) {
 		print "    $world\n" unless ($world =~ m/^\./);
 	}
 	print "\n";
@@ -67,23 +68,25 @@ if ($args{'help'}) {
 
 	print "Available options:\n";
 	foreach my $pkg (@pkgs) {
-		print "    --with-$pkg\n" unless ($pkg =~ m/(^\.|world|bliss|mission)/);
+		print "    --with-$pkg\n" unless ($pkg =~ m/(^\.|world|bliss)/);
 	}
 	exit;
 } elsif ($args{'clean'}) {
+	print "INFO: Removing $dst_dir\n";
+	remove_tree($dst_dir);
 	print "INFO: Removing $tmp_dir\n";
 	remove_tree($tmp_dir);
-	make_path($tmp_dir);
 	exit;
 }
 
 die "FATAL: Source dir $src_dir does not exist\n" unless (-d $src_dir);
-die "FATAL: Output dir $dst_dir does not exist\n" unless (-d $dst_dir);
+die "FATAL: Mission dir $base_dir/mission/world/$args{'world'} does not exist\n" unless (-d "$base_dir/mission/world/$args{'world'}");
 
-# Clean up existing dayz_server before starting work
-remove_tree($build_dir) if (-d $build_dir);
+# Create deploy directory and get build paths ready
+copy_dir("$base_dir/util/deploy", $dst_dir) unless (-d $dst_dir);
+make_path($tmp_dir) unless (-d $tmp_dir);
 
-# Ensure paths and settings are correct in deploy directory
+# Do all modifications to deploy directory
 configure_deploy(
 	$args{'instance'},
 	$args{'world'},
@@ -92,17 +95,25 @@ configure_deploy(
 	$dst_dir
 );
 
+# Clean up existing temp directories before starting work
+remove_tree($build_dir) if (-d $build_dir);
+remove_tree($pkg_build_dir) if (-d $pkg_build_dir);
+remove_tree($msn_build_dir) if (-d $msn_build_dir);
+
 # Apply core Bliss changes to build directory
 print "INFO: Merging Bliss code into official server\n";
-merge_base($bliss_dir, $src_dir, $build_dir);
+copy_dir($src_dir, $build_dir);
+simple_merge($bls_dir, $build_dir);
 
 # Optionally merge in world-specific modifications
-if (-d "$world_dir/$args{'world'}") {
+if (-d "$wld_dir/$args{'world'}") {
 	print "INFO: Merging changes for world $args{'world'}\n";
-	merge_package("$world_dir/$args{'world'}", $build_dir);
+	simple_merge("$wld_dir/$args{'world'}", $build_dir);
 }
 
 # For each --with-<package> option, attempt to merge in its changes
+my @pkgs = ();
+my @msn_pkgs = ();
 while (my $option = shift(@ARGV)) {
 	next unless ($option =~ m/with-([a-zA-Z0-9]+)/);
 	my $pkg_dir = "$base_dir/pkg/$1";
@@ -111,19 +122,152 @@ while (my $option = shift(@ARGV)) {
 		next;
 	}
 
-	print "INFO: Merging changes for package $1\n";
-	merge_package($pkg_dir, $build_dir);
+	push(@pkgs, $pkg_dir);
+	push(@msn_pkgs, "$msn_dir/$1") if (-d "$msn_dir/$1");
 }
 
 # Create the dayz_server PBO
+if (scalar(@pkgs) > 0) {
+	merge_packages(\@pkgs, $build_dir, $pkg_build_dir);
+}
+
 pack_world("$tmp_dir/dayz_server", "$dst_dir/\@bliss_$args{'instance'}.$args{'world'}/addons");
-copy("$base_dir/util/blisshive.dll", "$dst_dir/\@bliss_$args{'instance'}.$args{'world'}/blisshive.dll");
+copy("$base_dir/util/HiveEXT.dll", "$dst_dir/\@bliss_$args{'instance'}.$args{'world'}/HiveEXT.dll");
 
 # Create the mission PBO
-pack_mission($args{'instance'}, $args{'world'}, "$base_dir/pkg/mission/$args{'world'}", "$dst_dir/MPMissions");
+copy_dir("$msn_dir/world/$args{'world'}", $msn_build_dir);
+if (scalar(@msn_pkgs) > 0) {
+	merge_packages(\@msn_pkgs, $msn_build_dir, $msn_build_dir);
+}
 
+pack_mission($args{'instance'}, $args{'world'}, "$tmp_dir/mission_tmp", "$dst_dir/MPMissions");
+
+remove_tree($tmp_dir);
 print "INFO: Build completed successfully!\n";
 exit;
+
+# Merge helpers
+sub simple_merge {
+	my ($src, $dst) = @_;
+
+	die "FATAL: Source path $src does not exist\n" unless (-d $src);
+	die "FATAL: Destination path $dst does not exist\n" unless (-d $dst);
+
+	File::DirCompare->compare($src, $dst, sub {
+		my ($srcPath, $dstPath) = @_;
+
+		if (!$dstPath) {
+			return if (-d $srcPath);
+
+			# New file, copy it from $srcPath
+			my @dstSplit = File::Spec->splitdir($dst);
+			my @srcSplit = File::Spec->splitdir(dirname($srcPath));
+			my $dstLast = pop(@dstSplit);
+			my $srcLast = pop(@srcSplit);
+			$dstPath = "$dst/" . (($srcLast ne $dstLast) ? "$srcLast/" : '') . basename($srcPath);
+
+			#print "SRC $srcPath -> $dstPath\n";
+			make_path(dirname($dstPath)) unless (-d dirname($dstPath));
+			copy($srcPath, $dstPath) unless (-d $dstPath);
+		} elsif ($srcPath) {
+			my $diff = Text::Diff::diff($dstPath, $srcPath, { STYLE => 'Unified' });
+			my $srcData = read_file($dstPath);
+			my $dstData = patch($srcData, $diff, { STYLE => 'Unified' });
+
+			my @dstSplit = File::Spec->splitdir($dst);
+			my @srcSplit = File::Spec->splitdir(dirname($srcPath));
+			my $dstLast = pop(@dstSplit);
+			my $srcLast = pop(@srcSplit);
+			$dstPath = "$dst/" . (($srcLast ne $dstLast) ? "$srcLast/" : '') . basename($srcPath);
+
+			#print "MRG $srcPath -> $dstPath\n";
+			make_path(dirname($dstPath));
+			write_file($dstPath, $dstData);
+		}
+	});
+}
+
+sub complex_merge {
+	my ($orig, $src, $dst) = @_;
+
+	die "FATAL: Origin path $orig does not exist\n" unless (-d $orig);
+	die "FATAL: Source path $src does not exist\n" unless (-d $src);
+	die "FATAL: Destination path $dst does not exist\n" unless (-d $dst);
+
+	File::DirCompare->compare($orig, $dst, sub {
+		my ($origPath, $dstPath) = @_;
+
+		if ($origPath && $dstPath) {
+			#print "MRG $origPath -> $dstPath\n";
+
+			# Perform a three-way merge of the files 
+			my @origSplit = File::Spec->splitdir(dirname($origPath));
+			my $origLast = pop(@origSplit);
+			my $srcPath = "$src/$origLast/" . basename($origPath);
+
+			my ($origData, $srcData, $dstData) = (read_file($origPath), read_file($srcPath), read_file($dstPath));
+			my $cmd = (($^O =~ m/MSWin32/) ? 'util/diff3.exe' : 'diff3 -m');
+			my $diffOutput = `$cmd $srcPath $origPath $dstPath`;
+
+			$diffOutput =~ s/^[<=>]{7}.*//mg;
+			$diffOutput =~ s/(\n){2,}/\n/sg;
+
+			make_path(dirname($dstPath)) unless (-d dirname($dstPath));
+			write_file($dstPath, $diffOutput);
+		}
+	});
+}
+
+# Perform merge of package changes into output dir
+sub merge_packages {
+	my ($ref_pkgs, $dst, $tmp) = @_;
+	my @pkgs = @{$ref_pkgs};
+
+	die "FATAL: Destination path $dst does not exist\n" unless (-d $dst);
+
+	foreach my $i (0 .. $#pkgs) {
+		my $src = $pkgs[$i];
+
+		print "Merging changes for package $src\n";
+		if ($i > 0) {
+			my @pkg_slice = @pkgs[0 .. ($i - 1)];
+			remove_tree($tmp);
+			copy_dir($src, $tmp);
+			foreach my $replay_pkg (@pkg_slice) {
+				complex_merge($replay_pkg, $src, $tmp);
+			}
+			$src = $tmp;
+		}
+	
+		File::DirCompare->compare($src, $dst, sub {
+			my ($srcPath, $dstPath) = @_;
+
+			if (!$dstPath) {
+				# New file, copy it from $srcPath
+				my @srcSplit = File::Spec->splitdir(dirname($srcPath));
+				my $srcLast = pop(@srcSplit);
+				$dstPath = "$dst/$srcLast/" . basename($srcPath);
+
+				#print "SRC $srcPath -> $dstPath\n";
+				make_path(dirname($dstPath)) unless (-d dirname($dstPath));
+				copy($srcPath, $dstPath) unless (-d $dstPath);
+			} elsif ($srcPath) {
+				#print "MRG $srcPath -> $dstPath\n";
+
+				my $diff = diff($dstPath, $srcPath, { STYLE => 'Unified' });
+				my $srcData = read_file($dstPath);
+				my $dstData = patch($srcData, $diff, { STYLE => 'Unified' });
+
+				my @srcSplit = File::Spec->splitdir(dirname($srcPath));
+				my $srcLast = pop(@srcSplit);
+				$dstPath = "$dst/$srcLast/" . basename($srcPath);
+
+				make_path(dirname($dstPath)) unless (-d dirname($dstPath));
+				write_file($dstPath, $dstData);
+			}
+		});
+	}
+}
 
 sub configure_deploy {
 	my ($instance, $world, $src_bat, $src, $dst) = @_;
@@ -178,6 +322,15 @@ sub configure_deploy {
 	}
 }
 
+# .pbo packing helpers
+sub pack_pbo {
+	my ($dir, $pbo) = @_;
+	die "FATAL: PBO directory $dir does not exist\n" unless (-d $dir);
+
+	my $cmd = (($^O =~ m/MSWin32/) ? '' : 'wine ') . 'util/cpbo.exe -y -p';
+	system("$cmd \"$dir\" \"$pbo\"");
+}
+
 sub pack_world {
 	my ($src, $dst) = @_;
 
@@ -202,105 +355,8 @@ sub pack_mission {
 	replace_text("s/dayZ_instance\\s=\\s[0-9]*/dayZ_instance = 1/", "$src/init.sqf");
 }
 
-# Build a PBO from the given directory
-sub pack_pbo {
-	my ($dir, $pbo) = @_;
-	die "FATAL: PBO directory $dir does not exist\n" unless (-d $dir);
 
-	my $cmd = (($^O =~ m/MSWin32/) ? '' : 'wine ') . 'util/cpbo.exe -y -p';
-	system("$cmd \"$dir\" \"$pbo\"");
-}
-
-# Peform three-way merge of source code with world changes into output dir
-sub merge_base {
-	my ($src, $dst, $out) = @_;
-
-	die "FATAL: Source path $src does not exist\n" unless (-d $src);
-	die "FATAL: Destination path $dst does not exist\n" unless (-d $dst);
-	make_path($out);
-
-	File::DirCompare->compare($src, $dst, sub {
-		my ($srcPath, $dstPath) = @_;
-
-		if (!$dstPath) {
-			# New file, copy it from $srcPath
-			my @outSplit = File::Spec->splitdir($out);
-			my @srcSplit = File::Spec->splitdir(dirname($srcPath));
-			my $outLast = pop(@outSplit);
-			my $srcLast = pop(@srcSplit);
-			$dstPath = "$out/" . (($srcLast ne $outLast) ? "$srcLast/" : '') . basename($srcPath);
-
-			#print "SRC $srcPath -> $dstPath\n";
-			make_path(dirname($dstPath)) unless (-d dirname($dstPath));
-			copy($srcPath, $dstPath) unless (-d $dstPath);
-		} elsif (!$srcPath) {
-			# Unmodified file, copy it from $dstPath
-			my @outSplit = File::Spec->splitdir($out);
-			my @dstSplit = File::Spec->splitdir(dirname($dstPath));
-			my $outLast = pop(@outSplit);
-			my $dstLast = pop(@dstSplit);
-			$srcPath = "$out/" . (($dstLast ne $outLast) ? "$dstLast/" : '') . basename($dstPath);
-
-			#print "DST $dstPath -> $srcPath\n";
-			make_path(dirname($srcPath)) unless (-d dirname($srcPath));
-			copy($dstPath, $srcPath) unless (-d $srcPath);
-		} else {
-			# Existing file, merge the changes from source into dest and copy resulting file to $out
-			my $diff = diff($dstPath, $srcPath, { STYLE => 'Unified' });
-			my $srcData = read_file($dstPath);
-			my $dstData = patch($srcData, $diff, { STYLE => 'Unified' });
-
-			my @outSplit = File::Spec->splitdir($out);
-			my @srcSplit = File::Spec->splitdir(dirname($srcPath));
-			my $outLast = pop(@outSplit);
-			my $srcLast = pop(@srcSplit);
-			$dstPath = "$out/" . (($srcLast ne $outLast) ? "$srcLast/" : '') . basename($srcPath);
-
-			#print "MRG $srcPath -> $dstPath\n";
-			make_path(dirname($dstPath));
-			write_file($dstPath, $dstData);
-		}
-	});
-}
-
-# Perform merge of package changes into output dir
-sub merge_package {
-	my ($src, $dst) = @_;
-
-	die "FATAL: Source path $src does not exist\n" unless (-d $src);
-	#make_path($dst) unless (-d $dst);
-
-	File::DirCompare->compare($src, $dst, sub {
-		my ($srcPath, $dstPath) = @_;
-
-		if (!$dstPath) {
-			# New file, copy it from $srcPath
-			my @srcSplit = File::Spec->splitdir(dirname($srcPath));
-			my $srcLast = pop(@srcSplit);
-			$dstPath = "$dst/$srcLast/" . basename($srcPath);
-
-			#print "SRC $srcPath -> $dstPath\n";
-			make_path(dirname($dstPath)) unless (-d dirname($dstPath));
-			copy($srcPath, $dstPath) unless (-d $dstPath);
-		} elsif ($srcPath) {
-			#print "MRG $srcPath -> $dstPath\n";
-
-			# Existing file, merge the changes from source into dest and copy resulting file to $out
-			my $diff = diff($dstPath, $srcPath, { STYLE => 'Unified' });
-			my $srcData = read_file($dstPath);
-			my $dstData = patch($srcData, $diff, { STYLE => 'Unified' });
-
-			my @srcSplit = File::Spec->splitdir(dirname($srcPath));
-			my $srcLast = pop(@srcSplit);
-			$dstPath = "$dst/$srcLast/" . basename($srcPath);
-
-			make_path(dirname($dstPath)) unless (-d dirname($dstPath));
-			write_file($dstPath, $dstData);
-		}
-	});
-}
-
-# Cross-platform replacement of text using system()
+# Cross-platform system() helpers 
 sub replace_text {
 	system("perl -pi" . (($^O eq "MSWin32") ? '.bak' : '') . " -e \"$_[0]\" $_[1]");
 	# Clean up .bak file in Windows only
@@ -310,7 +366,6 @@ sub replace_text {
 	}
 }
 
-# Cross-platform recursive dir copy using system()
 sub copy_dir {
 	my ($src, $dst) = @_;
 	my $cmd = (($^O =~ m/MSWin32/) ? 'xcopy /s /q /y' : 'cp -r');

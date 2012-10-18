@@ -63,5 +63,7 @@
 1 "remExFP"
 5 "setDate"
 5 "setAccTime"
+5 "remoteControl"
+5 "rsay"
 5 "_YakB"
 //1 "request" //+5
