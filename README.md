@@ -59,7 +59,7 @@ Installation
     <td>Lingor Island</td><td>@dayzlingor</td><td>1.0</td><td>ftp://dayzcommander:dayzcommander@94.242.227.3/DayZLingor-1.0.rar</td>
   </tr>
   <tr>
-    <td>Takistan</td><td>@dayztakistan</td><td>1.3</td><td>ftp://dayzcommander:dayzcommander@94.242.227.3/DayZTakistan-1.3.rar</td>
+    <td>Takistan</td><td>@dayztakistan</td><td>1.3</td><td>ftp://dayzcommander:dayzcommander@94.242.227.3/DayZTakistan-1.4.rar</td>
   </tr>
   <tr>
     <td>Utes</td><td>@dayz</td><td>1.7.2.6</td><td>http://dayzmod.com/?Download</td>
