@@ -116,6 +116,10 @@ my @pkgs = ();
 my @msn_pkgs = ();
 while (my $option = shift(@ARGV)) {
 	next unless ($option =~ m/with-([a-zA-Z0-9]+)/);
+
+	# Skip killmsgs for Lingor as it is unnecessary
+	next unless ($args{'world'} eq 'lingor' && $1 eq 'killmsgs');
+
 	my $pkg_dir = "$base_dir/pkg/$1";
 	if (!-d $pkg_dir) {
 		print "ERROR: Package dir $pkg_dir does not exist\n";
@@ -291,11 +295,11 @@ sub configure_deploy {
 	replace_text("s/template\\s=\\sdayz_[0-9]+.[a-z]+/template = dayz_$instance.$world/", "$conf_dir/config.cfg");
 
 	my $mods = {
-		'lingor'    => '\@dayz_lingor;\@dayz_lingor_island',
+		'lingor'    => '\@dayzlingor',
 		'takistan'  => '\@dayztakistan',
 		'fallujah'  => '\@dayzfallujah',
 		'zargabad'  => '\@dayzzargabad',
-		'utes'      => '\@DayZ',
+		'utes'      => '\@dayz',
 		'panthera2' => '\@dayzpanthera'
 	};
 

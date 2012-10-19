@@ -56,7 +56,7 @@ Installation
     <td>Chernarus</td><td>@dayz</td><td>1.7.2.6</td><td>http://dayzmod.com/?Download</td>
   </tr>
   <tr>
-    <td>Lingor Island</td><td>@dayz_lingor, @dayz_lingor_island</td><td>0.34</td><td>http://dayzlingor.tk</td>
+    <td>Lingor Island</td><td>@dayzlingor</td><td>1.0</td><td>ftp://dayzcommander:dayzcommander@94.242.227.3/DayZLingor-1.0.rar</td>
   </tr>
   <tr>
     <td>Takistan</td><td>@dayztakistan</td><td>1.3</td><td>ftp://dayzcommander:dayzcommander@94.242.227.3/DayZTakistan-1.3.rar</td>

@@ -178,8 +178,7 @@ private ["_newBackpackType","_backpackWpn","_backpackMag"];
 //Clear and delete old Unit
 	removeAllWeapons _oldUnit;
 	{_oldUnit removeMagazine _x;} forEach  magazines _oldUnit;
-	
-	dayz_originalPlayer = objNull;
+		
 	if (!isNull dayz_originalPlayer) then {
 		dayz_originalPlayer = _oldUnit;
 		_oldUnit addEventHandler ["HandleDamage",{false}];

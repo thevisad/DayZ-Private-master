@@ -55,12 +55,12 @@ if (count _worldspace > 0) then {
 	};
 	_debug = getMarkerpos "respawn_west";
 	_distance = _debug distance _position;
-	if (_distance < 2000) then {
+	if (_distance < 500) then {
 		_randomSpot = true;
 	};
 	
 	_distance = [0,0,0] distance _position;
-	if (_distance < 200) then {
+	if (_distance < 500) then {
 		_randomSpot = true;
 	};
 
@@ -163,18 +163,12 @@ if (_randomSpot) then {
 		_counter = 0;
 		while {_counter < 20 and _findSpot} do {
 			_mkr = "spawn" + str(round(random 4));
-			_position = ([(getMarkerPos _mkr),0,1500,10,0,2000,1] call BIS_fnc_findSafePos);
+			_position = ([(getMarkerPos _mkr),0,1500,10,0,2000,0] call BIS_fnc_findSafePos);
 			_isNear = count (_position nearEntities ["Man",100]) == 0;
 			_isZero = ((_position select 0) == 0) and ((_position select 1) == 0);
 		//Island Check		//TeeChange
 			_pos 		= _position;
-			_isIsland	= false;		//Can be set to true during the Check
-			for [{_w=0},{_w<=150},{_w=_w+2}] do {
-				_pos = [(_pos select 0),((_pos select 1) + _w),(_pos select 2)];
-				if(surfaceisWater _pos) exitWith {
-					_isIsland = true;
-				};
-			};
+			_isIsland	= true;		//Can be set to true during the Check
 			
 			if ((_isNear and !_isZero) || _isIsland) then {_findSpot = false};
 			_counter = _counter + 1;
