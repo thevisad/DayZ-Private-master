@@ -79,9 +79,11 @@ $sth->execute() or die "FATAL: Could not clean up old deployables - " . $sth->er
 $sth = $dbh->prepare(<<EndSQL
 delete from
   id using instance_deployable id
+  inner join deployable d on id.deployable_id = d.id
   inner join survivor s on id.owner_id = s.id and s.is_dead = 1
 where
-  id.last_updated < now() - interval 4 day
+  d.class_name = 'TentStorage'
+  and id.last_updated < now() - interval 4 day
 EndSQL
 ) or die "FATAL: SQL Error - " . DBI->errstr . "\n";
 $sth->execute() or die "FATAL: Could not clean up orphaned tents - " . $sth->errstr . "\n";
