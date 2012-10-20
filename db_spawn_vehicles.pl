@@ -18,7 +18,7 @@ GetOptions(
 	'database|name|dbname|d=s',
 	'port|dbport=s',
 	'limit|l=s',
-	'cleanup',
+	'cleanup=s',
 	'help'
 );
 
@@ -33,7 +33,7 @@ my %db = (
 );
 
 if ($args{'help'}) {
-	print "usage: db_spawn_vehicles.pl [--instance <id>] [--limit <limit>] [--host <hostname>] [--user <username>] [--pass <password>] [--name <dbname>] [--port <port>]\n";
+	print "usage: db_spawn_vehicles.pl [--instance <id>] [--limit <limit>] [--host <hostname>] [--user <username>] [--pass <password>] [--name <dbname>] [--port <port>] [--cleanup tents|bounds|all]\n";
 	exit;
 }
 
@@ -51,9 +51,11 @@ die "FATAL: Invalid instance ID\n" unless (defined $world_id && defined $world_n
 
 print "INFO: Instance name dayz_$db{'instance'}.$world_name\n";
 
-print "INFO: Cleaning up damaged vehicles\n";
-# Clean up damaged vehicles and old objects
-my $sth = $dbh->prepare(<<EndSQL
+my $cleanup = ($args{'cleanup'}) ? $args{'cleanup'} : 'none';
+
+if ($cleanup ne 'none') {
+	print "INFO: Cleaning up damaged vehicles\n";
+	my $sth = $dbh->prepare(<<EndSQL
 delete from
   iv using instance_vehicle iv
   inner join vehicle v on iv.vehicle_id = v.id
@@ -61,9 +63,10 @@ where
   iv.damage = 1
 EndSQL
 ) or die "FATAL: SQL Error - " . DBI->errstr . "\n";
-$sth->execute() or die "FATAL: Could not clean up destroyed vehicles - " . $sth->errstr . "\n";
+	$sth->execute() or die "FATAL: Could not clean up destroyed vehicles - " . $sth->errstr . "\n";
 
-$sth = $dbh->prepare(<<EndSQL
+	print "INFO: Cleaning up old deployables\n";
+	$sth = $dbh->prepare(<<EndSQL
 delete from
   id using instance_deployable id
   inner join deployable d on id.deployable_id = d.id
@@ -74,9 +77,12 @@ where
   or (d.class_name = 'Sandbag1_DZ' and id.last_updated < now() - interval 8 day)
 EndSQL
 ) or die "FATAL: SQL Error - " . DBI->errstr . "\n";
-$sth->execute() or die "FATAL: Could not clean up old deployables - " . $sth->errstr . "\n";
+	$sth->execute() or die "FATAL: Could not clean up old deployables - " . $sth->errstr . "\n";
+}
 
-$sth = $dbh->prepare(<<EndSQL
+if ($cleanup eq 'tents' || $cleanup eq 'all') {
+	print "INFO: Cleaning up tents with dead owners older than four days\n";
+	$sth = $dbh->prepare(<<EndSQL
 delete from
   id using instance_deployable id
   inner join deployable d on id.deployable_id = d.id
@@ -86,10 +92,10 @@ where
   and id.last_updated < now() - interval 4 day
 EndSQL
 ) or die "FATAL: SQL Error - " . DBI->errstr . "\n";
-$sth->execute() or die "FATAL: Could not clean up orphaned tents - " . $sth->errstr . "\n";
+	$sth->execute() or die "FATAL: Could not clean up orphaned tents - " . $sth->errstr . "\n";
+}
 
-#Remove out-of-bounds vehicles
-if ($args{'cleanup'}) {
+if ($cleanup eq 'bounds' || $cleanup eq 'all') {
 	print "INFO: Starting boundary check for objects\n";
 	$sth = $dbh->prepare(<<EndSQL
 select
@@ -107,7 +113,7 @@ select
   0 dep_id,
   iv.id veh_id,
   iv.worldspace,
-  w.max_y,
+  w.max_x,
   w.max_y
 from
   instance_vehicle iv
@@ -206,6 +212,7 @@ while (my $vehicle = $spawns->fetchrow_hashref) {
 
 print "INFO: Spawned $spawnCount vehicles\n";
 
-$sth->finish();
+$spawns->finish();
+$insert->finish();
 $dbh->disconnect();
 
