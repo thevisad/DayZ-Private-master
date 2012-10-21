@@ -87,7 +87,7 @@ if (count _medical > 0) then {
 	_playerObj setVariable["USEC_lowBlood",(_medical select 6),true];
 	_playerObj setVariable["USEC_BloodQty",(_medical select 7),true];
 	_playerObj setVariable["unconsciousTime",(_medical select 10),true];
-
+	
 	//Add Wounds
 	{
 		_playerObj setVariable[_x,true,true];

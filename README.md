@@ -112,7 +112,7 @@ When running `build.pl`, you may specify additional options to merge in optional
     <td>Care Packages</td><td>-with-carepkgs</td><td>Drops care packages with various loot types across the map (similar to heli crash sites)</td>
   </tr>
   <tr>
-    <td>Kill Messages</td><td>-with-killmsgs</td><td>Shows in-game messages when one player kills another</td>
+    <td>Kill Messages</td><td>-with-killmsgs</td><td>Shows in-game messages when one player kills another (not needed for Lingor). Use update_scripts.pl to download compatible BE filters.</td>
   </tr>
   <tr>
     <td>Messaging</td><td>-with-messaging</td><td>Replacement for the old scheduler feature, see <b>Messaging/Scheduler</b> below</td>

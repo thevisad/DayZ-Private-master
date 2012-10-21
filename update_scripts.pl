@@ -1,14 +1,29 @@
+#!/usr/bin/perl -w
+
+use Getopt::Long qw(:config pass_through);
 use File::Path qw(make_path);
 
+our %args;
+GetOptions(
+	\%args,
+	'help'
+);
+
 my ($dst) = @ARGV;
+
+if ($args{'help'}) {
+	print "usage: update_scripts.pl <directory>\n";
+	print "     This script downloads updated BE filters from the community list and then modifies them to make them compatible with Bliss optional features\n";
+	exit;
+}
 
 die "FATAL: Must supply destination directory\n" unless defined $dst;
 die "FATAL: Destination directory $dst does not exist\n" unless (-d $dst);
 
 my %lookups = (
-	"spawn" => "!\\\"_this spawn fnc_plyrHit\\\" !\\\"_this spawn fnc_plyrDeath\\\"",
-	"set"   => "!\\\"_this spawn fnc_plyrHit\\\" !\\\"_this spawn fnc_plyrDeath\\\"",
-	"this"  => "!\\\"_this spawn fnc_plyrHit\\\" !\\\"_this spawn fnc_plyrDeath\\\""
+	"spawn" => "!\\\"_this spawn fnc_plyrHit\\\"",
+	"set"   => "!\\\"_this spawn fnc_plyrHit\\\"",
+	"this"  => "!\\\"_this spawn fnc_plyrHit\\\""
 );
 
 my @scripts = (
@@ -26,7 +41,7 @@ my @scripts = (
 foreach my $script (@scripts) {
 	my $uri = "https://dayz-community-banlist.googlecode.com/git/filters/$script";
 	my $cmd = (($^O =~ m/MSWin32/) ? 'util/wget' : 'wget');
-	my $cmd = "$cmd --no-check-certificate -q -N -O $dst/$script $uri";
+	$cmd = "$cmd --no-check-certificate -q -N -O $dst/$script $uri";
 
 	print "INFO: Fetching URI $uri\n";
 	my $ret = system($cmd);

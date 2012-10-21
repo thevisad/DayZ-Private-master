@@ -24,7 +24,6 @@ server_hiveReadWrite =		compile preprocessFileLineNumbers "\z\addons\dayz_server
 server_updateNearbyObjects =	compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\server_updateNearbyObjects.sqf";
 
 fnc_plyrHit   = compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\fnc_plyrHit.sqf";
-fnc_plyrDeath = compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\fnc_plyrDeath.sqf";
 
 fnc_join =			compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\fnc_join.sqf";
 fnc_split = 			compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\fnc_split.sqf";
