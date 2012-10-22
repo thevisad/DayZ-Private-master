@@ -127,9 +127,9 @@ spawn_Misc_cargo_cont_net1 = {
 	waitUntil{!isNil "BIS_fnc_selectRandom"};
 	if (isDedicated) then {
 	_position = [getMarkerPos "center",0,4000,10,0,2000,0] call BIS_fnc_findSafePos;
-	//diag_log("DEBUG: Spawning a Misc_cargo_cont_net1 at " + str(_position));
+	diag_log("DEBUG: Spawning a Misc_cargo_cont_net1 at " + str(_position));
 	_veh = createVehicle ["Misc_cargo_cont_net1",_position, [], 0, "CAN_COLLIDE"];
-	//dayz_serverObjectMonitor set [count dayz_serverObjectMonitor,_veh];
+	dayz_serverObjectMonitor set [count dayz_serverObjectMonitor,_veh];
 	_veh setVariable ["ObjectID",1,true];
 
 	_num = round(random 3) + 3;
@@ -167,7 +167,7 @@ spawn_Misc_cargo_cont_net2 = {
 	waitUntil{!isNil "BIS_fnc_selectRandom"};
 	if (isDedicated) then {
 	_position = [getMarkerPos "center",0,4000,10,0,2000,0] call BIS_fnc_findSafePos;
-	//diag_log("DEBUG: Spawning a Misc_cargo_cont_net2 at " + str(_position));
+	diag_log("DEBUG: Spawning a Misc_cargo_cont_net2 at " + str(_position));
 	_veh = createVehicle ["Misc_cargo_cont_net2",_position, [], 0, "CAN_COLLIDE"];
 	dayz_serverObjectMonitor set [count dayz_serverObjectMonitor,_veh];
 	_veh setVariable ["ObjectID",1,true];
@@ -210,7 +210,9 @@ spawn_Misc_cargo_cont_net3 = {
 	waitUntil{!isNil "BIS_fnc_selectRandom"};
 	if (isDedicated) then {
 		_position = [getMarkerPos "center",0,4000,10,0,2000,0] call BIS_fnc_findSafePos;
+		diag_log("DEBUG: Spawning a Misc_cargo_cont_net3 at " + str(_position));
 		_veh = createVehicle ["Misc_cargo_cont_net3",_position, [], 0, "CAN_COLLIDE"];
+	        dayz_serverObjectMonitor set [count dayz_serverObjectMonitor,_veh];
 		_veh setVariable ["ObjectID",1,true];
 
 		_num = round(random 9) + 3;
