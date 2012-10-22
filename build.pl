@@ -118,7 +118,7 @@ while (my $option = shift(@ARGV)) {
 	next unless ($option =~ m/with-([a-zA-Z0-9]+)/);
 
 	# Skip killmsgs for Lingor as it is unnecessary
-	next unless ($args{'world'} eq 'lingor' && $1 eq 'killmsgs');
+	next if ($args{'world'} eq 'lingor' && $1 eq 'killmsgs');
 
 	my $pkg_dir = "$base_dir/pkg/$1";
 	if (!-d $pkg_dir) {
