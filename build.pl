@@ -136,7 +136,7 @@ if (scalar(@pkgs) > 0) {
 }
 
 pack_world("$tmp_dir/dayz_server", "$dst_dir/\@bliss_$args{'instance'}.$args{'world'}/addons");
-copy("$base_dir/util/HiveEXT.dll", "$dst_dir/\@bliss_$args{'instance'}.$args{'world'}/HiveEXT.dll");
+copy("$base_dir/util/blisshive.dll", "$dst_dir/\@bliss_$args{'instance'}.$args{'world'}/blisshive.dll");
 
 # Create the mission PBO
 copy_dir("$msn_dir/world/$args{'world'}", $msn_build_dir);
