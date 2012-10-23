@@ -1,3 +1,7 @@
+insert ignore into vehicle (id, class_name, damage_min, damage_max, fuel_min, fuel_max, limit_min, limit_max, parts, inventory) values
+  (34, 'Ka60_GL_NAC', 0.100, 0.700, 0.200, 0.800, 0, 0, 'motor,elektronika,mala vrtule,velka vrtule', '[]'),
+  (35, 'Mi17_Civilian_Nam', 0.100, 0.700, 0.200, 0.800, 0, 0, 'palivo,motor,karoserie,wheel_1_1_steering,wheel_1_2_steering,wheel_2_1_steering,wheel_2_2_steering', '[]');
+
 insert ignore into world_vehicle (vehicle_id, world_id, worldspace, chance) values
   (34, 8, '[219,[4148.12,6579.55,3.866]]', 0.25),
   (4, 8, '[182,[4127.6,6703.51,0.00146484]]', 0.65),
@@ -35,6 +39,4 @@ insert ignore into world_vehicle (vehicle_id, world_id, worldspace, chance) valu
   (32, 8, '[126,[7647.15,7406.74,0.00144958]]', 0.55),
   (22, 8, '[1,[4991.09,8165.97,0.00148773]]', 0.55);
 
-insert into vehicle (id, class_name, damage_min, damage_max, fuel_min, fuel_max, limit_min, limit_max, parts, inventory) values
-  (34, 'Ka60_GL_NAC', 0.100, 0.700, 0.200, 0.800, 0, 0, 'motor,elektronika,mala vrtule,velka vrtule', '[]'),
-  (35, 'Mi17_Civilian_Nam', 0.100, 0.700, 0.200, 0.800, 0, 0, 'palivo,motor,karoserie,wheel_1_1_steering,wheel_1_2_steering,wheel_2_1_steering,wheel_2_2_steering', '[]');
+
