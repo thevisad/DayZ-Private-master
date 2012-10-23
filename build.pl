@@ -300,7 +300,8 @@ sub configure_deploy {
 		'fallujah'  => '\@dayzfallujah',
 		'zargabad'  => '\@dayzzargabad',
 		'utes'      => '\@dayz',
-		'panthera2' => '\@dayzpanthera'
+		'panthera2' => '\@dayzpanthera',
+		'namalsk'   => '\@dayz;\@nc'
 	};
 
 	# Ensure proper modfolders are specified in .bat file
