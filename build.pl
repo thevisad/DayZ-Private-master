@@ -213,7 +213,7 @@ sub complex_merge {
 			my $cmd = (($^O =~ m/MSWin32/) ? 'util/diff3.exe' : 'diff3 -m');
 			my $diffOutput = `$cmd $srcPath $origPath $dstPath`;
 
-			$diffOutput =~ s/^[<=>]{7}.*//mg;
+			$diffOutput =~ s/^[<=>\|]{7}.*//mg;
 			$diffOutput =~ s/(\n){2,}/\n/sg;
 
 			make_path(dirname($dstPath)) unless (-d dirname($dstPath));
