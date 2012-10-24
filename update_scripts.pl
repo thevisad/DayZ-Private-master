@@ -21,9 +21,9 @@ die "FATAL: Must supply destination directory\n" unless defined $dst;
 die "FATAL: Destination directory $dst does not exist\n" unless (-d $dst);
 
 my %lookups = (
-	"spawn" => "!\\\"_this spawn fnc_plyrHit\\\"",
-	"set"   => "!\\\"_this spawn fnc_plyrHit\\\"",
-	"this"  => "!\\\"_this spawn fnc_plyrHit\\\""
+	"\\\"spawn\\\""      => "!\\\"_this spawn fnc_plyrHit\\\"",
+	"\\\"this\\\""       => "!\\\"_this spawn fnc_plyrHit\\\"",
+	"addMPEventHandler"  => "!\\\"_this spawn fnc_plyrHit\\\"",
 );
 
 my @scripts = (
@@ -49,10 +49,11 @@ foreach my $script (@scripts) {
 	die "FATAL: Could not fetch URI!" unless ($ret == 0);
 
 	while (($pattern, $exception) = each %lookups) {
-		my $regex = "s/([0-9]{1})\\s$pattern\\s(.*)([\\\/]{2}.*)*/" . (($exception) ? "\\\$1 $pattern \\\$2 $exception/g" : "/g");
+		my $regex = "s/([0-9]{1})\\s$pattern\\s(.*)([\\\/]{2}.*)*/" . (($exception) ? "\\\$1 $pattern \\\$2 $exception\n/g" : "/g");
 		replace_text($regex, "$dst/$script");
 	}
 	replace_text("s#^//((?!new).*)\\\$##sg", "$dst/$script");
+	replace_text("s/^\\n\$//", "$dst/$script");
 }
 
 print "INFO: Update complete. NOTE: You must reload the filters on a running server for changes to take effect!\n";
