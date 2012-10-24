@@ -13,192 +13,187 @@ _currentAnim 	= animationState player;
 
 //Get PlayerID
 private ["_playerUID"];
-_playerUID = "";
-if (count playableUnits == 0 and isServer) then {
-	//In Single Player
-	isSinglePlayer = true;
-	player sidechat "Single player Mode detected!";
-	//_id = [42,"SinglePlayer"] spawn server_onPlayerConnect;
-	_playerUID = "42";
-} else {
-	_playerUID = getPlayerUID player;
-};
+	_playerUID = "";
+	if (count playableUnits == 0 and isServer) then {
+		//In Single Player
+		isSinglePlayer = true;
+		player sidechat "Single player Mode detected!";
+		//_id = [42,"SinglePlayer"] spawn server_onPlayerConnect;
+		_playerUID = "42";
+	} else {
+		_playerUID = getPlayerUID player;
+	};
 
 //BackUp Weapons and Mags
 private ["_weapons","_magazines","_primweapon","_secweapon"];
-_weapons 	= weapons player;
-_magazines	= call player_countmagazines; //magazines player;
+	_weapons 	= weapons player;
+	_magazines	= call player_countmagazines; //magazines player;
 
-if ( (_playerUID == dayz_playerUID) && (count _magazines == 0) && (count (magazines player) > 0 )) exitWith {cutText ["can't count magazines!", "PLAIN DOWN"]};
+	if ( (_playerUID == dayz_playerUID) && (count _magazines == 0) && (count (magazines player) > 0 )) exitWith {cutText ["can't count magazines!", "PLAIN DOWN"]};
 
 
 //	if ( count _magazines == 0 ) exitWith {cutText ["can't count magazines!", "PLAIN DOWN"]};
 
-_primweapon	= primaryWeapon player;
-_secweapon	= secondaryWeapon player;
+	_primweapon	= primaryWeapon player;
+	_secweapon	= secondaryWeapon player;
 
-//Checks
-if(!(_primweapon in _weapons) && _primweapon != "") then {
-	_weapons = _weapons + [_primweapon];
-};
+	//Checks
+	if(!(_primweapon in _weapons) && _primweapon != "") then {
+		_weapons = _weapons + [_primweapon];
+	};
 
-if(!(_secweapon in _weapons) && _secweapon != "") then {
-	_weapons = _weapons + [_secweapon];
-};
-
+	if(!(_secweapon in _weapons) && _secweapon != "") then {
+		_weapons = _weapons + [_secweapon];
+	};
+	
 //	if(count _magazines == 0) then {
 //		_magazines = magazines player;
 //	};
 
 //BackUp Backpack
 private ["_newBackpackType","_backpackWpn","_backpackMag"];
-dayz_myBackpack = unitBackpack player;
-_newBackpackType = (typeOf dayz_myBackpack);
-if(_newBackpackType != "") then {
-	_backpackWpn = getWeaponCargo unitBackpack player;
-	_backpackMag = getMagazineCargo unitBackpack player;
-};
+	dayz_myBackpack = unitBackpack player;
+	_newBackpackType = (typeOf dayz_myBackpack);
+	if(_newBackpackType != "") then {
+		_backpackWpn = getWeaponCargo unitBackpack player;
+		_backpackMag = getMagazineCargo unitBackpack player;
+	};
 
 //Get Muzzle
-_currentWpn = "";
-_muzzles = getArray(configFile >> "cfgWeapons" >> _currentWpn >> "muzzles");
-if (count _muzzles > 1) then {
-	_currentWpn = currentMuzzle player;
-};
-
+	_currentWpn = "";
+	_muzzles = getArray(configFile >> "cfgWeapons" >> _currentWpn >> "muzzles");
+	if (count _muzzles > 1) then {
+		_currentWpn = currentMuzzle player;
+	};
+	
 //Debug Message
-diag_log "Attempting to switch model";
-diag_log str(_weapons);
-diag_log str(_magazines);
-diag_log (str(_backpackWpn));
-diag_log (str(_backpackMag));
+	diag_log "Attempting to switch model";
+	diag_log str(_weapons);
+	diag_log str(_magazines);
+	diag_log (str(_backpackWpn));
+	diag_log (str(_backpackMag));
 
 //Secure Player for Transformation
-player setPosATL dayz_spawnPos;
+	player setPosATL dayz_spawnPos;
 
 //BackUp Player Object
-_oldUnit = player;
-
+	_oldUnit = player;
+	
 /***********************************/
 //DONT USE player AFTER THIS POINT
 /***********************************/
 
 //Create New Character
-//[player] joinSilent grpNull;
-_group 		= createGroup west;
-_newUnit 	= _group createUnit [_class,dayz_spawnPos,[],0,"NONE"];
+	//[player] joinSilent grpNull;
+	_group 		= createGroup west;
+	_newUnit 	= _group createUnit [_class,dayz_spawnPos,[],0,"NONE"];
 
-_newUnit 	setPosATL _position;
-_newUnit 	setDir _dir;
+	_newUnit 	setPosATL _position;
+	_newUnit 	setDir _dir;
 
 //Clear New Character
-{_newUnit removeMagazine _x;} forEach  magazines _newUnit;
-removeAllWeapons _newUnit;	
+	{_newUnit removeMagazine _x;} forEach  magazines _newUnit;
+	removeAllWeapons _newUnit;	
 
 //Equip New Charactar
-{
-	if (typeName _x == "ARRAY") then {_newUnit addMagazine [_x select 0,_x select 1] } else { _newUnit addMagazine _x };
-	//sleep 0.05;
-} forEach _magazines;
-
-{
-	_newUnit addWeapon _x;
-	//sleep 0.05;
-} forEach _weapons;
-
-//Check and Compare it
-if(str(_weapons) != str(weapons _newUnit)) then {
-	//Get Differecnce
 	{
-		_weapons = _weapons - [_x];
-	} forEach (weapons _newUnit);
-
-	//Add the Missing
+		if (typeName _x == "ARRAY") then {_newUnit addMagazine [_x select 0,_x select 1] } else { _newUnit addMagazine _x };
+		//sleep 0.05;
+	} forEach _magazines;
+	
 	{
 		_newUnit addWeapon _x;
-		//sleep 0.2;
+		//sleep 0.05;
 	} forEach _weapons;
-};
 
-if(_primweapon !=  (primaryWeapon _newUnit)) then {
-	_newUnit addWeapon _primweapon;		
-};
+//Check and Compare it
+	if(str(_weapons) != str(weapons _newUnit)) then {
+		//Get Differecnce
+		{
+			_weapons = _weapons - [_x];
+		} forEach (weapons _newUnit);
+	
+		//Add the Missing
+		{
+			_newUnit addWeapon _x;
+			//sleep 0.2;
+		} forEach _weapons;
+	};
+	
+	if(_primweapon !=  (primaryWeapon _newUnit)) then {
+		_newUnit addWeapon _primweapon;		
+	};
 
-if(_secweapon != (secondaryWeapon _newUnit) && _secweapon != "") then {
-	_newUnit addWeapon _secweapon;		
-};
+	if(_secweapon != (secondaryWeapon _newUnit) && _secweapon != "") then {
+		_newUnit addWeapon _secweapon;		
+	};
 
 //Add and Fill BackPack
-if (!isNil "_newBackpackType") then {
-	if (_newBackpackType != "") then {
-		_newUnit addBackpack _newBackpackType;
-		_oldBackpack = dayz_myBackpack;
-		dayz_myBackpack = unitBackpack _newUnit;
+	if (!isNil "_newBackpackType") then {
+		if (_newBackpackType != "") then {
+			_newUnit addBackpack _newBackpackType;
+			_oldBackpack = dayz_myBackpack;
+			dayz_myBackpack = unitBackpack _newUnit;
 
 
-		//Fill backpack contents
-		//Weapons
-		_backpackWpnTypes = [];
-		_backpackWpnQtys = [];
-		if (count _backpackWpn > 0) then {
-			_backpackWpnTypes = _backpackWpn select 0;
-			_backpackWpnQtys = 	_backpackWpn select 1;
+			//Fill backpack contents
+			//Weapons
+			_backpackWpnTypes = [];
+			_backpackWpnQtys = [];
+			if (count _backpackWpn > 0) then {
+				_backpackWpnTypes = _backpackWpn select 0;
+				_backpackWpnQtys = 	_backpackWpn select 1;
+			};
+			_countr = 0;
+			{
+				dayz_myBackpack addWeaponCargoGlobal [_x,(_backpackWpnQtys select _countr)];
+				_countr = _countr + 1;
+			} forEach _backpackWpnTypes;
+			//magazines
+			_backpackmagTypes = [];
+			_backpackmagQtys = [];
+			if (count _backpackmag > 0) then {
+				_backpackmagTypes = _backpackMag select 0;
+				_backpackmagQtys = 	_backpackMag select 1;
+			};
+			_countr = 0;
+			{
+				dayz_myBackpack addmagazineCargoGlobal [_x,(_backpackmagQtys select _countr)];
+				_countr = _countr + 1;
+			} forEach _backpackmagTypes;
 		};
-		_countr = 0;
-		{
-			dayz_myBackpack addWeaponCargoGlobal [_x,(_backpackWpnQtys select _countr)];
-			_countr = _countr + 1;
-		} forEach _backpackWpnTypes;
-		//magazines
-		_backpackmagTypes = [];
-		_backpackmagQtys = [];
-		if (count _backpackmag > 0) then {
-			_backpackmagTypes = _backpackMag select 0;
-			_backpackmagQtys = 	_backpackMag select 1;
-		};
-		_countr = 0;
-		{
-			dayz_myBackpack addmagazineCargoGlobal [_x,(_backpackmagQtys select _countr)];
-			_countr = _countr + 1;
-		} forEach _backpackmagTypes;
 	};
-};
-//Debug Message
-diag_log "Swichtable Unit Created. Equipment:";
-diag_log str(weapons _newUnit);
-diag_log str(magazines _newUnit);
-diag_log str(getWeaponCargo unitBackpack _newUnit);
-diag_log str(getMagazineCargo unitBackpack _newUnit);
 
 //Make New Unit Playable
-addSwitchableUnit _newUnit;
-setPlayable _newUnit;
-selectPlayer _newUnit;
-_newUnit addMPEventHandler ["MPHit", {_this spawn fnc_plyrHit;}];
+	addSwitchableUnit _newUnit;
+	setPlayable _newUnit;
+	selectPlayer _newUnit;
+	_newUnit addMPEventHandler ["MPHit", {_this spawn fnc_plyrHit;}];
 
 //Clear and delete old Unit
-removeAllWeapons _oldUnit;
-{_oldUnit removeMagazine _x;} forEach  magazines _oldUnit;
-	
-if (!isNull dayz_originalPlayer) then {
-	dayz_originalPlayer = _oldUnit;
-	_oldUnit addEventHandler ["HandleDamage",{false}];
-	_oldUnit disableAI "ANIM";
-	_oldUnit disableAI "MOVE";
-} else {
-	deleteVehicle _oldUnit;
-};
+	removeAllWeapons _oldUnit;
+	{_oldUnit removeMagazine _x;} forEach  magazines _oldUnit;
+
+	if (isNull dayz_originalPlayer) then {
+		dayz_originalPlayer = _oldUnit;
+		_oldUnit addEventHandler ["HandleDamage",{false}];
+		_oldUnit disableAI "ANIM";
+		_oldUnit disableAI "MOVE";
+	} else {
+		deleteVehicle _oldUnit;
+	};
 
 //Move player inside
+	
+	if(_currentWpn != "") then {_newUnit selectWeapon _currentWpn;};
+	[objNull, player, rSwitchMove,_currentAnim] call RE;
+	//dayz_originalPlayer attachTo [_newUnit];
+	player disableConversation true;
+	
+	player setVariable ["bodyName",dayz_playerName,true];
 
-if(_currentWpn != "") then {_newUnit selectWeapon _currentWpn;};
-[objNull, player, rSwitchMove,_currentAnim] call RE;
-//dayz_originalPlayer attachTo [_newUnit];
-player disableConversation true;
+	_playerUID=getPlayerUID player;
+	_playerObjName = format["player%1",_playerUID];
+	call compile format["player%1 = player;",_playerUID];
+	publicVariable _playerObjName;
 
-player setVariable ["bodyName",dayz_playerName,true];
-
-_playerUID=getPlayerUID player;
-_playerObjName = format["player%1",_playerUID];
-call compile format["player%1 = player;",_playerUID];
-publicVariable _playerObjName;

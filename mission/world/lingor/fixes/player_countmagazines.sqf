@@ -3,10 +3,8 @@ private ["_dialog","_control","_magazineArray","_item","_val","_max"];
 disableSerialization;
 disableUserInput true;
 createGearDialog [player, "RscDisplayGear"];
-
 _dialog        = findDisplay 106;
 _magazineArray = [];
-
 
 for "_i" from 109 to 120 do 
 {
@@ -23,7 +21,6 @@ for "_i" from 109 to 120 do
 	};
 };
 
-
 for "_i" from 122 to 129 do 
 {
 	_control = _dialog displayCtrl _i;
@@ -38,9 +35,7 @@ for "_i" from 122 to 129 do
 		};
 	};
 };
-
 closeDialog 0;
 disableUserInput false;
 dayz_Magazines=_magazineArray;
-
 _magazineArray

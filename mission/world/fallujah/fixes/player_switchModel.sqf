@@ -163,12 +163,6 @@ private ["_newBackpackType","_backpackWpn","_backpackMag"];
 			} forEach _backpackmagTypes;
 		};
 	};
-//Debug Message
-	diag_log "Swichtable Unit Created. Equipment:";
-	diag_log str(weapons _newUnit);
-	diag_log str(magazines _newUnit);
-	diag_log str(getWeaponCargo unitBackpack _newUnit);
-	diag_log str(getMagazineCargo unitBackpack _newUnit);
 
 //Make New Unit Playable
 	addSwitchableUnit _newUnit;
@@ -178,8 +172,8 @@ private ["_newBackpackType","_backpackWpn","_backpackMag"];
 //Clear and delete old Unit
 	removeAllWeapons _oldUnit;
 	{_oldUnit removeMagazine _x;} forEach  magazines _oldUnit;
-		
-	if (!isNull dayz_originalPlayer) then {
+
+	if (isNull dayz_originalPlayer) then {
 		dayz_originalPlayer = _oldUnit;
 		_oldUnit addEventHandler ["HandleDamage",{false}];
 		_oldUnit disableAI "ANIM";
