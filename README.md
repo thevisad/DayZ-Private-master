@@ -59,7 +59,7 @@ Installation
     <td>Lingor Island</td><td>@dayzlingor</td><td>1.0</td><td>ftp://dayzcommander:dayzcommander@94.242.227.3/DayZLingor-1.0.rar</td>
   </tr>
   <tr>
-    <td>Takistan</td><td>@dayztakistan</td><td>1.3</td><td>ftp://dayzcommander:dayzcommander@94.242.227.3/DayZTakistan-1.4.rar</td>
+    <td>Takistan</td><td>@dayztakistan</td><td>1.4</td><td>ftp://dayzcommander:dayzcommander@94.242.227.3/DayZTakistan-1.4.rar</td>
   </tr>
   <tr>
     <td>Utes</td><td>@dayz</td><td>1.7.2.6</td><td>http://dayzmod.com/?Download</td>
@@ -72,6 +72,9 @@ Installation
   </tr>
   <tr>
     <td>Zargabad</td><td>@dayzzargabad</td><td>1.2</td><td>ftp://dayzcommander:dayzcommander@94.242.227.3/DayZZargabad-1.2.rar</td>
+  </tr>
+  <tr>
+    <td>Namalsk</td><td>@dayz;@dayz_namalsk;@namalsk;@nc</td><td>0.55</td><td>ftp://dayzcommander:dayzcommander@94.242.227.3/DayZNamalsk-0.55.rar</td>
   </tr>
 </table>
 11. Run **ArmA2**\\server_<world>_<instance>.bat (where world is the world name and instance is the instance ID) to start the server.  
@@ -112,7 +115,7 @@ When running `build.pl`, you may specify additional options to merge in optional
     <td>Care Packages</td><td>-with-carepkgs</td><td>Drops care packages with various loot types across the map (similar to heli crash sites)</td>
   </tr>
   <tr>
-    <td>Kill Messages</td><td>-with-killmsgs</td><td>Shows in-game messages when one player kills another (not needed for Lingor). Use update_scripts.pl to download compatible BE filters.</td>
+    <td>Kill Messages</td><td>-with-killmsgs</td><td>Shows in-game messages when one player kills another (not needed for Lingor). Custom BE filters must be used (https://code.google.com/p/bliss-community-filters/downloads/list)</td>
   </tr>
   <tr>
     <td>Messaging</td><td>-with-messaging</td><td>Replacement for the old scheduler feature, see <b>Messaging/Scheduler</b> below</td>
@@ -153,13 +156,15 @@ You may optionally enable a system that reads structure information from the dat
 2. When building Bliss, you must add `--with-buildings` to your arguments, for example `perl build.pl --with-buildings`.  
 3. You must manually insert any building class names you wish to use into the building table and then insert the spawn coordinates / associated building IDs into the instance_building table.  
 
+**NOTE:** Buildings added/updated via database manipulation are only available after a server restart.
+
 Customization
 =============
 
 Here are the most common customization requests with instructions.
 
 **Request**: I would like to change the available chat channels.  
-**Solution**: Go into **Repository**\\pkg\\missions\\chernarus (or the correct world name if you are building for another world) and edit `description.ext`. Refer to http://community.bistudio.com/wiki/Description.ext#disableChannels for a mapping of channel names to numbers. Then run `build.pl` and redeploy the files in **Repository**\\deploy\\MPMissions.
+**Solution**: Go into **Repository**\\mission\\world\\chernarus (or the correct world name if you are building for another world) and edit `description.ext`. Refer to http://community.bistudio.com/wiki/Description.ext#disableChannels for a mapping of channel names to numbers. Then run `build.pl` and redeploy the files in **Repository**\\deploy\\MPMissions.
 
 **Request**: I would like to change the server timezone.  
 **Solution**: Run `perl db_utility.pl --instance X tzoffset <offset>`, replacing `X` with your instance ID (default is 1) and `<offset>` with an integer. This will set the positive or negative offset applied (in hours) to the system time, which is checked when the server starts up.
