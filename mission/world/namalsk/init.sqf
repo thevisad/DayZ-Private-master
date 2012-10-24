@@ -46,8 +46,8 @@ player_build_orig       = compile preprocessFileLineNumbers "\z\addons\dayz_code
 player_cook_orig        = compile preprocessFileLineNumbers "\z\addons\dayz_code\actions\cook.sqf";
 player_drink_orig       = compile preprocessFileLineNumbers "\z\addons\dayz_code\actions\player_drink.sqf";
 player_eat_orig         = compile preprocessFileLineNumbers "\z\addons\dayz_code\actions\player_eat.sqf";
-player_useMeds_orig     = compile preprocessFileLineNumbers "\z\addons\dayz_code\actions\player_useMeds.sqf";
-player_wearClothes_orig = compile preprocessFileLineNumbers "\z\addons\dayz_code\actions\player_wearClothes.sqf";
+player_useMeds_orig     = compile preprocessFileLineNumbers "\nst\ns_dayz\code\actions\player_useMeds.sqf";
+player_wearClothes_orig = compile preprocessFileLineNumbers "\nst\ns_dayz\code\actions\player_wearClothes.sqf";
 player_tentPitch_orig   = compile preprocessFileLineNumbers "\z\addons\dayz_code\actions\tent_pitch.sqf";
 player_fillWater_orig   = compile preprocessFileLineNumbers "\z\addons\dayz_code\actions\water_fill.sqf";
 
