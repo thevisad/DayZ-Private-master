@@ -18,8 +18,7 @@ _location = _worldspace select 1;
 _uid = _worldspace call dayz_objectUID2;
 
 //Send request
-_key = format["CHILD:308:%1:%2:%3:%4:%5:", dayZ_instance, _class, _charID, _worldspace, _uid];
-//diag_log ("HIVE: WRITE: "+ str(_key));
+_key = format["CHILD:308:%1:%2:%3:%4:%5:", dayz_instance, _class, _charID, _worldspace, _uid];
 _key call server_hiveWrite;
 
 _object setVariable ["ObjectUID", _uid, true];

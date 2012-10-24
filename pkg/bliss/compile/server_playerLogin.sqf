@@ -44,64 +44,29 @@ if (isNull _playerObj or !isPlayer _playerObj) exitWith {
 };
 
 //Process request
-_newPlayer = 	_primary select 1;
-_isNew = 		count _primary < 6; //_result select 1;
-_charID = 		_primary select 2;
+_newPlayer  = _primary select 1;
+_isNew      = count _primary < 6;
+_charID     = _primary select 2;
 _randomSpot = false;
+_hiveVer    = 0;
 
-//diag_log ("LOGIN RESULT: " + str(_primary));
-
-/* PROCESS */
-_hiveVer = 0;
-
-if (!_isNew) then {
-	//RETURNING CHARACTER		
-	_inventory = 	_primary select 4;
-	_backpack = 	_primary select 5;
-	_survival =		_primary select 6;
-	_model =		_primary select 7;
-	_hiveVer =		_primary select 8;
+//Set character variables
+_inventory = _primary select 4;
+_backpack  = _primary select 5;
+_survival  = _primary select 6;
+_model     = _primary select 7;
+_hiveVer   = _primary select 8;
 	
-	if (!(_model in ["SurvivorW2_DZ","Survivor2_DZ","Survivor3_DZ","Sniper1_DZ","Soldier1_DZ","Camo1_DZ","Bandit1_DZ","Rocket_DZ"])) then {
-		_model = "Survivor2_DZ";
-	};
-	
-} else {
-	_model =		_primary select 3;
-	_hiveVer =		_primary select 4;
-	if (isNil "_model") then {
-		_model = "Survivor2_DZ";
-	} else {
-		if (_model == "") then {
-			_model = "Survivor2_DZ";
-		};
-	};
-
-	//Record initial inventory
-	_config = (configFile >> "CfgSurvival" >> "Inventory" >> "Default");
-	_mags = getArray (_config >> "magazines");
-	_wpns = getArray (_config >> "weapons");
-	_bcpk = getText (_config >> "backpack");
-	_randomSpot = true;
-	_dbLoadout = [_wpns,_mags];
-	if (str(initialLoadout) != "[]") then {
-		_inventory = initialLoadout;
-		_dbLoadout = _inventory;
-	};
-	//Wait for HIVE to be free
-	_key = format["CHILD:203:%1:%2:%3:",_charID,_dbLoadout,[_bcpk,[],[]]];
-	_key spawn server_hiveWrite;
+if (!(_model in ["SurvivorW2_DZ","Survivor2_DZ","Survivor3_DZ","Sniper1_DZ","Soldier1_DZ","Camo1_DZ","Bandit1_DZ","Rocket_DZ"])) then {
+	_model = "Survivor2_DZ";
 };
+
 diag_log ("LOGIN LOADED: " + str(_playerObj) + " Type: " + (typeOf _playerObj));
 
-_isHiveOk = false;	//EDITED
+_isHiveOk = false;
 if (_hiveVer >= dayz_hiveVersionNo) then {
 	_isHiveOk = true;
 };
-//diag_log ("SERVER RESULT: " + str("X") + " " + str(dayz_hiveVersionNo));
-
-//Server publishes variable to clients and WAITS
-//_playerObj setVariable ["publish",[_charID,_inventory,_backpack,_survival,_isNew,dayz_versionNo,_model,_isHiveOk,_newPlayer],true];
 
 _clientID = owner _playerObj;
 dayzPlayerLogin = [_charID,_inventory,_backpack,_survival,_isNew,dayz_versionNo,_model,_isHiveOk,_newPlayer];

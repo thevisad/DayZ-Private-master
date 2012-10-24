@@ -1,4 +1,6 @@
 #!/usr/bin/perl -w
+# Bliss schema migration utility 
+# by ayan4m1
 
 use Getopt::Long;
 use File::Basename;

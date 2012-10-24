@@ -5,7 +5,6 @@ dayZ_instance = 1;	//The instance
 hiveInUse	=	true;
 initialized = false;
 dayz_previousID = 0;
-dayz_hiveVersionNo = 1;
 
 call compile preprocessFileLineNumbers "\z\addons\dayz_code\init\variables.sqf";				//Initilize the Variables (IMPORTANT: Must happen very early)
 progressLoadingScreen 0.1;

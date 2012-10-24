@@ -40,13 +40,24 @@ Installation
 		grant all privileges on dayz.* to 'dayz'@'localhost';
 
 5. Run `perl db_migrate.pl --password CHANGEME` from the **ArmA2** directory. Replace `CHANGEME` with the password you chose in the previous step. Use the `--help` flag to get more information on how to set the hostname, username, or database name to suit your needs.  
-6. Ensure that the database information in **ArmA2**\\bliss.ini match the values you used in the previous step. Ensure that the section header `[dayz_1.chernarus]` matches the world and instance you chose in step 2.  
-7. Adjust server name/passwords in **Config**\\config_deadbeef.cfg, where `deadbeef` is some random value generated specifically for your installation.  
-8. If you would like to customize the server time, run `perl db_utility.pl tzoffset <offset>`, replacing `<offset>` with an integer number of hours (positive or negative). Please note that the default instance ID is 1; if you use another instance ID, you will need to run `perl db_utility.pl --instance X tzoffset <offset>`, replacing `X` with your instance ID.  
-9. If you would like to customize the starting loadout, run `perl db_utility.pl loadout <loadout>`, replacing `<loadout>` with a valid loadout string. Some examples:  
-	- Default DayZ loadout - **[]**
-	- Survival loadout - **[["ItemMap","ItemCompass","ItemMatchbox","FoodCanBakedBeans","ItemKnife","FoodCanBakedBeans"],["ItemTent","ItemBandage","ItemBandage"]]**
-	- PvP loadout - **[["Mk_48_DZ","NVGoggles","Binocular_Vector","M9SD","ItemGPS","ItemToolbox","ItemEtool","ItemCompass","ItemMatchbox","FoodCanBakedBeans","ItemKnife","ItemMap","ItemWatch"],[["100Rnd_762x51_M240",47],"ItemPainkiller","ItemBandage","15Rnd_9x19_M9SD","100Rnd_762x51_M240","ItemBandage","ItemBandage","15Rnd_9x19_M9SD","15Rnd_9x19_M9SD","15Rnd_9x19_M9SD","ItemMorphine","PartWoodPile"]]**
+6. Ensure that the database information in **Config**\\HiveExt.ini match the database details you used in the previous step.  
+7. If you would like to customize the server time, change the pertinent options in **Config**\\HiveExt.ini.  
+8. Adjust server name/passwords as desired in **Config**\\config_deadbeef.cfg, where `deadbeef` is some random value generated specifically for your installation.  
+9. If you would like to customize the starting loadout, run `perl db_utility.pl loadout <inventory> <backpack>`, replacing `<inventory>` with a valid inventory string and `<backpack>` with a valid backpack string. Some examples:  
+<table>
+  <tr>
+    <td>Description</td><td>Inventory</td><td>Backpack</td>
+  </tr>
+  <tr>
+    <td>Default</td><td>[]</td><td>["DZ_Patrol_Pack_EP1",[[],[]],[[],[]]]</td>
+  </tr>
+  <tr>
+    <td>Survival</td><td>[["ItemMap","ItemCompass","ItemMatchbox","FoodCanBakedBeans","ItemKnife","FoodCanBakedBeans"],["ItemTent","ItemBandage","ItemBandage"]]</td><td>["DZ_Patrol_Pack_EP1",[[],[]],[[],[]]]</td>
+  </tr>
+  <tr>
+    <td>PvP</td><td>["Mk_48_DZ","NVGoggles","Binocular_Vector","M9SD","ItemGPS","ItemToolbox","ItemCompass","FoodCanBakedBeans","ItemMap","ItemWatch"],[["100Rnd_762x51_M240",47],"ItemPainkiller","ItemBandage","15Rnd_9x19_M9SD","100Rnd_762x51_M240","ItemBandage","ItemBandage","15Rnd_9x19_M9SD","15Rnd_9x19_M9SD","15Rnd_9x19_M9SD","ItemMorphine"]]</td><td>["DZ_Backpack_EP1",[[],[]],[[],[]]]</td>
+  </tr>
+</table>
 10. Ensure the required client mods are present in **ArmA2**\\. Refer to the following table for specific information based on your desired world.  
 <table>
   <tr>
@@ -77,12 +88,10 @@ Installation
     <td>Namalsk</td><td>@dayz;@dayz_namalsk;@namalsk;@nc</td><td>0.55</td><td>ftp://dayzcommander:dayzcommander@94.242.227.3/DayZNamalsk-0.55.rar</td>
   </tr>
 </table>
-11. Run **ArmA2**\\server_<world>_<instance>.bat (where world is the world name and instance is the instance ID) to start the server.  
+11. Run **ArmA2**\\server_\<world\>_\<instance\>.bat (where world is the world name and instance is the instance ID) to start the server.  
 
 Upgrading
 =========
-
-**NOTE**: Users upgrading to the new **build.pl** script will need to run the latest **setup_perl.bat** to install new modules required by the new build system.
 
 Depending on what has changed since you deployed your server, you may need to perform one or more steps to do a clean upgrade to the latest code. Look for the following in the commit log (specifically, the files that were changed) when you update to the latest version of the repository:
 
@@ -125,15 +134,14 @@ When running `build.pl`, you may specify additional options to merge in optional
   </tr>
 </table> 
 
-
 Multiple Instances
 ==================
 
-You can run multiple server instances connected to the same database to provide a private cluster of servers all using the same player information.
+You can run multiple server instances connected to the same database to provide a private cluster of servers all using the same character information.
  
-1. Run `perl build.pl --world WORLD --instance ID` from the **Repo** directory, replacing WORLD with a valid world name and ID with a valid instance ID (the default is 1, so 2 would be sensible for a second instance).  
+1. Run `perl build.pl --world WORLD --instance ID` from the **Repository** directory, replacing WORLD with a valid world name and ID with a valid instance ID (the default is 1, so 2 would be sensible for a second instance).  
 2. Copy all new directories and files from **Repository**\\deploy\\ to **ArmA2**\\.  
-3. Edit **ArmA2**\\bliss.ini and add a new section for your instance. Change the section header so that it refers to the new instance ID and make sure the database configuration options are correct.  
+3. Edit **Config**\\HiveExt.ini and set the database / time zone parameters appropriately.
 4. Run the new server.bat file for your instance.
 
 Care must be taken to ensure that all paths and options have been set correctly. With this system you can run as many instances as your server can support simultaneously.
@@ -146,6 +154,8 @@ You may optionally enable an in-game announcement system for Bliss. To do so, fo
 1. Run `perl db_migrate.pl --schema BlissMessaging --version 0.01`. Be sure to include any parameters needed for your specific database passwords / configuration.  
 2. When building Bliss, you must add `--with-messaging` to your arguments, for example `perl build.pl --with-messaging`.  
 3. Use `perl db_utility.pl --help` to learn how to use the `messages` command to manage your messages without any direct database interaction.  
+
+**NOTE:** Messages added/updated via database manipulation are only available after a server restart.
 
 Buildings
 =========
@@ -164,13 +174,10 @@ Customization
 Here are the most common customization requests with instructions.
 
 **Request**: I would like to change the available chat channels.  
-**Solution**: Go into **Repository**\\mission\\world\\chernarus (or the correct world name if you are building for another world) and edit `description.ext`. Refer to http://community.bistudio.com/wiki/Description.ext#disableChannels for a mapping of channel names to numbers. Then run `build.pl` and redeploy the files in **Repository**\\deploy\\MPMissions.
+*Solution**: When running `build.pl`, add the `--disableChannel <channel>` option, where `<channel>` is a comma-separated list of chat channel numbers. Refer to http://community.bistudio.com/wiki/Description.ext#disableChannels for a mapping of channel names to numbers.
 
-**Request**: I would like to change the server timezone.  
-**Solution**: Run `perl db_utility.pl --instance X tzoffset <offset>`, replacing `X` with your instance ID (default is 1) and `<offset>` with an integer. This will set the positive or negative offset applied (in hours) to the system time, which is checked when the server starts up.
-
-**Request**: I would like to have constant daylight (or moonlight) on my server.  
-**Solution**: There is no easy solution for this. There is no way to halt the progression of time using SQF. If you *really* want to do this, you would have to modify the proc_getInstanceTime procedure to always return a constant time.
+**Request**: I would like to change the server time zone or provide a constant day/night server.  
+**Solution**: Edit **Config**\\HiveExt.ini and change the Type, Offset, and Hour values according to the commented documentation.
 
 **Request**: I would like to alter difficulty options (3rd-person, crosshairs, name tags, etc).  
 **Solution**: Edit **Config**\\Users\\Bliss\\Bliss.ArmA2OAProfile. An explanation of the options is available at http://community.bistudio.com/wiki/server.armaprofile. You must restart the server for these changes to take effect.
@@ -190,19 +197,16 @@ Any bug present in the official client or server will probably also exist in thi
 Common Issues
 =============
 
-**Problem**: Stuck at Loading / Wait for Host or Error Zero divisor in **arma2oaserver.rpt**  
-**Solution**: Look in `blisshive.log` for MySQL connection errors (Google these to find troubleshooting steps). If you do not have a `blisshive.log` in your server directory, right-click on `blisshive.dll` in `@Bliss` (`@BlissLingor` for Lingor servers) and select Properties. If you see an Unblock button, click it and hit OK. Ensure you have a valid MySQL user created, have run db_migrate.pl successfully, have set all options correctly in **ArmA2**\\bliss.ini and that you can run the following when logged in to MySQL:  
+**Problem**: Stuck at Loading / Errors in **arma2oaserver.rpt**  
+**Solution**: Look in `blisshive.log` for MySQL connection errors (Google these to find troubleshooting steps). If you do not have a `blisshive.log` in your server directory, right-click on `blisshive.dll` in `@Bliss` (`@BlissLingor` for Lingor servers) and select Properties. If you see an Unblock button, click it and hit OK. Ensure you have a valid MySQL user created, have run db_migrate.pl successfully, have set all options correctly in **Config**\\HiveExt.ini and that you can run the following when logged in to MySQL:  
 
-	call proc_getInstanceTime(1);
+	select * from survivor;
 
 **Problem**: You get errors referring to `libmysql_.dll` or see errors indicating a missing `DBD/mysql.pm` or `DBD::mysql` when running db_migrate.pl or db_spawn_vehicles.pl.  
 **Solution**: Use Strawberry Perl instead of ActivePerl. If that does not resolve the issue, try running `cpan DBD::mysql` in a command prompt or adding your Perl bin directory to the PATH environment variable.
 
 **Problem**: Server crashes when the first player connects  
-**Solution**: Ensure that you have blisshive.dll in your **ArmA2**\\@Bliss or **ArmA2**\\@BlissLingor directory and that you have a valid and well-formed **ArmA2**\\bliss.ini.
-
-**Problem**: Kicked from the game when using non-DayZ weapons/vehicles  
-**Solution**: Disable BattlEye by setting battleye=0 in **ArmA2**\\Bliss\\config.cfg, but note that this opens your server to hackers/griefers.
+**Solution**: Ensure that you have HiveEXT.dll in your **ArmA2**\\@bliss_\<instance\>.\<world\> directory and that you have a valid and well-formed **Config**\\HiveExt.ini. Also ensure that you have tried both `localhost` and `127.0.0.1` as the hostname if you run MySQL on the same server as Bliss.
 
 **Problem**: Server not listed on GameSpy in-game server list or third-party server lists  
 **Solution**: Ensure the game ports (default 2302 - 2305 UDP) are forwarded properly and that the GameSpy master server is up and running.  
@@ -214,4 +218,5 @@ Support
 =======
 
 **HTTP**: http://dayzprivate.com/forum/
+
 **IRC**: irc.thekreml.in #bliss

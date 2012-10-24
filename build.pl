@@ -1,4 +1,6 @@
 #!/usr/bin/perl -w
+# Bliss build utility 
+# by ayan4m1
 
 use Getopt::Long qw(:config pass_through);
 
@@ -8,7 +10,7 @@ use File::Slurp;
 use File::Basename;
 use File::DirCompare;
 
-use Text::Diff;
+use Text::Diff qw(diff);
 use Text::Patch;
 
 use Digest::SHA1 qw(sha1_hex);
@@ -174,7 +176,7 @@ sub simple_merge {
 			make_path(dirname($dstPath)) unless (-d dirname($dstPath));
 			copy($srcPath, $dstPath) unless (-d $dstPath);
 		} elsif ($srcPath) {
-			my $diff = Text::Diff::diff($dstPath, $srcPath, { STYLE => 'Unified' });
+			my $diff = diff($dstPath, $srcPath, { STYLE => 'Unified' });
 			my $srcData = read_file($dstPath);
 			my $dstData = patch($srcData, $diff, { STYLE => 'Unified' });
 

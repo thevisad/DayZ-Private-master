@@ -18,16 +18,9 @@ server_playerSync =			compile preprocessFileLineNumbers "\z\addons\dayz_server\c
 //zombie_initialize =			compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\zombie_initialize.sqf";
 zombie_findOwner =			compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\zombie_findOwner.sqf";
 
-server_hiveWrite =			compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\server_hiveWrite.sqf";
-server_hiveReadWrite =		compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\server_hiveReadWrite.sqf";
-
 server_updateNearbyObjects =	compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\server_updateNearbyObjects.sqf";
 
 fnc_plyrHit   = compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\fnc_plyrHit.sqf";
-
-fnc_join =			compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\fnc_join.sqf";
-fnc_split = 			compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\fnc_split.sqf";
-fnc_replace =			compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\fnc_replace.sqf";
 
 //Get instance name (e.g. dayz_1.chernarus)
 fnc_instanceName = {
@@ -75,6 +68,23 @@ fnc_buildWeightedArray = 	compile preprocessFileLineNumbers "\z\addons\dayz_code
 
 //onPlayerConnected 		"[_uid,_name] spawn server_onPlayerConnect;";
 onPlayerDisconnected 		"[_uid,_name] call server_onPlayerDisconnect;";
+
+server_hiveWrite = {
+	private["_resultArray","_data"];
+	//diag_log ("ATTEMPT WRITE: " + _this);
+	_data = "HiveEXT" callExtension _this;
+	diag_log ("WRITE: " + _data);
+};
+
+server_hiveReadWrite = {
+	private["_key","_resultArray","_data"];
+	_key = _this select 0;
+	//diag_log ("ATTEMPT READ/WRITE: " + _key);
+	_data = "HiveEXT" callExtension _key;
+	diag_log ("READ/WRITE: " + _data);
+	_resultArray = call compile format ["%1;",_data];
+	_resultArray;
+};
 
 spawn_heliCrash = {
 	private["_position","_veh","_num","_config","_itemType","_itemChance","_weights","_index","_iArray"];

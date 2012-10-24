@@ -1,4 +1,6 @@
 #!/usr/bin/perl -w
+# Bliss database manipulation utility
+# by ayan4m1
 
 use strict;
 use warnings;
@@ -36,7 +38,7 @@ if ($args{'help'}) {
 	print "  cleanitem <classname> - remove comma-separated list of classnames from all survivor inventories\n";
 	print "  cleandead <days>      - delete dead survivors who were last updated more than <days> days ago\n";
 	print "  tzoffset <offset>     - set server time to system time minus <offset> hours\n";
-	print "  loadout <value>       - set loadout to <value> (default is [])\n";
+	print "  loadout <inventory> <backpack> - set default loadout to <inventory> and <backpack> (default is [], [\"DZ_Patrol_Pack_EP1\",[[],[]],[[],[]]])\n";
 	print "  messages <subcommand> - manage the optional messaging system\n";
 	print "    add <instance_id> <start_delay> <loop_interval> <message> - add a message for <instance_id> with body <message> that first prints <start_delay> seconds and then every <loop_interval> seconds thereafter (use 0 for <loop_interval> for a one-time message)\n";
 	print "    edit <id> <instance_id> <start_delay> <loop_interval> <message> - set the message with <id> to the specified values\n";
@@ -191,17 +193,14 @@ EndSQL
 	$sth->execute($days);
 	print "INFO: Removed " . $sth->rows . " rows from the survivor table\n";
 	$sth->finish();
-} elsif ($cmd eq 'tzoffset') {
-	my $offset = shift(@ARGV);
-	defined $offset or die "FATAL: Invalid arguments\n";
-	$dbh->do("update instance set tz_offset = ? where id = ?", undef, ($offset, $db{'instance'}));
-	my ($date, $time) = $dbh->selectrow_array("call proc_getInstanceTime(?)", undef, $db{'instance'});
-	print "INFO: Set timezone offset to ${offset} for instance $db{'instance'}, game time will be $date $time after a restart\n";
 } elsif ($cmd eq 'loadout') {
-	my $loadout = shift(@ARGV);
-	die "FATAL: Invalid loadout\n" unless ($loadout =~ /\[(\[.+?\],{0,1})+\]/);
-	$dbh->do("update instance set inventory = ? where id = ?", undef, ($loadout, $db{'instance'}));
-	print "INFO: Set loadout to \"${loadout}\" for instance $db{'instance'}\n";
+	my $inventory = shift(@ARGV);
+	die "FATAL: Invalid inventory\n" unless ($inventory =~ /\[(\[.+?\],{0,1})+\]/);
+	my $backpack = shift(@ARGV);
+	$backpack = '["DZ_Patrol_Pack_EP1",[[],[]],[[],[]]]' if (!defined $backpack);
+	die "FATAL: Invalid backpack\n" unless ($backpack =~ /\[(\[.+?\],{0,1})+\]/);
+	$dbh->do("update instance set inventory = ?, backpack = ? where id = ?", undef, ($inventory, $backpack, $db{'instance'}));
+	print "INFO: Set inventory to $inventory, backpack $backpack for instance $db{'instance'}\n";
 } else {
 	die "FATAL: Unrecognized command.\n";
 }

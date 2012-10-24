@@ -1,6 +1,6 @@
 private["_objectID","_object","_updates","_uGear","_key","_result","_position","_speed","_crew","_canDo","_uid","_type","_previous","_force"];
 _object = 	_this select 0;
-_objectID =	_object getVariable ["ObjectID", 0];
+_objectID =	_object getVariable ["ObjectID", "0"];
 _uid =		_object getVariable ["ObjectUID", "0"];
 _type = 	_this select 1;
 _speed = speed _object;
@@ -33,7 +33,7 @@ switch (_type) do {
 		_previous = str(_object getVariable["lastInventory",[]]);
 		if (str(_inventory) != _previous) then {
 			_object setVariable["lastInventory",_inventory];
-			if (_objectID == 0) then {
+			if (_objectID == "0") then {
 				_key = format["CHILD:309:%1:%2:",_uid,_inventory];
 			} else {
 				_key = format["CHILD:303:%1:%2:",_objectID,_inventory];
@@ -65,7 +65,7 @@ switch (_type) do {
 		_previous = str(_object getVariable["lastInventory",[]]);
 		if (str(_inventory) != _previous) then {
 			_object setVariable["lastInventory",_inventory];
-			if (_objectID == 0) then {
+			if (_objectID == "0") then {
 				_key = format["CHILD:309:%1:%2:",_uid,_inventory];
 			} else {
 				_key = format["CHILD:303:%1:%2:",_objectID,_inventory];
