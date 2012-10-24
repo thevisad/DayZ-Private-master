@@ -135,7 +135,7 @@ if (scalar(@pkgs) > 0) {
 	merge_packages(\@pkgs, $build_dir, $pkg_build_dir);
 }
 
-pack_world("$tmp_dir/dayz_server", "$dst_dir/\@bliss_$args{'instance'}.$args{'world'}/addons");
+pack_world($build_dir, "$dst_dir/\@bliss_$args{'instance'}.$args{'world'}/addons");
 copy("$base_dir/util/blisshive.dll", "$dst_dir/\@bliss_$args{'instance'}.$args{'world'}/blisshive.dll");
 
 # Create the mission PBO
@@ -209,8 +209,7 @@ sub complex_merge {
 			my $origLast = pop(@origSplit);
 			my $srcPath = "$src/$origLast/" . basename($origPath);
 
-			my ($origData, $srcData, $dstData) = (read_file($origPath), read_file($srcPath), read_file($dstPath));
-			my $cmd = (($^O =~ m/MSWin32/) ? 'util/diff3.exe' : 'diff3 -m');
+			my $cmd = (($^O =~ m/MSWin32/) ? 'util\\diff3.exe --diff-program=util\\diff.exe -m' : 'diff3 -m');
 			my $diffOutput = `$cmd $srcPath $origPath $dstPath`;
 
 			$diffOutput =~ s/^[<=>\|]{7}.*//mg;
