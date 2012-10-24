@@ -121,16 +121,16 @@ When running `build.pl`, you may specify additional options to merge in optional
     <td>Perflib</td><td>-with-perflib</td><td>Improved performance, **NOTE** Overwrite util\\blisshive.dll with util\\blisshive_perflib.dll before building</td>
   </tr>
   <tr>
-    <td>Care Packages</td><td>-with-carepkgs</td><td>Drops care packages with various loot types across the map (similar to heli crash sites)</td>
+    <td>Kill Messages</td><td>--with-killmsgs</td><td>Shows in-game messages when one player kills another (not needed for Lingor). Custom BE filters must be used (https://code.google.com/p/bliss-community-filters/downloads/list)</td>
   </tr>
   <tr>
-    <td>Kill Messages</td><td>-with-killmsgs</td><td>Shows in-game messages when one player kills another (not needed for Lingor). Custom BE filters must be used (https://code.google.com/p/bliss-community-filters/downloads/list)</td>
+    <td>Messaging</td><td>--with-messaging</td><td>Replacement for the old scheduler feature, see <b>Messaging/Scheduler</b> below</td>
   </tr>
   <tr>
-    <td>Messaging</td><td>-with-messaging</td><td>Replacement for the old scheduler feature, see <b>Messaging/Scheduler</b> below</td>
+    <td>Buildings</td><td>--with-buildings</td><td>Allow spawning of database-defined structures/buildings on the map, see <b>Buildings</b></td>
   </tr>
   <tr>
-    <td>Buildings</td><td>-with-buildings</td><td>Allow spawning of database-defined structures/buildings on the map, see <b>Buildings</b></td>
+    <td>Wrecks</td><td>--with-buildings</td><td>Spawns various lootable vehicle wrecks across the map on server start</td>
   </tr>
 </table> 
 
