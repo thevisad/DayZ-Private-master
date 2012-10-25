@@ -20,8 +20,10 @@ use List::Util qw(max min);
 our %args;
 GetOptions(
 	\%args,
+	'rcon|password|pass|p=s',
 	'world|w|map|mission|m=s',
 	'instance|id|i=s',
+	'channels|chat=s',
 	'list',
 	'clean',
 	'help'
@@ -32,25 +34,27 @@ $args{'world'} = ($args{'world'}) ? lc($args{'world'}) : 'chernarus';
 $args{'instance'} = '1' unless $args{'instance'};
 
 # Initialize paths
-my $base_dir = dirname(__FILE__);
-my $tmp_dir  = "$base_dir/tmp";
-my $wld_dir  = "$base_dir/pkg/world";
-my $bls_dir  = "$base_dir/pkg/bliss";
-my $msn_dir  = "$base_dir/mission";
-my $src_dir  = "$base_dir/util/dayz_server";
-my $dst_dir  = "$base_dir/deploy";
+our $base_dir = dirname(__FILE__);
+our $tmp_dir  = "$base_dir/tmp";
+our $wld_dir  = "$base_dir/pkg/world";
+our $bls_dir  = "$base_dir/pkg/bliss";
+our $msn_dir  = "$base_dir/mission";
+our $src_dir  = "$base_dir/util/dayz_server";
+our $dst_dir  = "$base_dir/deploy";
 
-my $build_dir     = "$tmp_dir/dayz_server";
-my $msn_build_dir = "$tmp_dir/mission_tmp";
-my $pkg_build_dir = "$tmp_dir/package_tmp";
+our $build_dir     = "$tmp_dir/dayz_server";
+our $msn_build_dir = "$tmp_dir/mission_tmp";
+our $pkg_build_dir = "$tmp_dir/package_tmp";
 
 if ($args{'help'}) {
-	print "usage: build.pl [--world <world>] [--instance <id>] [--with-<option>] [--clean] [--list]\n";
+	print "usage: build.pl [--world <world>] [--instance <id>] [--with-<option>] [--clean] [--channels <channels>] [--rcon <password>] [--list]\n";
 	print "    --world <world>: build an instance for the specified map/world\n";
 	print "    --instance <id>: build an instance with the specified integer instance id\n";
 	print "\n";
 	print "    --with-<package>: merge in changes from ./pkg/<package>/ during build\n";
 	print "    --clean: remove all files in ./tmp/ and perform no further action\n";
+	print "    --channels: set comma-separated list of channel ids to disable\n";
+	print "    --rcon: set rcon/admin password\n";
 	print "    --list: lists all available worlds and packages\n";
 	exit;
 } elsif ($args{'list'}) {
@@ -82,20 +86,65 @@ if ($args{'help'}) {
 }
 
 die "FATAL: Source dir $src_dir does not exist\n" unless (-d $src_dir);
-die "FATAL: Mission dir $base_dir/mission/world/$args{'world'} does not exist\n" unless (-d "$base_dir/mission/world/$args{'world'}");
+die "FATAL: Mission dir $msn_dir/world/$args{'world'} does not exist\n" unless (-d "$msn_dir/world/$args{'world'}");
 
 # Create deploy directory and get build paths ready
 copy_dir("$base_dir/util/deploy", $dst_dir) unless (-d $dst_dir);
 make_path($tmp_dir) unless (-d $tmp_dir);
 
-# Do all modifications to deploy directory
-configure_deploy(
-	$args{'instance'},
-	$args{'world'},
-	"$base_dir/util/server.bat",
-	"$base_dir/util/dayz_config",
-	$dst_dir
-);
+# Make all modifications to deploy directory
+my $conf_dir = "$dst_dir/dayz_$args{'instance'}.$args{'world'}";
+my $src_bat  = "$base_dir/util/server.bat";
+my $src      = "$base_dir/util/dayz_config";
+
+# Check that required files exist
+if (-d $src && !-d $conf_dir && -f $src_bat) {
+	# Copy base config directory to the instance-specific path
+	print "INFO: Creating configuration dayz_$args{'instance'}.$args{'world'}\n";
+	copy_dir($src, $conf_dir);
+
+	# Copy bat file if one does not already exist 
+	my $dst_bat = "$dst_dir/server_$args{'world'}_$args{'instance'}.bat";
+	if ($src_bat ne $dst_bat && !-f $dst_bat) {
+		copy($src_bat, $dst_bat);
+		$src_bat = $dst_bat;
+	}
+
+	# Ensure proper mission name is specified in config.cfg
+	replace_text("s/template\\s=\\sdayz_[0-9]+.[a-z]+/template = dayz_$args{'instance'}.$args{'world'}/", "$conf_dir/config.cfg");
+
+	my $mods = {
+		'lingor'    => '\@dayzlingor',
+		'takistan'  => '\@dayztakistan',
+		'fallujah'  => '\@dayzfallujah',
+		'zargabad'  => '\@dayzzargabad',
+		'utes'      => '\@dayz',
+		'panthera2' => '\@dayzpanthera',
+		'namalsk'   => '\@dayz;\@dayz_namalsk;\@namalsk;\@nc',
+	};
+
+	# Ensure proper modfolders are specified in .bat file
+	if (defined $mods->{$args{'world'}}) {
+		$mods->{$args{'world'}} .= ";\\\@bliss_$args{'instance'}.$args{'world'}";
+		replace_text("s/\\\"-mod=.*\\\"/\\\"-mod=$mods->{$args{'world'}}\\\"/", $src_bat);
+	}
+
+	# Ensure proper profile directory is specified in .bat file
+	replace_text("s/=dayz_1.chernarus/=dayz_$args{'instance'}.$args{'world'}/g", $src_bat);
+
+	# Obfuscate the configuration/password if not already performed
+	if (-f "$conf_dir/config.cfg") {
+		my $start = int(rand(32));
+		my $hash = ($args{'rcon'}) ? $args{'rcon'} : substr(sha1_hex(time()), $start, 8);
+		print "INFO: RCon password will be set to $hash\n";
+
+		# Copy config.cfg to secured path, substitute values and update .bat file
+		rename("$conf_dir/config.cfg", "$conf_dir/config_$hash.cfg");
+		replace_text("s/passwordAdmin\\s=\\s\\\"\\\"/passwordAdmin = \\\"$hash\\\"/", "$conf_dir/config_$hash.cfg");
+		replace_text("s/RConPassword\\s[0-9a-fA-F]{8}/RConPassword $hash/", "$conf_dir/BattlEye/BEServer.cfg");
+		replace_text("s/config=dayz_$args{'instance'}.$args{'world'}\\\\config_[0-9a-fA-F]{8}.cfg/config=dayz_$args{'instance'}.$args{'world'}\\\\config_$hash.cfg/", $src_bat);
+	}
+}
 
 # Clean up existing temp directories before starting work
 remove_tree($build_dir) if (-d $build_dir);
@@ -137,8 +186,7 @@ if (scalar(@pkgs) > 0) {
 	merge_packages(\@pkgs, $build_dir, $pkg_build_dir);
 }
 
-pack_world($build_dir, "$dst_dir/\@bliss_$args{'instance'}.$args{'world'}/addons");
-copy("$base_dir/util/blisshive.dll", "$dst_dir/\@bliss_$args{'instance'}.$args{'world'}/blisshive.dll");
+pack_world();
 
 # Create the mission PBO
 copy_dir("$msn_dir/world/$args{'world'}", $msn_build_dir);
@@ -146,11 +194,15 @@ if (scalar(@msn_pkgs) > 0) {
 	merge_packages(\@msn_pkgs, $msn_build_dir, $msn_build_dir);
 }
 
-pack_mission($args{'instance'}, $args{'world'}, "$tmp_dir/mission_tmp", "$dst_dir/MPMissions");
+pack_mission();
 
 remove_tree($tmp_dir);
 print "INFO: Build completed successfully!\n";
 exit;
+
+#==================================================================================================
+# SUBROUTINE DEFINITIONS BELOW
+#==================================================================================================
 
 # Merge helpers
 sub simple_merge {
@@ -274,59 +326,6 @@ sub merge_packages {
 	}
 }
 
-sub configure_deploy {
-	my ($instance, $world, $src_bat, $src, $dst) = @_;
-	my $conf_dir = "$dst/dayz_$instance.$world";
-
-	# Check that required files exist
-	return unless (-d $src && !-d $conf_dir && -f $src_bat);
-
-	# Copy base config directory to the instance-specific path
-	print "INFO: Creating configuration dayz_$instance.$world\n";
-	copy_dir($src, $conf_dir);
-
-	# Copy bat file if one does not already exist 
-	my $dst_bat = "$dst/server_${world}_$instance.bat";
-	if ($src_bat ne $dst_bat && !-f $dst_bat) {
-		copy($src_bat, $dst_bat);
-		$src_bat = $dst_bat;
-	}
-
-	# Ensure proper mission name is specified in config.cfg
-	replace_text("s/template\\s=\\sdayz_[0-9]+.[a-z]+/template = dayz_$instance.$world/", "$conf_dir/config.cfg");
-
-	my $mods = {
-		'lingor'    => '\@dayzlingor',
-		'takistan'  => '\@dayztakistan',
-		'fallujah'  => '\@dayzfallujah',
-		'zargabad'  => '\@dayzzargabad',
-		'utes'      => '\@dayz',
-		'panthera2' => '\@dayzpanthera',
-		'namalsk'   => '\@dayz;\@dayz_namalsk;\@namalsk;\@nc'
-	};
-
-	# Ensure proper modfolders are specified in .bat file
-	if (defined $mods->{$world}) {
-		$mods->{$world} .= ";\\\@bliss_$instance.$world";
-		replace_text("s/\\\"-mod=.*\\\"/\\\"-mod=$mods->{$world}\\\"/", $src_bat);
-	}
-
-	# Ensure proper profile directory is specified in .bat file
-	replace_text("s/=dayz_1.chernarus/=dayz_$instance.$world/g", $src_bat);
-
-	# Obfuscate the configuration/password if not already performed
-	if (-f "$conf_dir/config.cfg") {
-		my $start = int(rand(32));
-		my $hash = substr(sha1_hex(time()), $start, 8);
-		print "INFO: RCon password will be set to $hash\n";
-
-		# Copy config.cfg to secured path, substitute values and update .bat file
-		rename("$conf_dir/config.cfg", "$conf_dir/config_$hash.cfg");
-		replace_text("s/passwordAdmin\\s=\\s\\\"\\\"/passwordAdmin = \\\"$hash\\\"/", "$conf_dir/config_$hash.cfg");
-		replace_text("s/RConPassword\\s[0-9a-fA-F]{8}/RConPassword $hash/", "$conf_dir/BattlEye/BEServer.cfg");
-		replace_text("s/config=dayz_$instance.$world\\\\config_[0-9a-fA-F]{8}.cfg/config=dayz_$instance.$world\\\\config_$hash.cfg/", $src_bat);
-	}
-}
 
 # .pbo packing helpers
 sub pack_pbo {
@@ -338,20 +337,28 @@ sub pack_pbo {
 }
 
 sub pack_world {
-	my ($src, $dst) = @_;
+	my $src = $build_dir;
+	my $dst = "$dst_dir/\@bliss_$args{'instance'}.$args{'world'}/addons";
 
 	print "INFO: Creating dayz_server.pbo\n";
 	make_path($dst) unless (-d $dst);
 	pack_pbo($src, "$dst/dayz_server.pbo");
-	remove_tree($src);
+
+	copy("$base_dir/util/HiveExt.dll", "$dst_dir/\@bliss_$args{'instance'}.$args{'world'}/HiveExt.dll");
 }
 
 sub pack_mission {
-	my ($instance, $world, $src, $dst) = @_;
-	my $name = "dayz_$instance.$world";
+	my $src  = "$tmp_dir/mission_tmp";
+	my $dst  = "$dst_dir/MPMissions";
+	my $name = "dayz_$args{'instance'}.$args{'world'}";
 
 	# Substitute the instance ID into init.sqf
-	replace_text("s/dayZ_instance\\s=\\s[0-9]*/dayZ_instance = $instance/", "$src/init.sqf");
+	replace_text("s/dayZ_instance\\s=\\s[0-9]*/dayZ_instance = $args{'instance'}/", "$src/init.sqf");
+
+	# Set the chat channels in description.ext
+	if ($args{'channels'}) {
+		replace_text("s/disableChannels\\[\\]=\\{([0-9],*)+\\}/disableChannels\\[\\]={$args{'channels'}}/", "$msn_build_dir/description.ext");
+	}
 
 	print "INFO: Creating $name.pbo\n";
 	make_path($dst) unless (-d $dst);
