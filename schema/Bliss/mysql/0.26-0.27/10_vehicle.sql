@@ -1,0 +1,18 @@
+insert ignore into vehicle (id, class_name, damage_min, damage_max, fuel_min, fuel_max, limit_min, limit_max, parts, inventory) values
+  (36,'BW_Ikarus1',0.100,0.700,0.200,0.800,0,5,'palivo,motor,karoserie,wheel_1_1_steering,wheel_1_2_steering,wheel_2_1_steering,wheel_2_2_steering','[]'),
+  (37,'BW_Ikarus2',0.100,0.700,0.200,0.800,0,5,'palivo,motor,karoserie,wheel_1_1_steering,wheel_1_2_steering,wheel_2_1_steering,wheel_2_2_steering','[]'),
+  (38,'kpfs_golf_g',0.100,0.700,0.200,0.800,0,5,'palivo,motor,karoserie,wheel_1_1_steering,wheel_1_2_steering,wheel_2_1_steering,wheel_2_2_steering','[]'),
+  (39,'kpfs_golf_p',0.100,0.700,0.200,0.800,0,5,'palivo,motor,karoserie,wheel_1_1_steering,wheel_1_2_steering,wheel_2_1_steering,wheel_2_2_steering','[]'),
+  (40,'kpfs_golf_post',0.100,0.700,0.200,0.800,0,5,'palivo,motor,karoserie,wheel_1_1_steering,wheel_1_2_steering,wheel_2_1_steering,wheel_2_2_steering','[]'),
+  (41,'kpfs_golf_tk',0.100,0.700,0.200,0.800,0,5,'palivo,motor,karoserie,wheel_1_1_steering,wheel_1_2_steering,wheel_2_1_steering,wheel_2_2_steering','[]'),
+  (42,'Lada1_GDR',0.100,0.700,0.200,0.800,0,5,'palivo,motor,karoserie,wheel_1_1_steering,wheel_1_2_steering,wheel_2_1_steering,wheel_2_2_steering','[]'),
+  (43,'Lada2_GDR',0.100,0.700,0.200,0.800,0,5,'palivo,motor,karoserie,wheel_1_1_steering,wheel_1_2_steering,wheel_2_1_steering,wheel_2_2_steering','[]'),
+  (44,'Lada2_TK_CIV_EP1',0.100,0.700,0.200,0.800,0,5,'palivo,motor,karoserie,wheel_1_1_steering,wheel_1_2_steering,wheel_2_1_steering,wheel_2_2_steering','[]'),
+  (45,'Lada4_GDR',0.100,0.700,0.200,0.800,0,5,'palivo,motor,karoserie,wheel_1_1_steering,wheel_1_2_steering,wheel_2_1_steering,wheel_2_2_steering','[]'),
+  (46,'Lada5_GDR',0.100,0.700,0.200,0.800,0,5,'palivo,motor,karoserie,wheel_1_1_steering,wheel_1_2_steering,wheel_2_1_steering,wheel_2_2_steering','[]'),
+  (47,'TT650_Civ',0.100,0.700,0.200,0.800,0,5,'palivo,motor,karoserie,wheel_1_1_steering,wheel_1_2_steering,wheel_2_1_steering,wheel_2_2_steering','[]'),
+  (48,'TT650_Gue',0.100,0.700,0.200,0.800,0,5,'palivo,motor,karoserie,wheel_1_1_steering,wheel_1_2_steering,wheel_2_1_steering,wheel_2_2_steering','[]'),
+  (49,'MTVR',0.100,0.700,0.200,0.800,0,5,'palivo,motor,karoserie,wheel_1_1_steering,wheel_1_2_steering,wheel_2_1_steering,wheel_2_2_steering','[]'),
+  (50,'M1030_US_DES_EP1',0.100,0.700,0.200,0.800,0,5,'palivo,motor,karoserie,wheel_1_1_steering,wheel_1_2_steering,wheel_2_1_steering,wheel_2_2_steering','[]'),
+  (51,'smallboat_2',0.100,0.700,0.200,0.800,0,5,'motor','[]'),
+  (52,'Post_bike_E',0.100,0.700,0.200,0.800,0,5,'','[]');

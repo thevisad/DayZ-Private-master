@@ -59,13 +59,13 @@ if ($cleanup ne 'none') {
 	print "INFO: Cleaning up damaged vehicles\n";
 	my $sth = $dbh->prepare(<<EndSQL
 delete from
-  iv using instance_vehicle iv
-  inner join vehicle v on iv.vehicle_id = v.id
+  instance_vehicle 
 where
-  iv.damage = 1
+  instance_id = ?
+  and damage = 1
 EndSQL
 ) or die "FATAL: SQL Error - " . DBI->errstr . "\n";
-	$sth->execute() or die "FATAL: Could not clean up destroyed vehicles - " . $sth->errstr . "\n";
+	$sth->execute($db{'instance'}) or die "FATAL: Could not clean up destroyed vehicles - " . $sth->errstr . "\n";
 
 	print "INFO: Cleaning up old deployables\n";
 	$sth = $dbh->prepare(<<EndSQL
@@ -113,14 +113,16 @@ from
 union
 select
   0 dep_id,
-  iv.id veh_id,
+  v.id veh_id,
   iv.worldspace,
   w.max_x,
   w.max_y
 from
   instance_vehicle iv
-  inner join instance i on iv.instance_id = i.id
-  inner join world w on i.world_id = w.id
+  join instance i on iv.instance_id = i.id
+  join world_vehicle wv on iv.world_vehicle_id = wv.id
+  join vehicle v on wv.vehicle_id = v.id
+  join world w on i.world_id = w.id
 EndSQL
 );
 	$sth->execute() or die "FATAL: Couldn't get list of object positions\n";
@@ -152,7 +154,7 @@ die "FATAL: Count of $vehicleCount is greater than limit of $db{'limit'}\n" if (
 print "INFO: Fetching spawn information\n";
 my $spawns = $dbh->prepare(<<EndSQL
 select
-  wv.vehicle_id,
+  wv.id world_vehicle_id,
   wv.worldspace,
   v.inventory,
   coalesce(v.parts, '') parts,
@@ -161,16 +163,17 @@ select
   round(least(greatest(rand(), v.fuel_min), v.fuel_max), 3) fuel
 from
   world_vehicle wv 
-  inner join vehicle v on wv.vehicle_id = v.id
-  left join instance_vehicle iv on wv.worldspace = iv.worldspace and iv.instance_id = ?
+  join vehicle v on wv.vehicle_id = v.id
+  left join instance_vehicle iv on iv.world_vehicle_id = wv.id and iv.instance_id = ?
   left join (
     select
-      count(*) as count,
-      vehicle_id
+      count(iv.id) as count,
+      wv.vehicle_id
     from
-      instance_vehicle
+      instance_vehicle iv
+      join world_vehicle wv on iv.world_vehicle_id = wv.id
     where instance_id = ?
-    group by vehicle_id
+    group by wv.vehicle_id
   ) vc on vc.vehicle_id = v.id
 where
   wv.world_id = ?
@@ -183,7 +186,7 @@ $spawns->execute($db{'instance'}, $db{'instance'}, $world_id);
 
 my $insert = $dbh->prepare(<<EndSQL
 insert into
-  instance_vehicle (vehicle_id, worldspace, inventory, parts, damage, fuel, instance_id, created)
+  instance_vehicle (world_vehicle_id, worldspace, inventory, parts, damage, fuel, instance_id, created)
 values (?, ?, ?, ?, ?, ?, ?, current_timestamp())
 EndSQL
 ) or die "FATAL: SQL Error - " . DBI->errstr . "\n";
@@ -200,7 +203,7 @@ while (my $vehicle = $spawns->fetchrow_hashref) {
 	}
 
 	# If over the per-type limit, skip this spawn
-	my $count = $dbh->selectrow_array("select count(*) from instance_vehicle where instance_id = ? and vehicle_id = ?", undef, ($db{'instance'}, $vehicle->{vehicle_id}));
+	my $count = $dbh->selectrow_array("select count(iv.id) from instance_vehicle iv join world_vehicle wv on iv.world_vehicle_id = wv.id where iv.instance_id = ? and wv.id = ?", undef, ($db{'instance'}, $vehicle->{world_vehicle_id}));
 	next unless ($count < $vehicle->{limit_max});
 
 	# Generate parts damage
@@ -208,8 +211,8 @@ while (my $vehicle = $spawns->fetchrow_hashref) {
 
 	# Execute insert
 	$spawnCount++;
-	$insert->execute($vehicle->{vehicle_id}, $vehicle->{worldspace}, $vehicle->{inventory}, $health, $vehicle->{damage}, $vehicle->{fuel}, $db{'instance'});
-	print "INFO: Called insert with ($vehicle->{vehicle_id}, $vehicle->{worldspace}, $vehicle->{inventory}, $health, $vehicle->{damage}, $vehicle->{fuel}, $db{'instance'})\n";
+	$insert->execute($vehicle->{world_vehicle_id}, $vehicle->{worldspace}, $vehicle->{inventory}, $health, $vehicle->{damage}, $vehicle->{fuel}, $db{'instance'});
+	print "INFO: Called insert with ($vehicle->{world_vehicle_id}, $vehicle->{worldspace}, $vehicle->{inventory}, $health, $vehicle->{damage}, $vehicle->{fuel}, $db{'instance'})\n";
 }
 
 print "INFO: Spawned $spawnCount vehicles\n";

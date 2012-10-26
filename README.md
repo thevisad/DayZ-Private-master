@@ -93,6 +93,8 @@ Installation
 Upgrading
 =========
 
+**EXTREMELY IMPORTANT:** If you are migrating from **ANY** previous version of Bliss you will lose vehicles during the upgrade to schema 0.27.
+
 Depending on what has changed since you deployed your server, you may need to perform one or more steps to do a clean upgrade to the latest code. Look for the following in the commit log (specifically, the files that were changed) when you update to the latest version of the repository:
 
 If you see that SQL files or `db_migrate.pl` have changed, then you **must** run `db_migrate.pl` (with appropriate options, run it with `--help` for more information) to upgrade your database to the latest version.
