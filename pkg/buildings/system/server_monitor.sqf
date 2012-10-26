@@ -33,7 +33,13 @@ for "_page" from 1 to _pageCount do {
 	for "_i" from 0 to _end do {
 		_item = _result select _i;
 		if (count _item > 0) then {
-			_building = createVehicle [_item select 0, call compile (_item select 1), [], 0, "CAN_COLLIDE"];
+			_pos = call compile (_item select 1);
+			_dir = _pos select 0;
+			_pos = _pos select 1;
+
+			_building = createVehicle [_item select 0, _pos, [], 0, "CAN_COLLIDE"];
+			_building setDir _dir;
+
 			_bldCount = _bldCount + 1;
 			//diag_log("DEBUG: Added building " + _item);
 		};
