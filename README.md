@@ -120,7 +120,7 @@ When running `build.pl`, you may specify additional options to merge in optional
     <td>Name</td><td>Param</td><td>Description</td>
   </tr>
   <tr>
-    <td>Perflib</td><td>-with-perflib</td><td>Improved performance, **NOTE** Overwrite util\\blisshive.dll with util\\blisshive_perflib.dll before building</td>
+    <td>Care Packages</td><td>--with-carepkgs</td><td>Drops care packages with various loot types across the map (similar to heli crash sites)</td>
   </tr>
   <tr>
     <td>Kill Messages</td><td>--with-killmsgs</td><td>Shows in-game messages when one player kills another (not needed for Lingor). Custom BE filters must be used (https://code.google.com/p/bliss-community-filters/downloads/list)</td>
