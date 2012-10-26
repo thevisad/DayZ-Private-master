@@ -121,6 +121,7 @@ if (-d $src && !-d $conf_dir && -f $src_bat) {
 		'utes'      => '\@dayz',
 		'panthera2' => '\@dayzpanthera',
 		'namalsk'   => '\@dayz;\@dayz_namalsk;\@namalsk;\@nc',
+		'mbg_celle2'=> '\@dayz_celle;\@mbg_celle2'
 	};
 
 	# Ensure proper modfolders are specified in .bat file
