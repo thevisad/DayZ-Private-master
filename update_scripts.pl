@@ -6,24 +6,37 @@ use File::Path qw(make_path);
 our %args;
 GetOptions(
 	\%args,
+	'world|w=s',
 	'help'
 );
 
 my ($dst) = @ARGV;
 
 if ($args{'help'}) {
-	print "usage: update_scripts.pl <directory>\n";
+	print "usage: update_scripts.pl [--world <world>] <directory>\n";
 	print "     This script downloads updated BE filters from the community list and then modifies them to make them compatible with Bliss optional features\n";
 	exit;
 }
+
+$args{'world'} = 'chernarus' unless($args{'world'});
 
 die "FATAL: Must supply destination directory\n" unless defined $dst;
 die "FATAL: Destination directory $dst does not exist\n" unless (-d $dst);
 
 my %lookups = (
-	"\\\"spawn\\\""      => "!\\\"_this spawn fnc_plyrHit\\\"",
-	"\\\"this\\\""       => "!\\\"_this spawn fnc_plyrHit\\\"",
-	"addMPEventHandler"  => "!\\\"_this spawn fnc_plyrHit\\\"",
+	'global' => {
+		"\\\"spawn\\\""      => "!\\\"_this spawn fnc_plyrHit\\\"",
+		"\\\"this\\\""       => "!\\\"_this spawn fnc_plyrHit\\\"",
+		"addMPEventHandler"  => "!\\\"_this spawn fnc_plyrHit\\\""
+	},
+	'namalsk' => {
+		"createVehicle"      => "!\\\"_light = \\\"#LightPoint\\\" createVehicleLocal [4978.8086,6630.834,0];\\\"",
+		"createVehicleLocal" => "!\\\"_light = \\\"#LightPoint\\\" createVehicleLocal [4978.8086,6630.834,0];\\\"",
+		"\\\"box\\\""        => "!\\\"z_ru_soldier_light\\\" !\\\"z_us_soldier\\\" !\\\"z_us_soldier_light\\\" !\\\"z_ru_soldier\\\" !\\\"CamoWinter_DZN\\\""
+	},
+	'celle' => {
+		"createVehicleLocal" => "!\\\"createvehiclelocal getpos _house;\\\""
+	}
 );
 
 my @scripts = (
@@ -48,10 +61,18 @@ foreach my $script (@scripts) {
 
 	die "FATAL: Could not fetch URI!" unless ($ret == 0);
 
-	while (($pattern, $exception) = each %lookups) {
+	while (($pattern, $exception) = each %{$lookups{'global'}}) {
 		my $regex = "s/([0-9]{1})\\s$pattern\\s(.*)([\\\/]{2}.*)*/" . (($exception) ? "\\\$1 $pattern \\\$2 $exception\n/g" : "/g");
 		replace_text($regex, "$dst/$script");
 	}
+
+	if (defined $lookups{$args{'world'}}) {
+		while (($pattern, $exception) = each %{$lookups{$args{'world'}}}) {
+			my $regex = "s/([0-9]{1})\\s$pattern\\s(.*)([\\\/]{2}.*)*/" . (($exception) ? "\\\$1 $pattern \\\$2 $exception\n/g" : "/g");
+			replace_text($regex, "$dst/$script");
+		}
+	}
+
 	replace_text("s#^//((?!new).*)\\\$##sg", "$dst/$script");
 	replace_text("s/^\\n\$//", "$dst/$script");
 }
