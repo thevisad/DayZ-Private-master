@@ -40,7 +40,22 @@ eh_localCleanup =			{
 			private["_type","_unit"];
 			_unit = _this select 0;
 			_type = typeOf _unit;
+			 _myGroupUnit = group _unit;
+ 			_unit removeAllMPEventHandlers "mpkilled";
+ 			_unit removeAllMPEventHandlers "mphit";
+ 			_unit removeAllMPEventHandlers "mprespawn";
+ 			
+ 			_unit removeAllEventHandlers "FiredNear";
+			_unit removeAllEventHandlers "HandleDamage";
+			_unit removeAllEventHandlers "Killed";
+			_unit removeAllEventHandlers "Fired";
+			_unit removeAllEventHandlers "GetOut";
+			_unit removeAllEventHandlers "GetIn";
+			_unit removeAllEventHandlers "Local";
+			clearVehicleInit _unit;
 			deleteVehicle _unit;
+			deleteGroup _myGroupUnit;
+			_unit = nil;
 			diag_log ("CLEANUP: DELETED A " + str(_type) );
 		};
 	}];
