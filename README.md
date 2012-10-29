@@ -134,6 +134,9 @@ When running `build.pl`, you may specify additional options to merge in optional
   <tr>
     <td>Wrecks</td><td>--with-buildings</td><td>Spawns various lootable vehicle wrecks across the map on server start</td>
   </tr>
+  <tr>
+    <td>Custom Inventory</td><td>--with-invcust</td><td>Allows you to grant custom spawn loadouts to individuals or group, see <b>Custom Inventory</b></td>
+  </tr>
 </table> 
 
 Multiple Instances
@@ -169,6 +172,16 @@ You may optionally enable a system that reads structure information from the dat
 3. You must manually insert any building class names you wish to use into the building table and then insert the spawn coordinates / associated building IDs into the instance_building table.  
 
 **NOTE:** Buildings added/updated via database manipulation are only available after a server restart.
+
+Custom Inventory
+================
+
+You may optionally enable a system that allows you to define custom spawn loadouts for individuals and/or group. To do so, follow these steps:
+
+1. Run `perl db_migrate.pl --schema BlissInvCust --version 0.01`. Be sure to include any parameters needed for your specific database passwords / configuration.  
+2. When building Bliss, you must add `--with-invcust` to your arguments, for example `perl build.pl --with-invcust`.  
+
+There are two tables which you must insert values into to use this feature. The `cust_loadout` table defines unique sets of inventory/backpack to give the player(s) on spawn. The `cust_loadout_profile` table then ties these cust_loadout rows to player profile IDs. You can associate multiple profile IDs to a single loadout   
 
 Customization
 =============
