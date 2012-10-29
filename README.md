@@ -2,7 +2,7 @@ DayZ Bliss Private Server
 =========================
 
 This is a private server project for DayZ.
-This code is currently compatible with DayZ 1.7.2.6 and ArmA 2 OA beta patch build 97771.
+This code is currently compatible with DayZ 1.7.3 and ArmA 2 OA beta patch build 97771.
 
 This would not be possible without the work of Rocket and Guru Abdul. We also use the fantastic cPBO from Kegetys (www.kegetys.fi) and wget for Windows by the GnuWin32 team (gnuwin32.sourceforge.net).
 
@@ -39,7 +39,7 @@ Installation
 		create user 'dayz'@'localhost' identified by 'CHANGEME';
 		grant all privileges on dayz.* to 'dayz'@'localhost';
 
-5. Run `perl db_migrate.pl --password CHANGEME` from the **ArmA2** directory. Replace `CHANGEME` with the password you chose in the previous step. Use the `--help` flag to get more information on how to set the hostname, username, or database name to suit your needs.  
+5. Run `perl db_migrate.pl --password CHANGEME` from the **Repository** directory. Replace `CHANGEME` with the password you chose in the previous step. Use the `--help` flag to get more information on how to set the hostname, username, or database name to suit your needs.  
 6. Ensure that the database information in **Config**\\HiveExt.ini match the database details you used in the previous step.  
 7. If you would like to customize the server time, change the pertinent options in **Config**\\HiveExt.ini.  
 8. Adjust server name/passwords as desired in **Config**\\config_deadbeef.cfg, where `deadbeef` is some random value generated specifically for your installation.  
@@ -64,7 +64,7 @@ Installation
     <td>World</td><td>Mod Folders</td><td>Version</td><td>URL</td>
   </tr>
   <tr>
-    <td>Chernarus</td><td>@dayz</td><td>1.7.2.6</td><td>http://dayzmod.com/?Download</td>
+    <td>Chernarus</td><td>@dayz</td><td>1.7.3</td><td>http://dayzmod.com/?Download</td>
   </tr>
   <tr>
     <td>Lingor Island</td><td>@dayzlingor</td><td>1.0</td><td>ftp://dayzcommander:dayzcommander@94.242.227.3/DayZLingor-1.0.rar</td>
@@ -73,7 +73,7 @@ Installation
     <td>Takistan</td><td>@dayztakistan</td><td>1.4</td><td>ftp://dayzcommander:dayzcommander@94.242.227.3/DayZTakistan-1.4.rar</td>
   </tr>
   <tr>
-    <td>Utes</td><td>@dayz</td><td>1.7.2.6</td><td>http://dayzmod.com/?Download</td>
+    <td>Utes</td><td>@dayz</td><td>1.7.3</td><td>http://dayzmod.com/?Download</td>
   </tr>
   <tr>
     <td>Panthera</td><td>@dayzpanthera</td><td>1.5</td><td>ftp://dayzcommander:dayzcommander@94.242.227.3/DayZPanthera-1.5.rar</td>
