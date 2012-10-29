@@ -27,6 +27,8 @@ fnc_join =			compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\fn
 fnc_split = 			compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\fnc_split.sqf";
 fnc_replace =			compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\fnc_replace.sqf";
 
+spawn_carePackages = compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\fnc_carePkgs.sqf";
+
 //Get instance name (e.g. dayz_1.chernarus)
 fnc_instanceName = {
 	"dayz_" + str(dayz_instance) + "." + worldName
@@ -118,126 +120,6 @@ spawn_heliCrash = {
 			} forEach _nearBy;
 		};
 	};
-	};
-};
-
-spawn_Misc_cargo_cont_net1 = {
-	private["_position","_veh","_num","_config","_itemType","_itemChance","_weights","_index","_iArray"];
-
-	waitUntil{!isNil "BIS_fnc_selectRandom"};
-	if (isDedicated) then {
-	_position = [getMarkerPos "center",0,4000,10,0,2000,0] call BIS_fnc_findSafePos;
-	diag_log("DEBUG: Spawning a Misc_cargo_cont_net1 at " + str(_position));
-	_veh = createVehicle ["Misc_cargo_cont_net1",_position, [], 0, "CAN_COLLIDE"];
-	dayz_serverObjectMonitor set [count dayz_serverObjectMonitor,_veh];
-	_veh setVariable ["ObjectID",1,true];
-
-	_num = round(random 3) + 3;
-	_config = 		configFile >> "CfgBuildingLoot" >> "Residential";
-	_itemType =		[] + getArray (_config >> "itemType");	
-	_itemChance =	[] + getArray (_config >> "itemChance");
-
-	waituntil {!isnil "fnc_buildWeightedArray"};
-
-	_weights = [];
-	_weights = 		[_itemType,_itemChance] call fnc_buildWeightedArray;
-	//diag_log ("DW_DEBUG: _weights: " + str(_weights));	
-	for "_x" from 1 to _num do {
-		//create loot
-		_index = _weights call BIS_fnc_selectRandom;
-		sleep 1;
-		if (count _itemType > _index) then {
-			//diag_log ("DW_DEBUG: " + str(count (_itemType)) + " select " + str(_index));
-			_iArray = _itemType select _index;
-			_iArray set [2,_position];
-			_iArray set [3,5];
-			_iArray call spawn_loot;
-			_nearby = _position nearObjects ["WeaponHolder",20];
-			{
-				_x setVariable ["permaLoot",true];
-			} forEach _nearBy;
-		};
-	};
-	};
-};
-
-spawn_Misc_cargo_cont_net2 = {
-	private["_position","_veh","_num","_config","_itemType","_itemChance","_weights","_index","_iArray"];
-
-	waitUntil{!isNil "BIS_fnc_selectRandom"};
-	if (isDedicated) then {
-	_position = [getMarkerPos "center",0,4000,10,0,2000,0] call BIS_fnc_findSafePos;
-	diag_log("DEBUG: Spawning a Misc_cargo_cont_net2 at " + str(_position));
-	_veh = createVehicle ["Misc_cargo_cont_net2",_position, [], 0, "CAN_COLLIDE"];
-	dayz_serverObjectMonitor set [count dayz_serverObjectMonitor,_veh];
-	_veh setVariable ["ObjectID",1,true];
-
-	_num = round(random 6) + 3;
-	_config = 		configFile >> "CfgBuildingLoot" >> "Industrial";
-	_itemType =		[] + getArray (_config >> "itemType");
-	//diag_log ("DW_DEBUG: _itemType: " + str(_itemType));	
-	_itemChance =	[] + getArray (_config >> "itemChance");
-	//diag_log ("DW_DEBUG: _itemChance: " + str(_itemChance));	
-	//diag_log ("DW_DEBUG: (isnil fnc_buildWeightedArray): " + str(isnil "fnc_buildWeightedArray"));	
-
-	waituntil {!isnil "fnc_buildWeightedArray"};
-
-	_weights = [];
-	_weights = 		[_itemType,_itemChance] call fnc_buildWeightedArray;
-	//diag_log ("DW_DEBUG: _weights: " + str(_weights));	
-	for "_x" from 1 to _num do {
-		//create loot
-		_index = _weights call BIS_fnc_selectRandom;
-		sleep 1;
-		if (count _itemType > _index) then {
-			//diag_log ("DW_DEBUG: " + str(count (_itemType)) + " select " + str(_index));
-			_iArray = _itemType select _index;
-			_iArray set [2,_position];
-			_iArray set [3,5];
-			_iArray call spawn_loot;
-			_nearby = _position nearObjects ["WeaponHolder",30];
-			{
-				_x setVariable ["permaLoot",true];
-			} forEach _nearBy;
-		};
-	};
-	};
-};
-
-spawn_Misc_cargo_cont_net3 = {
-	private["_position","_veh","_num","_config","_itemType","_itemChance","_weights","_index","_iArray"];
-
-	waitUntil{!isNil "BIS_fnc_selectRandom"};
-	if (isDedicated) then {
-		_position = [getMarkerPos "center",0,4000,10,0,2000,0] call BIS_fnc_findSafePos;
-		diag_log("DEBUG: Spawning a Misc_cargo_cont_net3 at " + str(_position));
-		_veh = createVehicle ["Misc_cargo_cont_net3",_position, [], 0, "CAN_COLLIDE"];
-	        dayz_serverObjectMonitor set [count dayz_serverObjectMonitor,_veh];
-		_veh setVariable ["ObjectID",1,true];
-
-		_num = round(random 9) + 3;
-		_config = 		configFile >> "CfgBuildingLoot" >> "Military";
-		_itemType =		[] + getArray (_config >> "itemType");
-		_itemChance =	[] + getArray (_config >> "itemChance");
-
-		waituntil {!isnil "fnc_buildWeightedArray"};
-
-		_weights = [];
-		_weights = [_itemType,_itemChance] call fnc_buildWeightedArray;
-		for "_x" from 1 to _num do {
-			_index = _weights call BIS_fnc_selectRandom;
-			sleep 1;
-			if (count _itemType > _index) then {
-				_iArray = _itemType select _index;
-				_iArray set [2,_position];
-				_iArray set [3,5];
-				_iArray call spawn_loot;
-				_nearby = _position nearObjects ["WeaponHolder",40];
-				{
-					_x setVariable ["permaLoot",true];
-				} forEach _nearBy;
-			};
-		};
 	};
 };
 

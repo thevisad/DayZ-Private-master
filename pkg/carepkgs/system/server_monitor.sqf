@@ -187,19 +187,10 @@ allowConnection = true;
 //Spawn crashed helos
 for "_x" from 1 to 5 do {
 	_id = [] spawn spawn_heliCrash;
+	//waitUntil{scriptDone _id};
 };
 
-//Spawn small care packages
+//Spawn care packages
 for "_x" from 1 to 6 do {
-	_id = [] spawn spawn_Misc_cargo_cont_net1;
-};
-
-//Spawn medium care packages
-for "_x" from 1 to 4 do {
-	_id = [] spawn spawn_Misc_cargo_cont_net2;
-};
-
-//Spawn large care packages
-for "_x" from 1 to 2 do {
-	_id = [] spawn spawn_Misc_cargo_cont_net3;
+	_id = [] spawn spawn_carePackages;
 };
