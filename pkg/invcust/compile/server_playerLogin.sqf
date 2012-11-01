@@ -63,7 +63,7 @@ if (!(_model in ["SurvivorW2_DZ","Survivor2_DZ","Survivor3_DZ","Sniper1_DZ","Sol
 
 diag_log ("LOGIN LOADED: " + str(_playerObj) + " Type: " + (typeOf _playerObj));
 
-_key = format["CHILD:999:select replace(cl.`inventory`, '""', '""""') inventory, replace(cl.`backpack`, '""', '""""') backpack, replace(coalesce('Survivor2_DZ', cl.`model`), '""', '"""") model from `cust_loadout` cl join `cust_loadout_profile` clp on clp.`cust_loadout_id` = cl.`id` join `profile` p on clp.`unique_id` = p.`unique_id` left join (select distinct `unique_id` from `survivor` where `is_dead` = 0 and last_updated < now() - interval 2 minute) x on x.`unique_id` = p.`unique_id` where x.`unique_id` is null and clp.`unique_id` = ?:[%1]:",_playerID];
+_key = format["CHILD:999:select replace(cl.`inventory`, '""', '""""') inventory, replace(cl.`backpack`, '""', '""""') backpack, replace(coalesce('Survivor2_DZ', cl.`model`), '""', '""""') model from `cust_loadout` cl join `cust_loadout_profile` clp on clp.`cust_loadout_id` = cl.`id` join `profile` p on clp.`unique_id` = p.`unique_id` left join (select distinct `unique_id` from `survivor` where `is_dead` = 0 and last_updated < now() - interval 2 minute) x on x.`unique_id` = p.`unique_id` where x.`unique_id` is null and clp.`unique_id` = ?:[%1]:",_playerID];
 _data = "HiveEXT" callExtension _key;
 
 //Process result
