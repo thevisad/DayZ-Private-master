@@ -56,29 +56,32 @@ _backpack  = _primary select 5;
 _survival  = _primary select 6;
 _model     = _primary select 7;
 _hiveVer   = _primary select 8;
+
+// Check custom inventory for new characters
+if (_model == "") then {
+	_key = format["CHILD:999:select replace(cl.`inventory`, '""', '""""') inventory, replace(cl.`backpack`, '""', '""""') backpack, replace(coalesce(cl.`model`, 'Survivor2_DZ'), '""', '""""') model from `cust_loadout` cl join `cust_loadout_profile` clp on clp.`cust_loadout_id` = cl.`id` where clp.`unique_id` = ?:[%1]:",_playerID];
+	_data = "HiveEXT" callExtension _key;
+
+	//Process result
+	_result = call compile format ["%1", _data];
+	_status = _result select 0;
+
+	if (_status == "CustomStreamStart") then {
+		if ((_result select 1) > 0) then {
+			_data = "HiveEXT" callExtension _key;
+			_result = call compile format ["%1", _data];
+			_inventory = call compile (_result select 0);
+			_backpack = call compile (_result select 1);
+			_model = call compile (_result select 2);
+		};
+	};
+};
 	
 if (!(_model in ["SurvivorW2_DZ","Survivor2_DZ","Survivor3_DZ","Sniper1_DZ","Soldier1_DZ","Camo1_DZ","Bandit1_DZ","Rocket_DZ"])) then {
 	_model = "Survivor2_DZ";
 };
 
 diag_log ("LOGIN LOADED: " + str(_playerObj) + " Type: " + (typeOf _playerObj));
-
-_key = format["CHILD:999:select replace(cl.`inventory`, '""', '""""') inventory, replace(cl.`backpack`, '""', '""""') backpack, replace(coalesce('Survivor2_DZ', cl.`model`), '""', '""""') model from `cust_loadout` cl join `cust_loadout_profile` clp on clp.`cust_loadout_id` = cl.`id` join `profile` p on clp.`unique_id` = p.`unique_id` left join (select distinct `unique_id` from `survivor` where `is_dead` = 0 and last_updated < now() - interval 2 minute) x on x.`unique_id` = p.`unique_id` where x.`unique_id` is null and clp.`unique_id` = ?:[%1]:",_playerID];
-_data = "HiveEXT" callExtension _key;
-
-//Process result
-_result = call compile format ["%1", _data];
-_status = _result select 0;
-
-if (_status == "CustomStreamStart") then {
-	if ((_result select 1) > 0) then {
-		_data = "HiveEXT" callExtension _key;
-		_result = call compile format ["%1", _data];
-		_inventory = call compile (_result select 0);
-		_backpack = call compile (_result select 1);
-		_model = call compile (_result select 2);
-	};
-};
 
 _isHiveOk = false;
 if (_hiveVer >= dayz_hiveVersionNo) then {
