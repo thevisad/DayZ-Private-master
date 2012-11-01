@@ -77,8 +77,8 @@ _countr = 0;
 		_object = createVehicle [_type, _pos, [], 0, "CAN_COLLIDE"];
 		_object setVariable ["lastUpdate",time];
 
-		// Don't set objects for tents to ensure proper inventory updates
-		if (!(_object isKindOf "TentStorage")) then {
+		// Don't set objects for deployables to ensure proper inventory updates
+		if (_ownerID == "0") then {
 			_object setVariable ["ObjectID", str(_idKey), true];
 		} else {
 			_object setVariable ["ObjectUID", _worldspace call dayz_objectUID2, true];
