@@ -205,15 +205,13 @@ Character data can become desynchronized if the player was connected within seve
 Any bug present in the official client or server will probably also exist in this solution. Please do **not** report these as issues on GitHub. Some of the official bugs:
  - Loss of backpack due to bandit morphing or on respawn
  - Spawning in debug areas (plains / ocean)
- - Debug monitor issues (the debug monitor is being removed and is no longer supported)
- - Humanity not updating correctly / reset on death
- - Sandbags, Tank Traps, and Wire Fence are not always deleted from the database when disassembled
+ - Vehicle damage not saving properly
 
 Common Issues
 =============
 
 **Problem**: Stuck at Loading / Errors in **arma2oaserver.rpt**  
-**Solution**: Look in `blisshive.log` for MySQL connection errors (Google these to find troubleshooting steps). If you do not have a `blisshive.log` in your server directory, right-click on `blisshive.dll` in `@Bliss` (`@BlissLingor` for Lingor servers) and select Properties. If you see an Unblock button, click it and hit OK. Ensure you have a valid MySQL user created, have run db_migrate.pl successfully, have set all options correctly in **Config**\\HiveExt.ini and that you can run the following when logged in to MySQL:  
+**Solution**: Look in **Config**\\hiveext.log for MySQL connection errors (Google these to find troubleshooting steps). If you do not have a **Config**\\hiveext.log file, right-click on `blisshive.dll` in `@Bliss` (`@BlissLingor` for Lingor servers) and select Properties. If you see an Unblock button, click it and hit OK. Ensure you have a valid MySQL user created, have run db_migrate.pl successfully, have set all options correctly in **Config**\\HiveExt.ini and that you can run the following when logged in to MySQL:  
 
 	select * from survivor;
 
