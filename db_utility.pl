@@ -133,7 +133,7 @@ if ($cmd eq 'messages') {
 	foreach my $classname (@classnames) {
 		die "FATAL: Invalid classname" unless ($classname =~ m/^[a-zA-Z0-9_]+$/);
 		# Fetch all player inventories and states
-		my $sth = $dbh->prepare("select id, inventory, backpack, state from survivor");
+		my $sth = $dbh->prepare("select s.id, s.inventory, s.backpack, s.state, p.name from survivor s join profile p on s.unique_id = p.unique_id");
 		my $updSth = $dbh->prepare("update survivor set inventory = ?, backpack = ?, state = ? where id = ?");
 		my $rowCnt = 0, my $itemCnt = 0;
 		$sth->execute();
@@ -147,6 +147,7 @@ if ($cmd eq 'messages') {
 				$rowCnt++;
 				$itemCnt += $changed;
 				$updSth->execute($row->{'inventory'}, $row->{'backpack'}, $row->{'state'}, $row->{'id'});
+				print "WARN: Found an invalid item for survivor $row->{'id'} named \"$row->{'name'}\"\n";
 			}
 		}
 		$sth->finish();
