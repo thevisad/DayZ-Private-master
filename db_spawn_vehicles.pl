@@ -155,6 +155,7 @@ print "INFO: Fetching spawn information\n";
 my $spawns = $dbh->prepare(<<EndSQL
 select
   wv.id world_vehicle_id,
+  v.id vehicle_id,
   wv.worldspace,
   v.inventory,
   coalesce(v.parts, '') parts,
@@ -203,7 +204,7 @@ while (my $vehicle = $spawns->fetchrow_hashref) {
 	}
 
 	# If over the per-type limit, skip this spawn
-	my $count = $dbh->selectrow_array("select count(iv.id) from instance_vehicle iv join world_vehicle wv on iv.world_vehicle_id = wv.id where iv.instance_id = ? and wv.id = ?", undef, ($db{'instance'}, $vehicle->{world_vehicle_id}));
+	my $count = $dbh->selectrow_array("select count(iv.id) from instance_vehicle iv join world_vehicle wv on iv.world_vehicle_id = wv.id where iv.instance_id = ? and wv.vehicle_id = ?", undef, ($db{'instance'}, $vehicle->{vehicle_id}));
 	next unless ($count < $vehicle->{limit_max});
 
 	# Generate parts damage
