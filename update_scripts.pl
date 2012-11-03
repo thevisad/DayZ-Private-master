@@ -62,13 +62,13 @@ foreach my $script (@scripts) {
 	die "FATAL: Could not fetch URI!" unless ($ret == 0);
 
 	while (($pattern, $exception) = each %{$lookups{'global'}}) {
-		my $regex = "s/([0-9]{1})\\s$pattern\\s(.*)([\\\/]{2}.*)*/" . (($exception) ? "\\\$1 $pattern \\\$2 $exception\n/g" : "/g");
+		my $regex = "s/([0-9]{1})\\s$pattern\\s(.*)([\\\/]{2}.*)*/" . (($exception) ? "\\1 $pattern \\2 $exception\n/g" : "/g");
 		replace_text($regex, "$dst/$script");
 	}
 
 	if (defined $lookups{$args{'world'}}) {
 		while (($pattern, $exception) = each %{$lookups{$args{'world'}}}) {
-			my $regex = "s/([0-9]{1})\\s$pattern\\s(.*)([\\\/]{2}.*)*/" . (($exception) ? "\\\$1 $pattern \\\$2 $exception\n/g" : "/g");
+			my $regex = "s/([0-9]{1})\\s$pattern\\s(.*)([\\\/]{2}.*)*/" . (($exception) ? "\\1 $pattern \\2 $exception\n/g" : "/g");
 			replace_text($regex, "$dst/$script");
 		}
 	}
