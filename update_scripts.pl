@@ -34,7 +34,7 @@ my %lookups = (
 		"createVehicleLocal" => "!\\\"_light = \\\"#LightPoint\\\" createVehicleLocal [4978.8086,6630.834,0];\\\"",
 		"\\\"box\\\""        => "!\\\"z_ru_soldier_light\\\" !\\\"z_us_soldier\\\" !\\\"z_us_soldier_light\\\" !\\\"z_ru_soldier\\\" !\\\"CamoWinter_DZN\\\""
 	},
-	'celle' => {
+	'mbg_celle2' => {
 		"createVehicleLocal" => "!\\\"createvehiclelocal getpos _house;\\\""
 	}
 );
