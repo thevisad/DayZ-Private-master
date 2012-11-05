@@ -179,7 +179,7 @@ from
 where
   wv.world_id = ?
   and iv.id is null
-  and (rand() < wv.chance)
+  and (round(rand(), 3) < wv.chance)
   and (vc.count is null or vc.count between v.limit_min and v.limit_max)
 EndSQL
 ) or die "FATAL: SQL Error - " . DBI->errstr . "\n";
@@ -205,7 +205,7 @@ while (my $vehicle = $spawns->fetchrow_hashref) {
 
 	# If over the per-type limit, skip this spawn
 	my $count = $dbh->selectrow_array("select count(iv.id) from instance_vehicle iv join world_vehicle wv on iv.world_vehicle_id = wv.id where iv.instance_id = ? and wv.vehicle_id = ?", undef, ($db{'instance'}, $vehicle->{vehicle_id}));
-	next unless ($count < $vehicle->{limit_max});
+	next unless ($count <= $vehicle->{limit_max});
 
 	# Generate parts damage
 	my $health = "[" . join(',', map { (sprintf(rand(), "%.3f") > 0.85) ? "[\"$_\",1]" : () } split(/,/, $vehicle->{parts})) . "]";
