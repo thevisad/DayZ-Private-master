@@ -3,6 +3,7 @@ waitUntil{!isnil "bis_fnc_init"};
 #define PREFIX asff
 
 dayz_versionNo = getText(configFile >> "CfgMods" >> "DayZ" >> "version");
+dayzNam_versionNo = getText(configFile >> "CfgMods" >> "nc_dzn" >> "version");
 dayz_hiveVersionNo = getNumber(configFile >> "CfgMods" >> "DayZ" >> "hiveVersion");
 diag_log("SERVER VERSION: Bliss v4.0");
 
@@ -197,3 +198,12 @@ if (isDedicated) then {
 
 allowConnection = true;
 
+//Spawn crashed helos - disabled in DayZ: Namalsk
+/*for "_x" from 1 to 5 do {
+	_id = [] spawn spawn_heliCrash;
+};*/ //Spawn heli crash
+
+// Spawn medical care packages - DayZ: Namalsk
+for "_x" from 1 to 6 do {
+	_id = [] spawn medical_ckg_dzn;
+};

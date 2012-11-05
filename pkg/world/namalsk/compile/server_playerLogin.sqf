@@ -69,7 +69,7 @@ if (_hiveVer >= dayz_hiveVersionNo) then {
 };
 
 _clientID = owner _playerObj;
-dayzPlayerLogin = [_charID,_inventory,_backpack,_survival,_isNew,dayz_versionNo,_model,_isHiveOk,_newPlayer];
+dayzPlayerLogin = [_charID,_inventory,_backpack,_survival,_isNew,dayz_versionNo,dayzNam_versionNo,_model,_isHiveOk,_newPlayer];
 _clientID publicVariableClient "dayzPlayerLogin";
 
 //_playerObj enableSimulation false;
