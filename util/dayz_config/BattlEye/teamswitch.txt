@@ -1,2 +1,1 @@
 1 ""  !="_this spawn fnc_plyrHit"
-5 "1.000000"

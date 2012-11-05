@@ -25,17 +25,18 @@ die "FATAL: Destination directory $dst does not exist\n" unless (-d $dst);
 
 my %lookups = (
 	'global' => {
-		"\\\"spawn\\\""      => "!\\\"_this spawn fnc_plyrHit\\\"",
-		"\\\"this\\\""       => "!\\\"_this spawn fnc_plyrHit\\\"",
-		"addMPEventHandler"  => "!\\\"_this spawn fnc_plyrHit\\\""
+		"\\\"\\\""           => "!=\\\"_this spawn fnc_plyrHit\\\"",
+		"\\\"spawn\\\""      => "!=\\\"_this spawn fnc_plyrHit\\\"",
+		"\\\"this\\\""       => "!=\\\"_this spawn fnc_plyrHit\\\"",
+		"addMPEventHandler"  => "!=\\\"_this spawn fnc_plyrHit\\\""
 	},
 	'namalsk' => {
-		"createVehicle"      => "!\\\"_light = \\\"#LightPoint\\\" createVehicleLocal [4978.8086,6630.834,0];\\\"",
-		"createVehicleLocal" => "!\\\"_light = \\\"#LightPoint\\\" createVehicleLocal [4978.8086,6630.834,0];\\\"",
-		"\\\"box\\\""        => "!\\\"z_ru_soldier_light\\\" !\\\"z_us_soldier\\\" !\\\"z_us_soldier_light\\\" !\\\"z_ru_soldier\\\" !\\\"CamoWinter_DZN\\\""
+		"createVehicle"      => "!=\\\"_light = \\\"#LightPoint\\\" createVehicleLocal [4978.8086,6630.834,0];\\\"",
+		"createVehicleLocal" => "!=\\\"_light = \\\"#LightPoint\\\" createVehicleLocal [4978.8086,6630.834,0];\\\"",
+		"\\\"box\\\""        => "!=\\\"z_ru_soldier_light\\\" !\\\"z_us_soldier\\\" !\\\"z_us_soldier_light\\\" !\\\"z_ru_soldier\\\" !\\\"CamoWinter_DZN\\\""
 	},
 	'mbg_celle2' => {
-		"createVehicleLocal" => "!\\\"createvehiclelocal getpos _house;\\\""
+		"createVehicleLocal" => "!=\\\"createvehiclelocal getpos _house;\\\""
 	}
 );
 
@@ -48,7 +49,11 @@ my @scripts = (
 	"publicvariablevar.txt",
 	"setpos.txt",
 	"mpeventhandler.txt",
-	"setdamage.txt"
+	"setdamage.txt",
+	"addmagazinecargo.txt",
+	"addweaponcargo.txt",
+	"deleteVehicle.txt",
+	"teamswitch.txt"
 );
 
 foreach my $script (@scripts) {
