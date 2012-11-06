@@ -118,17 +118,14 @@ if (-d $src && !-d $conf_dir && -f $src_bat) {
 		'takistan'  => '\@dayztakistan',
 		'fallujah'  => '\@dayzfallujah',
 		'zargabad'  => '\@dayzzargabad',
-		'utes'      => '\@dayz',
 		'panthera2' => '\@dayzpanthera',
 		'namalsk'   => '\@dayz;\@dayz_namalsk',
 		'mbg_celle2'=> '\@dayz_celle;\@mbg_celle2'
 	};
 
 	# Ensure proper modfolders are specified in .bat file
-	if (defined $mods->{$args{'world'}}) {
-		$mods->{$args{'world'}} .= ";\\\@bliss_$args{'instance'}.$args{'world'}";
-		replace_text("s/\\\"-mod=.*\\\"/\\\"-mod=$mods->{$args{'world'}}\\\"/", $src_bat);
-	}
+	my $mod = ((defined $mods->{$args{'world'}}) ? "$mods->{$args{'world'}}" : '\@dayz') . ";\\\@bliss_$args{'instance'}.$args{'world'}";
+	replace_text("s/\\\"-mod=.*\\\"/\\\"-mod=$mod\\\"/", $src_bat);
 
 	# Ensure proper profile directory is specified in .bat file
 	replace_text("s/=dayz_1.chernarus/=dayz_$args{'instance'}.$args{'world'}/g", $src_bat);
