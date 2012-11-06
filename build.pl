@@ -120,7 +120,7 @@ if (-d $src && !-d $conf_dir && -f $src_bat) {
 		'zargabad'  => '\@dayzzargabad',
 		'utes'      => '\@dayz',
 		'panthera2' => '\@dayzpanthera',
-		'namalsk'   => '\@dayz;\@dayz_namalsk;\@namalsk;\@nc',
+		'namalsk'   => '\@dayz;\@dayz_namalsk',
 		'mbg_celle2'=> '\@dayz_celle;\@mbg_celle2'
 	};
 

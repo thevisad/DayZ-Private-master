@@ -85,7 +85,7 @@ Installation
     <td>Zargabad</td><td>@dayzzargabad</td><td>1.2</td><td>ftp://dayzcommander:dayzcommander@94.242.227.3/DayZZargabad-1.2.rar</td>
   </tr>
   <tr>
-    <td>Namalsk</td><td>@dayz;@nc</td><td>0.60</td><td>http://cdn.dayz.nu/unofficial/dayz_namalsk_v0.60.7z</td>
+    <td>Namalsk</td><td>@dayz;@dayz_namalsk</td><td>0.60</td><td>ftp://dayzcommander:dayzcommander@94.242.227.3/DayZNamalsk-0.60.rar</td>
   </tr>
 </table>
 11. Run **ArmA2**\\server_\<world\>_\<instance\>.bat (where world is the world name and instance is the instance ID) to start the server.  
