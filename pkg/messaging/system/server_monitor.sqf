@@ -194,6 +194,7 @@ _countr = 0;
 		dayz_serverObjectMonitor set [count dayz_serverObjectMonitor,_object];
 	};
 } forEach _objList;
+
 //TIME
 _key = "CHILD:307:";
 _result = [_key] call server_hiveReadWrite;
@@ -224,4 +225,3 @@ allowConnection = true;
 for "_x" from 1 to 5 do {
 	_id = [] spawn spawn_heliCrash;
 }; //Spawn heli crash
-
