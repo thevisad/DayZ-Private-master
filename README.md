@@ -178,7 +178,7 @@ Custom Inventory
 
 You may optionally enable a system that allows you to define custom spawn loadouts for individuals and/or group. To do so, follow these steps:
 
-1. Run `perl db_migrate.pl --schema BlissInvCust --version 0.01`. Be sure to include any parameters needed for your specific database passwords / configuration.  
+1. Run `perl db_migrate.pl --schema BlissInvCust --version 0.02`. Be sure to include any parameters needed for your specific database passwords / configuration.  
 2. When building Bliss, you must add `--with-invcust` to your arguments, for example `perl build.pl --with-invcust`.  
 
 There are two tables which you must insert values into to use this feature. The `cust_loadout` table defines unique sets of inventory/backpack to give the player(s) on spawn. The `cust_loadout_profile` table then ties these cust_loadout rows to player profile IDs. You can associate multiple profile IDs to a single loadout with this relationship.
