@@ -113,7 +113,7 @@ from
 union
 select
   0 dep_id,
-  v.id veh_id,
+  iv.id veh_id,
   iv.worldspace,
   w.max_x,
   w.max_y
