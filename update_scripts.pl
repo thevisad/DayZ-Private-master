@@ -25,10 +25,10 @@ die "FATAL: Destination directory $dst does not exist\n" unless (-d $dst);
 
 my %lookups = (
 	'global' => {
-		"\\\"\\\""           => "!=\\\"_playerObj addMPEventHandler [\\\\\\\\\\\"MPHit\\\\\\\\\\\", {_this spawn fnc_plyrHit;}];\\\"",
-		"\\\"spawn\\\""      => "!=\\\"_playerObj addMPEventHandler [\\\\\\\\\\\"MPHit\\\\\\\\\\\", {_this spawn fnc_plyrHit;}];\\\"",
-		"\\\"this\\\""       => "!=\\\"_playerObj addMPEventHandler [\\\\\\\\\\\"MPHit\\\\\\\\\\\", {_this spawn fnc_plyrHit;}];\\\"",
-		"addMPEventHandler"  => "!=\\\"_playerObj addMPEventHandler [\\\\\\\\\\\"MPHit\\\\\\\\\\\", {_this spawn fnc_plyrHit;}];\\\""
+		"\\\"\\\""           => "!\\\"addMPEventHandler [\\\\\\\\\\\"MPHit\\\\\\\\\\\", {_this spawn fnc_plyrHit;}];\\\"",
+		"\\\"spawn\\\""      => "!\\\"addMPEventHandler [\\\\\\\\\\\"MPHit\\\\\\\\\\\", {_this spawn fnc_plyrHit;}];\\\"",
+		"\\\"this\\\""       => "!\\\"addMPEventHandler [\\\\\\\\\\\"MPHit\\\\\\\\\\\", {_this spawn fnc_plyrHit;}];\\\"",
+		"addMPEventHandler"  => "!\\\"addMPEventHandler [\\\\\\\\\\\"MPHit\\\\\\\\\\\", {_this spawn fnc_plyrHit;}];\\\""
 	},
 	'namalsk' => {
 		"createVehicle"      => "!\\\"_light = \\\"#LightPoint\\\" createVehicleLocal [4978.8086,6630.834,0];\\\"",
