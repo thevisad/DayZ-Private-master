@@ -17,39 +17,6 @@ progressLoadingScreen 1.0;
 
 "filmic" setToneMappingParams [0.153, 0.357, 0.231, 0.1573, 0.011, 3.750, 6, 4]; setToneMapping "Filmic";
 
-// Vehicle damage fix
-vehicle_handleDamage    = compile preprocessFileLineNumbers "fixes\vehicle_handleDamage.sqf";
-vehicle_handleKilled    = compile preprocessFileLineNumbers "fixes\vehicle_handleKilled.sqf";
-
-// Right-click error fix
-player_selectSlot       = compile preprocessFileLineNumbers "fixes\ui_selectSlot.sqf";
-
-// Player action hooks
-player_build            = compile preprocessFileLineNumbers "fixes\player_build.sqf";
-player_drink            = compile preprocessFileLineNumbers "fixes\player_drink.sqf";
-player_eat              = compile preprocessFileLineNumbers "fixes\player_eat.sqf";
-player_useMeds          = compile preprocessFileLineNumbers "fixes\player_useMeds.sqf";
-player_wearClothes      = compile preprocessFileLineNumbers "fixes\player_wearClothes.sqf";
-player_tentPitch        = compile preprocessFileLineNumbers "fixes\tent_pitch.sqf";
-player_fillWater        = compile preprocessFileLineNumbers "fixes\water_fill.sqf";
-player_reloadMag        = compile preprocessFileLineNumbers "fixes\player_reloadMags.sqf";
-player_packTent         = compile preprocessFileLineNumbers "fixes\player_packTent.sqf";
-
-// Player sync hooks
-player_countmagazines 	= compile preprocessFileLineNumbers "fixes\player_countmagazines.sqf";
-player_humanityMorph 	= compile preprocessFileLineNumbers "fixes\player_humanityMorph.sqf";
-player_switchModel 	    = compile preprocessFileLineNumbers "fixes\player_switchModel.sqf";
-
-// Original functions being overridden
-player_build_orig       = compile preprocessFileLineNumbers "\z\addons\dayz_code\actions\player_build.sqf";
-player_cook_orig        = compile preprocessFileLineNumbers "\z\addons\dayz_code\actions\cook.sqf";
-player_drink_orig       = compile preprocessFileLineNumbers "\z\addons\dayz_code\actions\player_drink.sqf";
-player_eat_orig         = compile preprocessFileLineNumbers "\z\addons\dayz_code\actions\player_eat.sqf";
-player_useMeds_orig     = compile preprocessFileLineNumbers "\z\addons\dayz_code\actions\player_useMeds.sqf";
-player_wearClothes_orig = compile preprocessFileLineNumbers "\z\addons\dayz_code\actions\player_wearClothes.sqf";
-player_tentPitch_orig   = compile preprocessFileLineNumbers "\z\addons\dayz_code\actions\tent_pitch.sqf";
-player_fillWater_orig   = compile preprocessFileLineNumbers "\z\addons\dayz_code\actions\water_fill.sqf";
-
 if (isServer) then {
 	hiveInUse = true;
 	_serverMonitor = [] execVM "\z\addons\dayz_server\system\server_monitor.sqf";
