@@ -52,7 +52,7 @@
 1 setVehicleInit !"\"setVehicleInit\"," !"_v setVehicleInit \"[this] spawn BIS_Effects_AirDestruction\";" !"_v setVehicleInit format [\"[this, %1, %2]spawn BIS_Effects_AirDestructionStage2\",_int, _t];\nprocessInitCommands;" !"if (local _v) then\n{\n_v setVehicleInit format [\"[this, %1, %2,false,true]spawn BIS_Effects_Burn\",_int, _t];" 
 1 setWind !"\"setWint\"," !"setWind [_currentWindX, _currentWindZ, true];"
 5 addAmmo !"\"addAmmo\","
-5 addMPEventHandler !"\"addMPEventHandler\"," !="_this spawn fnc_plyrHit"
+5 addMPEventHandler !"\"addMPEventHandler\"," !"addMPEventHandler [\"MPHit\", {_this spawn fnc_plyrHit;}];"
 5 clearPlayerInit !"\"clearPlayerInit\","
 1 clearVehicleInit !"\"clearVehicleInit\"," !"if (isserver) then {deletevehicle _snd;};\nclearVehicleInit _v;" !"clearVehicleInit _v;\ndeletevehicle _fl;deletevehicle _sm;" !"clearvehicleinit _v;\n_crw= crew _v;" !"clearvehicleinit _v;\ndeleteVehicle _v;" 
 5 commandFSM !"\"commandFSM\","
