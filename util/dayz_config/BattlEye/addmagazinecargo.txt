@@ -1,4 +1,4 @@
-1 "" !="BoltSteel" !="5x_22_LR_17_HMR" !="10x_303" !="Binocular" !"item" !"trash" !"food" !"hand" !"part" !"rnd_" !"swing" !"skin" !"smoke" !"addMPEventHandler [\"MPHit\", {_this spawn fnc_plyrHit;}];"
+1 "" !="BoltSteel" !="5x_22_LR_17_HMR" !="10x_303" !="Binocular" !"item" !"trash" !"food" !"hand" !"part" !"rnd_" !"swing" !"skin" !"smoke" !="_this spawn fnc_plyrHit;"
 1 "Item" !="ItemSodaEmpty" !="ItemSodaPepsi" !="ItemBandage" !="ItemHeatPack" !="ItemMorphine" !="ItemWaterbottle" !="ItemWaterbottleUnfilled" !="ItemToolbox" !="ItemKnife" !="ItemWatch" !="ItemCompass" !="ItemJerrycan" !="ItemSodaCoke" !="ItemEpinephrine" !="ItemPainkiller" !="ItemBloodbag" !="ItemWire" !="ItemMatchbox" !="ItemMap" !="ItemAntibiotic" !="ItemFlashlightRed" !="ItemFlashlight" !="ItemJerrycanEmpty" !="ItemSodaMdew"
 1 "trash" !="TrashTinCan" !="TrashJackDaniels" 
 1 "food" !="FoodCanSardines" !="FoodSteakCooked" !="FoodCanFrankBeans" !="FoodSteakRaw" !="FoodCanPasta" !="FoodCanBakedBeans" 
