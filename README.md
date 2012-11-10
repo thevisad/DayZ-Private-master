@@ -106,7 +106,7 @@ These are the areas you will need to inspect to ensure a smooth upgrade. If data
 Vehicles
 ========
 
-Run `perl db_spawn_vehicles.pl` to get help information on how to invoke the vehicle spawn script correctly. You will need to run the vehicle script and point it to your database to get vehicles to spawn in-game. The script can be run periodically - it will not delete all vehicles every time it runs. It will clean up user-deployed objects (wire fence, tents, tank traps, etc) in the same way that official DayZ does. If you run db_spawn_vehicles.pl with the `--cleanup bounds` argument, it will also check for out-of-bounds objects and delete them.
+Run `perl db_spawn_vehicles.pl --help` to get help information on how to invoke the vehicle spawn script correctly. You will need to run the vehicle script and point it to your database to get vehicles to spawn in-game. The script can be run periodically - it will not delete all vehicles every time it runs. It will clean up user-deployed objects (wire fence, tents, tank traps, etc) in the same way that official DayZ does. If you run db_spawn_vehicles.pl with the `--cleanup bounds` argument, it will also check for out-of-bounds objects and delete them.
 
 **NOTE:** Vehicles added/updated via database manipulation are only available after a server restart.
 
@@ -147,7 +147,8 @@ You can run multiple server instances connected to the same database to provide 
 1. Run `perl build.pl --world WORLD --instance ID` from the **Repository** directory, replacing WORLD with a valid world name and ID with a valid instance ID (the default is 1, so 2 would be sensible for a second instance).  
 2. Copy all new directories and files from **Repository**\\deploy\\ to **ArmA2**\\.  
 3. Edit **Config**\\HiveExt.ini and set the database / time zone parameters appropriately.
-4. Run the new server.bat file for your instance.
+4. Insert a row into the instance table that has the instance ID you used previously and the correct world_id and starting loadout.  
+5. Run the new server.bat file for your instance.
 
 Care must be taken to ensure that all paths and options have been set correctly. With this system you can run as many instances as your server can support simultaneously.
 
