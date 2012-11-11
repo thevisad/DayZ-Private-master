@@ -53,7 +53,10 @@ my @scripts = (
 	"addmagazinecargo.txt",
 	"addweaponcargo.txt",
 	"deleteVehicle.txt",
-	"teamswitch.txt"
+	"teamswitch.txt",
+	"addbackpackcargo.txt",
+	"setvariable.txt",
+	"setvariableval.txt"
 );
 
 foreach my $script (@scripts) {
