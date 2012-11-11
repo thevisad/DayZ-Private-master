@@ -231,6 +231,4 @@ Common Issues
 Support
 =======
 
-**HTTP**: http://dayzprivate.com/forum/
-
 **IRC**: irc.thekreml.in #bliss
