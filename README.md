@@ -87,6 +87,9 @@ Installation
   <tr>
     <td>Namalsk</td><td>@dayz;@dayz_namalsk</td><td>0.60</td><td>ftp://dayzcommander:dayzcommander@94.242.227.3/DayZNamalsk-0.60.rar</td>
   </tr>
+  <tr>
+    <td>Celle</td><td>@mbg_celle2;@dayz_celle</td><td>1.7.3</td><td>http://opendayz.net/downloads/maps/celle/Celle_Dayz.zip</td>
+  </tr>
 </table>
 11. Run **ArmA2**\\server_\<world\>_\<instance\>.bat (where world is the world name and instance is the instance ID) to start the server.  
 
