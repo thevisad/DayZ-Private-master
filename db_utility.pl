@@ -34,6 +34,7 @@ my %db = (
 if ($args{'help'}) {
 	print "usage: db_utility.pl <command> [arguments] [--instance <id>] [--host <hostname>] [--user <username>] [--pass <password>] [--name <database-name>] [--port <port>]\n";
 	print "command is one of:\n";
+	print "  setworld <world_name> - set the world for an instance\n";
 	print "  itemdistr             - look at all live player inventories and show counts of each item in descending order\n";
 	print "  cleanitem <classname> - remove comma-separated list of classnames from all survivor inventories\n";
 	print "  cleandead <days>      - delete dead survivors who were last updated more than <days> days ago\n";
@@ -201,6 +202,12 @@ EndSQL
 	die "FATAL: Invalid backpack\n" unless ($backpack =~ /\[(\[.+?\],{0,1})+\]/);
 	$dbh->do("update instance set inventory = ?, backpack = ? where id = ?", undef, ($inventory, $backpack, $db{'instance'}));
 	print "INFO: Set inventory to $inventory, backpack $backpack for instance $db{'instance'}\n";
+} elsif ($cmd eq 'setworld') {
+	my $world = shift(@ARGV);
+	defined $world or die "FATAL: Invalid arguments\n";
+	$dbh->do("update instance set world_id = (select id from world where name = ?) where id = ?", undef, ($world, $db{'instance'}));
+	print "INFO: Set world to $world for instance $db{'instance'}\n";
+
 } else {
 	die "FATAL: Unrecognized command.\n";
 }

@@ -91,7 +91,8 @@ Installation
     <td>Celle</td><td>@mbg_celle2;@dayz_celle</td><td>1.7.3</td><td>http://opendayz.net/downloads/maps/celle/Celle_Dayz.zip</td>
   </tr>
 </table>
-11. Run **ArmA2**\\server_\<world\>_\<instance\>.bat (where world is the world name and instance is the instance ID) to start the server.  
+11. If you are using a world other than Chernarus, run `perl db_utility.pl setworld <world_name>`, where `<world_name>` is the name of the world you specified when running `build.pl`.
+12. Run **ArmA2**\\server_\<world\>_\<instance\>.bat (where world is the world name and instance is the instance ID) to start the server.  
 
 Upgrading
 =========
