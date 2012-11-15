@@ -92,7 +92,7 @@ Installation
   </tr>
 </table>
 11. If you are using a world other than Chernarus, run `perl db_utility.pl setworld <world_name>`, where `<world_name>` is the name of the world you specified when running `build.pl`.
-12. Run **ArmA2**\\server_\<world\>_\<instance\>.bat (where world is the world name and instance is the instance ID) to start the server.  
+12. Run **ArmA2**\\Restarter.exe to start the server.  
 
 Upgrading
 =========
@@ -152,7 +152,7 @@ You can run multiple server instances connected to the same database to provide 
 2. Copy all new directories and files from **Repository**\\deploy\\ to **ArmA2**\\.  
 3. Edit **Config**\\HiveExt.ini and set the database / time zone parameters appropriately.
 4. Insert a row into the instance table that has the instance ID you used previously and the correct world_id and starting loadout.  
-5. Run the new server.bat file for your instance.
+5. Stop and start Restarter.exe for your new instance to start up.
 
 Care must be taken to ensure that all paths and options have been set correctly. With this system you can run as many instances as your server can support simultaneously.
 

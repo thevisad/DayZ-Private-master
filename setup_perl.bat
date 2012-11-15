@@ -12,4 +12,4 @@ perl Makefile.PL
 dmake
 dmake install
 cd ..\..
-cpan File::Basename::Object Text::Diff Text::Patch
+cpan File::Basename::Object Text::Diff Text::Patch Config::IniFiles

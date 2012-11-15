@@ -2,6 +2,7 @@
 # Bliss build utility 
 # by ayan4m1
 
+use Config::IniFiles;
 use Getopt::Long qw(:config pass_through);
 
 use File::Copy;
@@ -93,42 +94,44 @@ copy_dir("$base_dir/util/deploy", $dst_dir) unless (-d $dst_dir);
 make_path($tmp_dir) unless (-d $tmp_dir);
 
 # Make all modifications to deploy directory
-my $conf_dir = "$dst_dir/dayz_$args{'instance'}.$args{'world'}";
-my $src_bat  = "$base_dir/util/server.bat";
+my $profile  = "dayz_$args{'instance'}.$args{'world'}";
 my $src      = "$base_dir/util/dayz_config";
+my $conf_dir = "$dst_dir/$profile";
 
-# Check that required files exist
-if (-d $src && !-d $conf_dir && -f $src_bat) {
+# Only create config directory if it does not exist
+if (-d $src && !-d $conf_dir) {
 	# Copy base config directory to the instance-specific path
-	print "INFO: Creating configuration dayz_$args{'instance'}.$args{'world'}\n";
+	print "INFO: Creating configuration $profile\n";
 	copy_dir($src, $conf_dir);
 
-	# Copy bat file if one does not already exist 
-	my $dst_bat = "$dst_dir/server_$args{'world'}_$args{'instance'}.bat";
-	if ($src_bat ne $dst_bat && !-f $dst_bat) {
-		copy($src_bat, $dst_bat);
-		$src_bat = $dst_bat;
-	}
-
 	# Ensure proper mission name is specified in config.cfg
-	replace_text("s/template\\s=\\sdayz_[0-9]+.[a-z]+/template = dayz_$args{'instance'}.$args{'world'}/", "$conf_dir/config.cfg");
+	replace_text("s/template\\s=\\sdayz_[0-9]+.[a-z]+/template = $profile/", "$conf_dir/config.cfg");
 
 	my $mods = {
-		'lingor'    => '\@dayzlingor',
-		'takistan'  => '\@dayztakistan',
-		'fallujah'  => '\@dayzfallujah',
-		'zargabad'  => '\@dayzzargabad',
-		'panthera2' => '\@dayzpanthera',
-		'namalsk'   => '\@dayz;\@dayz_namalsk',
-		'mbg_celle2'=> '\@dayz_celle;\@mbg_celle2'
+		'lingor'    => '@dayzlingor',
+		'takistan'  => '@dayztakistan',
+		'fallujah'  => '@dayzfallujah',
+		'zargabad'  => '@dayzzargabad',
+		'panthera2' => '@dayzpanthera',
+		'namalsk'   => '@dayz;@dayz_namalsk',
+		'mbg_celle2'=> '@dayz_celle;@mbg_celle2'
 	};
+	my $mod = ((defined $mods->{$args{'world'}}) ? "$mods->{$args{'world'}}" : '@dayz') . ";\@bliss_$args{'instance'}.$args{'world'}";
 
-	# Ensure proper modfolders are specified in .bat file
-	my $mod = ((defined $mods->{$args{'world'}}) ? "$mods->{$args{'world'}}" : '\@dayz') . ";\\\@bliss_$args{'instance'}.$args{'world'}";
-	replace_text("s/\\\"-mod=.*\\\"/\\\"-mod=$mod\\\"/", $src_bat);
+	my $dst_ini  = "$dst_dir/Restarter.ini";
+	die "FATAL: Could not find $dst_ini, try running build.pl --clean\n" unless (-f $dst_ini);
 
-	# Ensure proper profile directory is specified in .bat file
-	replace_text("s/=dayz_1.chernarus/=dayz_$args{'instance'}.$args{'world'}/g", $src_bat);
+	$ini = Config::IniFiles->new(-file => $dst_ini);
+	my $profile_sect = $profile;
+	$profile_sect =~ s/\./_/;
+	if (!$ini->SectionExists($profile_sect)) {
+		$ini->AddSection($profile_sect);
+		$ini->newval($profile_sect, 'name', $profile);
+		$ini->newval($profile_sect, 'profiles', $profile);
+		$ini->newval($profile_sect, 'config', "$profile\\config_deadbeef.cfg");
+		$ini->newval($profile_sect, 'mod', $mod);
+		$ini->newval($profile_sect, 'world', $args{'world'});
+	}
 
 	# Obfuscate the configuration/password if not already performed
 	if (-f "$conf_dir/config.cfg") {
@@ -136,12 +139,16 @@ if (-d $src && !-d $conf_dir && -f $src_bat) {
 		my $hash = ($args{'rcon'}) ? $args{'rcon'} : substr(sha1_hex(time()), $start, 8);
 		print "INFO: RCon password will be set to $hash\n";
 
-		# Copy config.cfg to secured path, substitute values and update .bat file
+		# Copy config.cfg to secured path and substitute values
 		rename("$conf_dir/config.cfg", "$conf_dir/config_$hash.cfg");
 		replace_text("s/passwordAdmin\\s=\\s\\\"\\\"/passwordAdmin = \\\"$hash\\\"/", "$conf_dir/config_$hash.cfg");
 		replace_text("s/RConPassword\\s[0-9a-fA-F]{8}/RConPassword $hash/", "$conf_dir/BattlEye/BEServer.cfg");
-		replace_text("s/config=dayz_$args{'instance'}.$args{'world'}\\\\config_[0-9a-fA-F]{8}.cfg/config=dayz_$args{'instance'}.$args{'world'}\\\\config_$hash.cfg/", $src_bat);
+
+		# Change config path in Restarter.ini
+		$ini->newval($profile_sect, 'config', "dayz_$args{'instance'}.$args{'world'}\\config_$hash.cfg");
 	}
+
+	$ini->WriteConfig($dst_ini);
 }
 
 # Clean up existing temp directories before starting work
