@@ -1,15 +1,13 @@
-waitUntil{!isnil "bis_fnc_init"};
-
-#define PREFIX asff
+[]execVM "\z\addons\dayz_server\system\s_fps.sqf";
 
 dayz_versionNo = getText(configFile >> "CfgMods" >> "DayZ" >> "version");
 dayz_hiveVersionNo = getNumber(configFile >> "CfgMods" >> "DayZ" >> "hiveVersion");
-diag_log("SERVER VERSION: Bliss v4.0");
+diag_log("SERVER VERSION: Bliss v4.2");
 
 if ((count playableUnits == 0) and !isDedicated) then {
 	isSinglePlayer = true;
-	diag_log("SERVER: SINGLEPLAYER DETECTED!");
 };
+
 waitUntil{initialized};
 
 //Send the key
@@ -182,11 +180,7 @@ _countr = 0;
 				if (count _pos < 3) then { _pos = [_pos select 0,_pos select 1,0]; };
 				_object setPosATL _position;
 			};
-
-			_object addEventHandler ["HandleDamage", { _this call vehicle_handleDamage }];
-			_object addEventHandler ["Killed", { _this call vehicle_handleKilled }];
-			_object addEventHandler ["GetOut", { _this call vehicle_handleInteract }];
-			_object addEventHandler ["GetIn", { _this call vehicle_handleInteract }];
+					_object call fnc_vehicleEventHandler;			
 		};
 
 		//Monitor the object
@@ -195,7 +189,7 @@ _countr = 0;
 	};
 } forEach _objList;
 
-//TIME
+//Set the Time
 _key = "CHILD:307:";
 _result = [_key] call server_hiveReadWrite;
 _outcome = _result select 0;
@@ -207,7 +201,7 @@ if (_outcome == "PASS") then {
 		publicVariable "dayzSetDate";
 	};
 
-	diag_log("SERVER: Set local time to " + str(_date));
+	diag_log("HIVE: Local Time set to " + str(_date));
 };
 	
 createCenter civilian;

@@ -5,21 +5,29 @@ object_spawnDamVehicle =	compile preprocessFileLineNumbers "\z\addons\dayz_code\
 server_playerLogin =		compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\server_playerLogin.sqf";
 server_playerSetup =		compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\server_playerSetup.sqf";
 server_onPlayerDisconnect = compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\server_onPlayerDisconnect.sqf";
-server_routinePlayerCheck =	compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\server_routinePlayerCheck.sqf";
 server_updateObject =		compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\server_updateObject.sqf";
 server_playerDied =			compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\server_playerDied.sqf";
-server_updatePlayer	=		compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\server_updatePlayer.sqf";
-server_playerStat =			compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\server_playerStat.sqf";
 server_publishObj = 		compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\server_publishObject.sqf";
 local_publishObj = 			compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\local_publishObj.sqf";		//Creates the object in DB
 local_deleteObj = 			compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\local_deleteObj.sqf";		//Creates the object in DB
 local_createObj = 			compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\local_createObj.sqf";		//Creates the object in DB
 server_playerSync =			compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\server_playerSync.sqf";
-//zombie_initialize =			compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\zombie_initialize.sqf";
 zombie_findOwner =			compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\zombie_findOwner.sqf";
+server_updateNearbyObjects =	compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\server_updateNearbyObjects.sqf";
+
+vehicle_handleInteract = {
+	private["_object"];
+	_object = _this select 0;
+	[_object, "all"] call server_updateObject;
+};
+
+player_combatLogged = {
+
+};
 
 //event Handlers
 eh_localCleanup =			{
+	private ["_object"];
 	_object = _this select 0;
 	_object addEventHandler ["local", {
 		if(_this select 1) then {
@@ -33,7 +41,7 @@ eh_localCleanup =			{
 };
 
 server_characterSync = {
-	//dayzCharDisco = [_characterID,_playerPos,[_weapons,_magazines],[typeOf _backpack,getWeaponCargo _backpack,getMagazineCargo _backpack],_medical,_currentState,_currentModel];
+	private ["_characterID","_playerPos","_playerGear","_playerBackp","_medical","_currentState","_currentModel","_key"];
 	_characterID = 	_this select 0;	
 	_playerPos =	_this select 1;
 	_playerGear =	_this select 2;
@@ -54,7 +62,7 @@ fnc_buildWeightedArray = 	compile preprocessFileLineNumbers "\z\addons\dayz_code
 onPlayerDisconnected 		"[_uid,_name] call server_onPlayerDisconnect;";
 
 server_hiveWrite = {
-	private["_resultArray","_data"];
+	private["_data"];
 	//diag_log ("ATTEMPT WRITE: " + _this);
 	_data = "HiveEXT" callExtension _this;
 	diag_log ("WRITE: " + _data);
@@ -146,25 +154,25 @@ server_getDiff2 =	{
 };
 
 dayz_objectUID = {
-	private["_position","_p1","_p2","_p3","_dir","_key","_object"];
+	private["_position","_dir","_key","_object"];
 	_object = _this;
 	_position = getPosATL _object;
-	_p1 = round((_position select 0) * 10);
-	_p2 = round((_position select 1) * 10);
-	_p3 = round((_position select 2) * 10);
-	_dir = round(direction _object);
-	_key = format["%1%2%3%4",_p1,_p2,_p3,_dir];
-	_key
+	_dir = direction _object;
+	_key = [_dir,_position] call dayz_objectUID2;
+    	_key
 };
 
 dayz_objectUID2 = {
-	private["_position","_p1","_p2","_p3","_dir","_key"];
+	private["_position","_dir","_key"];
 	_dir = _this select 0;
+	_key = "";
 	_position = _this select 1;
-	_p1 = round((_position select 0) * 10);
-	_p2 = round((_position select 1) * 10);
-	_p3 = round((_position select 2) * 10);
-	_key = format["%1%2%3%4",_p1,_p2,_p3,_dir];
+	{
+		_x = _x * 10;
+		if ( _x < 0 ) then { _x = _x * -10 };
+		_key = _key + str(round(_x));
+	} forEach _position;
+	_key = _key + str(round(_dir));
 	_key
 };
 

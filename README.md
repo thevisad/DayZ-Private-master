@@ -2,7 +2,7 @@ DayZ Bliss Private Server
 =========================
 
 This is a private server project for DayZ.
-This code is currently compatible with DayZ 1.7.3 and ArmA 2 OA beta patch build 97771.
+This code is currently compatible with DayZ 1.7.4.4 and ArmA 2 OA beta patch build 99113.
 
 This would not be possible without the work of Rocket and Guru Abdul. We also use the fantastic cPBO from Kegetys (www.kegetys.fi) and wget for Windows by the GnuWin32 team (gnuwin32.sourceforge.net).
 
@@ -64,7 +64,7 @@ Installation
     <td>World</td><td>Mod Folders</td><td>Version</td><td>URL</td>
   </tr>
   <tr>
-    <td>Chernarus</td><td>@dayz</td><td>1.7.3</td><td>http://dayzmod.com/?Download</td>
+    <td>Chernarus</td><td>@dayz</td><td>1.7.4.4</td><td>http://dayzmod.com/?Download</td>
   </tr>
   <tr>
     <td>Lingor Island</td><td>@dayzlingor</td><td>1.1.1</td><td>ftp://dayzcommander:dayzcommander@94.242.227.3/DayZLingor-1.1.1.rar</td>
@@ -73,7 +73,7 @@ Installation
     <td>Takistan</td><td>@dayztakistan</td><td>1.5.1</td><td>ftp://dayzcommander:dayzcommander@94.242.227.3/DayZTakistan-1.5.1.rar</td>
   </tr>
   <tr>
-    <td>Utes</td><td>@dayz</td><td>1.7.3</td><td>http://dayzmod.com/?Download</td>
+    <td>Utes</td><td>@dayz</td><td>1.7.4.4</td><td>http://dayzmod.com/?Download</td>
   </tr>
   <tr>
     <td>Panthera</td><td>@dayzpanthera</td><td>1.6.1</td><td>ftp://dayzcommander:dayzcommander@94.242.227.3/DayZPanthera-1.6.1.rar</td>
@@ -88,7 +88,7 @@ Installation
     <td>Namalsk</td><td>@dayz;@dayz_namalsk</td><td>0.60</td><td>ftp://dayzcommander:dayzcommander@94.242.227.3/DayZNamalsk-0.60.rar</td>
   </tr>
   <tr>
-    <td>Celle</td><td>@mbg_celle2;@dayz_celle</td><td>1.7.3</td><td>http://opendayz.net/downloads/maps/celle/Celle_Dayz.zip</td>
+    <td>Celle</td><td>@mbg_celle2;@dayz_celle</td><td>1.7.4.4</td><td>http://opendayz.net/downloads/maps/celle/Celle_Dayz.zip</td>
   </tr>
 </table>
 11. If you are using a world other than Chernarus, run `perl db_utility.pl setworld <world_name>`, where `<world_name>` is the name of the world you specified when running `build.pl`.
@@ -104,6 +104,7 @@ Depending on what has changed since you deployed your server, you may need to pe
 If you see that SQL files or `db_migrate.pl` have changed, then you **must** run `db_migrate.pl` (with appropriate options, run it with `--help` for more information) to upgrade your database to the latest version.
 If SQF files (game script) has changed, then you **must** run `build.pl` and copy the `**Repository**\\deploy\\@bliss_<id>.<world>\\` directory into **ArmA2**\\ (where `<id>` and `<world>` are the values you specified when running build.pl).
 If configuration files and BattlEye anti-cheat files have changed in **Repository**\\deploy\\, you will need to backup and overwrite your existing versions of these files. Take care to change any default server names, passwords or similar back to their customized values after copying the new versions into your **ArmA2** directory.
+If you receive an error like `Cannot locate Some::Module.pm in @INC` when running a Perl script after an upgrade, run `setup_perl.bat` and then try the Perl script again.
 
 These are the areas you will need to inspect to ensure a smooth upgrade. If database and code changes were not made at the same time and you do not read the history thoroughly, you may miss important changes and skip vital steps. It will save you frustration in the long run if you rebuild and redeploy, run `db_migrate.pl` and check for any new or changed files in **Repository**\\deploy\\ whenever you would like to update.
 
@@ -196,9 +197,6 @@ Here are the most common customization requests with instructions.
 **Request**: I would like to change the available chat channels.  
 *Solution**: When running `build.pl`, add the `--channels <channel>` option, where `<channel>` is a comma-separated list of chat channel numbers. Refer to http://community.bistudio.com/wiki/Description.ext#disableChannels for a mapping of channel names to numbers.
 
-**Request**: I would like to change the server time zone or provide a constant day/night server.  
-**Solution**: Edit **Config**\\HiveExt.ini and change the Type, Offset, and Hour values according to the commented documentation.
-
 **Request**: I would like to alter difficulty options (3rd-person, crosshairs, name tags, etc).  
 **Solution**: Edit **Config**\\Users\\Bliss\\Bliss.ArmA2OAProfile. An explanation of the options is available at http://community.bistudio.com/wiki/server.armaprofile. You must restart the server for these changes to take effect.
 
@@ -216,15 +214,18 @@ Common Issues
 =============
 
 **Problem**: Stuck at Loading / Errors in **arma2oaserver.rpt**  
-**Solution**: Look in **Config**\\hiveext.log for MySQL connection errors (Google these to find troubleshooting steps). If you do not have a **Config**\\hiveext.log file, right-click on `blisshive.dll` in `@Bliss` (`@BlissLingor` for Lingor servers) and select Properties. If you see an Unblock button, click it and hit OK. Ensure you have a valid MySQL user created, have run db_migrate.pl successfully, have set all options correctly in **Config**\\HiveExt.ini and that you can run the following when logged in to MySQL:  
+**Solution**: Look in **Config**\\hiveext.log for MySQL connection errors (Google these to find troubleshooting steps). If you do not have a **Config**\\hiveext.log file, right-click on `HiveExt.dll` in `@Bliss` (`@BlissLingor` for Lingor servers) and select Properties. If you see an Unblock button, click it and hit OK. Ensure you have a valid MySQL user created, have run db_migrate.pl successfully, have set all options correctly in **Config**\\HiveExt.ini and that you can run the following when logged in to MySQL:  
 
 	select * from survivor;
 
 **Problem**: You get errors referring to `libmysql_.dll` or see errors indicating a missing `DBD/mysql.pm` or `DBD::mysql` when running db_migrate.pl or db_spawn_vehicles.pl.  
 **Solution**: Use Strawberry Perl instead of ActivePerl. If that does not resolve the issue, try running `cpan DBD::mysql` in a command prompt or adding your Perl bin directory to the PATH environment variable.
 
+**Problem**: You get an error like `Cannot locate Some::Module.pm in @INC` when running a Perl script.  
+**Solution**: Run `setup_perl.bat` and try to execute the Perl script again.
+
 **Problem**: Server crashes when the first player connects  
-**Solution**: Ensure that you have HiveEXT.dll in your **ArmA2**\\@bliss_\<instance\>.\<world\> directory and that you have a valid and well-formed **Config**\\HiveExt.ini. Also ensure that you have tried both `localhost` and `127.0.0.1` as the hostname if you run MySQL on the same server as Bliss.
+**Solution**: Ensure that you have `HiveEXT.dll` in your **ArmA2**\\@bliss_\<instance\>.\<world\> directory and that you have a valid and well-formed **Config**\\HiveExt.ini. Also ensure that you have tried both `localhost` and `127.0.0.1` as the hostname if you run MySQL on the same server as Bliss.
 
 **Problem**: Server not listed on GameSpy in-game server list or third-party server lists  
 **Solution**: Ensure the game ports (default 2302 - 2305 UDP) are forwarded properly and that the GameSpy master server is up and running.  

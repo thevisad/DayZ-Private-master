@@ -1,11 +1,10 @@
-private["_int","_characterID","_doLoop","_newModel","_wait","_playerID","_playerObj","_randomSpot","_publishTo","_primary","_secondary","_key","_result","_charID","_playerObj","_playerName","_finished","_spawnPos","_spawnDir","_items","_counter","_magazines","_weapons","_group","_backpack","_worldspace","_direction","_newUnit","_score","_position","_pos","_isIsland","_isNew","_inventory","_backpack","_medical","_survival","_stats","_state"];
-//Set Variables
+private ["_characterID","_doLoop","_playerID","_playerObj","_randomSpot","_primary","_key","_worldspace","_score","_position","_pos","_isIsland","_medical","_stats","_state","_dummy","_debug","_distance","_hit","_fractures","_w","_findSpot","_humanity","_clientID"];//Set Variables
 //Wait for HIVE to be free
 //diag_log ("SETUP: attempted with " + str(_this));
 
 _characterID = _this select 0;
 _playerObj = _this select 1;
-_playerID = _this select 2;
+_playerID = getPlayerUID _playerObj;
 
 if (isNull _playerObj) exitWith {
 	diag_log ("SETUP INIT FAILED: Exiting, player object null: " + str(_playerObj));
@@ -19,10 +18,17 @@ if (_playerID == "") exitWith {
 	diag_log ("SETUP INIT FAILED: Exiting, no player ID: " + str(_playerObj));
 };
 
+private["_dummy"];
+_dummy = getPlayerUID _playerObj;
+if ( _playerID != _dummy ) then { 
+	diag_log format["DEBUG: _playerID miscompare with UID! _playerID:%1",_playerID]; 
+	_playerID = _dummy;
+};
+
 //Variables
 _worldspace = 	[];
-_survival =		[0,0,0];
-_tent =			[];
+
+
 _state = 		[];
 
 //Do Connection Attempt
@@ -57,7 +63,7 @@ _randomSpot = false;
 //diag_log ("WORLDSPACE: " + str(_worldspace));
 
 if (count _worldspace > 0) then {
-	_direction =	_worldspace select 0;
+
 	_position = 	_worldspace select 1;
 	if (count _position < 3) then {
 		//prevent debug world!
@@ -75,7 +81,6 @@ if (count _worldspace > 0) then {
 	};
 
 	//_playerObj setPosATL _position;
-	//_playerObj setDir _direction;
 } else {
 	_randomSpot = true;
 };
@@ -92,12 +97,15 @@ if (count _medical > 0) then {
 	_playerObj setVariable["USEC_isCardiac",(_medical select 5),true];
 	_playerObj setVariable["USEC_lowBlood",(_medical select 6),true];
 	_playerObj setVariable["USEC_BloodQty",(_medical select 7),true];
-	if (_playerID in dayz_disco) then {
-		_playerObj setVariable["NORRN_unconscious",true, true];
-		_playerObj setVariable["unconsciousTime",300,true];
-	} else {
-		_playerObj setVariable["unconsciousTime",(_medical select 10),true];
-	};
+	
+	_playerObj setVariable["unconsciousTime",(_medical select 10),true];
+	
+//	if (_playerID in dayz_disco) then {
+//		_playerObj setVariable["NORRN_unconscious",true, true];
+//		_playerObj setVariable["unconsciousTime",300,true];
+//	} else {
+//		_playerObj setVariable["unconsciousTime",(_medical select 10),true];
+//	};
 	
 	//Add Wounds
 	{

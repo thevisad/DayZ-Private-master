@@ -12,7 +12,7 @@ if (count _this > 2) then {
 	dayz_players = dayz_players - [_this select 2];
 };
 
-waitUntil{allowConnection};
+//waitUntil{allowConnection};
 
 //Variables
 _inventory =	[];
@@ -56,6 +56,10 @@ if (isNull _playerObj or !isPlayer _playerObj) exitWith {
 	diag_log ("LOGIN RESULT: Exiting, player object null: " + str(_playerObj));
 };
 
+if ((_primary select 0) == "ERROR") exitWith {	
+    diag_log format ["LOGIN RESULT: Exiting, failed to load _primary: %1 for player: %2 ",_primary,_playerID];
+};
+
 //Process request
 _newPlayer = 	_primary select 1;
 _isNew = 		count _primary < 6; //_result select 1;
@@ -75,7 +79,7 @@ if (!_isNew) then {
 	_model =		_primary select 7;
 	_hiveVer =		_primary select 8;
 	
-	if (!(_model in ["SurvivorW2_DZ","Survivor2_DZ","Sniper1_DZ","Soldier1_DZ","Camo1_DZ","Bandit1_DZ","SurvivorW2_DZ"])) then {
+	if (!(_model in ["SurvivorW2_DZ","Survivor2_DZ","Sniper1_DZ","Soldier1_DZ","Camo1_DZ","BanditW1_DZ","Bandit1_DZ","SurvivorW2_DZ"])) then {
 		_model = "Survivor2_DZ";
 	};
 	
