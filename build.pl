@@ -173,9 +173,6 @@ my @msn_pkgs = ();
 while (my $option = shift(@ARGV)) {
 	next unless ($option =~ m/with-([a-zA-Z0-9]+)/);
 
-	# Skip killmsgs for Lingor as it is unnecessary
-	next if ($args{'world'} eq 'lingor' && $1 eq 'killmsgs');
-
 	my $pkg_dir = "$base_dir/pkg/$1";
 	if (!-d $pkg_dir) {
 		print "ERROR: Package dir $pkg_dir does not exist\n";
