@@ -126,7 +126,7 @@ if (-d $src && !-d $conf_dir) {
 	$profile_sect =~ s/\./_/;
 	if (!$ini->SectionExists($profile_sect)) {
 		$ini->AddSection($profile_sect);
-		$ini->newval($profile_sect, 'name', $profile);
+		$ini->newval($profile_sect, 'name', 'Bliss');
 		$ini->newval($profile_sect, 'profiles', $profile);
 		$ini->newval($profile_sect, 'config', "$profile\\config_deadbeef.cfg");
 		$ini->newval($profile_sect, 'mod', $mod);
