@@ -122,8 +122,8 @@ class FSM
           priority = 1.000000;
           to="update_objects";
           precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
-          condition=/*%FSM<CONDITION""">*/"( (count needUpdate_objects) > 0 && (time-_lastNeedUpdate>10) )"/*%FSM</CONDITION""">*/;
-          action=/*%FSM<ACTION""">*/"_lastNeedUpdate = time;"/*%FSM</ACTION""">*/;
+          condition=/*%FSM<CONDITION""">*/"((count needUpdate_objects) > 0 && (time - _lastUpdateVeh > 10))"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/"_lastUpdateVeh = time;"/*%FSM</ACTION""">*/;
         };
         /*%FSM</LINK>*/
         /*%FSM<LINK "true">*/
@@ -325,7 +325,7 @@ class FSM
     class prepare
     {
       name = "prepare";
-      init = /*%FSM<STATEINIT""">*/"private [""_safety"", ""_msgList"", ""_crier"", ""_lastSyncTime"", ""_lastCleanDead"", ""_lastCleanObjs""];" \n
+      init = /*%FSM<STATEINIT""">*/"private [""_safety"", ""_msgList"", ""_crier"", ""_lastSyncTime"", ""_lastCleanDead"", ""_lastCleanObjs"", ""_lastUpdateVeh""];" \n
        "diag_log (""CLEANUP: INITIALIZING CLEANUP SCRIPT"");" \n
        "" \n
        "_safety = dayz_serverObjectMonitor;" \n
@@ -335,7 +335,8 @@ class FSM
        "" \n
        "_lastSyncTime = time;" \n
        "_lastCleanDead = time;" \n
-       "_lastCleanObjs = time;"/*%FSM</STATEINIT""">*/;
+       "_lastCleanObjs = time;" \n
+       "_lastUpdateVeh = time;"/*%FSM</STATEINIT""">*/;
       precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
       class Links
       {
