@@ -65,6 +65,7 @@ if ($cur_version) {
 	print "INFO: Did not find an existing schema for $schema\n";
 }
 
+print "INFO: Latest schema version is $version\n" if (defined $args{'check'});
 die "INFO: Exiting\n" if (defined $args{'check'});
 print "INFO: Attempting migration to $version\n";
 $m->migrate or die "FATAL: Database migration failed!\n";
