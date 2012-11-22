@@ -67,5 +67,5 @@ if ($cur_version) {
 
 die "INFO: Exiting\n" if (defined $args{'check'});
 print "INFO: Attempting migration to $version\n";
-$m->migrate or die "FATAL: Database migration failed! Current version is " . $m->get_current_version() . "\n";
-printf("INFO: Completed the migration from %.2f to version %.2f\n", $cur_version, $m->get_current_version());
+$m->migrate or die "FATAL: Database migration failed!\n";
+printf("INFO: Completed the migration from %.2f to version %.2f\n", (($cur_version) ? $cur_version : 0), $m->get_current_version());
