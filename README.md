@@ -88,7 +88,7 @@ Installation
     <td>Namalsk</td><td>@dayz;@dayz_namalsk</td><td>0.60</td><td>ftp://dayzcommander:dayzcommander@94.242.227.3/DayZNamalsk-0.60.rar</td>
   </tr>
   <tr>
-    <td>Celle</td><td>@mbg_celle2;@dayz_celle</td><td>1.7.3</td><td>http://opendayz.net/downloads/maps/celle/Celle_Dayz.zip</td>
+    <td>Celle</td><td>@mbg_celle2;@dayz_celle</td><td>1.7.4</td><td>http://opendayz.net/downloads/maps/celle/DayZCelle174.zip</td>
   </tr>
 </table>
 11. If you are using a world other than Chernarus, run `perl db_utility.pl setworld <world_name>`, where `<world_name>` is the name of the world you specified when running `build.pl`.
