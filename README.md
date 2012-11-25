@@ -67,22 +67,22 @@ Installation
     <td>Chernarus</td><td>@dayz</td><td>1.7.4.4</td><td>http://dayzmod.com/?Download</td>
   </tr>
   <tr>
-    <td>Lingor Island</td><td>@dayzlingor</td><td>1.1.1</td><td>ftp://dayzcommander:dayzcommander@94.242.227.3/DayZLingor-1.1.1.rar</td>
+    <td>Lingor Island</td><td>@dayzlingor</td><td>1.2</td><td>ftp://dayzcommander:dayzcommander@94.242.227.3/DayZLingor-1.2.rar</td>
   </tr>
   <tr>
-    <td>Takistan</td><td>@dayztakistan</td><td>1.5.1</td><td>ftp://dayzcommander:dayzcommander@94.242.227.3/DayZTakistan-1.5.1.rar</td>
+    <td>Takistan</td><td>@dayztakistan</td><td>1.6</td><td>ftp://dayzcommander:dayzcommander@94.242.227.3/DayZTakistan-1.6.rar</td>
   </tr>
   <tr>
     <td>Utes</td><td>@dayz</td><td>1.7.4.4</td><td>http://dayzmod.com/?Download</td>
   </tr>
   <tr>
-    <td>Panthera</td><td>@dayzpanthera</td><td>1.6.1</td><td>ftp://dayzcommander:dayzcommander@94.242.227.3/DayZPanthera-1.6.1.rar</td>
+    <td>Panthera</td><td>@dayzpanthera</td><td>1.7</td><td>ftp://dayzcommander:dayzcommander@94.242.227.3/DayZPanthera-1.7.rar</td>
   </tr>
   <tr>
-    <td>Fallujah</td><td>@dayzfallujah</td><td>1.3.1</td><td>ftp://dayzcommander:dayzcommander@94.242.227.3/DayZFallujah-1.3.1.rar</td>
+    <td>Fallujah</td><td>@dayzfallujah</td><td>1.4</td><td>ftp://dayzcommander:dayzcommander@94.242.227.3/DayZFallujah-1.4.rar</td>
   </tr>
   <tr>
-    <td>Zargabad</td><td>@dayzzargabad</td><td>1.3.1</td><td>ftp://dayzcommander:dayzcommander@94.242.227.3/DayZZargabad-1.3.1.rar</td>
+    <td>Zargabad</td><td>@dayzzargabad</td><td>1.4</td><td>ftp://dayzcommander:dayzcommander@94.242.227.3/DayZZargabad-1.4.rar</td>
   </tr>
   <tr>
     <td>Namalsk</td><td>@dayz;@dayz_namalsk</td><td>0.60</td><td>ftp://dayzcommander:dayzcommander@94.242.227.3/DayZNamalsk-0.60.rar</td>
