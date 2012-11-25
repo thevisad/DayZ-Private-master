@@ -142,7 +142,7 @@ if ($cmd eq 'messages') {
 			# Remove all instances of the current classname from inventory, backpack, and state
 			my $changed = $row->{'inventory'} =~ s/,{0,1}"$classname",{0,1}//gi;
 			$changed += $row->{'backpack'} =~ s/,{0,1}"$classname",{0,1}//gi;
-			$row->{'state'} =~ s/\["$classname","amovpknlmstpsraswrfldnon",42\]/["","aidlpercmstpsnonwnondnon_player_idlesteady04",36]/;
+			$row->{'state'} =~ s/\["$classname","\w*",\d+\]/["","aidlpercmstpsnonwnondnon_player_idlesteady04",36]/;
 			# Iff an item was removed, update the row
 			if ($changed > 0) {
 				$rowCnt++;
