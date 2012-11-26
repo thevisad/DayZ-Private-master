@@ -335,8 +335,10 @@ sub merge_packages {
 				my $dstData = patch($srcData, $diff, { STYLE => 'Unified' });
 
 				my @srcSplit = File::Spec->splitdir(dirname($srcPath));
+				my @dstSplit = File::Spec->splitdir(dirname($dstPath));
 				my $srcLast = pop(@srcSplit);
-				$dstPath = "$dst/$srcLast/" . basename($srcPath);
+				my $dstLast = pop(@dstSplit);
+				$dstPath = "$dst/" . (($srcLast eq $dstLast) ? "$srcLast/" : '') . basename($srcPath);
 
 				make_path(dirname($dstPath)) unless (-d dirname($dstPath));
 				write_file($dstPath, $dstData);
