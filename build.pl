@@ -185,7 +185,7 @@ while (my $option = shift(@ARGV)) {
 
 # Create the dayz_server PBO
 if (scalar(@pkgs) > 0) {
-	merge_packages(\@pkgs, $build_dir, $pkg_build_dir);
+	merge_packages(\@pkgs, $build_dir, $pkg_build_dir, 0);
 }
 
 pack_world();
@@ -193,7 +193,7 @@ pack_world();
 # Create the mission PBO
 copy_dir("$msn_dir/world/$args{'world'}", $msn_build_dir);
 if (scalar(@msn_pkgs) > 0) {
-	merge_packages(\@msn_pkgs, $msn_build_dir, $msn_build_dir);
+	merge_packages(\@msn_pkgs, $msn_build_dir, $msn_build_dir, 1);
 }
 
 pack_mission();
@@ -281,7 +281,7 @@ sub complex_merge {
 
 # Perform merge of package changes into output dir
 sub merge_packages {
-	my ($ref_pkgs, $dst, $tmp) = @_;
+	my ($ref_pkgs, $dst, $tmp, $mission) = @_;
 	my @pkgs = @{$ref_pkgs};
 
 	die "FATAL: Destination path $dst does not exist\n" unless (-d $dst);
@@ -300,8 +300,10 @@ sub merge_packages {
 		print "Merging changes for package $src\n";
 		if ($i > 0) {
 			my @pkg_slice = @pkgs[0 .. ($i - 1)];
-			remove_tree($tmp);
-			copy_dir($src, $tmp);
+			if (!$mission) {
+				remove_tree($tmp);
+				copy_dir($src, $tmp);
+			}
 			foreach my $replay_pkg (@pkg_slice) {
 				if (-d "$wld_dir/$args{'world'}") {
 					my $replay_pkg_tmp = "$tmp_dir/" . basename($replay_pkg) . "_replay_tmp";
