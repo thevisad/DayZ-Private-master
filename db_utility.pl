@@ -34,12 +34,14 @@ my %db = (
 if ($args{'help'}) {
 	print "usage: db_utility.pl <command> [arguments] [--instance <id>] [--host <hostname>] [--user <username>] [--pass <password>] [--name <database-name>] [--port <port>]\n";
 	print "command is one of:\n";
-	print "  setworld <world_name> - set the world for an instance\n";
-	print "  itemdistr             - look at all live player inventories and show counts of each item in descending order\n";
-	print "  cleanitem <classname> - remove comma-separated list of classnames from all survivor inventories\n";
-	print "  cleandead <days>      - delete dead survivors who were last updated more than <days> days ago\n";
+	print "  setworld <world_name>          - set the world for an instance\n";
+	print "  itemdistr                      - look at all live player inventories and show counts of each item in descending order\n";
+	print "  cleanitem <classname>          - remove comma-separated list of classnames from all survivor inventories\n";
+	print "  cleandead <days>               - delete dead survivors who were last updated more than <days> days ago\n";
+	print "  cleanvehicle [<vehicle_id>]    - deletes all spawned vehicles (only of <vehicle_id> if specified)";
+	print "  cleandeploy [<deployable_id>]  - deletes all spawned deployables (only of type <deployable_id> if specified)";
 	print "  loadout <inventory> <backpack> - set default loadout to <inventory> and <backpack> (default is [], [\"DZ_Patrol_Pack_EP1\",[[],[]],[[],[]]])\n";
-	print "  messages <subcommand> - manage the optional messaging system\n";
+	print "  messages <subcommand>          - manage the optional messaging system\n";
 	print "    add <instance_id> <start_delay> <loop_interval> <message> - add a message for <instance_id> with body <message> that first prints <start_delay> seconds and then every <loop_interval> seconds thereafter (use 0 for <loop_interval> for a one-time message)\n";
 	print "    edit <id> <instance_id> <start_delay> <loop_interval> <message> - set the message with <id> to the specified values\n";
 	print "    del <id>\n - delete a message with <id> specified (use 'messages list' to find valid values).\n";
@@ -194,6 +196,24 @@ EndSQL
 	$sth->execute($days);
 	print "INFO: Removed " . $sth->rows . " rows from the survivor table\n";
 	$sth->finish();
+} elsif ($cmd eq 'cleanvehicle') {
+	my $vehicle_id = shift(@ARGV);
+	my $sth = $dbh->prepare("delete from iv using instance_vehicle iv join world_vehicle wv on iv.world_vehicle_id = wv.id where iv.instance_id = ?" . ((defined $vehicle_id) ? ' and wv.vehicle_id = ?' : ''));
+        if (defined $vehicle_id) {
+		$sth->execute($db{'instance'}, $vehicle_id);
+	} else {
+		$sth->execute($db{'instance'});
+	}
+	print "INFO: Removed " . $sth->rows . " vehicles\n";
+} elsif ($cmd eq 'cleandeploy') {
+	my $deployable_id = shift(@ARGV);
+	my $sth = $dbh->prepare("delete from id using instance_deployable id join deployable d on id.deployable_id = d.id where id.instance_id = ?" . ((defined $deployable_id) ? ' and d.id = ?' : ''));
+	if (defined $deployable_id) {
+		$sth->execute($db{'instance'}, $deployable_id);
+	} else {
+		$sth->execute($db{'instance'});
+	}
+	print "INFO: Removed " . $sth->rows . " deployables\n";
 } elsif ($cmd eq 'loadout') {
 	my $inventory = shift(@ARGV);
 	die "FATAL: Invalid inventory\n" unless ($inventory =~ /\[(\[.+?\],{0,1})+\]/);
