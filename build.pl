@@ -14,7 +14,7 @@ use File::DirCompare;
 use Text::Diff qw(diff);
 use Text::Patch;
 
-use Digest::SHA1 qw(sha1_hex);
+use Digest::SHA qw(sha1_hex);
 use Time::HiRes qw(time);
 use List::Util qw(max min);
 
