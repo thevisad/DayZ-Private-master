@@ -38,8 +38,8 @@ if ($args{'help'}) {
 	print "  itemdistr                      - look at all live player inventories and show counts of each item in descending order\n";
 	print "  cleanitem <classname>          - remove comma-separated list of classnames from all survivor inventories\n";
 	print "  cleandead <days>               - delete dead survivors who were last updated more than <days> days ago\n";
-	print "  cleanvehicle [<vehicle_id>]    - deletes all spawned vehicles (only of <vehicle_id> if specified)";
-	print "  cleandeploy [<deployable_id>]  - deletes all spawned deployables (only of type <deployable_id> if specified)";
+	print "  cleanvehicle [<vehicle_id>]    - deletes all spawned vehicles (only of <vehicle_id> if specified)\n";
+	print "  cleandeploy [<deployable_id>]  - deletes all spawned deployables (only of type <deployable_id> if specified)\n";
 	print "  loadout <inventory> <backpack> - set default loadout to <inventory> and <backpack> (default is [], [\"DZ_Patrol_Pack_EP1\",[[],[]],[[],[]]])\n";
 	print "  messages <subcommand>          - manage the optional messaging system\n";
 	print "    add <instance_id> <start_delay> <loop_interval> <message> - add a message for <instance_id> with body <message> that first prints <start_delay> seconds and then every <loop_interval> seconds thereafter (use 0 for <loop_interval> for a one-time message)\n";
