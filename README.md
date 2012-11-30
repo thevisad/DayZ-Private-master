@@ -61,34 +61,37 @@ Installation
 10. Ensure the required client mods are present in **ArmA2**\\. Refer to the following table for specific information based on your desired world.  
 <table>
   <tr>
-    <td>World</td><td>Mod Folders</td><td>Version</td><td>URL</td>
+    <td>World</td><td>World Name (Database)</td><td>Mod Folders</td><td>Version</td><td>URL</td>
   </tr>
   <tr>
-    <td>Chernarus</td><td>@dayz</td><td>1.7.4.4</td><td>http://dayzmod.com/?Download</td>
+    <td>Chernarus</td><td>chernarus</td><td>@dayz</td><td>1.7.4.4</td><td>http://dayzmod.com/?Download</td>
   </tr>
   <tr>
-    <td>Lingor Island</td><td>@dayzlingor</td><td>1.2</td><td>ftp://dayzcommander:dayzcommander@94.242.227.3/DayZLingor-1.2.rar</td>
+    <td>Lingor Island</td><td>lingor</td><td>@dayzlingor</td><td>1.2</td><td>ftp://dayzcommander:dayzcommander@94.242.227.3/DayZLingor-1.2.rar</td>
   </tr>
   <tr>
-    <td>Takistan</td><td>@dayztakistan</td><td>1.6</td><td>ftp://dayzcommander:dayzcommander@94.242.227.3/DayZTakistan-1.6.rar</td>
+    <td>Takistan</td><td>takistan</td><td>@dayztakistan</td><td>1.6</td><td>ftp://dayzcommander:dayzcommander@94.242.227.3/DayZTakistan-1.6.rar</td>
   </tr>
   <tr>
-    <td>Utes</td><td>@dayz</td><td>1.7.4.4</td><td>http://dayzmod.com/?Download</td>
+    <td>Utes</td><td>utes</td><td>@dayz</td><td>1.7.4.4</td><td>http://dayzmod.com/?Download</td>
   </tr>
   <tr>
-    <td>Panthera</td><td>@dayzpanthera</td><td>1.7</td><td>ftp://dayzcommander:dayzcommander@94.242.227.3/DayZPanthera-1.7.rar</td>
+    <td>Panthera</td><td>panthera2</th><td>@dayzpanthera</td><td>1.7</td><td>ftp://dayzcommander:dayzcommander@94.242.227.3/DayZPanthera-1.7.rar</td>
   </tr>
   <tr>
-    <td>Fallujah</td><td>@dayzfallujah</td><td>1.4</td><td>ftp://dayzcommander:dayzcommander@94.242.227.3/DayZFallujah-1.4.rar</td>
+    <td>Fallujah</td><td>fallujah</td><td>@dayzfallujah</td><td>1.4</td><td>ftp://dayzcommander:dayzcommander@94.242.227.3/DayZFallujah-1.4.rar</td>
   </tr>
   <tr>
-    <td>Zargabad</td><td>@dayzzargabad</td><td>1.4</td><td>ftp://dayzcommander:dayzcommander@94.242.227.3/DayZZargabad-1.4.rar</td>
+    <td>Zargabad</td><td>zargabad</td><td>@dayzzargabad</td><td>1.4</td><td>ftp://dayzcommander:dayzcommander@94.242.227.3/DayZZargabad-1.4.rar</td>
   </tr>
   <tr>
-    <td>Namalsk</td><td>@dayz;@dayz_namalsk</td><td>0.60</td><td>ftp://dayzcommander:dayzcommander@94.242.227.3/DayZNamalsk-0.60.rar</td>
+    <td>Namalsk Island</td><td>namalsk</td><td>@dayz;@dayz_namalsk</td><td>0.60</td><td>ftp://dayzcommander:dayzcommander@94.242.227.3/DayZNamalsk-0.60.rar</td>
   </tr>
   <tr>
-    <td>Celle</td><td>@mbg_celle2;@dayz_celle</td><td>1.7.4</td><td>http://opendayz.net/downloads/maps/celle/DayZCelle174.zip</td>
+    <td>Celle</td><td>mbg_celle2</td><td>@mbg_celle2;@dayz_celle</td><td>1.7.4</td><td>http://opendayz.net/downloads/maps/celle/DayZCelle174.zip</td>
+  </tr>
+  <tr>
+    <td>Taviana</td><td>tavi</td><td>@dayztaviana</td><td>1.1.0</td><td>http://www.board.dayzland.eu/downloads/maps/DayzTaviana-Final-V1.1.0.zip<br>http://download.dayzland.com/DayzTaviana-Final-V1.1.0.zip</td>
   </tr>
 </table>
 11. If you are using a world other than Chernarus, run `perl db_utility.pl setworld <world_name>`, where `<world_name>` is the name of the world you specified when running `build.pl`.
