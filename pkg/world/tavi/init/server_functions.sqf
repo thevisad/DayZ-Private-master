@@ -15,9 +15,6 @@ server_playerSync =			compile preprocessFileLineNumbers "\z\addons\dayz_server\c
 zombie_findOwner =			compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\zombie_findOwner.sqf";
 server_updateNearbyObjects =	compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\server_updateNearbyObjects.sqf";
 
-fnc_buildWeightedArray =   compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\fn_buildWeightedArray.sqf";
-onPlayerDisconnected     { [_uid,_name] call server_onPlayerDisconnect; };
-
 //Get instance name (e.g. dayz_1.chernarus)
 fnc_instanceName = {
 	"dayz_" + str(dayz_instance) + "." + worldName
