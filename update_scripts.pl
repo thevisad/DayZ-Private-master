@@ -60,7 +60,10 @@ my @scripts = (
 	"teamswitch.txt",
 	"addbackpackcargo.txt",
 	"setvariable.txt",
-	"setvariableval.txt"
+	"setvariableval.txt",
+	"attachto.txt",
+	"remotecontrol.txt",
+	"selectplayer.txt"
 );
 
 foreach my $script (@scripts) {
