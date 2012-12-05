@@ -91,7 +91,7 @@ Installation
     <td>Celle</td><td>mbg_celle2</td><td>@mbg_celle2;@dayz_celle</td><td>1.7.4</td><td>http://opendayz.net/downloads/maps/celle/DayZCelle174.zip</td>
   </tr>
   <tr>
-    <td>Taviana</td><td>tavi</td><td>@dayztaviana</td><td>1.1.0</td><td>http://www.board.dayzland.eu/downloads/maps/DayzTaviana-Final-V1.1.0.zip<br>http://download.dayzland.com/DayzTaviana-Final-V1.1.0.zip</td>
+    <td>Taviana</td><td>tavi</td><td>@taviana</td><td>1.7.4.4</td><td>http://69.4.233.147/dayzcommander/Taviana-1.7.4.4.rar</td>
   </tr>
 </table>
 11. If you are using a world other than Chernarus, run `perl db_utility.pl setworld <world_name>`, where `<world_name>` is the name of the world you specified when running `build.pl`.
