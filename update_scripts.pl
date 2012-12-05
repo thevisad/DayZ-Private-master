@@ -39,11 +39,8 @@ my %lookups = (
 		"createVehicleLocal" => "!\\\"createvehiclelocal getpos _house;\\\""
 	},
 	'tavi' => {
-		"enableSimulation" => "!\\\"\\\\\\\\\\\"BLACK OUT\\\\\\\\\\\",1];\\\\nplayer enableSimulation false\\\"",
-		"publicVariable"   => "!\\\"\\\\\\\\\\\"TentStorage\\\\\\\\\\\"], 10];\\\\n{\\\\ndayzUpdateVehicle = [_x,\\\\\\\\\\\"all\\\\\\\\\\\"];\\\\npublicVariableServer \\\\\\\\\\\"dayzUpdateVehicle\\\\\\\\\\\";\\\\n}  foreach _objects;\\\"",
-		"setDamage"        => "!\\\"this setDamage 0.8;\\\" !\\\"this setDamage 1;\\\"",
-		"setHit"           => "!\\\"[player,\\\\\\\\\\\"legs\\\\\\\\\\\", (_fractures select 0)] call object_setHit;\\\" !\\\"[player,\\\\\\\\\\\"hands\\\\\\\\\\\", (_fractures select 1)] call object_setHit;\\\"",
-		"toArray"          => "!\\\"_damage = [_vehicle,_x] call object_getHit;\\\\n_part = \\\"PartGeneric\\\";\\\""
+		"addAction"          => "!\\\"_vehicle addAction [\\\\\\\\\\\"Refuel\\\\\\\\\\\", \\\\\\\\\\\"kh_vehicle_refuel.sqf\\\\\\\\\\\",\\\"",
+		"setFuel"            => "!\\\"if (_fuel >= 1.0) then { _fuel = 1.0; };\\\\n\\\\n_target setFuel _fuel;\\\""
 	}
 );
 

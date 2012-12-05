@@ -1,6 +1,6 @@
 respawn = "BASE";
 respawndelay = 5;
-onLoadMission= "DayZ Taviana Test";
+onLoadMission= "DayZ Taviana";
 OnLoadIntro = "Welcome to Taviana";
 OnLoadIntroTime = False;
 OnLoadMissionTime = False;

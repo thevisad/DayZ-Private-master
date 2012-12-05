@@ -46,7 +46,7 @@ if (_characterID == "0") exitWith {
 private["_debug","_distance"];
 _debug = getMarkerpos "respawn_west";
 _distance = _debug distance _charPos;
-if (_distance < 250) exitWith { 
+if (_distance < 2000) exitWith { 
 	diag_log format["ERROR: server_playerSync: Cannot Sync Player %1 [%2]. Position in debug! %3",name _character,_characterID,_charPos];
 };
 
@@ -175,7 +175,7 @@ if (_characterID != "0") then {
 		if (count _playerPos > 0) then {
 			_array = [];
 			{
-				if (_x < 25600) then {
+				if (_x > -30000 and _x < 30000) then {
 					_array set [count _array,_x];
 				};
 			} forEach (_playerPos select 1);
