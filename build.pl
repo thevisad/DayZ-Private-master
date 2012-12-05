@@ -266,6 +266,7 @@ sub complex_merge {
 			my $origLast = pop(@origSplit);
 			my $srcPath = "$src/$origLast/" . basename($origPath);
 
+			$srcPath = "$src/" . basename($origPath) if (!-f $srcPath);
 			return unless (-f $srcPath);
 
 			my $cmd = (($^O =~ m/MSWin32/) ? 'util\\diff3.exe --diff-program=util\\diff.exe -m' : 'diff3 -m');
@@ -292,9 +293,15 @@ sub merge_packages {
 
 		if (-d "$wld_dir/$args{'world'}") {
 			print "Merging world changes into $src\n";
-			my $src_tmp = "$tmp_dir/" . basename($src) . "_tmp";
-			copy_dir($src, $src_tmp);
-			complex_merge($bls_dir, "$wld_dir/$args{'world'}", $src_tmp);
+			my $src_tmp = "$tmp_dir/" . basename($src) . (($mission) ? '_msn' : '') . "_tmp";
+                        remove_tree($src_tmp) if (-d $src_tmp);
+                        copy_dir($src, $src_tmp);
+
+			if ($mission) {
+				complex_merge("$msn_dir/world/$args{'world'}", $src, $src_tmp);
+			} else {
+				complex_merge($bls_dir, "$wld_dir/$args{'world'}", $src_tmp);
+			}
 			$src = $src_tmp;
 		}
 
@@ -307,9 +314,14 @@ sub merge_packages {
 			}
 			foreach my $replay_pkg (@pkg_slice) {
 				if (-d "$wld_dir/$args{'world'}") {
-					my $replay_pkg_tmp = "$tmp_dir/" . basename($replay_pkg) . "_replay_tmp";
+					my $replay_pkg_tmp = "$tmp_dir/" . basename($replay_pkg) . "_replay" . (($mission) ? '_msn' : '') . "_tmp";
+					remove_tree($replay_pkg_tmp) if (-d $replay_pkg_tmp);
 					copy_dir($replay_pkg, $replay_pkg_tmp);
-					complex_merge($bls_dir, "$wld_dir/$args{'world'}", $replay_pkg_tmp);
+					if ($mission) {
+						complex_merge("$msn_dir/world/$args{'world'}", $replay_pkg, $replay_pkg_tmp);
+					} else {
+						complex_merge($bls_dir, "$wld_dir/$args{'world'}", $replay_pkg_tmp);
+					}
 					$replay_pkg = $replay_pkg_tmp;
 				}
 				
