@@ -1,18 +1,14 @@
 DayZ Bliss Private Server
 =========================
 
-This is a private server project for DayZ.
-This code is currently compatible with DayZ 1.7.4.4 and ArmA 2 OA beta patch build 99113.
-
-This would not be possible without the work of Rocket and Guru Abdul. We also use the fantastic cPBO from Kegetys (www.kegetys.fi) and wget for Windows by the GnuWin32 team (gnuwin32.sourceforge.net).
-
+This is a private server project for DayZ which would not be possible without the work of Rocket and Guru Abdul. 
 **NOTE**: No support is implied or offered for pirated copies of ArmA 2.
 
 Prerequisites
 =============
 
  - Windows (tested with 7 and Server 2008)
- - A working ArmA 2 Combined Ops dedicated server (Steam users must merge ArmA2 and ArmA2 OA directories) with recommended beta patch installed (http://www.arma2.com/beta-patch.php)
+ - A working ArmA 2 Combined Ops dedicated server (Steam users must merge ArmA2 and ArmA2 OA directories) with beta patch **99113** installed (http://www.arma2.com/beta-patch.php)
  - Microsoft Visual C++ 2010 SP1 x86 Redistributable (http://www.microsoft.com/en-us/download/details.aspx?id=8328)
  - MySQL Server 5.x with TCP/IP Networking enabled **NOTE:** You **must** use the official MySQL installer, not XAMPP (http://dev.mysql.com/get/Downloads/MySQL-5.5/mysql-5.5.27-win32.msi/from/http://cdn.mysql.com)
  - The decimal separator on your server MUST BE a period. If it is a comma, vehicle spawning (at least) will not work correctly. **NOTE:** If you use FireDaemon to start your server, you must re-create the service if you change the comma separator in Windows.
@@ -21,7 +17,7 @@ Prerequisites
 Directories
 ===========
 
-When you see the following names in bold, substitute in the appropriate path as described.
+**IMPORTANT**: When you see the following names in bold, substitute in the appropriate path as described.
 
  - **ArmA2** - this is the root directory of your ArmA 2 installation.
  - **Repository** - this is the directory you have extracted (or cloned) these private server files to.
@@ -30,10 +26,12 @@ When you see the following names in bold, substitute in the appropriate path as 
 Installation
 ============
 
+**NOTE**: The importance of following each of these steps correctly and in order cannot be understated. 
+
 1. Run `setup_perl.bat`. If you are prompted to provide a schema path, press enter to continue. If you are prompted Yes/No to run tests, type "n" and press Enter.  
 2. Run `perl build.pl --world <world> --instance <id>` in **Repository**, replacing `<world>` with a valid world name and `<id>` with an integer representing the instance ID. If you only run one server, you may omit the `--instance` parameter from the command. If --world is omitted, the default is Chernarus. Use `perl build.pl --list` to get a list of available worlds and optional packages and run `perl build.pl --help` for additional information on how to use build.pl.  
 3. Copy all files from **Repository**\\deploy into **ArmA2**\\  
-4. Run the following SQL code as the **root** user (be **sure** to change the password from CHANGEME):  
+4. For this step, you will need to use one of several MySQL administrative utilities to execute some SQL queries. These utilities include the MySQL Command Line Interface (which is bundled with the MySQL Server install for Windows) and various free and commercial GUI utilities. We recommend HeidiSQL if you want a graphical interface (http://www.heidisql.com/). Once you have connected to your database as the **root** user (you set the password for this user when you installed MySQL Server), execute the following SQL queries (be **sure** to change the password in the second query from CHANGEME):  
 
 		create database dayz;
 		create user 'dayz'@'localhost' identified by 'CHANGEME';
@@ -235,6 +233,19 @@ Common Issues
 
 **Problem**: "Bad CD Key" messages  
 **Solution**: Buy the game.
+
+Thanks To
+=========
+
+Each of these packages is a part of Bliss and makes what we do possible.
+
+<table>
+  <tr><th>Name</th><th>Author</th><th>URL</th></tr>
+  <tr><td>cPBO</td><td>Kegetys</td><td>http://www.kegetsys.fi</td></tr>
+  <tr><td>GnuWin32 (wget)</td><td></td><td>http://gnuwin32.sourceforge.net</td></tr>
+  <tr><td>MySQL</td><td></td><td>http://www.mysql.com/</td></tr>
+  <tr><td>Strawberry Perl</td><td></td><td>http://strawberryperl.com/</td></tr>
+</table>
 
 Support
 =======
