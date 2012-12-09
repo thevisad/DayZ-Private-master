@@ -1,7 +1,7 @@
 DayZ Bliss Private Server
 =========================
 
-This is a private server project for DayZ which would not be possible without the work of Rocket and Guru Abdul. 
+This is a private server project for DayZ which would not be possible without the work of Rocket and Guru Abdul.   
 **NOTE**: No support is implied or offered for pirated copies of ArmA 2.
 
 Prerequisites
@@ -204,26 +204,25 @@ Here are the most common customization requests with instructions.
 Gotchas / Known Bugs
 ==========
 
-Character data can become desynchronized if the player was connected within several minutes of server shutdown. We strongly recommend that you wait 5 minutes after all players have disconnected before shutting down a public server.
+Character data can become desynchronized if the player was connected within several minutes of server shutdown. A heavily loaded server will continue processing backlogged player syncs for some time even after all players have been disconnected. We strongly recommend that you wait 5 minutes after all players have disconnected before shutting down a public server.
 
 Any bug present in the official client or server will probably also exist in this solution. Please do **not** report these as issues on GitHub. Some of the official bugs:
  - Loss of backpack due to bandit morphing or on respawn
  - Spawning in debug areas (plains / ocean)
- - Vehicle damage not saving properly
 
 Common Issues
 =============
-
-**Problem**: Stuck at Loading / Errors in **arma2oaserver.rpt**  
-**Solution**: Look in **Config**\\hiveext.log for MySQL connection errors (Google these to find troubleshooting steps). If you do not have a **Config**\\hiveext.log file, right-click on `HiveExt.dll` in `@Bliss` (`@BlissLingor` for Lingor servers) and select Properties. If you see an Unblock button, click it and hit OK. Ensure you have a valid MySQL user created, have run db_migrate.pl successfully, have set all options correctly in **Config**\\HiveExt.ini and that you can run the following when logged in to MySQL:  
-
-	select * from survivor;
 
 **Problem**: You get errors referring to `libmysql_.dll` or see errors indicating a missing `DBD/mysql.pm` or `DBD::mysql` when running db_migrate.pl or db_spawn_vehicles.pl.  
 **Solution**: Use Strawberry Perl instead of ActivePerl. If that does not resolve the issue, try running `cpan DBD::mysql` in a command prompt or adding your Perl bin directory to the PATH environment variable.
 
 **Problem**: You get an error like `Cannot locate Some::Module.pm in @INC` when running a Perl script.  
 **Solution**: Run `setup_perl.bat` and try to execute the Perl script again.
+
+**Problem**: "Error Connecting to Service" / Stuck at Loading / Errors in **arma2oaserver.rpt**  
+**Solution**: Look in **Config**\\hiveext.log for MySQL connection errors (Google these to find troubleshooting steps). If you do not have a **Config**\\hiveext.log file, right-click on `HiveExt.dll` in `@Bliss` (`@BlissLingor` for Lingor servers) and select Properties. If you see an Unblock button, click it and hit OK. Ensure you have a valid MySQL user created, have run db_migrate.pl successfully, have set all options correctly in **Config**\\HiveExt.ini and that you can run the following when logged in to MySQL:  
+
+	select * from survivor;
 
 **Problem**: Server crashes when the first player connects  
 **Solution**: Ensure that you have `HiveEXT.dll` in your **ArmA2**\\@bliss_\<instance\>.\<world\> directory and that you have a valid and well-formed **Config**\\HiveExt.ini. Also ensure that you have tried both `localhost` and `127.0.0.1` as the hostname if you run MySQL on the same server as Bliss.
