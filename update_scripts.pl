@@ -69,7 +69,7 @@ my @scripts = (
 foreach my $script (@scripts) {
 	my $uri = "https://dayz-community-banlist.googlecode.com/git/filters/$script";
 	my $cmd = (($^O =~ m/MSWin32/) ? 'util/wget' : 'wget');
-	$cmd = "$cmd --no-check-certificate -q -N -O $dst/$script $uri";
+	$cmd = "$cmd --no-check-certificate -q -N -O \"$dst/$script\" $uri";
 
 	print "INFO: Fetching URI $uri\n";
 	my $ret = system($cmd);
@@ -96,8 +96,8 @@ print "INFO: Update complete. NOTE: You must reload the filters on a running ser
 
 # Cross-platform system() helper
 sub replace_text {
-	#print "perl -pi" . (($^O eq "MSWin32") ? '.bak' : '') . " -e \"$_[0]\" $_[1]\n";
-	system("perl -pi" . (($^O eq "MSWin32") ? '.bak' : '') . " -e \"$_[0]\" $_[1]");
+	#print "perl -pi" . (($^O eq "MSWin32") ? '.bak' : '') . " -e \"$_[0]\" \"$_[1]\"\n";
+	system("perl -pi" . (($^O eq "MSWin32") ? '.bak' : '') . " -e \"$_[0]\" \"$_[1]\"");
 	# Clean up .bak file in Windows only
 	if ($^O eq "MSWin32") {
 		(my $bakPath = $_[1]) =~ s/\//\\/g;
