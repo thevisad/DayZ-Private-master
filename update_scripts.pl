@@ -40,7 +40,7 @@ my %lookups = (
 	},
 	'tavi' => {
 		"addAction"          => "!\\\"_vehicle addAction [\\\\\\\\\\\"Refuel\\\\\\\\\\\", \\\\\\\\\\\"kh_vehicle_refuel.sqf\\\\\\\\\\\",\\\"",
-		"setFuel"            => "!\\\"if (_fuel >= 1.0) then { _fuel = 1.0; };\\\\n\\\\n_target setFuel _fuel;\\\""
+		"setFuel"            => "!\\\"if (_fuel \\x3e= 1.0) then { _fuel = 1.0; };\\\\n\\\\n_target setFuel _fuel;\\\""
 	}
 );
 
