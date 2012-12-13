@@ -28,9 +28,10 @@ if (!isNull _object) then {
 
 	if (alive _object) then {
 		[_object, (magazines _object), true] call server_playerSync;
-		[_playerID,_characterID,2] spawn dayz_recordLogin;
 		_myGroup = group _object;
 		deleteVehicle _object;
 		deleteGroup _myGroup;
 	};
+
+	[_playerID,_characterID,2] call dayz_recordLogin;
 };
