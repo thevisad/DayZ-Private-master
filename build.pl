@@ -172,7 +172,7 @@ if (-d "$wld_dir/$args{'world'}") {
 my @pkgs = ();
 my @msn_pkgs = ();
 while (my $option = shift(@ARGV)) {
-	next unless ($option =~ m/with-([a-zA-Z0-9]+)/);
+	next unless ($option =~ m/with-([a-zA-Z0-9-]+)/);
 
 	my $pkg_dir = "$base_dir/pkg/$1";
 	if (!-d $pkg_dir) {
@@ -218,7 +218,7 @@ sub simple_merge {
 		my ($srcPath, $dstPath) = @_;
 
 		if (!$dstPath) {
-			return if (-d $srcPath);
+			return unless (-f $srcPath);
 
 			# New file, copy it from $srcPath
 			my @dstSplit = File::Spec->splitdir($dst);
@@ -309,7 +309,7 @@ sub merge_packages {
 		if ($i > 0) {
 			my @pkg_slice = @pkgs[0 .. ($i - 1)];
 			if (!$mission) {
-				remove_tree($tmp);
+				remove_tree($tmp) if (-d $tmp);
 				copy_dir($src, $tmp);
 			}
 			foreach my $replay_pkg (@pkg_slice) {
@@ -334,10 +334,14 @@ sub merge_packages {
 			my ($srcPath, $dstPath) = @_;
 
 			if (!$dstPath) {
+				return unless (-f $srcPath);
+
 				# New file, copy it from $srcPath
+				my @dstSplit = File::Spec->splitdir($dst);
 				my @srcSplit = File::Spec->splitdir(dirname($srcPath));
+				my $dstLast = pop(@dstSplit);
 				my $srcLast = pop(@srcSplit);
-				$dstPath = "$dst/$srcLast/" . basename($srcPath);
+				$dstPath = "$dst/" . (($srcLast eq $dstLast) ? "$srcLast/" : '') . basename($srcPath);
 
 				#print "SRC $srcPath -> $dstPath\n";
 				make_path(dirname($dstPath)) unless (-d dirname($dstPath));
@@ -353,7 +357,8 @@ sub merge_packages {
 				my @dstSplit = File::Spec->splitdir(dirname($dstPath));
 				my $srcLast = pop(@srcSplit);
 				my $dstLast = pop(@dstSplit);
-				$dstPath = "$dst/" . (($srcLast eq $dstLast) ? "$srcLast/" : '') . basename($srcPath);
+
+				$dstPath = "$dst/" . (($srcLast eq $dstLast && -f $srcPath) ? "$srcLast/" : '') . basename($srcPath);
 
 				make_path(dirname($dstPath)) unless (-d dirname($dstPath));
 				write_file($dstPath, $dstData);
