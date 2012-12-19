@@ -1,7 +1,11 @@
 #!/usr/bin/perl -w
 
 use Getopt::Long qw(:config pass_through);
+
+use File::Slurp;
 use File::Path qw(make_path);
+
+use JSON;
 
 our %args;
 GetOptions(
@@ -11,6 +15,7 @@ GetOptions(
 );
 
 my ($dst) = @ARGV;
+my $filter_dir = './filter';
 
 if ($args{'help'}) {
 	print "usage: update_scripts.pl [--world <world>] <directory>\n";
@@ -20,29 +25,25 @@ if ($args{'help'}) {
 
 $args{'world'} = 'chernarus' unless($args{'world'});
 
+die "FATAL: Filter directory does not exist\n" unless (-d $filter_dir);
 die "FATAL: Must supply destination directory\n" unless defined $dst;
 die "FATAL: Destination directory $dst does not exist\n" unless (-d $dst);
 
-my %lookups = (
-	'global' => {
-		"\\\"\\\""           => "!=\\\"_this spawn fnc_plyrHit;\\\"",
-		"\\\"spawn\\\""      => "!=\\\"_this spawn fnc_plyrHit;\\\"",
-		"\\\"this\\\""       => "!=\\\"_this spawn fnc_plyrHit;\\\"",
-		"addMPEventHandler"  => "!=\\\"_this spawn fnc_plyrHit;\\\""
-	},
-	'namalsk' => {
-		"createVehicle"      => "!\\\"_light = \\\"#LightPoint\\\" createVehicleLocal [4978.8086,6630.834,0];\\\"",
-		"createVehicleLocal" => "!\\\"_light = \\\"#LightPoint\\\" createVehicleLocal [4978.8086,6630.834,0];\\\"",
-		"\\\"box\\\""        => "!\\\"z_ru_soldier_light\\\" !\\\"z_us_soldier\\\" !\\\"z_us_soldier_light\\\" !\\\"z_ru_soldier\\\" !\\\"CamoWinter_DZN\\\""
-	},
-	'mbg_celle2' => {
-		"createVehicleLocal" => "!\\\"createvehiclelocal getpos _house;\\\""
-	},
-	'tavi' => {
-		"addAction"          => "!\\\"_vehicle addAction [\\\\\\\\\\\"Refuel\\\\\\\\\\\", \\\\\\\\\\\"kh_vehicle_refuel.sqf\\\\\\\\\\\",\\\"",
-		"setFuel"            => "!\\\"if (_fuel \\x3e= 1.0) then { _fuel = 1.0; };\\\\n\\\\n_target setFuel _fuel;\\\""
-	}
-);
+my %lookups = ();
+
+opendir (my $dh, $filter_dir);
+my @filters = readdir $dh;
+closedir $dh;
+
+foreach my $filter (@filters) {
+	next unless (-f "$filter_dir/$filter");
+
+	my $json = read_file("$filter_dir/$filter");
+	my $json_data = decode_json($json);
+
+	next if defined $lookups{$filter};
+	$lookups{$filter} = $json_data;
+}
 
 my @scripts = (
 	"scripts.txt",
