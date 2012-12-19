@@ -34,7 +34,7 @@
 5 "spawn"  !="_this spawn fnc_plyrHit;"
 1 "for"
 1 "this"  !="_this spawn fnc_plyrHit;"
-1 "format"
+5 "format"
 1 "skip"
 1 "enable"
 1 "fail"
