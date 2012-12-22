@@ -14,12 +14,13 @@ GetOptions(
 	'help'
 );
 
-my ($dst) = @ARGV;
+my $dst = shift(@ARGV);
 my $filter_dir = './filter';
 
 if ($args{'help'}) {
-	print "usage: update_scripts.pl [--world <world>] <directory>\n";
-	print "     This script downloads updated BE filters from the community list and then modifies them to make them compatible with Bliss optional features\n";
+	print "usage: update_scripts.pl <directory> [--with-<exception ...]\n";
+	print "     This script downloads updated BE filters from the community list and then modifies them to make them compatible with Bliss optional features.\n";
+	print "     If you are using certain worlds or features you must add in special sets of BE exceptions. To do this, consult your filter directory and add in --with-<exception> options for each exception set required.\n";
 	exit;
 }
 
@@ -82,8 +83,13 @@ foreach my $script (@scripts) {
 		replace_text($regex, "$dst/$script");
 	}
 
-	if (defined $lookups{$args{'world'}}) {
-		while (($pattern, $exception) = each %{$lookups{$args{'world'}}}) {
+	# For each --with-<exception> option, attempt to find an exception set
+	my @exceptions = ();
+	while (my $option = shift(@ARGV)) {
+		next unless ($option =~ m/with-([a-zA-Z0-9-]+)/);
+		next unless (defined $lookups{$1});
+
+		while (($pattern, $exception) = each %{$lookups{$1}}) {
 			my $regex = "s/([0-9]{1})\\s$pattern\\s(.*)([\\\/]{2}.*)*/" . (($exception) ? "\\1 $pattern \\2 $exception\n/g" : "/g");
 			replace_text($regex, "$dst/$script");
 		}
