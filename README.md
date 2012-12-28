@@ -121,27 +121,31 @@ Optional Features
 
 When running `build.pl`, you may specify additional options to merge in optional features. To get a list of optional features, run `perl build.pl --list`.
 
+To install new optional features, use the `package_manager.pl` script. Run `perl package_manager.pl install <package-name>`, replacing `<package-name>` with the name of a package. You may browse packages at http://www.blissrepo.com. 
+
+A list of Bliss-supported packages follows.
+
 <table>
   <tr>
     <td>Name</td><td>Param</td><td>Description</td>
   </tr>
   <tr>
-    <td>Care Packages</td><td>--with-carepkgs</td><td>Drops care packages with various loot types across the map (similar to heli crash sites)</td>
+    <td>carepkgs</td><td>--with-carepkgs</td><td>Drops care packages with various loot types across the map (similar to heli crash sites)</td>
   </tr>
   <tr>
-    <td>Kill Messages</td><td>--with-killmsgs</td><td>Shows in-game messages when one player kills another (not needed for Lingor). Custom BE filters must be used (https://code.google.com/p/bliss-community-filters/downloads/list)</td>
+    <td>killmsgs</td><td>--with-killmsgs</td><td>Shows in-game messages when one player kills another (not needed for Lingor). Custom BE filters must be used (https://code.google.com/p/bliss-community-filters/downloads/list)</td>
   </tr>
   <tr>
-    <td>Messaging</td><td>--with-messaging</td><td>Replacement for the old scheduler feature, see <b>Messaging/Scheduler</b> below</td>
+    <td>messaging</td><td>--with-messaging</td><td>Replacement for the old scheduler feature, see <b>Messaging/Scheduler</b> below</td>
   </tr>
   <tr>
-    <td>Buildings</td><td>--with-buildings</td><td>Allow spawning of database-defined structures/buildings on the map, see <b>Buildings</b></td>
+    <td>buildings</td><td>--with-buildings</td><td>Allow spawning of database-defined structures/buildings on the map, see <b>Buildings</b></td>
   </tr>
   <tr>
-    <td>Wrecks</td><td>--with-wrecks</td><td>Spawns various lootable vehicle wrecks across the map on server start</td>
+    <td>wrecks</td><td>--with-wrecks</td><td>Spawns various lootable vehicle wrecks across the map on server start</td>
   </tr>
   <tr>
-    <td>Custom Inventory</td><td>--with-invcust</td><td>Allows you to grant custom spawn loadouts to individuals or group, see <b>Custom Inventory</b></td>
+    <td>invcust</td><td>--with-invcust</td><td>Allows you to grant custom spawn loadouts to individuals or group, see <b>Custom Inventory</b></td>
   </tr>
 </table> 
 
@@ -206,9 +210,7 @@ Gotchas / Known Bugs
 
 Character data can become desynchronized if the player was connected within several minutes of server shutdown. A heavily loaded server will continue processing backlogged player syncs for some time even after all players have been disconnected. We strongly recommend that you wait 5 minutes after all players have disconnected before shutting down a public server.
 
-Any bug present in the official client or server will probably also exist in this solution. Please do **not** report these as issues on GitHub. Some of the official bugs:
- - Loss of backpack due to bandit morphing or on respawn
- - Spawning in debug areas (plains / ocean)
+Any bug present in the official client or server will probably also exist in this solution. Please do **not** report these as issues on GitHub.
 
 Common Issues
 =============
