@@ -64,6 +64,7 @@ sub install {
 	my $metadata = get_json("$args{'mirror'}/package/metadata/" . uri_escape($pkg_name));
 	die "FATAL: Did not get a valid response from server\n" unless (defined $metadata);
 	$metadata = $metadata->{payload}[0];
+	die "FATAL: Invalid response from server\n" unless (defined $metadata->{file_name});
 	$metadata->{file_name} = "$metadata->{file_name}.tgz";
 	get_uri("$args{'mirror'}/file/fetch/$metadata->{file_hash}", $metadata->{file_name});
 	unlink($metadata->{file_name}) if (-f $metadata->{file_name} && !-s $metadata->{file_name});

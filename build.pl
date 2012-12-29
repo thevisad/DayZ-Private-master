@@ -341,7 +341,7 @@ sub merge_packages {
 				my @srcSplit = File::Spec->splitdir(dirname($srcPath));
 				my $dstLast = pop(@dstSplit);
 				my $srcLast = pop(@srcSplit);
-				$dstPath = "$dst/" . (($srcLast eq $dstLast) ? "$srcLast/" : '') . basename($srcPath);
+				$dstPath = "$dst/" . (($srcLast eq $dstLast || !$mission) ? "$srcLast/" : '') . basename($srcPath);
 
 				#print "SRC $srcPath -> $dstPath\n";
 				make_path(dirname($dstPath)) unless (-d dirname($dstPath));
