@@ -172,7 +172,7 @@ if (-d "$wld_dir/$args{'world'}") {
 my @pkgs = ();
 my @msn_pkgs = ();
 while (my $option = shift(@ARGV)) {
-	next unless ($option =~ m/with-([a-zA-Z0-9-]+)/);
+	next unless ($option =~ m/with-([a-zA-Z0-9-_]+)/);
 
 	my $pkg_dir = "$base_dir/pkg/$1";
 	if (!-d $pkg_dir) {

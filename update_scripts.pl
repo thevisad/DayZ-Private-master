@@ -86,7 +86,7 @@ foreach my $script (@scripts) {
 	# For each --with-<exception> option, attempt to find an exception set
 	my @exceptions = ();
 	while (my $option = shift(@ARGV)) {
-		next unless ($option =~ m/with-([a-zA-Z0-9-]+)/);
+		next unless ($option =~ m/with-([a-zA-Z0-9-_]+)/);
 		next unless (defined $lookups{$1});
 
 		while (($pattern, $exception) = each %{$lookups{$1}}) {
