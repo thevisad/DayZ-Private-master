@@ -36,4 +36,5 @@ if (!isDedicated) then {
  0 fadeSound 0;
  0 cutText ["You are running an incorrect version of DayZ: Namalsk, please download newest version from http://www.nightstalkers.cz/", "BLACK"];
  };
+
 };
