@@ -4,6 +4,8 @@ DayZ Bliss Private Server
 This is a private server project for DayZ which would not be possible without the work of Rocket and Guru Abdul.   
 **NOTE**: No support is implied or offered for pirated copies of ArmA 2.
 
+**NOTE**: Do **NOT** create GitHub issues for support requests. They are **ONLY** to be created if you have a repeatable bug that you can provide copious debugging information about. See the end of the README for ways to get support.
+
 Prerequisites
 =============
 
@@ -251,4 +253,4 @@ Each of these packages is a part of Bliss and makes what we do possible.
 Support
 =======
 
-**IRC**: irc.thekreml.in #bliss
+**IRC**: irc.thekreml.in #bliss (Web chat interface at http://www.dayzprivate.com:55448)
