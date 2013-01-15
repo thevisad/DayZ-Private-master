@@ -10,7 +10,7 @@ use File::Basename;
 
 use URI::Escape;
 use Archive::Extract;
-use Digest::SHA1 qw(sha1_hex);
+use Digest::SHA qw(sha1_hex);
 use JSON;
 
 use Data::Dumper;
@@ -71,7 +71,7 @@ sub install {
 	die "FATAL: Package was not downloaded\n" unless (-s $metadata->{file_name});
 
 	my $file = Archive::Extract->new(archive => $metadata->{file_name});
-	my $sha1sum = sha1_hex(read_file($metadata->{file_name}));
+	my $sha1sum = sha1_hex(read_file($metadata->{file_name}, binmode => ':raw'));
 	die "FATAL: Package file is corrupt or invalid - bad sha1sum $sha1sum\n" unless ($file->is_tgz && $sha1sum eq $metadata->{file_hash});
 
 	$file->extract(to => $base_dir) or die "FATAL: Could not extract the package\n";
