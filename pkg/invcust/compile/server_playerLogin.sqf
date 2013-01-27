@@ -39,83 +39,62 @@ if ((_playerID == "") or (isNil "_playerID")) exitWith {
 endLoadingScreen;
 diag_log ("LOGIN ATTEMPT: " + str(_playerID) + " " + _playerName);
 
-//Do Connection Attempt
-_doLoop = 0;
-while {_doLoop < 5} do {
-	_key = format["CHILD:101:%1:%2:%3:",_playerID,dayZ_instance,_playerName];
-	_primary = [_key,false,dayZ_hivePipeAuth] call server_hiveReadWrite;
-	if (count _primary > 0) then {
-		if ((_primary select 0) != "ERROR") then {
-			_doLoop = 9;
-		};
-	};
-	_doLoop = _doLoop + 1;
-};
+_key = format["CHILD:101:%1:%2:%3:",_playerID,dayZ_instance,_playerName];
+_primary = [_key,false,dayZ_hivePipeAuth] call server_hiveReadWrite;
 
 if (isNull _playerObj or !isPlayer _playerObj) exitWith {
 	diag_log ("LOGIN RESULT: Exiting, player object null: " + str(_playerObj));
 };
 
-if ((_primary select 0) == "ERROR") exitWith {	
+if ((_primary select 0) == "ERROR") exitWith {
     diag_log format ["LOGIN RESULT: Exiting, failed to load _primary: %1 for player: %2 ",_primary,_playerID];
 };
 
 //Process request
-_newPlayer = 	_primary select 1;
+_newPlayer  = _primary select 1;
+//_isNew      = count _primary < 6;
 _isNew = count (_primary select 3) == 0;
-_charID = 		_primary select 2;
+_charID     = _primary select 2;
 _randomSpot = false;
+_hiveVer    = 0;
 
-//diag_log ("LOGIN RESULT: " + str(_primary));
+//Set character variables
+_inventory = _primary select 4;
+_backpack  = _primary select 5;
+_survival  = _primary select 6;
+_model     = _primary select 7;
+_hiveVer   = _primary select 8;
 
-/* PROCESS */
-_hiveVer = 0;
+// Check custom inventory for new characters
+if (_model == "") then {
+	_key = format["CHILD:999:select replace(cl.`inventory`, '""', '""""') inventory, replace(cl.`backpack`, '""', '""""') backpack, replace(coalesce(cl.`model`, 'Survivor2_DZ'), '""', '""""') model from `cust_loadout` cl join `cust_loadout_profile` clp on clp.`cust_loadout_id` = cl.`id` where clp.`unique_id` = '?':[%1]:",str(_playerID)];
+	_data = "HiveEXT" callExtension _key;
 
-if (!_isNew) then {
-	//RETURNING CHARACTER		
-	_inventory = 	_primary select 4;
-	_backpack = 	_primary select 5;
-	_survival =		_primary select 6;
-	_model =		_primary select 7;
-	_hiveVer =		_primary select 8;
-	
-	if (!(_model in ["SurvivorW2_DZ","Survivor2_DZ","Sniper1_DZ","Soldier1_DZ","Camo1_DZ","BanditW1_DZ","Bandit1_DZ","SurvivorW2_DZ"])) then {
-		_model = "Survivor2_DZ";
-	};
-	
-} else {
-	_model =		_primary select 3;
-	_hiveVer =		_primary select 4;
-	if (isNil "_model") then {
-		_model = "Survivor2_DZ";
-	} else {
-		if (_model == "") then {
-			_model = "Survivor2_DZ";
+	//Process result
+	_result = call compile format ["%1", _data];
+	_status = _result select 0;
+
+	if (_status == "CustomStreamStart") then {
+		if ((_result select 1) > 0) then {
+			_data = "HiveEXT" callExtension _key;
+			_result = call compile format ["%1", _data];
+			_inventory = call compile (_result select 0);
+			_backpack = call compile (_result select 1);
+			_model = call compile (_result select 2);
 		};
 	};
-
-	//Record initial inventory
-	_config = (configFile >> "CfgSurvival" >> "Inventory" >> "Default");
-	_mags = getArray (_config >> "magazines");
-	_wpns = getArray (_config >> "weapons");
-	_bcpk = getText (_config >> "backpack");
-	_randomSpot = true;
-	
-	//Wait for HIVE to be free
-	_key = format["CHILD:203:%1:%2:%3:",_charID,[_wpns,_mags],[_bcpk,[],[]]];
-	_key spawn server_hiveWrite;
-	
 };
+	
+if (!(_model in ["SurvivorW2_DZ","Survivor2_DZ","Survivor3_DZ","Sniper1_DZ","Soldier1_DZ","Camo1_DZ","Bandit1_DZ","BanditW1_DZ","Rocket_DZ"])) then {
+	_model = "Survivor2_DZ";
+};
+
 diag_log ("LOGIN LOADED: " + str(_playerObj) + " Type: " + (typeOf _playerObj));
 
-_isHiveOk = false;	//EDITED
+_isHiveOk = false;
 if (_hiveVer >= dayz_hiveVersionNo) then {
 	_isHiveOk = true;
 };
-//diag_log ("SERVER RESULT: " + str("X") + " " + str(dayz_hiveVersionNo));
-
-//Server publishes variable to clients and WAITS
-//_playerObj setVariable ["publish",[_charID,_inventory,_backpack,_survival,_isNew,dayz_versionNo,_model,_isHiveOk,_newPlayer],true];
 
 _clientID = owner _playerObj;
 dayzPlayerLogin = [_charID,_inventory,_backpack,_survival,_isNew,dayz_versionNo,_model,_isHiveOk,_newPlayer];
