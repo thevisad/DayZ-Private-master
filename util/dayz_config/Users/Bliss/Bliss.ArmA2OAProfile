@@ -1,0 +1,131 @@
+class Difficulties
+{
+	class Recruit
+	{
+		class Flags
+		{
+			// These are the settings. Set a value to 0 to disable the feature, or set it to 1 to enable it.
+			
+			Armor=1;		// Gives you improved body armor, tank armor etc
+			FriendlyTag=1;		// Displays information on friendly units. ONLY WORKS WITH 'Weaponcursor=0', eg crosshair on.
+			EnemyTag=1;		// Displays information on enemy units
+			HUD=1;			// Shows you leaders location and your position in formation
+			HUDPerm=1;		// Shows HUD permanently
+			HUDWp=1;		// Shows Waypoints right after they're ordered to you
+			HUDWpPerm=1;		// Shows Waypoints permanently
+			WeaponCursor=1;		// Shows the crosshair for your weapon
+			AutoAim=1;		// Enables auto aim when you're not looking through your weapon's scope. Also works with crosshair off
+			AutoGuideAT=1;		// AT missiles will be automatically guided to their target. If 0, player has to lock onto the target.
+			3rdPersonView=1;	// This turns 3rd(third) person view and group leader view on or off. Please never talk of this as "3D view" - ArmA is not an arcade game !
+			ClockIndicator=1;	// Displays the clock indicator on the left of your screen when giving/receiving orders like "At 11 o'clock, eemy man at 200 meters"
+			Map=1;			// Shows symbols for all objects known to your gruop on the map. This will NOT disable the map itself !
+			Tracers=1;		// Displays tracers even of small arms that in real life would not have tracers
+			AutoSpot=1;		// If you're close enough to an enemy, you'll report it without right-clicking
+			UltraAI=0;		// Enables some kind of super AI that hears and sses more and has better tactics. This is for both friendly and enemy sides.
+			UnlimitedSaves=1;	// Enables saing permanently. For single player missions. But you then can only load the last save state.
+			DeathMessages=1;	// (1.09 and later) Displays "XXX was killed by YYY" messages in multiplayer
+			NetStats=1;		// (1.09 and later) Enables the scoreboard functionality in MP
+			VonID=1;		// (1.09 and later) When using VoN, display the name of the player speaking.
+		};
+		skillFriendly = 1;
+		precisionFriendly = 1;
+		skillEnemy = 0.55;
+		precisionEnemy = 0.3;
+	};
+	class Regular
+	{
+		class Flags
+		{
+			3rdPersonView = 1;
+			armor = 1;
+			autoAim = 0;
+			autoGuideAT = 1;
+			autoSpot = 1;
+			cameraShake = 1;
+			clockIndicator = 1;
+			deathMessages = 1;
+			enemyTag = 0;
+			friendlyTag = 1;
+			hud = 1;
+			hudGroupInfo = 1;
+			hudPerm = 1;
+			hudWp = 1;
+			hudWpPerm = 1;
+			map = 1;
+			netStats = 1;
+			tracers = 1;
+			ultraAI = 0;
+			unlimitedSaves = 1;
+			vonId = 1;
+			weaponCursor = 1;
+		};
+		skillFriendly = 1;
+		precisionFriendly = 1;
+		skillEnemy = 0.7;
+		precisionEnemy = 0.5;
+	};
+	class Veteran
+	{
+		class Flags
+		{
+			3rdPersonView = 1;
+			armor = 0;// Cannot be changed
+			autoAim = 0;// Cannot be changed
+			autoGuideAT = 0;// Cannot be changed
+			autoSpot = 0;// Cannot be changed
+			cameraShake = 1;
+			clockIndicator = 0;
+			deathMessages = 1;
+			enemyTag = 0;// Cannot be changed
+			friendlyTag = 0;// Cannot be changed
+			hud = 1;
+			hudGroupInfo = 0;
+			hudPerm = 0;// Cannot be changed
+			hudWp = 1;
+			hudWpPerm = 0;// Cannot be changed
+			map = 0;
+			netStats = 1;
+			tracers = 0;// Cannot be changed
+			ultraAI = 0;
+			unlimitedSaves = 0;
+			vonId = 0;
+			weaponCursor = 1;
+		};
+		skillFriendly = 1;
+		precisionFriendly = 1;
+		skillEnemy = 0.9;
+		precisionEnemy = 0.75;
+	};
+	class Mercenary
+	{
+		class Flags
+		{
+			3rdPersonView = 0;// Cannot be changed
+			armor = 0;// Cannot be changed
+			autoAim = 0;// Cannot be changed
+			autoGuideAT = 0;// Cannot be changed
+			autoSpot = 0;// Cannot be changed
+			cameraShake = 1;// Cannot be changed
+			clockIndicator = 0;// Cannot be changed
+			deathMessages = 0;
+			enemyTag = 0;// Cannot be changed
+			friendlyTag = 0;// Cannot be changed
+			hud = 0;// Cannot be changed
+			hudGroupInfo = 0;// Cannot be changed
+			hudPerm = 0;// Cannot be changed
+			hudWp = 0;// Cannot be changed
+			hudWpPerm = 0;// Cannot be changed
+			map = 0;// Cannot be changed
+			netStats = 0;
+			tracers = 0;// Cannot be changed
+			ultraAI = 0;
+			unlimitedSaves = 0;// Cannot be changed
+			vonID = 0;
+			weaponCursor = 0;// Cannot be changed
+		};
+		skillFriendly = 1;
+		precisionFriendly = 1;
+		skillEnemy = 1;
+		precisionEnemy = 1;
+	};
+};
