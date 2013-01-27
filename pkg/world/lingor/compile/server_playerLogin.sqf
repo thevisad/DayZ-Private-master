@@ -52,7 +52,7 @@ if ((_primary select 0) == "ERROR") exitWith {
 
 //Process request
 _newPlayer  = _primary select 1;
-_isNew      = count _primary < 6;
+_isNew = count (_primary select 3) == 0;
 _charID     = _primary select 2;
 _randomSpot = false;
 _hiveVer    = 0;
@@ -64,7 +64,7 @@ _survival  = _primary select 6;
 _model     = _primary select 7;
 _hiveVer   = _primary select 8;
 	
-if (!(_model in ["SurvivorW2_DZ","Survivor2_DZ","Survivor3_DZ","Sniper1_DZ","Soldier1_DZ","Camo1_DZ","Bandit1_DZ","Rocket_DZ","pzn_dz_Contractor1_BAF","pzn_dz_Contractor2_BAF","pzn_dz_Contractor3_BAF"])) then {
+if (!(_model in ["SurvivorW2_DZ","Survivor2_DZ","Survivor3_DZ","Sniper1_DZ","Soldier1_DZ","Camo1_DZ","Bandit1_DZ","Rocket_DZ","pzn_dz_Contractor1_BAF","pzn_dz_Contractor2_BAF","pzn_dz_Contractor3_BAF","BanditW1_DZ"])) then {
 	_model = "Survivor2_DZ";
 };
 

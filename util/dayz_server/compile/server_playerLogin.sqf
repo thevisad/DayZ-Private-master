@@ -62,7 +62,7 @@ if ((_primary select 0) == "ERROR") exitWith {
 
 //Process request
 _newPlayer = 	_primary select 1;
-_isNew = 		count _primary < 6; //_result select 1;
+_isNew = count (_primary select 3) == 0;
 _charID = 		_primary select 2;
 _randomSpot = false;
 
