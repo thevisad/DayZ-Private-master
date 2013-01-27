@@ -253,4 +253,3 @@ Each of these packages is a part of Bliss and makes what we do possible.
 Support
 =======
 
-**IRC**: irc.thekreml.in #bliss (Web chat interface at http://www.dayzprivate.com:55448)
