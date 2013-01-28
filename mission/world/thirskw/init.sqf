@@ -7,7 +7,6 @@ initialized = false;
 dayz_previousID = 0;
 
 call compile preprocessFileLineNumbers "\z\addons\dayz_code\init\variables.sqf"; //Initilize the Variables (IMPORTANT: Must happen very early)
-
 progressLoadingScreen 0.1;
 call compile preprocessFileLineNumbers "\z\addons\dayz_code\init\publicEH.sqf";	//Initilize the publicVariable event handlers
 progressLoadingScreen 0.2;
@@ -32,4 +31,5 @@ if (!isDedicated) then {
 	0 cutText [(localize "STR_AUTHENTICATING"), "BLACK FADED",60];
 	_id = player addEventHandler ["Respawn", {_id = [] spawn player_death;}];
 	_playerMonitor = 	[] execVM "\z\addons\dayz_code\system\player_monitor.sqf";
+
 };
