@@ -3,26 +3,28 @@ class Mission
 {
 	addOns[]=
 	{
-		"thirsk",
+		"thirskw",
 		"ca_modules_animals",
 		"dayz_code",
 		"dayz_weapons",
 		"dayz_equip",
 		"dayz_vehicles",
 		"cacharacters_pmc",
-		"ca_modules_functions"
+		"ca_modules_functions",
+		"THIRSK_Clouds"
 	};
 	addOnsAuto[]=
 	{
 		"dayz_weapons",
 		"ca_modules_functions",
-		"thirsk"
+		"THIRSK_Clouds",
+		"thirskw"
 	};
 	randomSeed=11171215;
 	class Intel
 	{
-		briefingName="DAYZ";
-		briefingDescription="DAYZ ALPHA";
+		briefingName="DayZThirsk";
+		briefingDescription="DayZThirsk - Created By Stapo";
 		startWeather=0.067362607;
 		forecastWeather=0.52341133;
 		year=2008;
@@ -32,7 +34,7 @@ class Mission
 	};
 	class Groups
 	{
-		items=2;
+		items=3;
 		class Item0
 		{
 			side="WEST";
@@ -1161,6 +1163,23 @@ class Mission
 				};
 			};
 		};
+		class Item2
+		{
+			side="LOGIC";
+			class Vehicles
+			{
+				items=1;
+				class Item0
+				{
+					position[]={716.64526,40,3583.5652};
+					id=101;
+					side="LOGIC";
+					vehicle="TH_SNOWING1";
+					leader=1;
+					skill=0.60000002;
+				};
+			};
+		};
 	};
 	class Markers
 	{
@@ -1213,11 +1232,11 @@ class Intro
 {
 	addOns[]=
 	{
-		"thirsk"
+		"thirskw"
 	};
 	addOnsAuto[]=
 	{
-		"thirsk"
+		"thirskw"
 	};
 	randomSeed=6913869;
 	class Intel
@@ -1235,11 +1254,11 @@ class OutroWin
 {
 	addOns[]=
 	{
-		"thirsk"
+		"thirskw"
 	};
 	addOnsAuto[]=
 	{
-		"thirsk"
+		"thirskw"
 	};
 	randomSeed=4081731;
 	class Intel
@@ -1257,11 +1276,11 @@ class OutroLoose
 {
 	addOns[]=
 	{
-		"thirsk"
+		"thirskw"
 	};
 	addOnsAuto[]=
 	{
-		"thirsk"
+		"thirskw"
 	};
 	randomSeed=4975929;
 	class Intel
