@@ -6,8 +6,7 @@ hiveInUse	=	true;
 initialized = false;
 dayz_previousID = 0;
 
-//call compile preprocessFileLineNumbers "\z\addons\dayz_code\init\variables.sqf"; //Initilize the Variables (IMPORTANT: Must happen very early)
-call compile preprocessFileLineNumbers "fixes\variables.sqf"; 
+call compile preprocessFileLineNumbers "\z\addons\dayz_code\init\variables.sqf"; //Initilize the Variables (IMPORTANT: Must happen very early)
 
 // (Taviana) Override some of the variables:
 call compile preprocessFileLineNumbers "\kh\dayztaviana\init\variables.sqf";
@@ -42,12 +41,6 @@ if (!isDedicated) then {
 	_id = player addEventHandler ["Respawn", {_id = [] spawn player_death;}];
 	_playerMonitor = 	[] execVM "\z\addons\dayz_code\system\player_monitor.sqf";
 
-};
-
-null = [] execVM "fixes\earthquake.sqf";
-
-if (!isDedicated) then {
-[] execVM "fixes\houseLighting.sqf";
 };
 
 // Extra actions for Taviana:
