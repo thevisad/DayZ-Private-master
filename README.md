@@ -4,8 +4,6 @@ DayZ Bliss Private Server
 This is a private server project for DayZ which would not be possible without the work of Rocket and Guru Abdul.   
 **NOTE**: No support is implied or offered for pirated copies of ArmA 2.
 
-**NOTE**: Do **NOT** create GitHub issues for support requests. They are **ONLY** to be created if you have a repeatable bug that you can provide copious debugging information about. See the end of the README for ways to get support.
-
 Prerequisites
 =============
 
@@ -35,7 +33,7 @@ Installation
 3. Copy all files from **Repository**\\deploy into **ArmA2**\\  
 4. For this step, you will need to use one of several MySQL administrative utilities to execute some SQL queries. These utilities include the MySQL Command Line Interface (which is bundled with the MySQL Server install for Windows) and various free and commercial GUI utilities. We recommend HeidiSQL if you want a graphical interface (http://www.heidisql.com/). Once you have connected to your database as the **root** user (you set the password for this user when you installed MySQL Server), execute the following SQL queries (be **sure** to change the password in the second query from CHANGEME):  
 
-  	create database dayz;
+		create database dayz;
 		create user 'dayz'@'localhost' identified by 'CHANGEME';
 		grant all privileges on dayz.* to 'dayz'@'localhost';
 

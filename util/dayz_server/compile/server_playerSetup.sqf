@@ -35,7 +35,7 @@ _state = 		[];
 _doLoop = 0;
 while {_doLoop < 5} do {
 	_key = format["CHILD:102:%1:",_characterID];
-	_primary = [_key,false,dayZ_hivePipeAuth] call server_hiveReadWrite;
+	_primary = _key call server_hiveReadWrite;
 	if (count _primary > 0) then {
 		if ((_primary select 0) != "ERROR") then {
 			_doLoop = 9;
@@ -110,9 +110,7 @@ if (count _medical > 0) then {
 	//Add Wounds
 	{
 		_playerObj setVariable[_x,true,true];
-		[_playerObj,_x,_hit] spawn fnc_usec_damageBleed;
-		usecBleed = [_playerObj,_x,0];
-		publicVariable "usecBleed";
+		["usecBleed",[_playerObj,_x,_hit]] call broadcastRpcCallAll;
 	} forEach (_medical select 8);
 	
 	//Add fractures
@@ -232,22 +230,6 @@ _playerObj setVariable ["lastTime",time];
 //_playerObj setVariable ["model_CHK",typeOf _playerObj];
 
 diag_log ("LOGIN PUBLISHING: " + str(_playerObj) + " Type: " + (typeOf _playerObj));
-
-myObj = objNull;
-call compile format["myObj = player%1",_playerID];
-
-if (!(isNull myObj)) then {
-	if (alive myObj) then {
-		deleteVehicle myObj;
-		diag_log ("LOGIN DUPLICATE PLAYER: " + str(_playerObj) + " DELETED ORIGINAL");
-	};
-};
-
-//Record player for management
-myObj = _playerObj;
-call compile format["player%1 = myObj;",_playerID];
-//diag_log (format["player%1 = myObj",_playerID]);
-//dayz_players set [count dayz_players,_playerObj];
 
 dayzLogin = null;
 dayzLogin2 = null;

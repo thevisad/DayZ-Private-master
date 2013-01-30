@@ -7,12 +7,14 @@ OnLoadMissionTime = False;
 disabledAI = true;
 disableChannels[]={0,1,2,6};
 enableItemsDropping = 0;
+onPauseScript = "onpause.sqf";
+loadScreen = "\z\addons\dayz_code\gui\dayz_logo_ca.paa";
 
 class Header
 {
  gameType = COOP;            //DM, Team, Coop, ...
  minPlayers = 1;             //min # of players the mission supports
- maxPlayers = 50;            //Max # of players the mission supports
+ maxPlayers = 100;            //Max # of players the mission supports
 };
 
 aiKills = 1;

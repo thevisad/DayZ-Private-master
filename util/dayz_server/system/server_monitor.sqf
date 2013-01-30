@@ -7,7 +7,7 @@ if ((count playableUnits == 0) and !isDedicated) then {
 	isSinglePlayer = true;
 };
 
-waitUntil{initialized};
+waitUntil{initialized}; //means all the functions are now defined
 
 diag_log "HIVE: Starting";
 
@@ -15,12 +15,11 @@ diag_log "HIVE: Starting";
 	/* STREAM OBJECTS */
 		//Send the key
 		_key = format["CHILD:302:%1:",dayZ_instance];
-		_data = "HiveEXT" callExtension _key;
+		_result = _key call server_hiveReadWrite;
 
 		diag_log "HIVE: Request sent";
 		
 		//Process result
-		_result = call compile format ["%1",_data];
 		_status = _result select 0;
 		
 		_myArray = [];
@@ -29,8 +28,7 @@ diag_log "HIVE: Starting";
 			//Stream Objects
 			diag_log ("HIVE: Commence Object Streaming...");
 			for "_i" from 1 to _val do {
-				_data = "HiveEXT" callExtension _key;
-				_result = call compile format ["%1",_data];
+				_result = _key call server_hiveReadWrite;
 
 				_status = _result select 0;
 				_myArray set [count _myArray,_result];
@@ -48,8 +46,12 @@ diag_log "HIVE: Starting";
 			_idKey = 	_x select 1;
 			_type =		_x select 2;
 			_ownerID = 	_x select 3;
-
 			_worldspace = _x select 4;
+			_intentory=	_x select 5;
+			_hitPoints=	_x select 6;
+			_fuel =		_x select 7;
+			_damage = 	_x select 8;
+
 			_dir = 0;
 			_pos = [0,0,0];
 			_wsDone = false;
@@ -67,11 +69,6 @@ diag_log "HIVE: Starting";
 				if (count _pos < 3) then { _pos = [_pos select 0,_pos select 1,0]; };
 				diag_log ("MOVED OBJ: " + str(_idKey) + " of class " + _type + " to pos: " + str(_pos));
 			};
-
-			_intentory=	_x select 5;
-			_hitPoints=	_x select 6;
-			_fuel =		_x select 7;
-			_damage = 	_x select 8;
 			
 			if (_damage < 1) then {
 				diag_log format["OBJ: %1 - %2", _idKey,_type];
@@ -88,6 +85,7 @@ diag_log "HIVE: Starting";
 				if (_object isKindOf "TentStorage") then {
 					_pos set [2,0];
 					_object setpos _pos;
+					_object addMPEventHandler ["MPKilled",{_this call vehicle_handleServerKilled;}];
 				};
 				_object setdir _dir;
 				_object setDamage _damage;
@@ -148,11 +146,7 @@ diag_log "HIVE: Starting";
 					} forEach _hitpoints;
 					_object setvelocity [0,0,1];
 					_object setFuel _fuel;
-					if (getDammage _object == 1) then {
-						_position = ([(getPosATL _object),0,100,10,0,500,0] call BIS_fnc_findSafePos);
-						_object setPosATL _position;
-					};
-					_object call fnc_vehicleEventHandler;			
+					_object call fnc_vehicleEventHandler;
 				};
 
 				//Monitor the object
@@ -166,14 +160,12 @@ diag_log "HIVE: Starting";
 //Set the Time
 	//Send request
 	_key = "CHILD:307:";
-	_result = [_key] call server_hiveReadWrite;
+	_result = _key call server_hiveReadWrite;
 	_outcome = _result select 0;
 	if(_outcome == "PASS") then {
 		_date = _result select 1; 
 		if(isDedicated) then {
-			setDate _date;
-			dayzSetDate = _date;
-			publicVariable "dayzSetDate";
+			["dayzSetDate",_date] call broadcastRpcCallAll;
 		};
 
 		diag_log ("HIVE: Local Time set to " + str(_date));
@@ -183,16 +175,13 @@ diag_log "HIVE: Starting";
 	if (isDedicated) then {
 		endLoadingScreen;
 	};	
-	hiveInUse = false;
-
+	
 if (isDedicated) then {
 	_id = [] execFSM "\z\addons\dayz_server\system\server_cleanup.fsm";
 };
 
 allowConnection = true;
 
-//Spawn crashed helos
-for "_x" from 1 to 5 do {
-	_id = [] spawn spawn_heliCrash;
-	//waitUntil{scriptDone _id};
-};
+// [_guaranteedLoot, _randomizedLoot, _frequency, _variance, _spawnChance, _spawnMarker, _spawnRadius, _spawnFire, _fadeFire]
+nul = [3, 4, (50 * 60), (15 * 60), 0.75, 'center', 4000, true, false] spawn server_spawnCrashSite;
+

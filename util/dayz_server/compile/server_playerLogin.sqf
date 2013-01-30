@@ -1,4 +1,4 @@
-private["_int","_newModel","_doLoop","_wait","_hiveVer","_isHiveOk","_playerID","_playerObj","_randomSpot","_publishTo","_primary","_secondary","_key","_result","_charID","_playerObj","_playerName","_finished","_spawnPos","_spawnDir","_items","_counter","_magazines","_weapons","_group","_backpack","_worldspace","_direction","_newUnit","_score","_position","_isNew","_inventory","_backpack","_medical","_survival","_stats","_state"];
+private["_botActive","_int","_newModel","_doLoop","_wait","_hiveVer","_isHiveOk","_playerID","_playerObj","_randomSpot","_publishTo","_primary","_secondary","_key","_result","_charID","_playerObj","_playerName","_finished","_spawnPos","_spawnDir","_items","_counter","_magazines","_weapons","_group","_backpack","_worldspace","_direction","_newUnit","_score","_position","_isNew","_inventory","_backpack","_medical","_survival","_stats","_state"];
 //Set Variables
 
 diag_log ("STARTING LOGIN: " + str(_this));
@@ -11,8 +11,6 @@ _worldspace = [];
 if (count _this > 2) then {
 	dayz_players = dayz_players - [_this select 2];
 };
-
-//waitUntil{allowConnection};
 
 //Variables
 _inventory =	[];
@@ -27,6 +25,7 @@ _state = 		[];
 _direction =	0;
 _model =		"";
 _newUnit =		objNull;
+_botActive = false;
 
 if (_playerID == "") then {
 	_playerID = getPlayerUID _playerObj;
@@ -36,14 +35,14 @@ if ((_playerID == "") or (isNil "_playerID")) exitWith {
 	diag_log ("LOGIN FAILED: Player [" + _playerName + "] has no login ID");
 };
 
-endLoadingScreen;
+//??? endLoadingScreen;
 diag_log ("LOGIN ATTEMPT: " + str(_playerID) + " " + _playerName);
 
 //Do Connection Attempt
 _doLoop = 0;
 while {_doLoop < 5} do {
 	_key = format["CHILD:101:%1:%2:%3:",_playerID,dayZ_instance,_playerName];
-	_primary = [_key,false,dayZ_hivePipeAuth] call server_hiveReadWrite;
+	_primary = _key call server_hiveReadWrite;
 	if (count _primary > 0) then {
 		if ((_primary select 0) != "ERROR") then {
 			_doLoop = 9;
@@ -62,7 +61,7 @@ if ((_primary select 0) == "ERROR") exitWith {
 
 //Process request
 _newPlayer = 	_primary select 1;
-_isNew = count (_primary select 3) == 0;
+_isNew = 		count _primary < 6; //_result select 1;
 _charID = 		_primary select 2;
 _randomSpot = false;
 
@@ -103,7 +102,7 @@ if (!_isNew) then {
 	
 	//Wait for HIVE to be free
 	_key = format["CHILD:203:%1:%2:%3:",_charID,[_wpns,_mags],[_bcpk,[],[]]];
-	_key spawn server_hiveWrite;
+	_key call server_hiveWrite;
 	
 };
 diag_log ("LOGIN LOADED: " + str(_playerObj) + " Type: " + (typeOf _playerObj));
@@ -117,8 +116,5 @@ if (_hiveVer >= dayz_hiveVersionNo) then {
 //Server publishes variable to clients and WAITS
 //_playerObj setVariable ["publish",[_charID,_inventory,_backpack,_survival,_isNew,dayz_versionNo,_model,_isHiveOk,_newPlayer],true];
 
-_clientID = owner _playerObj;
 dayzPlayerLogin = [_charID,_inventory,_backpack,_survival,_isNew,dayz_versionNo,_model,_isHiveOk,_newPlayer];
-_clientID publicVariableClient "dayzPlayerLogin";
-
-//_playerObj enableSimulation false;
+(owner _playerObj) publicVariableClient "dayzPlayerLogin";

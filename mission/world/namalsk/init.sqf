@@ -1,8 +1,13 @@
-startLoadingScreen ["","DayZ_loadingScreen"];
+/*	
+	INITILIZATION
+*/
+startLoadingScreen ["","RscDisplayLoadCustom"];
+cutText ["","BLACK OUT"];
 enableSaving [false, false];
 
-dayZ_instance = 1;	//The instance
-hiveInUse	=	true;
+//REALLY IMPORTANT VALUES
+dayZ_instance =	1;					//The instance
+dayzHiveRequest = [];
 initialized = false;
 dayz_previousID = 0;
 
@@ -25,9 +30,20 @@ enableRadio false;
 
 "filmic" setToneMappingParams [0.153, 0.357, 0.231, 0.1573, 0.011, 3.750, 6, 4]; setToneMapping "Filmic";
 
+if ((!isServer) && (isNull player) ) then
+{
+waitUntil {!isNull player};
+waitUntil {time > 3};
+};
+
+if ((!isServer) && (player != player)) then
+{
+  waitUntil {player == player};
+  waitUntil {time > 3};
+};
+
 if (isServer) then {
-	hiveInUse = true;
-	_serverMonitor = [] execVM "\z\addons\dayz_server\system\server_monitor.sqf";
+	_serverMonitor = 	[] execVM "\z\addons\dayz_code\system\server_monitor.sqf";
 };
 
 if (!isDedicated) then {

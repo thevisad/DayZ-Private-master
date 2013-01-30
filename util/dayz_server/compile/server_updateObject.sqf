@@ -50,6 +50,7 @@ _object_position = {
 	};
 	_key = format["CHILD:305:%1:%2:%3:",_objectID,_worldspace,_fuel];
 	diag_log ("HIVE: WRITE: "+ str(_key));
+
 	_key call server_hiveWrite;
 };
 
@@ -82,6 +83,48 @@ _object_damage = {
 		_hit = [_object,_x] call object_getHit;
 		_selection = getText (configFile >> "CfgVehicles" >> (typeOf _object) >> "HitPoints" >> _x >> "name");
 		if (_hit > 0) then {_array set [count _array,[_selection,_hit]]};
+		_object setHit ["_selection", _hit]
+	} forEach _hitpoints;
+	_key = format["CHILD:306:%1:%2:%3:",_objectID,_array,_damage];
+	diag_log ("HIVE: WRITE: "+ str(_key));
+	_key call server_hiveWrite;
+	_object setVariable ["needUpdate",false,true];
+};
+
+_object_killed = {
+	private["_hitpoints","_array","_hit","_selection","_key","_damage"];
+	_hitpoints = _object call vehicle_getHitpoints;
+	_damage = damage _object;
+	_array = [];
+	{
+		_hit = [_object,_x] call object_getHit;
+		_selection = getText (configFile >> "CfgVehicles" >> (typeOf _object) >> "HitPoints" >> _x >> "name");
+		if (_hit > 0) then {_array set [count _array,[_selection,_hit]]};
+		_hit = 1;
+		_object setHit ["_selection", _hit]
+	} forEach _hitpoints;
+	_damage = 1;
+	
+	if (_objectID == "0") then {
+		_key = format["CHILD:306:%1:%2:%3:",_uid,_array,_damage];
+	} else {
+		_key = format["CHILD:306:%1:%2:%3:",_objectID,_array,_damage];
+	};
+	diag_log ("HIVE: WRITE: "+ str(_key));
+	_key call server_hiveWrite;
+	_object setVariable ["needUpdate",false,true];
+};
+
+_object_repair = {
+	private["_hitpoints","_array","_hit","_selection","_key","_damage"];
+	_hitpoints = _object call vehicle_getHitpoints;
+	_damage = damage _object;
+	_array = [];
+	{
+		_hit = [_object,_x] call object_getHit;
+		_selection = getText (configFile >> "CfgVehicles" >> (typeOf _object) >> "HitPoints" >> _x >> "name");
+		if (_hit > 0) then {_array set [count _array,[_selection,_hit]]};
+		_object setHit ["_selection", _hit]
 	} forEach _hitpoints;
 	_key = format["CHILD:306:%1:%2:%3:",_objectID,_array,_damage];
 	diag_log ("HIVE: WRITE: "+ str(_key));
@@ -104,13 +147,16 @@ switch (_type) do {
 		call _object_inventory;
 	};
 	case "damage": {
-		if ( (time - _lastUpdate) > 5 && !_needUpdate ) then {
+	diag_log ("Damaged Called");
+		if ( (time - _lastUpdate) > 5) then {
 			call _object_damage;
 		} else {
-			if ( !_needUpdate ) then {
-				needUpdate_objects set [count needUpdate_objects, _object];
-			};
+		diag_log format["DEBUG: Added to NeedUpdate=%1",_object];
+			needUpdate_objects set [count needUpdate_objects, _object];
 		};
+	};
+	case "killed": {
+		call _object_killed;
 	};
 	case "repair": {
 		call _object_damage;

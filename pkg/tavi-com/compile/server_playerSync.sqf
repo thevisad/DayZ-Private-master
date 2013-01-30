@@ -4,10 +4,13 @@ private ["_characterID","_temp","_currentWpn","_magazines","_force","_isNewPos",
 
 //waituntil {(typeName(_this) == "ARRAY");sleep 0.01;};	//seems to cause often infinite waits (but not for first n players)
 
-if ( typeName(_this) == "OBJECT" ) then {
+//this only happens when we don't follow the correct parameter format...
+//(like supplying just the player object instead of the array in player_eat.sqf)
+//i've fixed this in player_eat so i can comment this part out
+/*if ( typeName(_this) == "OBJECT" ) then {
 	_this = [_this,[],true];
 	//diag_log ("DW_DEBUG: #manual fix _this: " + str(_this));
-};
+};*/
 
 //correct
 //"UPDATE: [B 1-1-B:1 (THE BEAST) REMOTE,[],true]"
@@ -16,7 +19,9 @@ if ( typeName(_this) == "OBJECT" ) then {
 
 _character = 	_this select 0;
 _magazines =	_this select 1;
-_force = 		true;
+_force =	_this select 2;
+_force =	true;
+
 
 _characterID =	_character getVariable ["characterID","0"];
 _charPos = 		getPosATL _character;
@@ -175,7 +180,7 @@ if (_characterID != "0") then {
 		if (count _playerPos > 0) then {
 			_array = [];
 			{
-				if (_x > -30000 and _x < 30000) then {
+				if (_x > -20000 and _x < 20000) then {
 					_array set [count _array,_x];
 				};
 			} forEach (_playerPos select 1);
@@ -190,14 +195,18 @@ if (_characterID != "0") then {
 				_key call server_hiveWrite;
 			};
 		};
-
+		
 		// If player is in a vehicle, keep its position updated
 		if (vehicle _character != _character) then {
 			[vehicle _character, "position"] call server_updateObject;
 		};
 		
 		// Force gear updates for nearby vehicles/tents
-		[_charPos] call server_updateNearbyObjects;
+		_pos = _this select 0;
+		{
+			[_x, "gear"] call server_updateObject;
+		} forEach nearestObjects [_pos, ["Car", "Helicopter", "Motorcycle", "Ship", "TentStorage"], 10];
+		//[_charPos] call server_updateNearbyObjects;
 
 		//Reset timer
 		if (_timeSince > 0) then {
