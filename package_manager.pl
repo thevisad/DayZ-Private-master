@@ -22,7 +22,7 @@ GetOptions(
 	'help'
 );
 
-$args{'mirror'} = 'http://www.blissrepo.com' unless (defined $args{'mirror'});
+$args{'mirror'} = 'http://www.realityrepo.com' unless (defined $args{'mirror'});
 
 # Initialize paths
 our $base_dir = dirname(__FILE__);
