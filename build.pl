@@ -1,5 +1,5 @@
 #!/usr/bin/perl -w
-# Bliss build utility 
+# Reality build utility 
 # by ayan4m1
 
 use Config::IniFiles;
@@ -38,7 +38,7 @@ $args{'instance'} = '1' unless $args{'instance'};
 our $base_dir = dirname(__FILE__);
 our $tmp_dir  = "$base_dir/tmp";
 our $wld_dir  = "$base_dir/pkg/world";
-our $bls_dir  = "$base_dir/pkg/bliss";
+our $bls_dir  = "$base_dir/pkg/reality";
 our $msn_dir  = "$base_dir/mission";
 our $src_dir  = "$base_dir/util/dayz_server";
 our $dst_dir  = "$base_dir/deploy";
@@ -75,7 +75,7 @@ if ($args{'help'}) {
 
 	print "Available options:\n";
 	foreach my $pkg (@pkgs) {
-		print "    --with-$pkg\n" unless ($pkg =~ m/(^\.|world|bliss)/);
+		print "    --with-$pkg\n" unless ($pkg =~ m/(^\.|world|reality)/);
 	}
 	exit;
 } elsif ($args{'clean'}) {
@@ -117,7 +117,7 @@ if (-d $src && !-d $conf_dir) {
 		'mbg_celle2'=> '@dayz_celle;@mbg_celle',
 		'tavi'      => '@taviana'
 	};
-	my $mod = ((defined $mods->{$args{'world'}}) ? "$mods->{$args{'world'}}" : '@dayz') . ";\@bliss_$args{'instance'}.$args{'world'}";
+	my $mod = ((defined $mods->{$args{'world'}}) ? "$mods->{$args{'world'}}" : '@dayz') . ";\@reality_$args{'instance'}.$args{'world'}";
 
 	my $dst_ini  = "$dst_dir/Restarter.ini";
 	die "FATAL: Could not find $dst_ini, try running build.pl --clean\n" unless (-f $dst_ini);
@@ -127,9 +127,9 @@ if (-d $src && !-d $conf_dir) {
 	$profile_sect =~ s/\./_/;
 	if (!$ini->SectionExists($profile_sect)) {
 		$ini->AddSection($profile_sect);
-		$ini->newval($profile_sect, 'name', 'Bliss');
+		$ini->newval($profile_sect, 'name', 'Reality');
 		$ini->newval($profile_sect, 'profiles', $profile);
-		$ini->newval($profile_sect, 'config', "$profile\\config_deadbeef.cfg");
+		$ini->newval($profile_sect, 'config', "$profile\\config.cfg");
 		$ini->newval($profile_sect, 'mod', $mod);
 		$ini->newval($profile_sect, 'world', $args{'world'});
 	}
@@ -141,12 +141,12 @@ if (-d $src && !-d $conf_dir) {
 		print "INFO: RCon password will be set to $hash\n";
 
 		# Copy config.cfg to secured path and substitute values
-		rename("$conf_dir/config.cfg", "$conf_dir/config_$hash.cfg");
-		replace_text("s/passwordAdmin\\s=\\s\\\"\\\"/passwordAdmin = \\\"$hash\\\"/", "$conf_dir/config_$hash.cfg");
-		replace_text("s/RConPassword\\s[0-9a-fA-F]{8}/RConPassword $hash/", "$conf_dir/BattlEye/BEServer.cfg");
+		#rename("$conf_dir/config.cfg", "$conf_dir/config.cfg");
+		#replace_text("s/passwordAdmin\\s=\\s\\\"\\\"/passwordAdmin = \\\"$hash\\\"/", "$conf_dir/config_$hash.cfg");
+		#replace_text("s/RConPassword\\s[0-9a-fA-F]{8}/RConPassword $hash/", "$conf_dir/BattlEye/BEServer.cfg");
 
 		# Change config path in Restarter.ini
-		$ini->newval($profile_sect, 'config', "dayz_$args{'instance'}.$args{'world'}\\config_$hash.cfg");
+		#$ini->newval($profile_sect, 'config', "dayz_$args{'instance'}.$args{'world'}\\config_$hash.cfg");
 	}
 
 	$ini->WriteConfig($dst_ini);
@@ -157,8 +157,8 @@ remove_tree($build_dir) if (-d $build_dir);
 remove_tree($pkg_build_dir) if (-d $pkg_build_dir);
 remove_tree($msn_build_dir) if (-d $msn_build_dir);
 
-# Apply core Bliss changes to build directory
-print "INFO: Merging Bliss code into official server\n";
+# Apply core Reality changes to build directory
+print "INFO: Merging Reality code into official server\n";
 copy_dir($src_dir, $build_dir);
 simple_merge($bls_dir, $build_dir);
 
@@ -379,13 +379,13 @@ sub pack_pbo {
 
 sub pack_world {
 	my $src = $build_dir;
-	my $dst = "$dst_dir/\@bliss_$args{'instance'}.$args{'world'}/addons";
+	my $dst = "$dst_dir/\@reality_$args{'instance'}.$args{'world'}/addons";
 
 	print "INFO: Creating dayz_server.pbo\n";
 	make_path($dst) unless (-d $dst);
 	pack_pbo($src, "$dst/dayz_server.pbo");
 
-	copy("$base_dir/util/HiveExt.dll", "$dst_dir/\@bliss_$args{'instance'}.$args{'world'}/HiveExt.dll");
+	copy("$base_dir/util/HiveExt.dll", "$dst_dir/\@reality_$args{'instance'}.$args{'world'}/HiveExt.dll");
 }
 
 sub pack_mission {

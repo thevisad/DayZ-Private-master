@@ -19,7 +19,7 @@ my $filter_dir = './filter';
 
 if ($args{'help'}) {
 	print "usage: update_scripts.pl <directory> [--with-<exception ...]\n";
-	print "     This script downloads updated BE filters from the community list and then modifies them to make them compatible with Bliss optional features.\n";
+	print "     This script downloads updated BE filters from the community list and then modifies them to make them compatible with Reality optional features.\n";
 	print "     If you are using certain worlds or features you must add in special sets of BE exceptions. To do this, consult your filter directory and add in --with-<exception> options for each exception set required.\n";
 	exit;
 }

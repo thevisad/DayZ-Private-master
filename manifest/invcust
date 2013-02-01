@@ -1,4 +1,4 @@
 pkg/invcust/compile/server_playerLogin.sqf
-schema/BlissInvCust/mysql/0.01-0.02/40_cust_loadout.sql
-schema/BlissInvCust/mysql/0.01/10_cust_loadout.sql
-schema/BlissInvCust/mysql/0.01/11_cust_loadout_profile.sql
+schema/RealityInvCust/mysql/0.01-0.02/40_cust_loadout.sql
+schema/RealityInvCust/mysql/0.01/10_cust_loadout.sql
+schema/RealityInvCust/mysql/0.01/11_cust_loadout_profile.sql

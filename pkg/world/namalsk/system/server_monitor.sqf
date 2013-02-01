@@ -3,7 +3,7 @@
 dayz_versionNo = 		getText(configFile >> "CfgMods" >> "DayZ" >> "version");
 dayzNam_versionNo = getText(configFile >> "CfgMods" >> "nc_dzn" >> "version");
 dayz_hiveVersionNo = 	getNumber(configFile >> "CfgMods" >> "DayZ" >> "hiveVersion");
-diag_log("SERVER VERSION: Bliss v5.0a");
+diag_log("SERVER VERSION: Reality v5.0a");
 
 if ((count playableUnits == 0) and !isDedicated) then {
 	isSinglePlayer = true;

@@ -1,5 +1,5 @@
 #!/usr/bin/perl -w
-# Bliss vehicle spawn script
+# Reality vehicle spawn script
 # by ayan4m1
 
 use warnings;

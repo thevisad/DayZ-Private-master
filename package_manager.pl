@@ -1,5 +1,5 @@
 #!/usr/bin/perl -w
-# Bliss package manager
+# Reality package manager
 # by ayan4m1
 
 use Getopt::Long qw(:config pass_through);

@@ -1,4 +1,4 @@
-DayZ Bliss Private Server
+DayZ Reality Private Server
 =========================
 
 This is a private server project for DayZ which would not be possible without the work of Rocket and Guru Abdul.   
@@ -98,12 +98,12 @@ Installation
 Upgrading
 =========
 
-**EXTREMELY IMPORTANT:** If you are migrating from **ANY** previous version of Bliss you will lose vehicles during the upgrade to schema 0.27.
+**EXTREMELY IMPORTANT:** If you are migrating from **ANY** previous version of Reality you will lose vehicles during the upgrade to schema 0.27.
 
 Depending on what has changed since you deployed your server, you may need to perform one or more steps to do a clean upgrade to the latest code. Look for the following in the commit log (specifically, the files that were changed) when you update to the latest version of the repository:
 
 If you see that SQL files or `db_migrate.pl` have changed, then you **must** run `db_migrate.pl` (with appropriate options, run it with `--help` for more information) to upgrade your database to the latest version.
-If SQF files (game script) has changed, then you **must** run `build.pl` and copy the `**Repository**\\deploy\\@bliss_<id>.<world>\\` directory into **ArmA2**\\ (where `<id>` and `<world>` are the values you specified when running build.pl).
+If SQF files (game script) has changed, then you **must** run `build.pl` and copy the `**Repository**\\deploy\\@reality_<id>.<world>\\` directory into **ArmA2**\\ (where `<id>` and `<world>` are the values you specified when running build.pl).
 If configuration files and BattlEye anti-cheat files have changed in **Repository**\\deploy\\, you will need to backup and overwrite your existing versions of these files. Take care to change any default server names, passwords or similar back to their customized values after copying the new versions into your **ArmA2** directory.
 If you receive an error like `Cannot locate Some::Module.pm in @INC` when running a Perl script after an upgrade, run `setup_perl.bat` and then try the Perl script again.
 
@@ -121,9 +121,9 @@ Optional Features
 
 When running `build.pl`, you may specify additional options to merge in optional features. To get a list of optional features, run `perl build.pl --list`.
 
-To install new optional features, use the `package_manager.pl` script. Run `perl package_manager.pl install <package-name>`, replacing `<package-name>` with the name of a package. You may browse packages at http://www.blissrepo.com. 
+To install new optional features, use the `package_manager.pl` script. Run `perl package_manager.pl install <package-name>`, replacing `<package-name>` with the name of a package. You may browse packages at http://www.realityrepo.com. 
 
-A list of Bliss-supported packages follows.
+A list of Reality-supported packages follows.
 
 <table>
   <tr>
@@ -133,7 +133,7 @@ A list of Bliss-supported packages follows.
     <td>carepkgs</td><td>--with-carepkgs</td><td>Drops care packages with various loot types across the map (similar to heli crash sites)</td>
   </tr>
   <tr>
-    <td>killmsgs</td><td>--with-killmsgs</td><td>Shows in-game messages when one player kills another (not needed for Lingor). Custom BE filters must be used (https://code.google.com/p/bliss-community-filters/downloads/list)</td>
+    <td>killmsgs</td><td>--with-killmsgs</td><td>Shows in-game messages when one player kills another (not needed for Lingor). Custom BE filters must be used (https://code.google.com/p/reality-community-filters/downloads/list)</td>
   </tr>
   <tr>
     <td>messaging</td><td>--with-messaging</td><td>Replacement for the old scheduler feature, see <b>Messaging/Scheduler</b> below</td>
@@ -165,10 +165,10 @@ Care must be taken to ensure that all paths and options have been set correctly.
 Messaging / Scheduler
 =====================
 
-You may optionally enable an in-game announcement system for Bliss. To do so, follow these steps:
+You may optionally enable an in-game announcement system for Reality. To do so, follow these steps:
 
-1. Run `perl db_migrate.pl --schema BlissMessaging --version 0.01`. Be sure to include any parameters needed for your specific database passwords / configuration.  
-2. When building Bliss, you must add `--with-messaging` to your arguments, for example `perl build.pl --with-messaging`.  
+1. Run `perl db_migrate.pl --schema RealityMessaging --version 0.01`. Be sure to include any parameters needed for your specific database passwords / configuration.  
+2. When building Reality, you must add `--with-messaging` to your arguments, for example `perl build.pl --with-messaging`.  
 3. Use `perl db_utility.pl --help` to learn how to use the `messages` command to manage your messages without any direct database interaction.  
 
 **NOTE:** Messages added/updated via database manipulation are only available after a server restart.
@@ -178,8 +178,8 @@ Buildings
 
 You may optionally enable a system that reads structure information from the database and spawns a set of static structures on the map on each server start. To do so, follow these steps:
 
-1. Run `perl db_migrate.pl --schema BlissBuildings --version 0.01`. Be sure to include any parameters needed for your specific database passwords / configuration.  
-2. When building Bliss, you must add `--with-buildings` to your arguments, for example `perl build.pl --with-buildings`.  
+1. Run `perl db_migrate.pl --schema RealityBuildings --version 0.01`. Be sure to include any parameters needed for your specific database passwords / configuration.  
+2. When building Reality, you must add `--with-buildings` to your arguments, for example `perl build.pl --with-buildings`.  
 3. You must manually insert any building class names you wish to use into the building table and then insert the spawn coordinates / associated building IDs into the instance_building table.  
 
 **NOTE:** Buildings added/updated via database manipulation are only available after a server restart.
@@ -189,8 +189,8 @@ Custom Inventory
 
 You may optionally enable a system that allows you to define custom spawn loadouts for individuals and/or group. To do so, follow these steps:
 
-1. Run `perl db_migrate.pl --schema BlissInvCust --version 0.02`. Be sure to include any parameters needed for your specific database passwords / configuration.  
-2. When building Bliss, you must add `--with-invcust` to your arguments, for example `perl build.pl --with-invcust`.  
+1. Run `perl db_migrate.pl --schema RealityInvCust --version 0.02`. Be sure to include any parameters needed for your specific database passwords / configuration.  
+2. When building Reality, you must add `--with-invcust` to your arguments, for example `perl build.pl --with-invcust`.  
 
 There are two tables which you must insert values into to use this feature. The `cust_loadout` table defines unique sets of inventory/backpack to give the player(s) on spawn. The `cust_loadout_profile` table then ties these cust_loadout rows to player profile IDs. You can associate multiple profile IDs to a single loadout with this relationship.
 
@@ -203,7 +203,7 @@ Here are the most common customization requests with instructions.
 **Solution**: When running `build.pl`, add the `--channels <channel>` option, where `<channel>` is a comma-separated list of chat channel numbers, which will be **DISABLED**. Refer to http://community.bistudio.com/wiki/Description.ext#disableChannels for a mapping of channel names to numbers.
 
 **Request**: I would like to alter difficulty options (3rd-person, crosshairs, name tags, etc).  
-**Solution**: Edit **Config**\\Users\\Bliss\\Bliss.ArmA2OAProfile. An explanation of the options is available at http://community.bistudio.com/wiki/server.armaprofile. You must restart the server for these changes to take effect.
+**Solution**: Edit **Config**\\Users\\Reality\\Reality.ArmA2OAProfile. An explanation of the options is available at http://community.bistudio.com/wiki/server.armaprofile. You must restart the server for these changes to take effect.
 
 Gotchas / Known Bugs
 ==========
@@ -222,12 +222,12 @@ Common Issues
 **Solution**: Run `setup_perl.bat` and try to execute the Perl script again.
 
 **Problem**: "Error Connecting to Service" / Stuck at Loading / Errors in **arma2oaserver.rpt**  
-**Solution**: Look in **Config**\\hiveext.log for MySQL connection errors (Google these to find troubleshooting steps). If you do not have a **Config**\\hiveext.log file, right-click on `HiveExt.dll` in `@Bliss` (`@BlissLingor` for Lingor servers) and select Properties. If you see an Unblock button, click it and hit OK. Ensure you have a valid MySQL user created, have run db_migrate.pl successfully, have set all options correctly in **Config**\\HiveExt.ini and that you can run the following when logged in to MySQL:  
+**Solution**: Look in **Config**\\hiveext.log for MySQL connection errors (Google these to find troubleshooting steps). If you do not have a **Config**\\hiveext.log file, right-click on `HiveExt.dll` in `@Reality` (`@RealityLingor` for Lingor servers) and select Properties. If you see an Unblock button, click it and hit OK. Ensure you have a valid MySQL user created, have run db_migrate.pl successfully, have set all options correctly in **Config**\\HiveExt.ini and that you can run the following when logged in to MySQL:  
 
 	select * from survivor;
 
 **Problem**: Server crashes when the first player connects  
-**Solution**: Ensure that you have `HiveEXT.dll` in your **ArmA2**\\@bliss_\<instance\>.\<world\> directory and that you have a valid and well-formed **Config**\\HiveExt.ini. Also ensure that you have tried both `localhost` and `127.0.0.1` as the hostname if you run MySQL on the same server as Bliss.
+**Solution**: Ensure that you have `HiveEXT.dll` in your **ArmA2**\\@reality_\<instance\>.\<world\> directory and that you have a valid and well-formed **Config**\\HiveExt.ini. Also ensure that you have tried both `localhost` and `127.0.0.1` as the hostname if you run MySQL on the same server as Reality.
 
 **Problem**: Server not listed on GameSpy in-game server list or third-party server lists  
 **Solution**: Ensure the game ports (default 2302 - 2305 UDP) are forwarded properly and that the GameSpy master server is up and running.  
@@ -238,7 +238,7 @@ Common Issues
 Thanks To
 =========
 
-Each of these packages is a part of Bliss and makes what we do possible.
+Each of these packages is a part of Reality and makes what we do possible.
 
 <table>
   <tr><th>Name</th><th>Author</th><th>URL</th></tr>
