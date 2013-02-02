@@ -48,7 +48,7 @@ my $dbh = DBI->connect(
 	$db{'pass'}
 ) or die "FATAL: Could not connect to MySQL -  " . DBI->errstr . "\n";
 
-my ($world_id, $world_name) = $dbh->selectrow_array("select w.id, w.name from instance i join world w on i.world_id = w.id where i.id = ?", undef, ($db{'instance'}));
+my ($world_id, $world_name) = $dbh->selectrow_array("select w.id, w.name from instance i join world w on i.world_id = w.id where i.world_id = ?", undef, ($db{'instance'}));
 die "FATAL: Invalid instance ID\n" unless (defined $world_id && defined $world_name);
 
 print "INFO: Instance name dayz_$db{'instance'}.$world_name\n";
