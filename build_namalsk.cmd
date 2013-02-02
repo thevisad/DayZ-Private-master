@@ -1,3 +1,3 @@
 perl build.pl --clean
-perl build.pl --world namalsk --with-killmsgs --with-wrecks --with-invcust --with-carepkgs --instance 1
+perl build.pl --world namalsk --with-wrecks --with-invcust --with-carepkgs --instance 8
 pause
