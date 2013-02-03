@@ -5,6 +5,8 @@ perl build.pl --world fallujah --with-carepkgs
  pause
 perl build.pl --world lingor --with-carepkgs 
  pause
+perl build.pl --world lingor-skaro --with-carepkgs 
+ pause
 perl build.pl --world mbg_celle2 --with-carepkgs 
  pause
 perl build.pl --world namalsk -with-carepkgs 

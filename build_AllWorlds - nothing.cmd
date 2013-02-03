@@ -5,6 +5,8 @@ perl build.pl --world fallujah
 
 perl build.pl --world lingor 
 
+perl build.pl --world lingor-skaro 
+
 perl build.pl --world mbg_celle2 
 
 perl build.pl --world namalsk 

@@ -5,6 +5,8 @@ perl build.pl --world fallujah --with-killmsgs
 
 perl build.pl --world lingor --with-killmsgs 
 
+perl build.pl --world lingor-skaro --with-killmsgs 
+
 perl build.pl --world mbg_celle2 --with-killmsgs 
 
 perl build.pl --world namalsk --with-killmsgs 

@@ -5,6 +5,8 @@ perl build.pl --world fallujah --with-wrecks
 
 perl build.pl --world lingor --with-wrecks 
 
+perl build.pl --world lingor-skaro --with-wrecks 
+
 perl build.pl --world mbg_celle2 --with-wrecks 
 
 perl build.pl --world namalsk --with-wrecks 
