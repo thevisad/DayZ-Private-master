@@ -147,7 +147,6 @@ switch (_type) do {
 		call _object_inventory;
 	};
 	case "damage": {
-	diag_log ("Damaged Called");
 		if ( (time - _lastUpdate) > 5) then {
 			call _object_damage;
 		} else {

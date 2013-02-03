@@ -1,0 +1,9 @@
+filter/lingor-skaro
+mission/lingor-skaro/description.ext
+mission/lingor-skaro/init.sqf
+mission/lingor-skaro/mission.sqm
+pkg/world/lingor/
+schema/Bliss/mysql/0.36-0.37/40_vehicle.sql
+schema/Bliss/mysql/0.36-0.37/41_world_vehicle.sql
+schema/Bliss/mysql/0.36-0.37/42_world_vehicle_update.sql
+util/deploy/Keys/skaronator.bikey

@@ -17,8 +17,10 @@ player setVariable ["BIS_noCoreConversations", true];
 
 //Load in compiled functions
 call compile preprocessFileLineNumbers "\z\addons\dayz_code\init\variables.sqf";				//Initilize the Variables (IMPORTANT: Must happen very early)
+
 // (Taviana) Override some of the variables:
 call compile preprocessFileLineNumbers "\kh\dayztaviana\init\variables.sqf";
+
 progressLoadingScreen 0.1;
 call compile preprocessFileLineNumbers "\z\addons\dayz_code\init\publicEH.sqf";				//Initilize the publicVariable event handlers
 progressLoadingScreen 0.2;
