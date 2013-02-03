@@ -108,14 +108,15 @@ if (-d $src && !-d $conf_dir) {
 	replace_text("s/template\\s=\\sdayz_[0-9]+.[a-z]+/template = $profile/", "$conf_dir/config.cfg");
 
 	my $mods = {
-		'lingor'    => '@dayzlingor',
-		'takistan'  => '@dayztakistan',
-		'fallujah'  => '@dayzfallujah',
-		'zargabad'  => '@dayzzargabad',
-		'panthera2' => '@dayzpanthera',
-		'namalsk'   => '@dayz;@dayz_namalsk',
-		'mbg_celle2'=> '@dayz_celle;@mbg_celle',
-		'tavi'      => '@taviana'
+		'lingor-skaro'=> '@dayzlingorskaro',
+		'lingor'      => '@dayzlingor',
+		'takistan'    => '@dayztakistan',
+		'fallujah'    => '@dayzfallujah',
+		'zargabad'    => '@dayzzargabad',
+		'panthera2'   => '@dayzpanthera',
+		'namalsk'     => '@dayz;@dayz_namalsk',
+		'mbg_celle2'  => '@dayz_celle;@mbg_celle',
+		'tavi'        => '@taviana'
 	};
 	my $mod = ((defined $mods->{$args{'world'}}) ? "$mods->{$args{'world'}}" : '@dayz') . ";\@reality_$args{'instance'}.$args{'world'}";
 
