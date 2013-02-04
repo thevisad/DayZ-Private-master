@@ -13,6 +13,7 @@ Prerequisites
  - MySQL Server 5.x with TCP/IP Networking enabled **NOTE:** You **must** use the official MySQL installer, not XAMPP (http://dev.mysql.com/get/Downloads/MySQL-5.5/mysql-5.5.27-win32.msi/from/http://cdn.mysql.com)
  - The decimal separator on your server MUST BE a period. If it is a comma, vehicle spawning (at least) will not work correctly. **NOTE:** If you use FireDaemon to start your server, you must re-create the service if you change the comma separator in Windows.
  - Strawberry Perl >= 5.16 (http://strawberryperl.com/)
+ - DayZ 1.7.5.1 client - server files needed. 
 
 Directories
 ===========
