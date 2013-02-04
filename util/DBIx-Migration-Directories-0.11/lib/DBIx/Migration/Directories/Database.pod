@@ -1,0 +1,163 @@
+=pod
+
+=head1 NAME
+
+DBIx::Migration::Directories::Database - Database-dependant migration operations
+
+=head1 SYNOPSIS
+
+  my $object = DBIx::Migration::Directories->new(
+    $dbh => $some_database_handle, schema => "foo"
+  );
+
+  if($object->db->table_exists("foo")) {
+    print "Table foo exists.\n";
+  }
+
+=head1 DESCRIPTION
+
+DBIx::Migration::Directories::Database contains any migration operations
+that actually make use of a database. The purpose of having these as a
+separate module is to make it possible to override specific SQL operations
+for specific database engines do things in a non-standard way (eg; MySQL).
+
+=head1 CONSTRUCTOR
+
+=over
+
+=item new(%args)
+
+Creates a new DBIx::Migration::Directories::Base object. C<%args> is a
+hash of properties to set on the object; the following properties are
+used by C<DBIx::Migration::Directories::Base>:
+
+=over
+
+=item dbh
+
+B<Required.> The C<DBIx::Transaction> database handle to use for queries.
+This handle should already be connected to the database that you wish to manage.
+
+=item driver
+
+The name of the DBD driver we are using. You normally don't want to
+specify this option; C<DBIx::Migration::Directories::Database> will automatically
+pull the driver name out of the database handle you pass along.
+
+=back
+
+=back
+
+=head1 METHODS
+
+=over
+
+=item db_schemas
+
+Queries the migration schema, and returns a hash reference containing
+all of the schemas currently registered in this database. The keys in
+this hash are the schemas' names, and the values are hash references,
+containing the contents of that schema's row in the database as key/value
+pairs:
+
+=over
+
+=item name
+
+The schema's name, again.
+
+=item version
+
+The current version of this schema.
+
+=back
+
+=item db_get_current_version($schema)
+
+Looks at C<DBIx::Migration::Directories>'s tables to see what the specified
+schema's version is. If the schema is installed, the current
+version will be returned, otherwise this method will return C<undef>.
+
+=item db_schema_version_log($schema)
+
+Queries the migration schema, and returns an array reference containing
+the specified schema's version history. The "C<$schema>" parameter is
+required.
+
+Each entry in the array reference returned is a hash reference,
+containing the contents of that schema's log rows in the database as
+key/value pairs:
+
+=over
+
+=item id
+
+A unique integer identifier for this log entry.
+
+=item schema_name
+
+Schema this log entry refers to.
+
+=item event_time
+
+Time this migration action took place.
+
+=item old_version
+
+Schema version before this migration action took place.
+
+=item new_version
+
+Schema version after this migration took place.
+
+=back
+
+=item db_delete_schema_record($schema)
+
+Remove any knowledge about the specified schema from the migration log.
+It probably isn't safe to call it on it's own unless you are B<sure> your
+schema is gone.
+
+=item table_exists($table)
+
+Queries the database and returns 1 if the named table exists, 0 otherwise.
+
+=item sql_insert_migration_schema_version($schema, $version)
+
+Returns an SQL query used to add a new schema to the database.
+
+=item sql_update_migration_schema_version($schema, $version)
+
+Returns an SQL query used to change the version number we have
+on record for a schema.
+
+=item sql_insert_migration_schema_log($schema, $from, $to)
+
+Returns an SQL query used to add a new schema log record to the database
+indicating a migration between schema versions.
+
+=item sql_table_exists($table)
+
+Returns a string containing an SQL query that is garunteed to only return
+rows if the named table exists. Base.pm's implementation queries
+the SQL standard C<INFORMATION_SCHEMA> table.
+
+=back
+
+=head1 AUTHOR
+
+Tyler "Crackerjack" MacDonald <japh@crackerjack.net>
+
+=head1 LICENSE
+
+Copyright 2009 Tyler "Crackerjack" MacDonald <japh@crackerjack.net>
+
+This is free software; You may distribute it under the same terms as perl
+itself.
+
+=head1 SEE ALSO
+
+L<DBIx::Migration::Directories::Database::mysql>,
+L<DBIx::Migration::Directories::Database::SQLite2>
+
+=cut

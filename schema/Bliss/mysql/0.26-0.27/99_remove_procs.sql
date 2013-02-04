@@ -1,0 +1,17 @@
+drop procedure if exists `proc_getInstanceTime`;
+drop procedure if exists `proc_getInstanceLoadout`;
+drop procedure if exists `proc_getObjects`;
+drop procedure if exists `proc_getObjectPageCount`;
+drop procedure if exists `proc_insertSurvivor`;
+drop procedure if exists `proc_loginSurvivor`;
+drop procedure if exists `proc_getSurvivorStats`;
+drop procedure if exists `proc_killSurvivor`;
+drop procedure if exists `proc_updateSurvivor`;
+drop procedure if exists `proc_insertObject`;
+drop procedure if exists `proc_deleteObject`;
+drop procedure if exists `proc_deleteObjectId`;
+drop procedure if exists `proc_updateObject`;
+drop procedure if exists `proc_updateObjectInventory`;
+drop procedure if exists `proc_updateObjectPosition`;
+drop procedure if exists `proc_updateObjectHealth`;
+drop procedure if exists `proc_updateObjectInventoryByUID`;

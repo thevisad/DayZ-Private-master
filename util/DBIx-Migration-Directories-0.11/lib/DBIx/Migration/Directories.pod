@@ -1,0 +1,666 @@
+=pod
+
+=head1 NAME
+
+DBIx::Migration::Directories - Install/remove/upgrade/downgrade SQL schemas
+
+=head1 SYNOPSIS
+
+ use DBIx::Migration::Directories;
+ use DBI;
+
+ my $dbh = DBI->connect('db:something:some=where', 'user', 'pass');
+
+ my $m = DBIx::Migration::Directories->new(
+    base                    => '/path/where/schemas/are',
+    schema                  => 'MyApp',
+    desired_version_from    => 'MyApp::DataPackage',
+    dbh                     => $dbh
+ );
+ 
+ $m->migrate
+     or die "Installing database failed!";
+
+=head1 DESCRIPTION
+
+C<DBIx::Migration::Directories> provides you with a framework for managing
+database schemas easily. You create a directory to hold your schema, then in
+that directory create sub-directories containing the SQL code to install,
+remove, upgrade, or downgrade your schema. The schema layout is described in
+more detail in the L</DIRECTORY LAYOUT> section below.
+
+When asked to install, upgrade, or downgrade a database schema,
+C<DBIx::Migration::Directories> will look at these directories and attempt
+to find the shortest path between two schema versions. It will then run
+the entire upgrade code in one transaction, rolling back if the upgrade fails.
+
+Multiple database schemas can be managed within one database.
+C<DBIx::Migration::Directories> currently requires two tables to exist in
+your database to track schema version numbers and upgrade/downgrade history.
+These tables are called "C<migration_schema_version>" and
+"C<migration_schema_log>", and are also manageable using
+C<DBIx::Migration::Directories>.
+
+=head1 END USERS
+
+Take a look at the L<migrate-database-schema> documentation, and the
+documentation that came with the package whose schema you wish to use.
+
+=head1 DEVELOPERS
+
+Read on...
+
+=head1 FEATURES
+
+The design goal of C<DBIx::Migration::Directories> is to relieve the
+developer and end-users' burden in building, supporting, and using packages
+that require a database schema (or schemas) to function. It provides a
+convention for developers wishing to build such a package, and an easy-to-use
+commandline tool for end-users to manage their databases. Here are some of it's
+life-easing features:
+
+=over
+
+=item * Works with Postgres, MySQL, and SQLite2
+
+=item * Easily extensible for other database engines
+
+It's easy to add support for another low-level database, by adding
+a new migration schema and possibly a DBIx::Migration::Directories subclass
+to deal with driver-specific quirks
+
+=item * Install, upgrade, remove, *or* downgrade database schemas
+
+Given the appropriate database schema directory layout,
+C<DBIx::Migration::Directories> can migrate schemas in both directions,
+from completely uninstalled to the latest and greatest version or anything
+in-between.
+
+=item * Easy binding of schema versions to perl modules
+
+Simply running "migrate-database-system My::Perl::Package" will attempt to
+load My::Perl::Package, and use it's C<$VERSION> as the desired version of
+the My-Perl-Package database schema
+
+=item * "_common" and "_generic" schemas avoid duplication of effort
+
+When you are supporting multiple database engines in your schema, you
+can place the SQL that's common to all of them in the "_common" directory,
+or even put it all there and only put small differences in the engine-
+specific schema directories.
+
+When your one schema is expected to work on all SQL engines (hah, good luck!),
+you can place it in the "_generic" schema.
+
+=item * Test framework that keeps your databases clean
+
+The L<DBIx::Migration::Directories::Test> test framework tries it's hardest
+to make sure your database tests are handled cleanly; your schema is installed
+when the test starts, and uninstalled when the test finishes, even if your
+tests die.
+
+=item * Module::Build subclass makes it easy to install schema files
+
+The L<DBIx::Migration::Directories::Build> package is a Module::Build subclass.
+When used by your package, your database schemas will be installed in the same
+way as DBIx::Migration::Directories's were, keeping everything nice and 
+organized.
+
+=back
+
+=head1 USAGE
+
+There are only a few steps to go through to get your perl/DBI package ready
+to use C<DBIx::Migration::Directories> to manage it's database schemas.
+
+=over
+
+=item * Set up your build environment
+
+C<DBIx::Migration::Directories> uses the L<Module::Build|Module::Build> package
+to build and install itself, and packages that use it should, too. The old
+L<ExtUtils::MakeMakemaker|ExtUtils::MakeMaker> method of installing perl
+packages just wasn't flexible enough.
+
+Once you have your package set up to use L<Module::Build|Module::Build>, it
+is simple to make it use C<DBIx::Migration::Directories> as well. A subclass of
+L<Module::Build|Module::Build> is provide that should help put your schemas
+in the correct location for migration. See L<DBIx::Migration::Directories::Build>
+for more information.
+
+=item * Set up your migration directory tree
+
+The migration directory tree describe above needs to go into a specific
+directory in your build if you want it to be useable, and be installed when
+your perl package is. See L</DIRECTORY LAYOUT> below, and
+L<DBIx::Migration::Directories::Build>.
+
+=item * Have your package call C<DBIx::Migration::Directories> to install/update it's schema
+
+How and when you do this depends on your package. If you are writing an
+apache module, you may want to do it when the apache module is first used
+by the server. If you are writing an application, you might want to do it
+during server startup. If you are writing some other helper module, you
+may want to skip doing it yourself, and just provide a method or documentation
+on how the end-user can do it themselves.
+
+No matter where you do it, the best way to install/update the schema is
+I<usually> to create a new C<DBIx::Migration::Directories> object, then call the
+"full_migrate" method on it, detailed below. In some circumstances,
+this may not be sufficient, in which case there are lower-level methods you
+can poke around with. :-) See L</METHODS> below.
+
+=back
+
+=head1 DIRECTORY LAYOUT
+
+In your schema's directory (see L<DBIx::Migration::Directories::Build> to
+understand where that should live), you should create a subdirectory for
+each DBD driver you will support. This directory should be named the same
+as what the driver calls itself; if you are using L<DBD::Pg|DBD::Pg>, you would
+want to name your schema directory "Pg", L<DBD::mysql|DBD::mysql> users would
+call it "mysql", etc. There are a few exceptions, see "special schemas" below.
+
+Inside I<that> directory, create a directory for the initial version of your
+schema. (B<Tip:> it's easier to manage if your schema version numbers match
+up with your package's C<$VERSION> numbers.) For now, let's say this
+directory ends up being "0.01".
+
+Inside B<that> directory, place your database schema. When the schema
+install/upgrade occurs, these files will be executed in order, sorted
+by their names. This makes it easy to split up your schema files by table,
+and still have them installed in the correct order to satisfy C<FOREIGN KEY>s
+or other constraints. A typical schema directory might look something like
+this:
+
+  100_mystore_users.sql
+  120_mystore_user_flags.sql
+  140_mystore_user_log.sql
+  200_mystore_products.sql
+  220_mystore_product_comments.sql
+
+When you have multiple versions of your schema, you will want to create
+a directory for each version, and place every line of SQL needed to create
+them in those directories.
+
+Next comes migration.
+
+When asked to migrate a schema, C<DBIx::Migration::Directories> first checks
+if we already have an older (or newer) version installed, and if so, what
+version that is. It then attempts to find a path between the currently
+installed schema and the one you want.
+
+These paths are defined by schema directories named with two version numbers;
+first the version number you're coming from, followed by a dash, then the
+version number you're going to. So the directory "0.01-0.02" would define
+the SQL neccessary upgrade a version 0.01 schema to 0.02, and the
+directory "0.02-0.01" would define the SQL needed to I<downgrade> from
+version 0.02 to 0.01. (This would presumedly drop any new tables/columns,
+remove any new static data, etc.)
+
+For example, if you had 4 versions of your database schema, your schema
+directory may look as follows:
+
+  0.01
+  0.01-0.00
+  0.01-0.02
+  0.01-0.04
+  0.02
+  0.02-0.00
+  0.02-0.01
+  0.02-0.03
+  0.03
+  0.03-0.02
+  0.03-0.04
+  0.04
+  0.04-0.03
+  0.04-0.00
+
+In most cases, people won't want/need to downgrade, so whether or not you
+support that in your schema is up to you. However, there is one common
+downgrade case you may want to consider: un-installing your package.
+If you want people to be able to do this easily, it's best to provide a
+way to migrate from each version of your schema to version C<0> (eg;
+directories called C<0.02-0> or C<0.02-0.00>, or a path from C<0.02-0.01>,
+then from C<0.01-0.00>). If you don't provide these
+schemas, it will be a lot more difficult for an end user to completely
+remove your package. If you I<do> provide these schemas, completely removing
+your schema from the system is as easy as calling the
+L<delete_schema()|/item_delete_schema> method, described below.
+
+=head2 Special Schemas
+
+There are two "driver" directories that may contain special schemas:
+
+=over
+
+=item _common
+
+If some of your SQL is shared across multiple drivers, you can place it
+here and it will be picked up whenever the same file does not exist in
+your driver-specific schema. For example, if you had the files:
+
+  Pg/0.01/100_create_table.sql
+  Pg/0.01/110_update_table.sql
+  mysql/0.01/100_create_table.sql
+  mysql/0.01/105_insert_rows.sql
+  mysql/0.01/110_update_table.sql
+  _common/0.01/105_insert_rows.sql
+  _common/0.01/120_create_another_table.sql
+  
+Then version 0.01 of your schema would be this when used with postgresql:
+
+  Pg/0.01/100_create_table.sql
+  _common/0.01/105_insert_rows.sql
+  Pg/0.01/110_update_table.sql
+  _common/0.01/120_create_another_table.sql
+
+But this when running under mysql:
+
+  mysql/0.01/100_create_table.sql
+  mysql/0.01/105_insert_rows.sql
+  mysql/0.01/110_update_table.sql
+  _common/0.01/120_create_another_table.sql
+
+=item _generic
+
+If there is no directory for the DBD driver in use, but there is a C<_generic>
+directory, that directory will be used for the schema instead. This is a good
+place to put a schema that is so simple that it should work on virtually any
+SQL engine.
+
+=back
+
+=head2 Important note about Schema Files
+
+DBIx::Migration::Directories sends the contents of the schema's files to
+the database engine as a sequence of SQL commands. We consider an "SQL command"
+a sequence of text, delimited by a semicolon (;) at the B<end of a line>.
+
+If you need to supply a string with a semicolon followed by a newline
+to your schema, you can do something like this:
+
+  INSERT INTO foo VALUES (''bar;''||''
+  baz;'));
+
+If you need to create a trigger with well formatted SQL statements in it,
+it's more readable to put an empty comment ( --) after the line that
+ends with a semicolon:
+
+  CREATE OR REPLACE FUNCTION lock_archive () RETURNS TRIGGER LANGUAGE PLPGSQL AS
+  'BEGIN
+    IF OLD.archived THEN
+      RAISE EXCEPTION ''This record has been archived.''; --
+    END IF; --
+      RETURN NEW; --
+   END;';
+
+=head1 METHODS
+
+=head2 Constructor
+
+=over
+
+=item new()
+
+Creates a new DBIx::Migration::Directories object ready to manage your
+database schema. The following options are supported:
+
+  dbh
+  schema
+  desired_version
+  desired_version_from
+  driver
+  base
+  dir
+
+Typically, you will only need to supply the "L<dbh|/item_dbh>" and
+"L<schema|/item_schema>" parameters, and one of
+"L<desired_version|/item_desired_version>" or
+"L<desired_version_from|/item_desired_version_from>".
+
+=over
+
+=item dbh
+
+B<Required.> The C<DBIx::Transaction> database handle to use to manage the schema.
+This handle should already be connected to the database that you wish to manage.
+
+=item schema
+
+The name of the schema you wish to manage. Either this parameter, or the
+L<desired_version_from|/item_desired_version_from> parameter is required.
+If this option is not specified, C<desired_version_from> is used instead,
+with all double-colons (C<::>) converted to dashes (C<->), as is the perl way.
+
+=item desired_version
+
+The schema version number that you wish to migrate to. Schema versions
+may be an integer or a decimal, but may not be "double-decimals" (eg;
+C<0.0001> is allowed, but C<0.0.1> is not.)
+
+=item desired_version_from
+
+If C<desired_version> is not specified, C<DBIx::Migration::Directories>
+will attempt to load the package named in C<desired_version_from>.
+If successful, the desired version will be set to the value of that package's
+C<$SCHEMA_VERSION> global variable, or it's C<$VERSION> global variable if
+C<$SCHEMA_VERSION> was not specified. This can make it easier for your
+package to specify what version of the schema it's API supports.
+
+=item driver
+
+The name of the DBD driver we are using. You normally don't want to
+specify this option; C<DBIx::Migration::Directories> will automatically
+pull the driver name out of the database handle you pass along.
+
+=item base
+
+The location on your filesystem where all database schemas are stored.
+This option is typically set by the user when the
+C<DBIx::Migration::Directories> package is installed. If you are installing
+your schemas somewhere else (or not installing them at all - however this is
+not a suggested practice), you may wish to set this option.
+
+=item dir
+
+The full path to your database schema, including the schema and driver name,
+but B<not> the version number. The default for this option is generated from
+the C<base>, C<schema>, and C<driver> options. It may be useful to override
+this option during unit testing, when your schema files have not yet been
+installed.
+
+=back
+
+=back
+
+=head2 High-Level Methods
+
+These are the methods that are most commonly used to manage schemas with
+C<DBIx::Migration::Directories>. Most of these methods will return a
+true value for success, a false value for failure, and will throw a
+C<die()> exception for serious failure (eg; no migration path,
+database handle issues, etc.)
+
+=over
+
+=item full_migrate(%args)
+
+This method first checks to see if C<DBIx::Migration::Directories>'s schema
+is installed and up-to-date, then does the same migration with your schema.
+Since you need the C<DBIx::Migration::Directories> schema in order to
+revision your schema, it is usually best to use this method to
+install/upgrade your schema.
+
+If you specify any arguments, they are passed onto the
+C<DBIx::Migration::Directories> constructor that is used to check on
+it's own schemas. You won't normally need to do this, unless you are
+storing the schemas in a funny location or want a specific
+C<DBIx::Migration::Directories> schema version (but why would you want that?)
+
+=item full_delete_schema(%args)
+
+This method attempts to remove your database schema. If that is successful,
+it then checks to see if your database contains any other schemas that use
+C<DBIx::Migration::Directories>. If there aren't any, the
+C<DBIx-Migration-Directories> schema tables are removed as well.
+
+If you specify any arguemnts, they are passed onto the
+C<DBIx::Migration::Directories> constructor that is used to check on
+it's own schemas. You won't normally need to do this, unless you are
+storing the schemas in a funny location.
+
+=item migrate()
+
+Attempts to migrate your schema to the desired version, without doing the
+check on C<DBIx::Migration::Directories>'s schema that is done by
+C<full_migrate()>.
+
+=item migrate_to($version)
+
+Attempts to migrate your schema to a specific version, other than the
+one supplied in L<desired_version|/item_desired_version>.
+
+=item delete_schema()
+
+Attempts to migrate your schema to version "0", which you should
+set up to complete remove it from the database. If that is successful, then
+the schema's records are removed from C<DBIx::Migration::Directories>'s
+tables.
+
+=item get_current_version()
+
+Looks at C<DBIx::Migration::Directories>'s tables to see what the currently
+installed schema's version is. If the schema is installed, the current
+version will be returned, otherwise this method will return C<undef>.
+
+=back
+
+=head2 Mid-Level Methods
+
+These methods are used by the high-level methods above, and you usually
+won't have to use them yourself. They provide more fine-grain control over
+your schema and give you more detailed information about it.
+
+=over
+
+=item migration_schema(%args)
+
+Returns a C<DBIx::Migration::Directories> object suitable for manipulating
+the C<DBIx-Migration-Directories> schema itself.
+
+If you specify any arguemnts, they are passed onto the
+C<DBIx::Migration::Directories> constructor that is used to check on
+it's own schemas. You won't normally need to do this, unless you are
+storing the schemas in a funny location or want a specific
+C<DBIx::Migration::Directories> schema version (but why would you want that?)
+
+It is the equivalent to calling:
+
+  $schema->new(
+      dbh       => $schema->{dbh},
+      schema    =>  'DBIx-Migration-Directories',
+      %args
+  );
+
+=item migrate_migration(%args)
+
+This method simply attempts to migrate the C<DBIx::Migration::Directories>
+schema using the same database handle you passed it. It is used by the
+C<full_migrate()> method described above.
+
+It is the equivalent to calling:
+
+   $schema->migration_schema(%args)->migrate();
+
+=item delete_migration(%args)
+
+This method simply attempts to remove the C<DBIx::Migration::Directories>
+schema using the same database handle you passed it. It is used by the
+C<full_delete_schema()> method described above.
+
+It is the equivalent to calling:
+
+   $schema->migration_schema(%args)->delete_schema();
+
+=item migrate_from_to($from, $to)
+
+Attempt to migrate B<from> a particular version to the specified version.
+Using this method on it's own can be dangerous unless you are
+B<absolutely sure> of which version you currently have. It's far better
+to use C<migrate_to()> and let the module figure out where you're currently at.
+
+=item detect_desired_version()
+
+Returns the highest available version we can migrate to from our current
+version. Returns the current version of our schema if there are no forwards
+migrations available, or returns undef if we have a version of the schema
+that is not in the schema directory.
+
+=item set_desired_version()
+
+Calls L<detect_desired_version()|/item_detect_desired_version>. If a valid
+version number found, this object's C<desired_version> property is set and
+the version number is returned. If not, an exception is raised.
+
+This method is called when a C<DBIx::Migration::Directories> object is
+initialized if you do not supply L<desired_version|/item_desired_version>
+or L<desired_version_from|/item_desired_version_from> to L<new()|/item_new>.
+
+=back
+
+=head2 Low-Level Methods
+
+All of these methods are used by the Mid-Level and High-Level methods above.
+The only one I expect you to find remotely useful on it's own is the
+"version_update_sql" method, but here's the what they all do:
+
+=over
+
+=item version_update_sql($from, $to)
+
+Returns the SQL required to log that the database was migrated from
+version C<$from> to version C<$to>, as an array of SQL statements.
+
+The first statement will be either an UPDATE or an INSERT, depending
+on if your schema already has an entry in the migration tables. This
+determination is made by the
+L<get_current_version()|/item_get_current_version> method above,
+so you will want to call that first to ensure these queries are accurate.
+
+It might be useful to use this method if your package had a schema
+before, and you are updating it to include migration support with
+C<DBIx::Migration::Directories>. In those cases, a schema probably already
+exists in the database, and you'll have to "fake" the migration log
+information in.
+
+Note that this method only returns the SQL neccessary to update the logs,
+it doesn't execute it itself.
+
+=item delete_schema_record()
+
+Remove any knowledge about your schema from the migration log. This method
+is called by the L<delete_schema()|/item_delete_schema> method once your
+schema has been
+successfully removed, and it probably isn't safe to call it on it's own
+unless you are B<sure> your schema is gone.
+
+=item refresh()
+
+Look at the schema directory and build a table of what's inside it. This
+is called automatically by new(), so you shouldn't need to call it yourself
+unless you change that directory's contents while the migration object exists.
+(And why would you do that???)
+
+=item migration_path($from, $to)
+
+Attempt to build a path between schema versions, assuming your current
+schema version is C<$from>, and you want to get to C<$to>. If a path
+is found, it is returned as an array of subdirectory names. If a path
+is not found, an exception is raised.
+
+=item dir_sql($subdir)
+
+Given a directory relative to your schema's directory, reads all of the
+files inside of it, and returns an array of the SQL statements they
+contain. Raises an exception if the directory or any of it's non-hidden
+files cannot be read.
+
+The SQL statements are split based on the presence of a semicolon (;)
+at the end of a line, or on a line by itself. That means that you can not
+change SQL statements in mid-line.
+
+=item dir_migration_sql($dir)
+
+Returns the SQL returned from the L<dir_sql()|/item_dir_sql> method for
+the specified directory, plus the SQL required to update the migration
+schema to log this upgrade, as returned by
+L<version_update_sql()|/item_version_update_sql>.
+
+=item migration_path_sql(@path)
+
+For each directory in @path, returns the result of dir_migration_sql().
+The result is a full set of SQL queries neccessary to follow a database
+migration path.
+
+=back
+
+=head2 Other Methods
+
+The other methods that C<DBIx::Migration::Directories> uses to
+handle database migrations are supplied by the
+L<DBIx::Migration::Directories::Base|DBIx::Migration::Directories::Base>
+base class. See it's documentation for a description of these.
+
+=head1 BUGS
+
+=over
+
+=item * MySQL driver
+
+MySQL's error and transaction handling are different than other database
+drivers. Some workarounds have been applied and everything I<seems> to work,
+but there could be other problems as well. If you find one, let me know!
+
+=back
+
+=head1 TODO
+
+=over
+
+=item * Handle fancier version numbers
+
+=item * Add migration schemas for a wider variety of DBMS.
+
+=item * Bubble some build-time stuff up as enhancements to Module::Build
+
+=item * Support inter-schema dependancies
+
+(eg; "My-Image-Gallery" depends on "Some-User-Management-Schema", etc...)
+
+=back
+
+=head1 AUTHOR
+
+Tyler "Crackerjack" MacDonald <japh@crackerjack.net>
+
+=head1 LICENSE
+
+Copyright 2009 Tyler "Crackerjack" MacDonald <japh@crackerjack.net>
+
+This is free software; You may distribute it under the same terms as perl
+itself.
+
+=head1 THANKS
+
+=over
+
+=item Mischa Sandberg <mischa.sandberg@telus.net>
+
+For teaching me a lot about PostgreSQL, and SQL database issues in general.
+Without him I wouldn't have even known I needed a module like this. :-)
+
+=item Ken Williams <kwilliams@cpan.org>
+
+For the kick-ass L<Module::Build|Module::Build> framework that makes a package like this
+sane to maintain.
+
+=item Paul Johnson <pjcj@cpan.org>
+
+For L<Devel::Cover|Devel::Cover>, which makes it easy for me to know when I can say
+"It really works!"
+
+=item Sedara MacDonald
+
+My daughter, for bringing me cookies while I coded this!
+
+=back
+
+=head1 SEE ALSO
+
+L<DBIx::Migration::Directories::Build>, L<DBIx::Migration::Directories::Base>,
+L<DBD::Pg>, L<DBD::mysql>
+
+=cut
+
+

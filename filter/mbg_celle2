@@ -1,0 +1,3 @@
+{
+ "createVehicleLocal": "!\\\"createvehiclelocal getpos _house;\\\""
+}

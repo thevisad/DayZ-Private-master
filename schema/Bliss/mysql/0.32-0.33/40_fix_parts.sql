@@ -1,0 +1,3 @@
+update instance_vehicle iv join world_vehicle wv on iv.world_vehicle_id = wv.id join vehicle v on wv.vehicle_id = v.id set iv.parts = '[]' where v.parts = '[["motor",0.8],["karoserie",1],["palivo",0.8],["elektronika",0.8],["mala vrtule",0.8],["velka vrtule",0.8],["sklo predni P",1],["sklo predni L",1],["glass1",1],["glass3",1]]';
+
+update vehicle set parts = 'motor,karoserie,palivo,elektronika,mala vrtule,velka vrtule,sklo predni P,sklo predni L,glass1,glass3' where parts = '[["motor",0.8],["karoserie",1],["palivo",0.8],["elektronika",0.8],["mala vrtule",0.8],["velka vrtule",0.8],["sklo predni P",1],["sklo predni L",1],["glass1",1],["glass3",1]]';
