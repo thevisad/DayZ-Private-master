@@ -41,7 +41,7 @@ Installation
 6. Ensure that the database information in **Config**\\HiveExt.ini match the database details you used in the previous step.  
 7. If you would like to customize the server time, change the pertinent options in **Config**\\HiveExt.ini.  
 8. Adjust server name/passwords as desired in **Config**\\config_deadbeef.cfg, where `deadbeef` is some random value generated specifically for your installation.  
-9. If you would like to customize the starting loadout, it is highly recommended that you use the Reality Inventory manager located here <ahref = "http://opendayz.net/index.php?threads/reality-dayz-inventory-manager-c.6835/" target = _blank >Reality Inventory manager</a>You may also run `perl db_utility.pl loadout <inventory> <backpack>`, replacing `<inventory>` with a valid inventory string and `<backpack>` with a valid backpack string. Some examples:  
+9. If you would like to customize the starting loadout, it is highly recommended that you use the Reality Inventory manager located here http://opendayz.net/index.php?threads/reality-dayz-inventory-manager-c.6835/  You may also run `perl db_utility.pl loadout <inventory> <backpack>`, replacing `<inventory>` with a valid inventory string and `<backpack>` with a valid backpack string. Some examples:  
 <table>
   <tr>
     <td>Description</td><td>Inventory</td><td>Backpack</td>
