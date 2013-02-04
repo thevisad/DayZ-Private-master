@@ -4,6 +4,12 @@ DayZ Reality Private Server
 This is a private server project for DayZ which would not be possible without the work of Rocket and Guru Abdul.   
 **NOTE**: No support is implied or offered for pirated copies of ArmA 2.
 
+Users Migrating from Bliss
+==========================
+Users migrating from Bliss to Reality using an existing database will need to run the following against the database. 
+db_migrate.pl --host 192.168.12.175 --user redbone --pass hound --name takistan --port 3306 --schema RealityMigrate --version 0.01
+
+
 Prerequisites
 =============
 
