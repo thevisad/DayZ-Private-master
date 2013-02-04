@@ -7,6 +7,7 @@ This is a private server project for DayZ which would not be possible without th
 Users Migrating from Bliss
 ==========================
 Users migrating from Bliss to Reality using an existing database will need to run the following against the database. 
+
 db_migrate.pl --host 192.168.12.175 --user redbone --pass hound --name takistan --port 3306 --schema RealityMigrate --version 0.01
 
 
