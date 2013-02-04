@@ -108,14 +108,16 @@ if (-d $src && !-d $conf_dir) {
 	replace_text("s/template\\s=\\sdayz_[0-9]+.[a-z]+/template = $profile/", "$conf_dir/config.cfg");
 
 	my $mods = {
-		'lingor'    => '@dayzlingor',
-		'takistan'  => '@dayztakistan',
-		'fallujah'  => '@dayzfallujah',
-		'zargabad'  => '@dayzzargabad',
-		'panthera2' => '@dayzpanthera',
-		'namalsk'   => '@dayz;@dayz_namalsk',
-		'mbg_celle2'=> '@dayz_celle;@mbg_celle',
-		'tavi'      => '@taviana'
+		'skaro.lingor'=> '@dayzlingorskaro',
+		'lingor'      => '@dayzlingor',
+		'takistan'    => '@dayztakistan',
+		'fallujah'    => '@dayzfallujah',
+		'zargabad'    => '@dayzzargabad',
+		'panthera2'   => '@dayzpanthera',
+		'namalsk'     => '@dayz;@dayz_namalsk',
+		'mbg_celle2'  => '@dayz_celle;@mbg_celle',
+
+		'tavi'        => '@taviana'
 	};
 	my $mod = ((defined $mods->{$args{'world'}}) ? "$mods->{$args{'world'}}" : '@dayz') . ";\@reality_$args{'instance'}.$args{'world'}";
 
@@ -124,7 +126,7 @@ if (-d $src && !-d $conf_dir) {
 
 	$ini = Config::IniFiles->new(-file => $dst_ini);
 	my $profile_sect = $profile;
-	$profile_sect =~ s/\./_/;
+	$profile_sect =~ s/\./_/g;
 	if (!$ini->SectionExists($profile_sect)) {
 		$ini->AddSection($profile_sect);
 		$ini->newval($profile_sect, 'name', 'Reality');
@@ -172,7 +174,7 @@ if (-d "$wld_dir/$args{'world'}") {
 my @pkgs = ();
 my @msn_pkgs = ();
 while (my $option = shift(@ARGV)) {
-	next unless ($option =~ m/with-([-\w]+)/);
+	next unless ($option =~ m/with-([.-\w]+)/);
 
 	my $pkg_dir = "$base_dir/pkg/$1";
 	if (!-d $pkg_dir) {
@@ -325,11 +327,13 @@ sub merge_packages {
 					$replay_pkg = $replay_pkg_tmp;
 				}
 				
+
 				complex_merge($replay_pkg, $src, $tmp);
 			}
 			$src = $tmp;
 		}
 	
+
 		File::DirCompare->compare($src, $dst, sub {
 			my ($srcPath, $dstPath) = @_;
 
