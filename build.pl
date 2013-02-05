@@ -116,7 +116,6 @@ if (-d $src && !-d $conf_dir) {
 		'panthera2'   => '@dayzpanthera',
 		'namalsk'     => '@dayz;@dayz_namalsk',
 		'mbg_celle2'  => '@dayz_celle;@mbg_celle',
-
 		'tavi'        => '@taviana'
 	};
 	my $mod = ((defined $mods->{$args{'world'}}) ? "$mods->{$args{'world'}}" : '@dayz') . ";\@reality_$args{'instance'}.$args{'world'}";

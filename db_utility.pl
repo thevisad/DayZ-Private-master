@@ -35,6 +35,8 @@ if ($args{'help'}) {
 	print "usage: db_utility.pl <command> [arguments] [--instance <id>] [--host <hostname>] [--user <username>] [--pass <password>] [--name <database-name>] [--port <port>]\n";
 	print "command is one of:\n";
 	print "  setworld <world_name>          - set the world for an instance\n";
+	print "  addworld <world_name>          - add an instance for a world\n";
+	print "  deleteinstance <instance_id>          - delete an instance for a world\n";
 	print "  itemdistr                      - look at all live player inventories and show counts of each item in descending order\n";
 	print "  cleanitem <classname>          - remove comma-separated list of classnames from all survivor inventories\n";
 	print "  cleandead <days>               - delete dead survivors who were last updated more than <days> days ago\n";
@@ -227,6 +229,27 @@ EndSQL
 	defined $world or die "FATAL: Invalid arguments\n";
 	$dbh->do("update instance set world_id = (select id from world where name = ?) where id = ?", undef, ($world, $db{'instance'}));
 	print "INFO: Set world to $world for instance $db{'instance'}\n";
+
+} elsif ($cmd eq 'addworld') {
+	my $world = shift(@ARGV);
+	defined $world or die "FATAL: Invalid arguments\n";
+	my $instancetemp = $dbh->prepare('SELECT instance.id FROM instance ORDER BY instance.id DESC limit 1;');
+	$instancetemp->execute();
+	my $result = $instancetemp->fetchrow_array();
+	my $result1 = $result + 1;
+	$dbh->do("INSERT INTO instance (id, world_id, inventory, backpack ) 
+	values ( ? , (select id from world where name = ?), \"[[],['ItemPainkiller','ItemBandage']]\", \"['DZ_Patrol_Pack_EP1',[[],[]],[[],[]]]\");" , undef, ($result1 , $world));
+	print "INFO: Added instance $result1 for world $world.\n";
+
+} elsif ($cmd eq 'deleteinstance') {
+	my $instance = shift(@ARGV);
+	defined $instance or die "FATAL: Invalid arguments\n";
+	$dbh->do("delete from instance_vehicle where instance_id = ?", undef, ($instance));
+	$dbh->do("delete from instance_building where instance_id = ?", undef, ($instance));
+	$dbh->do("delete from instance_deployable where instance_id = ?", undef, ($instance));
+	$dbh->do("delete from message where instance_id = ?", undef, ($instance));
+	$dbh->do("delete from instance where id = ?", undef, ( $instance));
+	print "INFO: Deleted instance $instance and all relevent data.\n";
 
 } else {
 	die "FATAL: Unrecognized command.\n";
