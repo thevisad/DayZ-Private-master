@@ -76,7 +76,7 @@ Installation
     <td>Lingor Island</td><td>lingor</td><td>@dayzlingor</td><td>1.2</td><td>ftp://dayzcommander:dayzcommander@94.242.227.3/DayZLingor-1.2.rar</td>
   </tr>
   <tr>
-    <td>Lingor Island (Skaronator.com)</td><td>lingor-skaro</td><td>@dayzlingor</td><td>1.2</td><td>http://dl.skaronator.com/DayZLingor%20by%20Skaronator.com%20-%20Version%202.0.zip</td>
+    <td>Lingor Island (Skaronator.com)</td><td>lingor-skaro</td><td>@dayzlingorskaro</td><td>2.0</td><td>http://dl.skaronator.com/DayZLingorSkaro-2.0.rar</td>
   </tr>
   <tr>
     <td>Takistan</td><td>takistan</td><td>@dayztakistan</td><td>1.6</td><td>ftp://dayzcommander:dayzcommander@94.242.227.3/DayZTakistan-1.6.rar</td>
