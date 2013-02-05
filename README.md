@@ -35,7 +35,7 @@ Installation
 3. Copy all files from **Repository**\\deploy into **ArmA2**\\  
 4. For this step, you will need to use one of several MySQL administrative utilities to execute some SQL queries. These utilities include the MySQL Command Line Interface (which is bundled with the MySQL Server install for Windows) and various free and commercial GUI utilities. We recommend HeidiSQL if you want a graphical interface (http://www.heidisql.com/). Once you have connected to your database as the **root** user (you set the password for this user when you installed MySQL Server), execute the following SQL queries (be **sure** to change the password in the second query from CHANGEME):  
 
-		create database dayz;
+  	create database dayz;
 		create user 'dayz'@'localhost' identified by 'CHANGEME';
 		grant all privileges on dayz.* to 'dayz'@'localhost';
 
