@@ -273,4 +273,7 @@ Each of these packages is a part of Reality and makes what we do possible.
 
 Support
 =======
+Please use our Teamspeak 3 server for support. You may also post a request in the forums here http://opendayz.net/index.php?forums/support.100/
+
+Teamspeak server: teamspeak.hngamers.com
 
