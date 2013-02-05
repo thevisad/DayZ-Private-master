@@ -1,6 +1,6 @@
 #!/usr/bin/perl -w
 # Reality package manager
-# by ayan4m1
+# forked from Bliss by ayan4m1, updated by Thevisad
 
 use Getopt::Long qw(:config pass_through);
 

@@ -144,7 +144,7 @@ Optional Features
 
 When running `build.pl`, you may specify additional options to merge in optional features. To get a list of optional features, run `perl build.pl --list`.
 
-To install new optional features, use the `package_manager.pl` script. Run `perl package_manager.pl install <package-name>`, replacing `<package-name>` with the name of a package. You may browse packages at http://www.realityrepo.com. 
+To install new optional features, use the `package_manager.pl` script. Run `perl package_manager.pl install <package-name>`, replacing `<package-name>` with the name of a package. 
 
 A list of Reality-supported packages follows.
 

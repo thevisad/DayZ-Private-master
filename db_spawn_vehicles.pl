@@ -1,6 +1,6 @@
 #!/usr/bin/perl -w
 # Reality vehicle spawn script
-# by ayan4m1
+# forked from Bliss by ayan4m1, updated by Thevisad
 
 use warnings;
 

@@ -1,6 +1,6 @@
 #!/usr/bin/perl -w
 # Reality build utility 
-# by ayan4m1
+# forked from Bliss by ayan4m1, updated by Thevisad
 
 use Config::IniFiles;
 use Getopt::Long qw(:config pass_through);
