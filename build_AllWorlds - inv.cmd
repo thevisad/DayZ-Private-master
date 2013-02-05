@@ -5,7 +5,7 @@ perl build.pl --world fallujah --with-invcust
 
 perl build.pl --world lingor --with-invcust 
 
-perl build.pl --world lingor-skaro --with-invcust 
+perl build.pl --world skaro.lingor --with-invcust 
 
 perl build.pl --world mbg_celle2 --with-invcust 
 
