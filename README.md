@@ -106,6 +106,18 @@ Installation
 11. If you are using a world other than Chernarus, run `perl db_utility.pl setworld <world_name>`, where `<world_name>` is the name of the world you specified when running `build.pl`.
 12. Run **ArmA2**\\Restarter.exe to start the server.  
 
+
+Adding/Removing Instances
+=========================
+To add an instance run the db_utility with the following commands
+
+This will add an instance for chernarus to the dayz database. It looks at the last instance number and increments it by one. 
+- perl db_utility.pl addworld chernarus --host 127.0.0.1 --user changeme --pass changeme --name dayz --port 3306
+
+This will delete an instance number that you specify from the database, it will also delete all relevant data from the instance_vehicle, instance_deployable and instance_building.
+perl db_utility.pl deleteinstance 3 --host 127.0.0.1 --user changeme --pass changeme --name tavi --port 3306
+
+
 Upgrading
 =========
 
