@@ -5,8 +5,8 @@ dayZ_instance = 1;	//The instance
 hiveInUse	=	true;
 initialized = false;
 dayz_previousID = 0;
-setViewDistance 2000;
-setTerrainGrid 20;
+setViewDistance 2500;
+//setTerrainGrid 20; //Use Update_Script.pl befor you enable this!
 
 call compile preprocessFileLineNumbers "\z\addons\dayz_code\init\variables.sqf"; //Initilize the Variables (IMPORTANT: Must happen very early)
 progressLoadingScreen 0.1;

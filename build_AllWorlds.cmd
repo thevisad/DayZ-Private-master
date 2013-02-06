@@ -2,7 +2,8 @@ perl build.pl --clean
 perl build.pl --world chernarus --with-killmsgs --with-wrecks --with-invcust --with-carepkgs 
 perl build.pl --world fallujah --with-killmsgs --with-wrecks --with-invcust --with-carepkgs 
 perl build.pl --world lingor --with-killmsgs --with-wrecks --with-invcust --with-carepkgs 
-perl build.pl --world lingor-skaro --with-killmsgs --with-wrecks --with-invcust --with-carepkgs 
+perl build.pl --world skaro.lingor --with-killmsgs --with-wrecks --with-invcust --with-carepkgs 
+perl update_scripts.pl deploy\dayz_1.skaro.lingor\BattlEye --with-skaro.lingor
 perl build.pl --world mbg_celle2 --with-killmsgs --with-wrecks --with-invcust --with-carepkgs 
 perl build.pl --world namalsk --with-wrecks --with-invcust --with-carepkgs 
 perl build.pl --world panthera2 --with-killmsgs --with-wrecks --with-invcust --with-carepkgs 
