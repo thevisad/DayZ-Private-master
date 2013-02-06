@@ -62,8 +62,8 @@ if not exist mysql.txt goto errsqlsetup
 cls
 echo Please give the world you want to add.
 echo.
-echo chernarus - skaro.lingor - lingor - takistan - fallujah
-echo zargabad - panthera2 - namalsk - mbg_celle2 - tavi
+echo chernarus - skaro.lingor - utes
+echo thirsk - thirsk winter
 echo.
 Set worldins=
 set /p worldins=: 
@@ -87,8 +87,8 @@ echo Make sure you have the requirements given in the readme before trying this.
 echo.
 echo Which world are you going to be using?
 echo.
-echo chernarus - skaro.lingor - lingor - takistan - fallujah
-echo zargabad - panthera2 - namalsk - mbg_celle2 - tavi
+echo chernarus - skaro.lingor - utes
+echo thirsk - thirsk winter
 echo.
 Set worldbuild=
 set /p worldbuild=: 
@@ -218,16 +218,14 @@ echo 1 - Reality main (required)
 echo 2 - RealityBuildings
 echo 3 - RealityMessaging
 echo 4 - RealityInvCust
-echo 5 - Namalsk
-echo 6 - Taviana.com
-echo 7 - Thirsk
-echo 8 - Thirsk Winter
-echo 9 - Lingor
-echo 10 - Back to menu
+echo 5 - Thirsk
+echo 6 - Thirsk Winter
+echo 7 - Lingor (Skaro)
+echo 8 - Back to menu
 echo.
 Set scheme=:
 set /p scheme=: 
-if %scheme%==10 goto menu
+if %scheme%==8 goto menu
 goto schemaspecs
 
 :schemaspecs
@@ -236,11 +234,9 @@ if %scheme%==1 db_migrate.pl --host %hostdb% --user %hostun% --pass %hostpw% --n
 if %scheme%==2 db_migrate.pl --host %hostdb% --user %hostun% --pass %hostpw% --name %hostnm% --port %hostport% --schema RealityBuildings --version 0.01
 if %scheme%==3 db_migrate.pl --host %hostdb% --user %hostun% --pass %hostpw% --name %hostnm% --port %hostport% --schema RealityMessaging --version 0.01
 if %scheme%==4 db_migrate.pl --host %hostdb% --user %hostun% --pass %hostpw% --name %hostnm% --port %hostport% --schema RealityInvCust --version 0.01
-if %scheme%==5 db_migrate.pl --host %hostdb% --user %hostun% --pass %hostpw% --name %hostnm% --port %hostport% --schema RealityNamalsk --version 0.01
-if %scheme%==6 db_migrate.pl --host %hostdb% --user %hostun% --pass %hostpw% --name %hostnm% --port %hostport% --schema RealityTaviCom --version 0.01
-if %scheme%==7 db_migrate.pl --host %hostdb% --user %hostun% --pass %hostpw% --name %hostnm% --port %hostport% --schema RealityThirsk --version 0.01
-if %scheme%==8 db_migrate.pl --host %hostdb% --user %hostun% --pass %hostpw% --name %hostnm% --port %hostport% --schema RealityThirskWinter --version 0.01
-if %scheme%==9 db_migrate.pl --host %hostdb% --user %hostun% --pass %hostpw% --name %hostnm% --port %hostport% --schema RealityLingorSkaro --version 0.01
+if %scheme%==5 db_migrate.pl --host %hostdb% --user %hostun% --pass %hostpw% --name %hostnm% --port %hostport% --schema RealityThirsk --version 0.01
+if %scheme%==6 db_migrate.pl --host %hostdb% --user %hostun% --pass %hostpw% --name %hostnm% --port %hostport% --schema RealityThirskWinter --version 0.01
+if %scheme%==7 db_migrate.pl --host %hostdb% --user %hostun% --pass %hostpw% --name %hostnm% --port %hostport% --schema RealityLingorSkaro --version 0.01
 pause
 goto schemaspec
 
