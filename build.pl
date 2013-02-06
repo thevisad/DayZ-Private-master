@@ -176,12 +176,12 @@ while (my $option = shift(@ARGV)) {
 	next unless ($option =~ m/with-([-\w]+)/);
 
 	my $pkg_dir = "$base_dir/pkg/$1";
-	if (!-d $pkg_dir) {
-		print "ERROR: Package dir $pkg_dir does not exist\n";
+	if (!-d $pkg_dir && !-d "$msn_dir/$1") {
+		print "ERROR: Package $1 does not exist\n";
 		next;
 	}
 
-	push(@pkgs, $pkg_dir);
+	push(@pkgs, $pkg_dir) if (-d $pkg_dir);
 	push(@msn_pkgs, "$msn_dir/$1") if (-d "$msn_dir/$1");
 }
 
