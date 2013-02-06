@@ -1,7 +1,7 @@
 DayZ Reality Private Server
 =========================
 
-This is a private server project for DayZ which would not be possible without the work of Rocket and Guru Abdul.   
+This is a private server project for DayZ which would not be possible without the work of Rocket, Guru Abdul and ayan4m1.   
 **NOTE**: No support is implied or offered for pirated copies of ArmA 2.
 
 Users Migrating from Bliss
@@ -82,7 +82,7 @@ Installation
     <td>Takistan</td><td>takistan</td><td>@dayztakistan</td><td>1.6</td><td>ftp://dayzcommander:dayzcommander@94.242.227.3/DayZTakistan-1.6.rar</td>
   </tr>
   <tr>
-    <td>Utes</td><td>utes</td><td>@dayz</td><td>1.7.4.4</td><td>http://dayzmod.com/?Download</td>
+    <td>Utes</td><td>utes</td><td>@dayz</td><td>1.7.5.1</td><td>http://dayzmod.com/?Download</td>
   </tr>
   <tr>
     <td>Panthera</td><td>panthera2</th><td>@dayzpanthera</td><td>1.7</td><td>ftp://dayzcommander:dayzcommander@94.242.227.3/DayZPanthera-1.7.rar</td>
@@ -275,5 +275,5 @@ Support
 =======
 Please use our Teamspeak 3 server for support. You may also post a request in the forums here http://opendayz.net/index.php?forums/support.100/
 
-Teamspeak server: teamspeak.hngamers.com
+Teamspeak server: [teamspeak.hngamers.com](http://www.teamspeak.com/invite/teamspeak.hngamers.com)
 
