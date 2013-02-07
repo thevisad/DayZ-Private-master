@@ -36,6 +36,39 @@ Installation
 
 **NOTE**: The importance of following each of these steps correctly and in order cannot be understated. 
 
+Automatic installation
+======================
+
+1. Run 'control_panel.cmd'. Here, the UI will guide you through everything and you won't have to enter commands yourself. If you are not the best at typing commands, this might be a better option for you, though it may limit you in the possibilities.
+2. Begin by doing 'Set up Perl'.
+3. After that, do 'Build'. Here you actually set-up the build files for your server. You'll find them in the 'deploy' folder after finishing.
+4. Copy all files from **Repository**\\deploy into **ArmA2**\\
+5. Make sure you also have the required client files in the **ArmA2**\\ directory. Check below for a table with download links.
+5. Now, you will need a database to be set up. The application cannot do this for you, you'll need an utility that let's you do this. You can use graphical interfaces such as HeidiSQL (http://www.heidisql.com) for this. Make sure all rights are granted to the user.
+6. Go to the 'Set up MySQL details' page in the application now. Here you can fill in the details of your database, and the application will remember them for you.
+7. Now choose 'Database Migration' And put the things you want into your database. Note that Reality main is required, and any packages you installed during build, you'll also need to put them in the database. (e.g, if you ran the builder with buildings, you'll need RealityBuildings in your database)
+8. Make sure that the database information in **Config**\\HiveExt.ini is matching the details you used in the previous steps.
+9. If you'd like to change server time/date, change the options in **Config**\\HiveExt.ini
+10. Adjust any server settings (name, password etc) in **Config**\\config.cfg
+11. If you would like to customize the starting loadout, it is highly recommended that you use the Reality Inventory manager located here http://opendayz.net/index.php?threads/reality-dayz-inventory-manager-c.6835/  You may also run `perl db_utility.pl loadout <inventory> <backpack>`, replacing `<inventory>` with a valid inventory string and `<backpack>` with a valid backpack string. Some examples:  
+<table>
+  <tr>
+    <td>Description</td><td>Inventory</td><td>Backpack</td>
+  </tr>
+  <tr>
+    <td>Default</td><td>[]</td><td>["DZ_Patrol_Pack_EP1",[[],[]],[[],[]]]</td>
+  </tr>
+  <tr>
+    <td>Survival</td><td>[["ItemMap","ItemCompass","ItemMatchbox","FoodCanBakedBeans","ItemKnife","FoodCanBakedBeans"],["ItemTent","ItemBandage","ItemBandage"]]</td><td>["DZ_Patrol_Pack_EP1",[[],[]],[[],[]]]</td>
+  </tr>
+  <tr>
+    <td>PvP</td><td>[["Mk_48_DZ","NVGoggles","Binocular_Vector","M9SD","ItemGPS","ItemToolbox","ItemCompass","FoodCanBakedBeans","ItemMap","ItemWatch"],[["100Rnd_762x51_M240",47],"ItemPainkiller","ItemBandage","15Rnd_9x19_M9SD","100Rnd_762x51_M240","ItemBandage","ItemBandage","15Rnd_9x19_M9SD","15Rnd_9x19_M9SD","15Rnd_9x19_M9SD","ItemMorphine"]]</td><td>["DZ_Backpack_EP1",[[],[]],[[],[]]]</td>
+  </tr>
+</table>
+
+Manual installation
+===================
+
 1. Run `setup_perl.bat`. If you are prompted to provide a schema path, press enter to continue. If you are prompted Yes/No to run tests, type "n" and press Enter.  
 2. Run `perl build.pl --world <world> --instance <id>` in **Repository**, replacing `<world>` with a valid world name and `<id>` with an integer representing the instance ID. If you only run one server, you may omit the `--instance` parameter from the command. If --world is omitted, the default is Chernarus. Use `perl build.pl --list` to get a list of available worlds and optional packages and run `perl build.pl --help` for additional information on how to use build.pl.  
 3. Copy all files from **Repository**\\deploy into **ArmA2**\\  
@@ -48,7 +81,7 @@ Installation
 5. Run `perl db_migrate.pl --password CHANGEME` from the **Repository** directory. Replace `CHANGEME` with the password you chose in the previous step. Use the `--help` flag to get more information on how to set the hostname, username, or database name to suit your needs.  
 6. Ensure that the database information in **Config**\\HiveExt.ini match the database details you used in the previous step.  
 7. If you would like to customize the server time, change the pertinent options in **Config**\\HiveExt.ini.  
-8. Adjust server name/passwords as desired in **Config**\\config_deadbeef.cfg, where `deadbeef` is some random value generated specifically for your installation.  
+8. Adjust server name/passwords as desired in **Config**\\config.cfg.  
 9. If you would like to customize the starting loadout, it is highly recommended that you use the Reality Inventory manager located here http://opendayz.net/index.php?threads/reality-dayz-inventory-manager-c.6835/  You may also run `perl db_utility.pl loadout <inventory> <backpack>`, replacing `<inventory>` with a valid inventory string and `<backpack>` with a valid backpack string. Some examples:  
 <table>
   <tr>
