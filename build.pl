@@ -17,6 +17,7 @@ use Text::Patch;
 use Digest::SHA qw(sha1_hex);
 use Time::HiRes qw(time);
 use List::Util qw(max min);
+use JSON;
 
 our %args;
 GetOptions(
@@ -42,6 +43,7 @@ our $bls_dir  = "$base_dir/pkg/reality";
 our $msn_dir  = "$base_dir/mission";
 our $src_dir  = "$base_dir/util/dayz_server";
 our $dst_dir  = "$base_dir/deploy";
+our $flt_dir  = "$base_dir/filter";
 
 our $build_dir     = "$tmp_dir/dayz_server";
 our $msn_build_dir = "$tmp_dir/mission_tmp";
@@ -172,17 +174,76 @@ if (-d "$wld_dir/$args{'world'}") {
 # For each --with-<package> option, attempt to merge in its changes
 my @pkgs = ();
 my @msn_pkgs = ();
+my @flt_lookups = ();
 while (my $option = shift(@ARGV)) {
 	next unless ($option =~ m/with-([-\w]+)/);
 
 	my $pkg_dir = "$base_dir/pkg/$1";
-	if (!-d $pkg_dir && !-d "$msn_dir/$1") {
+	if (!-d $pkg_dir && !-d "$msn_dir/$1" && !-f "$flt_dir/$1") {
 		print "ERROR: Package $1 does not exist\n";
 		next;
 	}
 
 	push(@pkgs, $pkg_dir) if (-d $pkg_dir);
 	push(@msn_pkgs, "$msn_dir/$1") if (-d "$msn_dir/$1");
+	
+	# Check if there are BattlEye filter exceptions for the package
+	next unless (-f "$flt_dir/$1");
+	my $json = read_file("$flt_dir/$1");
+	my $json_data = decode_json($json);
+	push(@flt_lookups, $json_data);
+}
+
+# Check if there are BattlEye filter exceptions for the world
+if(-f "$flt_dir/$args{'world'}") {
+	my $json = read_file("$flt_dir/$args{'world'}");
+	my $json_data = decode_json($json);
+	push(@flt_lookups, $json_data);
+}
+
+my @scripts = (
+	"scripts.txt",
+	"remoteexec.txt",
+	"createvehicle.txt",
+	"publicvariable.txt",
+	"publicvariableval.txt",
+	"publicvariablevar.txt",
+	"setpos.txt",
+	"mpeventhandler.txt",
+	"setdamage.txt",
+	"addmagazinecargo.txt",
+	"addweaponcargo.txt",
+	"deleteVehicle.txt",
+	"teamswitch.txt",
+	"addbackpackcargo.txt",
+	"setvariable.txt",
+	"setvariableval.txt",
+	"attachto.txt",
+	"remotecontrol.txt",
+	"selectplayer.txt"
+);
+
+#TODO: optionally download the latest battleye filters from dayz-community-banlist?
+
+if(scalar (@flt_lookups)) {
+	print "INFO: Merging BattlEye filter exceptions\n";
+	foreach my $script (@scripts) {
+		#Make sure the exceptions are only added once when you run the same build.pl command several times
+		#copy_dir("$src/BattlEye/$script","$conf_dir/BattlEye");
+		my $cmd = (($^O =~ m/MSWin32/) ? 'xcopy /q /y' : 'cp');
+		my $path = "\"$src/BattlEye/$script\" \"$conf_dir/BattlEye/\"";
+		$path =~ s/\//\\/g if ($^O =~ m/MSWin32/);
+		system("$cmd $path");
+		
+		foreach my $filter (@flt_lookups) {
+			while (($pattern, $exception) = each %{$filter}) {
+				my $regex = "s/([0-9]{1})\\s$pattern\\s(.*)([\\\/]{2}.*)*/" . (($exception) ? "\\1 $pattern \\2 $exception\n/g" : "/g");
+				replace_text($regex, "$conf_dir/BattlEye/$script");
+			}
+		}
+		replace_text("s#^//((?!new).*)\\\$##sg", "$conf_dir/BattlEye/$script");
+		replace_text("s/^\\n\$//", "$conf_dir/BattlEye/$script");
+	}
 }
 
 # Create the dayz_server PBO
@@ -377,6 +438,7 @@ sub pack_pbo {
 	die "FATAL: PBO directory $dir does not exist\n" unless (-d $dir);
 
 	my $cmd = (($^O =~ m/MSWin32/) ? '' : 'wine ') . 'util/cpbo.exe -y -p';
+	#system("$cmd \"$dir\" \"$pbo\" > " . (($^O =~ m/MSWin32/) ? 'NUL' : '/dev/null')); # This line was in the last commit from ayan4m1, but it does not seem to work properly on windows
 	system("$cmd \"$dir\" \"$pbo\"");
 }
 
