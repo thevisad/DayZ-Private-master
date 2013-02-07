@@ -237,7 +237,7 @@ echo 3 - RealityMessaging
 echo 4 - RealityInvCust
 echo 5 - Thirsk
 echo 6 - Thirsk Winter
-echo 7 - Lingor (Skaro)
+echo 7 - Lingor (Skaronator.com)
 echo 8 - Back to menu
 echo.
 Set scheme=:
