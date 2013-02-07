@@ -43,7 +43,8 @@ echo 4 - Set up Perl
 echo 5 - Set up MySQL details
 echo 6 - Migrate from Bliss
 echo 7 - Add instance to DB
-echo 8 - Exit
+echo 8 - Delete instance from DB
+echo 9 - Exit
 echo.
 Set menuoption=
 set /p menuoption=: 
@@ -54,7 +55,8 @@ if %menuoption%==4 goto perl
 if %menuoption%==5 goto sqlsetup
 if %menuoption%==6 goto mibliss
 if %menuoption%==7 goto instdb
-if %menuoption%==8 exit
+if %menuoption%==8 goto deldb
+if %menuoption%==9 exit
 goto menu
 
 :instdb
@@ -70,6 +72,21 @@ set /p worldins=:
 cls
 echo Adding instance...
 db_utility.pl addworld %worldins% --host %hostdb% --user %hostun% --pass %hostpw% --name %hostnm% --port %hostport%
+pause
+goto menu
+
+:deldb
+if not exist mysql.txt goto errsqlsetup
+cls
+echo Please give the instance you want to delete.
+echo.
+echo 1 - ??
+echo.
+Set instance=
+set /p instance=: 
+cls
+echo Deleting instance...
+db_utility.pl deleteinstance %instance% --host %hostdb% --user %hostun% --pass %hostpw% --name %hostnm% --port %hostport%
 pause
 goto menu
 
@@ -230,7 +247,7 @@ goto schemaspecs
 
 :schemaspecs
 cls
-if %scheme%==1 db_migrate.pl --host %hostdb% --user %hostun% --pass %hostpw% --name %hostnm% --port %hostport% --version 0.36
+if %scheme%==1 db_migrate.pl --host %hostdb% --user %hostun% --pass %hostpw% --name %hostnm% --port %hostport%
 if %scheme%==2 db_migrate.pl --host %hostdb% --user %hostun% --pass %hostpw% --name %hostnm% --port %hostport% --schema RealityBuildings --version 0.01
 if %scheme%==3 db_migrate.pl --host %hostdb% --user %hostun% --pass %hostpw% --name %hostnm% --port %hostport% --schema RealityMessaging --version 0.01
 if %scheme%==4 db_migrate.pl --host %hostdb% --user %hostun% --pass %hostpw% --name %hostnm% --port %hostport% --schema RealityInvCust --version 0.01
