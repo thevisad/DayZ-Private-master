@@ -71,7 +71,7 @@ Set worldins=
 set /p worldins=: 
 cls
 echo Adding instance...
-db_utility.pl addworld %worldins% --host %hostdb% --user %hostun% --pass %hostpw% --name %hostnm% --port %hostport%
+db_utility.pl addinstance %worldins% --host %hostdb% --user %hostun% --pass %hostpw% --name %hostnm% --port %hostport%
 pause
 goto menu
 
