@@ -5,10 +5,12 @@ _object = 		_this select 1;
 _worldspace = 	_this select 2;
 _class = 		_this select 3;
 
-
 if (!(_object isKindOf "Building")) exitWith {
 	deleteVehicle _object;
 };
+_allowed = [_object, "Server"] call check_publishobject;
+if (!_allowed) exitWith { };
+
 
 //diag_log ("PUBLISH: Attempt " + str(_object));
 
@@ -21,6 +23,10 @@ _key = format["CHILD:308:%1:%2:%3:%4:%5:%6:%7:%8:%9:",dayZ_instance, _class, 0 ,
 _key call server_hiveWrite;
 
 _object setVariable ["ObjectUID", _uid,true];
+
+if (_object isKindOf "TentStorage") then {
+	_object addMPEventHandler ["MPKilled",{_this call vehicle_handleServerKilled;}];
+};
 
 dayz_serverObjectMonitor set [count dayz_serverObjectMonitor,_object];
 

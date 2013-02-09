@@ -7,6 +7,6 @@ mission/tavi-com/mission.sqm
 mission/world/tavi/ignoreme
 pkg/tavi-com/compile/server_playerSync.sqf
 pkg/world/tavi/ignoreme
-schema/BlissTaviCom/mysql/0.01/40_world.sql
-schema/BlissTaviCom/mysql/0.01/41_world_vehicle.sql
+schema/RealityTaviCom/mysql/0.01/40_world.sql
+schema/RealityTaviCom/mysql/0.01/41_world_vehicle.sql
 util/deploy/Keys/DayZTaviana.bikey

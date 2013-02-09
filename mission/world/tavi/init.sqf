@@ -1,12 +1,23 @@
-startLoadingScreen ["","DayZ_loadingScreen"];
+/*	
+	INITILIZATION
+*/
+startLoadingScreen ["","RscDisplayLoadCustom"];
+cutText ["","BLACK OUT"];
 enableSaving [false, false];
 
-dayZ_instance = 1;	//The instance
-hiveInUse	=	true;
+//REALLY IMPORTANT VALUES
+dayZ_instance =	1;					//The instance
+dayzHiveRequest = [];
 initialized = false;
 dayz_previousID = 0;
 
-call compile preprocessFileLineNumbers "\z\addons\dayz_code\init\variables.sqf"; //Initilize the Variables (IMPORTANT: Must happen very early)
+//disable greeting menu 
+player setVariable ["BIS_noCoreConversations", true];
+//disable radio messages to be heard and shown in the left lower corner of the screen
+enableRadio false;
+
+//Load in compiled functions
+call compile preprocessFileLineNumbers "\z\addons\dayz_code\init\variables.sqf";				//Initilize the Variables (IMPORTANT: Must happen very early)
 
 // (Taviana) Override some of the variables:
 call compile preprocessFileLineNumbers "\kh\dayztaviana\init\variables.sqf";
@@ -25,22 +36,33 @@ call compile preprocessFileLineNumbers "\kh\dayztaviana\init\compiles.sqf"; //Co
 
 progressLoadingScreen 1.0;
 
-player setVariable ["BIS_noCoreConversations", true];
-enableRadio false;
-
 "filmic" setToneMappingParams [0.153, 0.357, 0.231, 0.1573, 0.011, 3.750, 6, 4]; setToneMapping "Filmic";
 
+if ((!isServer) && (isNull player) ) then
+{
+waitUntil {!isNull player};
+waitUntil {time > 3};
+};
+
+if ((!isServer) && (player != player)) then
+{
+  waitUntil {player == player};
+  waitUntil {time > 3};
+};
+
 if (isServer) then {
-	hiveInUse = true;
-	_serverMonitor = [] execVM "\z\addons\dayz_server\system\server_monitor.sqf";
+	_serverMonitor = 	[] execVM "\z\addons\dayz_code\system\server_monitor.sqf";
 };
 
 if (!isDedicated) then {
+	//Conduct map operations
 	0 fadeSound 0;
-	0 cutText [(localize "STR_AUTHENTICATING"), "BLACK FADED",60];
+	waitUntil {!isNil "dayz_loadScreenMsg"};
+	dayz_loadScreenMsg = (localize "STR_AUTHENTICATING");
+	
+	//Run the player monitor
 	_id = player addEventHandler ["Respawn", {_id = [] spawn player_death;}];
-	_playerMonitor = 	[] execVM "\z\addons\dayz_code\system\player_monitor.sqf";
-
+	_playerMonitor = 	[] execVM "\z\addons\dayz_code\system\player_monitor.sqf";	
 };
 
 // Extra actions for Taviana:

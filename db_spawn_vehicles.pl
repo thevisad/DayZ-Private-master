@@ -1,6 +1,6 @@
 #!/usr/bin/perl -w
-# Bliss vehicle spawn script
-# by ayan4m1
+# Reality vehicle spawn script
+# forked from Bliss by ayan4m1, updated by Thevisad
 
 use warnings;
 
@@ -55,7 +55,7 @@ print "INFO: Instance name dayz_$db{'instance'}.$world_name\n";
 
 my $cleanup = ($args{'cleanup'}) ? $args{'cleanup'} : 'none';
 
-if ($cleanup ne 'none') {
+if ($cleanup eq 'none') {
 	print "INFO: Cleaning up damaged vehicles\n";
 	my $sth = $dbh->prepare(<<EndSQL
 delete from

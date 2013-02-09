@@ -60,3 +60,16 @@
 5 "Fort_"
 5 "BasicWeapons"
 5 "SpecialWeapons"
+5 "_uav"
+//5 "AmmoBox" !="AmmoBoxSmall_556" !="AmmoBoxSmall_762"
+//5 "WeaponsBox"
+//5 "CacheBox"
+//!="DZ_Backpack_EP1" 
+//!="MedBox0" //filtered now
+//!="Sniper1_DZ" //filtered now
+//!="Camo1_DZ" //filtered now 
+//!="Soldier1_DZ" //filtered now 
+//!="TentStorage" 
+//!="DZ_Assault_Pack_EP1" //filtered now
+//!="BanditW1_DZ" //filtered now
+//!="WeaponHolder_ItemTent"

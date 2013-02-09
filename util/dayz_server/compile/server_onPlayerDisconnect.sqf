@@ -15,27 +15,21 @@ if (vehicle _object != _object) then {
 	_object action ["eject", vehicle _object];
 };
 
-if (59 in _playerIDtoarray) exitWith { 	diag_log ("Exited"); };
+if (59 in _playerIDtoarray) exitWith { };
 
 if ((_timeout - time) > 0) then {
-	//_playerName call player_combatLogged;
-	private["_playerName","_center","_group"];
-	_playerName = name player;
-	_timeout = _object getVariable["combattimeout",0];
-
 	diag_log format["COMBAT LOGGED: %1 (%2)", _playerName,_timeout];
 };
 
 diag_log format["DISCONNECT: %1 (%2) Object: %3, _characterID: %4", _playerName,_playerID,_object,_characterID];
-
+_id = [_playerID,_characterID,2] spawn dayz_recordLogin;
 dayz_disco = dayz_disco - [_playerID];
 if (!isNull _object) then {
 //Update Vehicle
 	{ [_x,"gear"] call server_updateObject } foreach 
 		(nearestObjects [getPosATL _object, ["Car", "Helicopter", "Motorcycle", "Ship", "TentStorage"], 10]);
 	if (alive _object) then {
-		[_object,[],true] call server_playerSync;
-		_id = [_playerID,_characterID,2] spawn dayz_recordLogin;
+		[_object,(magazines _object),true,(unitBackpack _object)] call server_playerSync;
 		_myGroup = group _object;
 		deleteVehicle _object;
 		deleteGroup _myGroup;

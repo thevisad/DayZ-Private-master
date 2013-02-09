@@ -1,6 +1,6 @@
 #!/usr/bin/perl -w
-# Bliss build utility 
-# by ayan4m1
+# Reality build utility 
+# forked from Bliss by ayan4m1, updated by Thevisad
 
 use Config::IniFiles;
 use Getopt::Long qw(:config pass_through);
@@ -17,6 +17,7 @@ use Text::Patch;
 use Digest::SHA qw(sha1_hex);
 use Time::HiRes qw(time);
 use List::Util qw(max min);
+use JSON;
 
 our %args;
 GetOptions(
@@ -38,10 +39,11 @@ $args{'instance'} = '1' unless $args{'instance'};
 our $base_dir = dirname(__FILE__);
 our $tmp_dir  = "$base_dir/tmp";
 our $wld_dir  = "$base_dir/pkg/world";
-our $bls_dir  = "$base_dir/pkg/bliss";
+our $bls_dir  = "$base_dir/pkg/reality";
 our $msn_dir  = "$base_dir/mission";
 our $src_dir  = "$base_dir/util/dayz_server";
 our $dst_dir  = "$base_dir/deploy";
+our $flt_dir  = "$base_dir/filter";
 
 our $build_dir     = "$tmp_dir/dayz_server";
 our $msn_build_dir = "$tmp_dir/mission_tmp";
@@ -75,7 +77,7 @@ if ($args{'help'}) {
 
 	print "Available options:\n";
 	foreach my $pkg (@pkgs) {
-		print "    --with-$pkg\n" unless ($pkg =~ m/(^\.|world|bliss)/);
+		print "    --with-$pkg\n" unless ($pkg =~ m/(^\.|world|reality)/);
 	}
 	exit;
 } elsif ($args{'clean'}) {
@@ -108,28 +110,29 @@ if (-d $src && !-d $conf_dir) {
 	replace_text("s/template\\s=\\sdayz_[0-9]+.[a-z]+/template = $profile/", "$conf_dir/config.cfg");
 
 	my $mods = {
-		'lingor'    => '@dayzlingor',
-		'takistan'  => '@dayztakistan',
-		'fallujah'  => '@dayzfallujah',
-		'zargabad'  => '@dayzzargabad',
-		'panthera2' => '@dayzpanthera',
-		'namalsk'   => '@dayz;@dayz_namalsk',
-		'mbg_celle2'=> '@dayz_celle;@mbg_celle',
-		'tavi'      => '@taviana'
+		'skaro.lingor'=> '@dayzlingorskaro',
+		'lingor'      => '@dayzlingor',
+		'takistan'    => '@dayztakistan',
+		'fallujah'    => '@dayzfallujah',
+		'zargabad'    => '@dayzzargabad',
+		'panthera2'   => '@dayzpanthera',
+		'namalsk'     => '@dayz;@dayz_namalsk',
+		'mbg_celle2'  => '@dayz_celle;@mbg_celle',
+		'tavi'        => '@taviana'
 	};
-	my $mod = ((defined $mods->{$args{'world'}}) ? "$mods->{$args{'world'}}" : '@dayz') . ";\@bliss_$args{'instance'}.$args{'world'}";
+	my $mod = ((defined $mods->{$args{'world'}}) ? "$mods->{$args{'world'}}" : '@dayz') . ";\@reality_$args{'instance'}.$args{'world'}";
 
 	my $dst_ini  = "$dst_dir/Restarter.ini";
 	die "FATAL: Could not find $dst_ini, try running build.pl --clean\n" unless (-f $dst_ini);
 
 	$ini = Config::IniFiles->new(-file => $dst_ini);
 	my $profile_sect = $profile;
-	$profile_sect =~ s/\./_/;
+	$profile_sect =~ s/\./_/g;
 	if (!$ini->SectionExists($profile_sect)) {
 		$ini->AddSection($profile_sect);
-		$ini->newval($profile_sect, 'name', 'Bliss');
+		$ini->newval($profile_sect, 'name', 'Reality');
 		$ini->newval($profile_sect, 'profiles', $profile);
-		$ini->newval($profile_sect, 'config', "$profile\\config_deadbeef.cfg");
+		$ini->newval($profile_sect, 'config', "$profile\\config.cfg");
 		$ini->newval($profile_sect, 'mod', $mod);
 		$ini->newval($profile_sect, 'world', $args{'world'});
 	}
@@ -141,12 +144,12 @@ if (-d $src && !-d $conf_dir) {
 		print "INFO: RCon password will be set to $hash\n";
 
 		# Copy config.cfg to secured path and substitute values
-		rename("$conf_dir/config.cfg", "$conf_dir/config_$hash.cfg");
-		replace_text("s/passwordAdmin\\s=\\s\\\"\\\"/passwordAdmin = \\\"$hash\\\"/", "$conf_dir/config_$hash.cfg");
-		replace_text("s/RConPassword\\s[0-9a-fA-F]{8}/RConPassword $hash/", "$conf_dir/BattlEye/BEServer.cfg");
+		#rename("$conf_dir/config.cfg", "$conf_dir/config.cfg");
+		#replace_text("s/passwordAdmin\\s=\\s\\\"\\\"/passwordAdmin = \\\"$hash\\\"/", "$conf_dir/config_$hash.cfg");
+		#replace_text("s/RConPassword\\s[0-9a-fA-F]{8}/RConPassword $hash/", "$conf_dir/BattlEye/BEServer.cfg");
 
 		# Change config path in Restarter.ini
-		$ini->newval($profile_sect, 'config', "dayz_$args{'instance'}.$args{'world'}\\config_$hash.cfg");
+		#$ini->newval($profile_sect, 'config', "dayz_$args{'instance'}.$args{'world'}\\config_$hash.cfg");
 	}
 
 	$ini->WriteConfig($dst_ini);
@@ -157,8 +160,8 @@ remove_tree($build_dir) if (-d $build_dir);
 remove_tree($pkg_build_dir) if (-d $pkg_build_dir);
 remove_tree($msn_build_dir) if (-d $msn_build_dir);
 
-# Apply core Bliss changes to build directory
-print "INFO: Merging Bliss code into official server\n";
+# Apply core Reality changes to build directory
+print "INFO: Merging Reality code into official server\n";
 copy_dir($src_dir, $build_dir);
 simple_merge($bls_dir, $build_dir);
 
@@ -171,17 +174,76 @@ if (-d "$wld_dir/$args{'world'}") {
 # For each --with-<package> option, attempt to merge in its changes
 my @pkgs = ();
 my @msn_pkgs = ();
+my @flt_lookups = ();
 while (my $option = shift(@ARGV)) {
 	next unless ($option =~ m/with-([-\w]+)/);
 
 	my $pkg_dir = "$base_dir/pkg/$1";
-	if (!-d $pkg_dir) {
-		print "ERROR: Package dir $pkg_dir does not exist\n";
+	if (!-d $pkg_dir && !-d "$msn_dir/$1" && !-f "$flt_dir/$1") {
+		print "ERROR: Package $1 does not exist\n";
 		next;
 	}
 
-	push(@pkgs, $pkg_dir);
+	push(@pkgs, $pkg_dir) if (-d $pkg_dir);
 	push(@msn_pkgs, "$msn_dir/$1") if (-d "$msn_dir/$1");
+	
+	# Check if there are BattlEye filter exceptions for the package
+	next unless (-f "$flt_dir/$1");
+	my $json = read_file("$flt_dir/$1");
+	my $json_data = decode_json($json);
+	push(@flt_lookups, $json_data);
+}
+
+# Check if there are BattlEye filter exceptions for the world
+if(-f "$flt_dir/$args{'world'}") {
+	my $json = read_file("$flt_dir/$args{'world'}");
+	my $json_data = decode_json($json);
+	push(@flt_lookups, $json_data);
+}
+
+my @scripts = (
+	"scripts.txt",
+	"remoteexec.txt",
+	"createvehicle.txt",
+	"publicvariable.txt",
+	"publicvariableval.txt",
+	"publicvariablevar.txt",
+	"setpos.txt",
+	"mpeventhandler.txt",
+	"setdamage.txt",
+	"addmagazinecargo.txt",
+	"addweaponcargo.txt",
+	"deleteVehicle.txt",
+	"teamswitch.txt",
+	"addbackpackcargo.txt",
+	"setvariable.txt",
+	"setvariableval.txt",
+	"attachto.txt",
+	"remotecontrol.txt",
+	"selectplayer.txt"
+);
+
+#TODO: optionally download the latest battleye filters from dayz-community-banlist?
+
+if(scalar (@flt_lookups)) {
+	print "INFO: Merging BattlEye filter exceptions\n";
+	foreach my $script (@scripts) {
+		#Make sure the exceptions are only added once when you run the same build.pl command several times
+		#copy_dir("$src/BattlEye/$script","$conf_dir/BattlEye");
+		my $cmd = (($^O =~ m/MSWin32/) ? 'xcopy /q /y' : 'cp');
+		my $path = "\"$src/BattlEye/$script\" \"$conf_dir/BattlEye/\"";
+		$path =~ s/\//\\/g if ($^O =~ m/MSWin32/);
+		system("$cmd $path");
+		
+		foreach my $filter (@flt_lookups) {
+			while (($pattern, $exception) = each %{$filter}) {
+				my $regex = "s/([0-9]{1})\\s$pattern\\s(.*)([\\\/]{2}.*)*/" . (($exception) ? "\\1 $pattern \\2 $exception\n/g" : "/g");
+				replace_text($regex, "$conf_dir/BattlEye/$script");
+			}
+		}
+		replace_text("s#^//((?!new).*)\\\$##sg", "$conf_dir/BattlEye/$script");
+		replace_text("s/^\\n\$//", "$conf_dir/BattlEye/$script");
+	}
 }
 
 # Create the dayz_server PBO
@@ -325,11 +387,13 @@ sub merge_packages {
 					$replay_pkg = $replay_pkg_tmp;
 				}
 				
+
 				complex_merge($replay_pkg, $src, $tmp);
 			}
 			$src = $tmp;
 		}
 	
+
 		File::DirCompare->compare($src, $dst, sub {
 			my ($srcPath, $dstPath) = @_;
 
@@ -374,18 +438,19 @@ sub pack_pbo {
 	die "FATAL: PBO directory $dir does not exist\n" unless (-d $dir);
 
 	my $cmd = (($^O =~ m/MSWin32/) ? '' : 'wine ') . 'util/cpbo.exe -y -p';
+	#system("$cmd \"$dir\" \"$pbo\" > " . (($^O =~ m/MSWin32/) ? 'NUL' : '/dev/null')); # This line was in the last commit from ayan4m1, but it does not seem to work properly on windows
 	system("$cmd \"$dir\" \"$pbo\"");
 }
 
 sub pack_world {
 	my $src = $build_dir;
-	my $dst = "$dst_dir/\@bliss_$args{'instance'}.$args{'world'}/addons";
+	my $dst = "$dst_dir/\@reality_$args{'instance'}.$args{'world'}/addons";
 
 	print "INFO: Creating dayz_server.pbo\n";
 	make_path($dst) unless (-d $dst);
 	pack_pbo($src, "$dst/dayz_server.pbo");
 
-	copy("$base_dir/util/HiveExt.dll", "$dst_dir/\@bliss_$args{'instance'}.$args{'world'}/HiveExt.dll");
+	copy("$base_dir/util/HiveExt.dll", "$dst_dir/\@reality_$args{'instance'}.$args{'world'}/HiveExt.dll");
 }
 
 sub pack_mission {

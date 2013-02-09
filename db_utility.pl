@@ -1,6 +1,6 @@
 #!/usr/bin/perl -w
-# Bliss database manipulation utility
-# by ayan4m1
+# Reality database manipulation utility
+# forked from Bliss by ayan4m1, updated by Thevisad
 
 use strict;
 use warnings;
@@ -35,6 +35,8 @@ if ($args{'help'}) {
 	print "usage: db_utility.pl <command> [arguments] [--instance <id>] [--host <hostname>] [--user <username>] [--pass <password>] [--name <database-name>] [--port <port>]\n";
 	print "command is one of:\n";
 	print "  setworld <world_name>          - set the world for an instance\n";
+	print "  addinstance <world_name>       - add an instance for a world\n";
+	print "  deleteinstance <instance_id>   - delete an instance for a world\n";
 	print "  itemdistr                      - look at all live player inventories and show counts of each item in descending order\n";
 	print "  cleanitem <classname>          - remove comma-separated list of classnames from all survivor inventories\n";
 	print "  cleandead <days>               - delete dead survivors who were last updated more than <days> days ago\n";
@@ -66,7 +68,7 @@ if ($cmd eq 'messages') {
 	my $sth = $dbh->prepare("select count(*) from message") or die "FATAL: Could not prepare SQL statement";
 	my $valid = $sth->execute();
 	$sth->finish();
-	die "FATAL: No message table found. Ensure you have run db_migrate.pl --schema BlissMessaging --version 0.01\n" unless defined $valid;
+	die "FATAL: No message table found. Ensure you have run db_migrate.pl --schema RealityMessaging --version 0.01\n" unless defined $valid;
 
 	my $subcmd = shift(@ARGV);
 	die "FATAL: No subcommand specified, try --help for more info\n" unless defined $subcmd;
@@ -227,6 +229,25 @@ EndSQL
 	defined $world or die "FATAL: Invalid arguments\n";
 	$dbh->do("update instance set world_id = (select id from world where name = ?) where id = ?", undef, ($world, $db{'instance'}));
 	print "INFO: Set world to $world for instance $db{'instance'}\n";
+
+} elsif ($cmd eq 'addinstance') {
+	my $world = shift(@ARGV);
+	defined $world or die "FATAL: Invalid arguments\n";
+	my $instance = $args{'instance'} ? $args{'instance'} : undef;
+	$dbh->do("INSERT INTO instance (id, world_id, inventory, backpack ) 
+	values ( ? , (select id from world where name = ?), \"[[],['ItemPainkiller','ItemBandage']]\", \"['DZ_Patrol_Pack_EP1',[[],[]],[[],[]]]\");" , undef, ($instance , $world));
+	$instance = $dbh->last_insert_id(undef, undef, undef, undef);
+	print "INFO: Added instance $instance for world $world.\n";
+
+} elsif ($cmd eq 'deleteinstance') {
+	my $instance = shift(@ARGV);
+	defined $instance or die "FATAL: Invalid arguments\n";
+	$dbh->do("delete from instance_vehicle where instance_id = ?", undef, ($instance));
+	$dbh->do("delete from instance_building where instance_id = ?", undef, ($instance));
+	$dbh->do("delete from instance_deployable where instance_id = ?", undef, ($instance));
+	$dbh->do("delete from message where instance_id = ?", undef, ($instance));
+	$dbh->do("delete from instance where id = ?", undef, ( $instance));
+	print "INFO: Deleted instance $instance and all relevent data.\n";
 
 } else {
 	die "FATAL: Unrecognized command.\n";

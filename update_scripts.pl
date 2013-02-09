@@ -17,14 +17,13 @@ GetOptions(
 my $dst = shift(@ARGV);
 my $filter_dir = './filter';
 
-if ($args{'help'}) {
+print "WARNING: The command syntax changed! The parameter --world has been removed.\n" if ($args{'world'});
+if ($args{'help'}||$args{'world'}) {
 	print "usage: update_scripts.pl <directory> [--with-<exception ...]\n";
-	print "     This script downloads updated BE filters from the community list and then modifies them to make them compatible with Bliss optional features.\n";
+	print "     This script downloads updated BE filters from the community list and then modifies them to make them compatible with Reality optional features.\n";
 	print "     If you are using certain worlds or features you must add in special sets of BE exceptions. To do this, consult your filter directory and add in --with-<exception> options for each exception set required.\n";
 	exit;
 }
-
-$args{'world'} = 'chernarus' unless($args{'world'});
 
 die "FATAL: Filter directory does not exist\n" unless (-d $filter_dir);
 die "FATAL: Must supply destination directory\n" unless defined $dst;
@@ -84,9 +83,8 @@ foreach my $script (@scripts) {
 	}
 
 	# For each --with-<exception> option, attempt to find an exception set
-	my @exceptions = ();
 	while (my $option = shift(@ARGV)) {
-		next unless ($option =~ m/with-([-\w]+)/);
+		next unless ($option =~ m/with-([-\w.]+)/);
 		next unless (defined $lookups{$1});
 
 		while (($pattern, $exception) = each %{$lookups{$1}}) {
