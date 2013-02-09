@@ -1,3 +1,4 @@
+//1 "" //+2 !="_this spawn fnc_plyrHit;"
 1 "draw"
 1 "hint" !="hintC" !="hintS"
 1 "create"
@@ -5,6 +6,7 @@
 1 "remove"
 1 "delete"
 1 "set"
+//1 "play" !="playmove" !="player" !="dayzPlayerSave" //+3
 1 "clear"
 1 "disable"
 1 "copy"
@@ -18,6 +20,7 @@
 1 "server"
 5 "compile"
 5 "loadFile"
+//1 "say" //+4
 5 "call"
 1 "move" !="\"switchmove\"" !="\"playmove\""
 1 "chat"
@@ -122,3 +125,6 @@
 5 "promptRName.sqf"
 5 "%"
 5 ".sqf\"]" !="init.sqf\"]"
+//5 "parseText" //covered by 5 "parse"
+//1 "" +5 !="_this spawn fnc_plyrHit;"
+//1 "request" //+6

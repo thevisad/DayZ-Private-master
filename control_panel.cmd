@@ -36,7 +36,7 @@ echo.
 echo Please select an option from the list below (type the number and press enter)
 echo.
 echo.
-echo 1 - Build
+echo 1 - Build Worlds
 echo 2 - Spawn Vehicles
 echo 3 - Database Migration
 echo 4 - Set up Perl
@@ -48,7 +48,7 @@ echo 9 - Exit
 echo.
 Set menuoption=
 set /p menuoption=: 
-if %menuoption%==1 goto build
+if %menuoption%==1 goto buildworlds
 if %menuoption%==2 goto vehspawn
 if %menuoption%==3 goto schemaspec
 if %menuoption%==4 goto perl
@@ -64,12 +64,55 @@ if not exist mysql.txt goto errsqlsetup
 cls
 echo Please give the world you want to add.
 echo.
-echo chernarus - skaro.lingor - utes
-echo thirsk - thirsk winter
+echo 1 - Chernarus
+echo 2 - Utes
+echo 3 - Thirsk
+echo 4 - Thirskw
+echo 5 - Celle
+echo 6 - Lingor (Skaronator.com)
+echo 0 - Back to menu
 echo.
 Set worldins=
 set /p worldins=: 
+if %worldins%==1 Set worldins = chernarus & goto addInstance
+if %worldins%==2 Set worldins = utes & goto addInstance
+if %worldins%==3 Set worldins = thirsk & goto addInstance
+if %worldins%==4 Set worldins = thirskw & goto addInstance
+if %worldins%==5 Set worldins = celle & goto addInstance
+if %worldins%==9 goto moreworlds
+if %worldins%==0 goto menu
 cls
+goto menu
+
+:moreworlds
+if not exist mysql.txt goto errsqlsetup
+cls
+echo Please give the world you want to add.
+echo.
+echo 1 - Taviana - Not Supported Yet
+echo 2 - Takistan - Not Supported Yet
+echo 3 - Fallujah - Not Supported Yet
+echo 4 - Lingor - Not Supported Yet
+echo 5 - Zargabad - Not Supported Yet
+echo 6 - Panthera - Not Supported Yet
+echo 8 - Goto Main
+echo 9 - More Worlds
+echo 0 - Back to menu
+echo.
+Set worldins=
+set /p worldins=: 
+if %worldins%==1 Set worldins = chernarus & goto addInstance
+if %worldins%==2 Set worldins = utes & goto addInstance
+if %worldins%==3 Set worldins = thirsk & goto addInstance
+if %worldins%==4 Set worldins = thirskw & goto addInstance
+if %worldins%==5 Set worldins = celle & goto addInstance
+if %worldins%==8 goto instdb
+if %worldins%==9 goto moreworlds
+if %worldins%==0 goto menu
+cls
+goto menu
+
+:addInstance
 echo Adding instance...
 db_utility.pl addinstance %worldins% --host %hostdb% --user %hostun% --pass %hostpw% --name %hostnm% --port %hostport%
 pause
@@ -97,19 +140,69 @@ db_migrate.pl --host %hostdb% --user %hostun% --pass %hostpw% --name %hostnm% --
 pause
 goto menu
 
-:build
+:buildworlds
 cls
 echo You are about to build a server package.
 echo Make sure you have the requirements given in the readme before trying this.
 echo.
 echo Which world are you going to be using?
 echo.
-echo chernarus - skaro.lingor - utes
-echo thirsk - thirsk winter
+echo 1 - Chernarus
+echo 2 - Utes
+echo 3 - Thirsk
+echo 4 - Thirskw
+echo 5 - Celle
+echo 6 - Lingor (Skaronator.com)
+echo 9 - More Worlds
+echo 0 - Back to menu
 echo.
 Set worldbuild=
+Set choosenworld=
 set /p worldbuild=: 
+if %worldbuild%==1 Set choosenworld=chernarus & goto build2
+if %worldbuild%==2 Set choosenworld=utes & goto build2
+if %worldbuild%==3 Set choosenworld=thirsk & goto build2
+if %worldbuild%==4 Set choosenworld=thirskw & goto build2
+if %worldbuild%==5 Set choosenworld=mbg_celle2 & goto build2
+if %worldbuild%==9 goto buildworlds1
+if %worldbuild%==0 goto menu
 cls
+goto menu
+
+:buildworlds1
+cls
+echo You are about to build a server package.
+echo Make sure you have the requirements given in the readme before trying this.
+echo.
+echo Which world are you going to be using?
+echo.
+echo 1 - Taviana - Not Supported Yet
+echo 2 - Takistan - Not Supported Yet
+echo 3 - Fallujah - Not Supported Yet
+echo 4 - Lingor - Not Supported Yet
+echo 5 - Zargabad - Not Supported Yet
+echo 6 - Panthera - Not Supported Yet
+echo 8 - Goto Main Worlds Panel
+echo 9 - More Worlds (Main Worlds Panel Currently)
+echo 0 - Back to menu
+echo.
+Set worldbuild=
+Set choosenworld=
+set /p worldbuild=: 
+if %worldbuild%==1 Set choosenworld=tavi & goto build2
+if %worldbuild%==2 Set choosenworld=takistan & goto build2
+if %worldbuild%==3 Set choosenworld=fallujah & goto build2
+if %worldbuild%==4 Set choosenworld=lingor & goto build2
+if %worldbuild%==5 Set choosenworld=zargabad & goto build2
+if %worldbuild%==6 Set choosenworld=panthera2 & goto build2
+if %worldbuild%==8 goto buildworlds
+if %worldbuild%==9 goto buildworlds
+if %worldbuild%==0 goto menu
+cls
+goto menu
+
+
+:build2
 echo Which packages do you want?
 echo.
 echo Buildings? (yes/no)
@@ -142,12 +235,17 @@ echo.
 Set buildwreck=
 set /p buildwreck=: 
 cls
+echo Disable Server Simulation of Zombies? (ziellos2k)? (yes/no)
+echo.
+Set ssZeds=
+set /p ssZeds=: 
+cls
 echo What should be the instance number? (1 is default)
 echo.
 Set buildinst=
 set /p buildinst=: 
 cls
-echo You are about to build a %worldbuild% server with instance number %buildinst%, incl. the following packages:
+echo You are about to build a %choosenworld% server with instance number %buildinst%, incl. the following packages:
 echo.
 echo Buildings: %buildbuildings%
 echo Carepackages: %buildcarepkg%
@@ -155,6 +253,7 @@ echo Custom Inventroy: %buildinvcust%
 echo Kill Messages: %buildkillmsg%
 echo Messaging: %buildmsg%
 echo Wrecks: %buildwreck%
+echo ssZeds: %ssZeds%
 echo.
 echo If you do not wish to continue, please close the window. Else, press any key.
 echo.
@@ -167,7 +266,8 @@ if %buildinvcust%==yes set buildinv=--with-invcust
 if %buildkillmsg%==yes set buildkill=--with-killmsgs
 if %buildmsg%==yes set buildmes=--with-messaging
 if %buildwreck%==yes set buildwrecks=--with-wrecks
-build.pl --world %worldbuild% --instance %buildinst% %buildbuild% %buildcare% %buildinv% %buildkill% %buildmes% %buildwrecks%
+if %buildwreck%==yes set buildwrecks=--with-ssZeds
+build.pl --world %choosenworld% --instance %buildinst% %buildbuild% %buildcare% %buildinv% %buildkill% %buildmes% %buildwrecks% %ssZeds%
 pause
 goto menu
 
@@ -250,10 +350,10 @@ cls
 if %scheme%==1 db_migrate.pl --host %hostdb% --user %hostun% --pass %hostpw% --name %hostnm% --port %hostport%
 if %scheme%==2 db_migrate.pl --host %hostdb% --user %hostun% --pass %hostpw% --name %hostnm% --port %hostport% --schema RealityBuildings --version 0.01
 if %scheme%==3 db_migrate.pl --host %hostdb% --user %hostun% --pass %hostpw% --name %hostnm% --port %hostport% --schema RealityMessaging --version 0.01
-if %scheme%==4 db_migrate.pl --host %hostdb% --user %hostun% --pass %hostpw% --name %hostnm% --port %hostport% --schema RealityInvCust --version 0.01
+if %scheme%==4 db_migrate.pl --host %hostdb% --user %hostun% --pass %hostpw% --name %hostnm% --port %hostport% --schema RealityInvCust --version 0.02
 if %scheme%==5 db_migrate.pl --host %hostdb% --user %hostun% --pass %hostpw% --name %hostnm% --port %hostport% --schema RealityThirsk --version 0.01
 if %scheme%==6 db_migrate.pl --host %hostdb% --user %hostun% --pass %hostpw% --name %hostnm% --port %hostport% --schema RealityThirskWinter --version 0.01
-if %scheme%==7 db_migrate.pl --host %hostdb% --user %hostun% --pass %hostpw% --name %hostnm% --port %hostport% --schema RealityLingorSkaro --version 0.01
+if %scheme%==7 db_migrate.pl --host %hostdb% --user %hostun% --pass %hostpw% --name %hostnm% --port %hostport% --schema RealitySkaroLingor --version 0.01
 pause
 goto schemaspec
 

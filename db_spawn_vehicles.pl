@@ -55,7 +55,7 @@ print "INFO: Instance name dayz_$db{'instance'}.$world_name\n";
 
 my $cleanup = ($args{'cleanup'}) ? $args{'cleanup'} : 'none';
 
-if ($cleanup ne 'none') {
+if ($cleanup eq 'none') {
 	print "INFO: Cleaning up damaged vehicles\n";
 	my $sth = $dbh->prepare(<<EndSQL
 delete from
