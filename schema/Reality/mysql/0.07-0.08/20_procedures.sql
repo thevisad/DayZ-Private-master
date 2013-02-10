@@ -62,12 +62,12 @@ drop procedure if exists `insUNselI`;
 drop procedure if exists `proc_insertSurvivor`;
 create procedure `proc_insertSurvivor`(in `p_uniqueId` varchar(128), in `p_playerName` varchar(255))
 begin
-  insert into profile
+  insert ignore into profile
     (unique_id, name)
   values
     (p_uniqueId, p_playerName)
   on duplicate key update name = p_playerName; --
-  insert into survivor
+  insert ignore into survivor
     (unique_id, start_time)
   values
     (p_uniqueId, now()); --
@@ -79,7 +79,7 @@ drop procedure if exists `loglogin`;
 drop procedure if exists `proc_logLogin`;
 create procedure `proc_loglogin`(in `p_uniqueId` varchar(128), in `p_instanceId` int)
 begin
-  insert into log_entry (unique_id, instance_id, log_code_id) values (p_uniqueId, p_instanceId, 1); --
+  insert ignore into log_entry (unique_id, instance_id, log_code_id) values (p_uniqueId, p_instanceId, 1); --
 end;
 
 
@@ -87,7 +87,7 @@ drop procedure if exists `loglogout`;
 drop procedure if exists `proc_logLogout`;
 create procedure `proc_loglogout`(in `p_uniqueId` varchar(128), in `p_instanceId` int)
 begin
-  insert into log_entry (unique_id, instance_id, log_code_id) values (p_uniqueId, p_instanceId, 2); --
+  insert ignore into log_entry (unique_id, instance_id, log_code_id) values (p_uniqueId, p_instanceId, 2); --
 end;
 
 
@@ -173,7 +173,7 @@ drop procedure if exists `insOselI`;
 drop procedure if exists `proc_insertObject`;
 create procedure `proc_insertObject`(in `p_uniqueId` varchar(255), in `p_type` varchar(255), in `p_health` varchar(1024), in `p_damage` double, in `p_fuel` double, in `p_owner` int, in `p_position` varchar(255), in `p_instanceId` int)
 begin
-  insert into objects
+  insert ignore into objects
     (uid,otype,health,damage,oid,pos,fuel,instance)
   values
     (p_uniqueId, p_type, p_health, p_damage, p_owner, p_position, p_fuel, p_instanceId); --

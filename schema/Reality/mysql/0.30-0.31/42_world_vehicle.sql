@@ -1,4 +1,4 @@
-insert into world_vehicle values
+insert ignore into world_vehicle values
  (311,13,10,'[210,[3910,7357,0]]','Motrovice Statue',0.640,'0.31'), 
  (312,21,10,'[270,[3903,7069,0]]','Motrovice Fulestation',0.660,'0.31'), 
  (313,19,10,'[80,[4580,6319,0]]','Barn in 045192',0.700,'0.31'), 

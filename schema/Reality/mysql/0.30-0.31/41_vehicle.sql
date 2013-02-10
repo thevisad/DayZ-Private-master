@@ -1,4 +1,4 @@
-insert into vehicle values
+insert ignore into vehicle values
  (58,'datsun1_civil_3_open',0.050,0.050,0.000,0.500,0,2,'[["motor",0.8],["karoserie",1],["palivo",0.8],["wheel_1_1_steering",1],["wheel_2_1_steering",1],["wheel_1_2_steering",1],["wheel_2_2_steering",1],["sklo predni P",1],["sklo predni L",1],["glass1",1],["glass2",1],["glass3",1]]','[]'),(59,'Fishing_Boat_DZ',0.050,0.050,0.000,0.500,0,1,'[["motor",0.8]]','[]'), 
  (60,'PBX_DZ',0.050,0.050,0.000,0.500,0,2,'[["motor",0.8]]','[]'), 
  (61,'An2_2_TK_CIV_EP1_DZ',0.050,0.050,0.000,0.500,0,2,'[]','[]'), 
