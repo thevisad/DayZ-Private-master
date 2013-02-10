@@ -41,13 +41,13 @@ END;
 DROP PROCEDURE IF EXISTS `insOselI`;
 CREATE PROCEDURE `insOselI`(IN myuid VARCHAR(50),IN mytype VARCHAR(255),IN myhealth VARCHAR(1024),IN myhp DOUBLE,IN myfuel DOUBLE,IN myowner INT,IN mypos VARCHAR(255),IN myinstance INT)
 BEGIN
-      INSERT INTO objects (uid,otype,health,damage,oid,pos,fuel,instance) VALUES (myuid,mytype,myhealth,myhp,myowner,mypos,myfuel,myinstance); --
+      insert into objects (uid,otype,health,damage,oid,pos,fuel,instance) VALUES (myuid,mytype,myhealth,myhp,myowner,mypos,myfuel,myinstance); --
 END;
 
 DROP PROCEDURE IF EXISTS `insUNselI`;
 CREATE PROCEDURE `insUNselI`(IN myuid INT,IN myname VARCHAR(255))
 BEGIN
-      INSERT INTO main (uid, name,survival) VALUES (myuid, myname,NOW()); --
+      insert into main (uid, name,survival) VALUES (myuid, myname,NOW()); --
       SELECT LAST_INSERT_ID(); --
 END;
 
