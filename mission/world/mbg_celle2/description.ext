@@ -1,15 +1,15 @@
 respawn = "BASE";
 respawndelay = 5;
-onLoadMission= "DayZ Chernarus";
-OnLoadIntro = "Welcome to Chernarus";
+onLoadMission= "DayZ Celle";
+OnLoadIntro = "Welcome to Celle";
 OnLoadIntroTime = False;
 OnLoadMissionTime = False;
 disabledAI = true;
-disableChannels[]={0,1,2,6};
+disableChannels[]={2,6};
 enableItemsDropping = 0;
 onPauseScript = "\z\addons\dayz_code\compile\player_onPause.sqf";
-loadScreen = "\z\addons\dayz_code\gui\dayz_logo_ca.paa";
 
+loadScreen = "\z\addons\dayz_code\gui\dayz_logo_ca.paa";
 class Header
 {
  gameType = COOP;            //DM, Team, Coop, ...
