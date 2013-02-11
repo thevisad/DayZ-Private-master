@@ -1,1 +1,1 @@
-update vehicle set class_name = replace(class_name, 'HMMWV', 'HMMWV_DZ');
+update vehicle set class_name = 'HMMWV_DZ' where class_name = 'HMMWV';
