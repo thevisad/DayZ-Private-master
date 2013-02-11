@@ -79,6 +79,7 @@ if %worldins%==2 Set worldins = utes & goto addInstance
 if %worldins%==3 Set worldins = thirsk & goto addInstance
 if %worldins%==4 Set worldins = thirskw & goto addInstance
 if %worldins%==5 Set worldins = celle & goto addInstance
+if %worldins%==6 Set worldins = skaro.lingor & goto addInstance
 if %worldins%==9 goto moreworlds
 if %worldins%==0 goto menu
 cls
@@ -106,6 +107,7 @@ if %worldins%==2 Set worldins = utes & goto addInstance
 if %worldins%==3 Set worldins = thirsk & goto addInstance
 if %worldins%==4 Set worldins = thirskw & goto addInstance
 if %worldins%==5 Set worldins = celle & goto addInstance
+if %worldins%==6 Set worldins = skaro.lingor & goto addInstance
 if %worldins%==8 goto instdb
 if %worldins%==9 goto moreworlds
 if %worldins%==0 goto menu
@@ -164,6 +166,7 @@ if %worldbuild%==2 Set choosenworld=utes & goto build2
 if %worldbuild%==3 Set choosenworld=thirsk & goto build2
 if %worldbuild%==4 Set choosenworld=thirskw & goto build2
 if %worldbuild%==5 Set choosenworld=mbg_celle2 & goto build2
+if %worldbuild%==6 Set choosenworld=skaro.lingor & goto build2
 if %worldbuild%==9 goto buildworlds1
 if %worldbuild%==0 goto menu
 cls
