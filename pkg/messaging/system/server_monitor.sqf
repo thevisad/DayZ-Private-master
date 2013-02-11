@@ -113,7 +113,7 @@ if (_status == "CustomStreamStart") then {
 				//Create it
 				_object = createVehicle [_type, _pos, [], 0, "CAN_COLLIDE"];
 				_object setVariable ["lastUpdate",time];
-				_object setVariable ["ObjectID", _idKey, true];
+				if (_ownerID == "0") then {_object setVariable ["ObjectID", str(_idKey), true];} else {_object setVariable ["ObjectUID", str(_idKey),true];}; //_object setVariable ["ObjectID", _idKey, true];
 				_object setVariable ["CharacterID", _ownerID, true];
 				
 				clearWeaponCargoGlobal  _object;
