@@ -206,6 +206,7 @@ goto menu
 
 
 :build2
+cls
 echo Which packages do you want?
 echo.
 echo Buildings? (yes/no)
@@ -240,8 +241,8 @@ set /p buildwreck=:
 cls
 echo Disable Server Simulation of Zombies? (ziellos2k)? (yes/no)
 echo.
-Set ssZeds=
-set /p ssZeds=: 
+Set buildssZeds=
+set /p buildssZeds=: 
 cls
 echo What should be the instance number? (1 is default)
 echo.
@@ -256,7 +257,7 @@ echo Custom Inventroy: %buildinvcust%
 echo Kill Messages: %buildkillmsg%
 echo Messaging: %buildmsg%
 echo Wrecks: %buildwreck%
-echo ssZeds: %ssZeds%
+echo ssZeds: %buildssZeds%
 echo.
 echo If you do not wish to continue, please close the window. Else, press any key.
 echo.
@@ -269,8 +270,8 @@ if %buildinvcust%==yes set buildinv=--with-invcust
 if %buildkillmsg%==yes set buildkill=--with-killmsgs
 if %buildmsg%==yes set buildmes=--with-messaging
 if %buildwreck%==yes set buildwrecks=--with-wrecks
-if %buildwreck%==yes set buildwrecks=--with-ssZeds
-build.pl --world %choosenworld% --instance %buildinst% %buildbuild% %buildcare% %buildinv% %buildkill% %buildmes% %buildwrecks% %ssZeds%
+if %buildssZeds%==yes set buildss=--with-ssZeds
+build.pl --world %choosenworld% --instance %buildinst% %buildbuild% %buildcare% %buildinv% %buildkill% %buildmes% %buildwrecks% %buildss%
 pause
 goto menu
 
