@@ -1,0 +1,20 @@
+{
+ "addAction": "!\\\"_addAction1 = player addAction \\\"Enable GCam\\\", \\\"fixes\\\\gcam.sqf\\\"];\\\"",
+ "createDialog": "!\\\"createDialog \\\"GCam_Dialog\\\";\\\"",
+ "createMarkerLocal": "!\\\"createMarkerLocal[\\\"gcam_c\\\", [_cp select 0, _cp select 1]];\\\"",
+ "displayAddEventHandler": "!\\\"_ehid_keydown = (findDisplay 46) displayAddEventHandler [\\\"KeyDown\\\", \\\"GCam_KD = _this\\\"];\\\"",
+ "setMarkerPosLocal": "!\\\"\\\"gcam_c\\\" setMarkerPosLocal [_sm_cp select 0, _sm_cp select 1];\\\"",
+ "SetCamUseTi": "!\\\"false setCamUseTi 0;\\\"",
+ "enableTeamSwitch": "!\\\"1;\n_initcamview = cameraView;\n_initacctime = accTime;\n_initteamswitch = teamSwitchEnabled;\nenableTeamSwitch false;\n_help = false\\\"",
+ "onMapSingleClick": "!\\\"onMapSingleClick \\\"GCam_MCP = _pos; GCam_MC = true\\\";\\\"",
+ "setposASL": "!\\\"getPosATL _c select 2\\\" !\\\"setPosATL [ getPosASL _c select 0, getPosASL _c select 1, 0.501 - _be\\\"",
+ "teamSwitch": "!\\\"1;\n_initcamview = cameraView;\n_initacctime = accTime;\n_initteamswitch = teamSwitchEnabled;\nenableTeamSwitch false;\n_help = false\\\"",
+ "WorldToScreen": "!\\\"_ma_crp = (findDisplay 5100 displayCtrl 100) posWorldToScreen [ _sm_cp select 0, _sm_cp select 1 ];\\\"",
+ "posWorldToScreen": "!\\\"_ma_crp = (findDisplay 5100 displayCtrl 100) posWorldToScreen [ _sm_cp select 0, _sm_cp select 1 ];\\\"",
+ "ScreenToWorld": "!\\\"posScreenToWorld _ma_crp\\\"",
+ "compile": "!\\\"call compile ctrlText\\\"",
+ "copyToClipboard": "!\\\"copyToClipboard ctrlText\\\"",
+ "switchCamera": "!\\\"_initobject switchCamera _initcamview;\\\" !\\\"_o switchCamera\\\"",
+ "\\\"marker2 setMarkerPosLocal (getPos veh)\\\"": "!\\\"\\\"gcam_c\\\" setMarkerPosLocal [_sm_cp select 0, _sm_cp select 1];\\\"",
+ "Trigger": "!\\\"T : Toggle Firing and Ejection Trigger\\\""
+}
