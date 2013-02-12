@@ -49,7 +49,7 @@ Automatic installation
 7. Now choose 'Database Migration' And put the things you want into your database. Note that Reality main is required, and any packages you installed during build, you'll also need to put them in the database. (e.g, if you ran the builder with buildings, you'll need RealityBuildings in your database)
 8. Make sure that the database information in **Config**\\HiveExt.ini is matching the details you used in the previous steps.
 9. If you'd like to change server time/date, change the options in **Config**\\HiveExt.ini
-10. Adjust any server settings (name, password etc) in **Config**\\config.cfg
+10. Adjust any server settings (name, password etc) in **Config**\\config_deadbeef.cfg (deadbeef is a randomly generated string)
 11. If you would like to customize the starting loadout, it is highly recommended that you use the Reality Inventory manager located here http://opendayz.net/index.php?threads/reality-dayz-inventory-manager-c.6835/  You may also run `perl db_utility.pl loadout <inventory> <backpack>`, replacing `<inventory>` with a valid inventory string and `<backpack>` with a valid backpack string. Some examples:  
 <table>
   <tr>
@@ -81,7 +81,7 @@ Manual installation
 5. Run `perl db_migrate.pl --password CHANGEME` from the **Repository** directory. Replace `CHANGEME` with the password you chose in the previous step. Use the `--help` flag to get more information on how to set the hostname, username, or database name to suit your needs.  
 6. Ensure that the database information in **Config**\\HiveExt.ini match the database details you used in the previous step.  
 7. If you would like to customize the server time, change the pertinent options in **Config**\\HiveExt.ini.  
-8. Adjust server name/passwords as desired in **Config**\\config.cfg.  
+8. Adjust server name/passwords as desired in **Config**\\config_deadbeef.cfg. (deadbeef is a randomly generated string)
 9. If you would like to customize the starting loadout, it is highly recommended that you use the Reality Inventory manager located here http://opendayz.net/index.php?threads/reality-dayz-inventory-manager-c.6835/  You may also run `perl db_utility.pl loadout <inventory> <backpack>`, replacing `<inventory>` with a valid inventory string and `<backpack>` with a valid backpack string. Some examples:  
 <table>
   <tr>
