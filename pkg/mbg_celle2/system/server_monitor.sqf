@@ -1,9 +1,7 @@
 []execVM "\z\addons\dayz_server\system\s_fps.sqf"; //server monitor FPS (writes each ~181s diag_fps+181s diag_fpsmin*)
-
 dayz_versionNo = 		getText(configFile >> "CfgMods" >> "DayZ" >> "version");
 dayz_hiveVersionNo = 	getNumber(configFile >> "CfgMods" >> "DayZ" >> "hiveVersion");
 _script = getText(missionConfigFile >> "onPauseScript");
-
 if (_script != "") then
 {
 	diag_log "MISSION: File Updated";
@@ -14,21 +12,16 @@ if (_script != "") then
 		sleep 1;
 	};
 };
-
 if ((count playableUnits == 0) and !isDedicated) then {
 	isSinglePlayer = true;
 };
-
 waitUntil{initialized}; //means all the functions are now defined
-
 diag_log "HIVE: Starting";
-
 //Stream in objects
 	/* STREAM OBJECTS */
 		//Send the key
 		_key = format["CHILD:302:%1:",dayZ_instance];
 		_result = _key call server_hiveReadWrite;
-
 		diag_log "HIVE: Request sent";
 		
 		//Process result
@@ -41,7 +34,6 @@ diag_log "HIVE: Starting";
 			diag_log ("HIVE: Commence Object Streaming...");
 			for "_i" from 1 to _val do {
 				_result = _key call server_hiveReadWrite;
-
 				_status = _result select 0;
 				_myArray set [count _myArray,_result];
 				//diag_log ("HIVE: Loop ");
@@ -63,7 +55,6 @@ diag_log "HIVE: Starting";
 			_hitPoints=	_x select 6;
 			_fuel =		_x select 7;
 			_damage = 	_x select 8;
-
 			_dir = 0;
 			_pos = [0,0,0];
 			_wsDone = false;
@@ -88,7 +79,7 @@ diag_log "HIVE: Starting";
 				//Create it
 				_object = createVehicle [_type, _pos, [], 0, "CAN_COLLIDE"];
 				_object setVariable ["lastUpdate",time];
-				if (_ownerID == "0") then {_object setVariable ["ObjectID", str(_idKey), true];} else {_object setVariable ["ObjectUID", str(_idKey),true];}; //_object setVariable ["ObjectID", _idKey, true];
+				_object setVariable ["ObjectID", _idKey, true];
 				_object setVariable ["CharacterID", _ownerID, true];
 				
 				clearWeaponCargoGlobal  _object;
@@ -132,7 +123,6 @@ diag_log "HIVE: Starting";
 						};
 						_countr = _countr + 1;
 					} forEach _objWpnTypes;
-
 					//Add Backpacks
 					_objWpnTypes = (_intentory select 2) select 0;
 					_objWpnQty = (_intentory select 2) select 1;
@@ -160,7 +150,6 @@ diag_log "HIVE: Starting";
 					_object setFuel _fuel;
 					_object call fnc_vehicleEventHandler;
 				};
-
 				//Monitor the object
 				//_object enableSimulation false;
 				dayz_serverObjectMonitor set [count dayz_serverObjectMonitor,_object];
@@ -168,7 +157,6 @@ diag_log "HIVE: Starting";
 		} forEach _myArray;
 		
 	// # END OF STREAMING #
-
 //Set the Time
 	//Send request
 	_key = "CHILD:307:";
@@ -179,7 +167,6 @@ diag_log "HIVE: Starting";
 		if(isDedicated) then {
 			["dayzSetDate",_date] call broadcastRpcCallAll;
 		};
-
 		diag_log ("HIVE: Local Time set to " + str(_date));
 	};
 	
@@ -191,11 +178,12 @@ diag_log "HIVE: Starting";
 if (isDedicated) then {
 	_id = [] execFSM "\z\addons\dayz_server\system\server_cleanup.fsm";
 };
-
 allowConnection = true;
-
 // [_guaranteedLoot, _randomizedLoot, _frequency, _variance, _spawnChance, _spawnMarker, _spawnRadius, _spawnFire, _fadeFire]
 nul = [3, 4, (50 * 60), (15 * 60), 0.75, 'center', 4000, true, false] spawn server_spawnCrashSite;
+for "_x" from 1 to 20 do {
+	_id = [] spawn spawn_wrecks;
+}; //Spawn wrecks
 for "_x" from 1 to 6 do {
 	_id = [] spawn spawn_carePackages;
 }; //Spawn care packages

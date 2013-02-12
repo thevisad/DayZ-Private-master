@@ -19,6 +19,10 @@ zombie_findOwner =			compile preprocessFileLineNumbers "\z\addons\dayz_server\co
 server_updateNearbyObjects =	compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\server_updateNearbyObjects.sqf";
 server_spawnCrashSite  =    compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\server_spawnCrashSite.sqf";
 server_handleZedSpawn =    compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\server_handleZedSpawn.sqf";
+//Get instance name (e.g. dayz_1.chernarus)
+fnc_instanceName = {
+	"dayz_" + str(dayz_instance) + "." + worldName
+};
 
 vehicle_handleInteract = {
 	private["_object"];

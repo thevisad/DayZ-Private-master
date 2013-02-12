@@ -1,13 +1,10 @@
 waituntil {!isnil "bis_fnc_init"};
-
 BIS_MPF_remoteExecutionServer = {
 	if ((_this select 1) select 2 == "JIPrequest") then {
 		[nil,(_this select 1) select 0,"loc",rJIPEXEC,[any,any,"per","execVM","ca\Modules\Functions\init.sqf"]] call RE;
 	};
 };
-
 BIS_Effects_Burn =			{};
-spawn_wrecks = compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\fnc_wrecks.sqf";
 server_playerLogin =		compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\server_playerLogin.sqf";
 server_playerSetup =		compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\server_playerSetup.sqf";
 server_onPlayerDisconnect = compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\server_onPlayerDisconnect.sqf";
@@ -19,20 +16,18 @@ server_playerSync =			compile preprocessFileLineNumbers "\z\addons\dayz_server\c
 zombie_findOwner =			compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\zombie_findOwner.sqf";
 server_updateNearbyObjects =	compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\server_updateNearbyObjects.sqf";
 server_spawnCrashSite  =    compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\server_spawnCrashSite.sqf";
-
-
+spawn_wrecks = compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\fnc_wrecks.sqf";
+spawn_carePackages = compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\fnc_carePkgs.sqf";
 //Get instance name (e.g. dayz_1.chernarus)
 fnc_instanceName = {
 	"dayz_" + str(dayz_instance) + "." + worldName
 };
-
 vehicle_handleInteract = {
 	private["_object"];
 	_object = _this select 0;
 	needUpdate_objects = needUpdate_objects - [_object];
 	[_object, "all"] call server_updateObject;
 };
-
 vehicle_handleServerKilled = {
 	private["_unit","_killer"];
 	_unit = _this select 0;
@@ -46,25 +41,19 @@ vehicle_handleServerKilled = {
 	_unit removeAllEventHandlers "GetIn";
 	_unit removeAllEventHandlers "GetOut";
 };
-
 check_publishobject = {
 	private["_allowed","_allowedObjects","_object"];
-
 	_object = _this select 0;
 	_playername = _this select 1;
 	_allowedObjects = ["TentStorage", "Hedgehog_DZ", "Sandbag1_DZ","TrapBear","Wire_cat1"];
 	_allowed = false;
-
 	diag_log format ["DEBUG: Checking if Object: %1 is allowed published by %2", _object, _playername];
-
 	if ((typeOf _object) in _allowedObjects) then {
 		diag_log format ["DEBUG: Object: %1 published by %2 is Safe",_object, _playername];
 		_allowed = true;
 	};
-
 	_allowed
 };
-
 //event Handlers
 eh_localCleanup = {
 	private ["_object"];
@@ -93,14 +82,12 @@ eh_localCleanup = {
 		};
 	}];
 };
-
 server_hiveWrite = {
 	private["_data"];
 	//diag_log ("ATTEMPT WRITE: " + _this);
 	_data = "HiveExt" callExtension _this;
 	diag_log ("WRITE: " +str(_data));
 };
-
 server_hiveReadWrite = {
 	private["_key","_resultArray","_data"];
 	_key = _this;
@@ -110,7 +97,6 @@ server_hiveReadWrite = {
 	_resultArray = call compile format ["%1",_data];
 	_resultArray
 };
-
 server_characterSync = {
 	private ["_characterID","_playerPos","_playerGear","_playerBackp","_medical","_currentState","_currentModel","_key"];
 	_characterID = 	_this select 0;	
@@ -125,10 +111,8 @@ server_characterSync = {
 	//diag_log ("HIVE: WRITE: "+ str(_key) + " / " + _characterID);
 	_key call server_hiveWrite;
 };
-
 //onPlayerConnected 		"[_uid,_name] spawn server_onPlayerConnect;";
 onPlayerDisconnected 		"[_uid,_name] call server_onPlayerDisconnect;";
-
 server_getDiff =	{
 	private["_variable","_object","_vNew","_vOld","_result"];
 	_variable = _this select 0;
@@ -146,7 +130,6 @@ server_getDiff =	{
 	};
 	_result
 };
-
 server_getDiff2 =	{
 	private["_variable","_object","_vNew","_vOld","_result"];
 	_variable = _this select 0;
@@ -157,7 +140,6 @@ server_getDiff2 =	{
 	_object setVariable[(_variable + "_CHK"),_vNew];
 	_result
 };
-
 dayz_objectUID = {
 	private["_position","_dir","_key","_object"];
 	_object = _this;
@@ -166,7 +148,6 @@ dayz_objectUID = {
 	_key = [_dir,_position] call dayz_objectUID2;
     _key
 };
-
 dayz_objectUID2 = {
 	private["_position","_dir","_key"];
 	_dir = _this select 0;
@@ -180,7 +161,6 @@ dayz_objectUID2 = {
 	_key = _key + str(round(_dir));
 	_key
 };
-
 dayz_recordLogin = {
 	private["_key"];
 	_key = format["CHILD:103:%1:%2:%3:",_this select 0,_this select 1,_this select 2];
