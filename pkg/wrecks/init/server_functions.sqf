@@ -7,6 +7,7 @@ BIS_MPF_remoteExecutionServer = {
 };
 
 BIS_Effects_Burn =			{};
+spawn_wrecks = compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\fnc_wrecks.sqf";
 server_playerLogin =		compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\server_playerLogin.sqf";
 server_playerSetup =		compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\server_playerSetup.sqf";
 server_onPlayerDisconnect = compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\server_onPlayerDisconnect.sqf";
@@ -18,12 +19,13 @@ server_playerSync =			compile preprocessFileLineNumbers "\z\addons\dayz_server\c
 zombie_findOwner =			compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\zombie_findOwner.sqf";
 server_updateNearbyObjects =	compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\server_updateNearbyObjects.sqf";
 server_spawnCrashSite  =    compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\server_spawnCrashSite.sqf";
-spawn_wrecks = compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\fnc_wrecks.sqf";
+
 
 //Get instance name (e.g. dayz_1.chernarus)
 fnc_instanceName = {
 	"dayz_" + str(dayz_instance) + "." + worldName
 };
+
 vehicle_handleInteract = {
 	private["_object"];
 	_object = _this select 0;

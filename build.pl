@@ -132,7 +132,7 @@ if (-d $src && !-d $conf_dir) {
 		$ini->AddSection($profile_sect);
 		$ini->newval($profile_sect, 'name', 'Reality');
 		$ini->newval($profile_sect, 'profiles', $profile);
-		$ini->newval($profile_sect, 'config', "$profile\\config.cfg");
+		$ini->newval($profile_sect, 'config', "$profile\\config_deadbeef.cfg");
 		$ini->newval($profile_sect, 'mod', $mod);
 		$ini->newval($profile_sect, 'world', $args{'world'});
 	}
@@ -144,12 +144,12 @@ if (-d $src && !-d $conf_dir) {
 		print "INFO: RCon password will be set to $hash\n";
 
 		# Copy config.cfg to secured path and substitute values
-		#rename("$conf_dir/config.cfg", "$conf_dir/config.cfg");
-		#replace_text("s/passwordAdmin\\s=\\s\\\"\\\"/passwordAdmin = \\\"$hash\\\"/", "$conf_dir/config_$hash.cfg");
-		#replace_text("s/RConPassword\\s[0-9a-fA-F]{8}/RConPassword $hash/", "$conf_dir/BattlEye/BEServer.cfg");
+		rename("$conf_dir/config.cfg", "$conf_dir/config_$hash.cfg");
+		replace_text("s/passwordAdmin\\s=\\s\\\"\\\"/passwordAdmin = \\\"$hash\\\"/", "$conf_dir/config_$hash.cfg");
+		replace_text("s/RConPassword\\s[0-9a-fA-F]{8}/RConPassword $hash/", "$conf_dir/BattlEye/BEServer.cfg");
 
 		# Change config path in Restarter.ini
-		#$ini->newval($profile_sect, 'config', "dayz_$args{'instance'}.$args{'world'}\\config_$hash.cfg");
+		$ini->newval($profile_sect, 'config', "dayz_$args{'instance'}.$args{'world'}\\config_$hash.cfg");
 	}
 
 	$ini->WriteConfig($dst_ini);
