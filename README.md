@@ -130,7 +130,7 @@ Manual installation
     <td>Namalsk Island</td><td>namalsk</td><td>@dayz;@dayz_namalsk</td><td>0.60</td><td>ftp://dayzcommander:dayzcommander@94.242.227.3/DayZNamalsk-0.60.rar</td>
   </tr>
   <tr>
-    <td>Celle</td><td>mbg_celle</td><td>@mbg_celle;@dayz_celle;@dayz_conflicts</td><td>1.7.5.1</td><td>http://cdn.dayz.st/dayzcommander/DayZCelle-1.7.5.1.rar</td>
+    <td>Celle</td><td>mbg_celle2</td><td>@mbg_celle;@dayz_celle;@dayz_conflicts</td><td>1.7.5.1</td><td>http://cdn.dayz.st/dayzcommander/DayZCelle-1.7.5.1.rar</td>
   </tr>
   <tr>
     <td>Taviana</td><td>tavi</td><td>@taviana</td><td>1.7.4.4</td><td>http://cdn.dayz.st/dayzcommander/Taviana-1.7.4.4.rar</td>
@@ -202,6 +202,9 @@ A list of Reality-supported packages follows.
   </tr>
   <tr>
     <td>invcust</td><td>--with-invcust</td><td>Allows you to grant custom spawn loadouts to individuals or group, see <b>Custom Inventory</b></td>
+  </tr>
+  <tr>
+    <td>mbg_celle2</td><td>--with-mbg_celle2</td><td>Server-pbo modifications/fixes for celle</b></td>
   </tr>
 </table> 
 
