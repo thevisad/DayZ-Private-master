@@ -148,7 +148,8 @@ This will add an instance for chernarus to the dayz database. It looks at the la
 - perl db_utility.pl addworld chernarus --host 127.0.0.1 --user changeme --pass changeme --name dayz --port 3306
 
 This will delete an instance number that you specify from the database, it will also delete all relevant data from the instance_vehicle, instance_deployable and instance_building.
-perl db_utility.pl deleteinstance 3 --host 127.0.0.1 --user changeme --pass changeme --name tavi --port 3306
+
+- perl db_utility.pl deleteinstance 3 --host 127.0.0.1 --user changeme --pass changeme --name tavi --port 3306
 
 
 Upgrading
@@ -172,10 +173,10 @@ Run `perl db_spawn_vehicles.pl --help` to get help information on how to invoke 
 
 Your options for cleanup are as follows. Default --cleanup will remove all items that are destroyed.
 
-perl db_spawn_vehicles.pl --instance 1 --host localhost --user changeme --pass changeme --name dayz --port 3306 --cleanup
-perl db_spawn_vehicles.pl --instance 1 --host localhost --user changeme --pass changeme --name dayz --port 3306 --cleanup tents
-perl db_spawn_vehicles.pl --instance 1 --host localhost --user changeme --pass changeme --name dayz --port 3306 --cleanup bounds
-perl db_spawn_vehicles.pl --instance 1 --host localhost --user changeme --pass changeme --name dayz --port 3306 --cleanup all
+- perl db_spawn_vehicles.pl --instance 1 --host localhost --user changeme --pass changeme --name dayz --port 3306 --cleanup
+- perl db_spawn_vehicles.pl --instance 1 --host localhost --user changeme --pass changeme --name dayz --port 3306 --cleanup tents
+- perl db_spawn_vehicles.pl --instance 1 --host localhost --user changeme --pass changeme --name dayz --port 3306 --cleanup bounds
+- perl db_spawn_vehicles.pl --instance 1 --host localhost --user changeme --pass changeme --name dayz --port 3306 --cleanup all
 
 **NOTE:** Vehicles added/updated via database manipulation are only available after a server restart.
 
