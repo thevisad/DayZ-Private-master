@@ -346,8 +346,8 @@ if %worldbuild%==2 Set choosenworld=utes & goto build2
 if %worldbuild%==3 Set choosenworld=thirsk & goto build2
 if %worldbuild%==4 Set choosenworld=thirskw & goto build2
 if %worldbuild%==5 Set choosenworld=mbg_celle2 & goto build2
-if %worldbuild%==5 Set choosenworld=skaro.lingor & goto build2
-if %worldbuild%==5 Set choosenworld=dayzplus & goto build2
+if %worldbuild%==6 Set choosenworld=skaro.lingor & goto build2
+if %worldbuild%==7 Set choosenworld=dayzplus & goto build2
 if %worldbuild%==9 goto buildworlds1
 if %worldbuild%==0 goto menu
 cls
