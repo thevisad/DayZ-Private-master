@@ -173,7 +173,7 @@ Run `perl db_spawn_vehicles.pl --help` to get help information on how to invoke 
 
 Your options for cleanup are as follows. Default --cleanup will remove all items that are destroyed.
 
-- perl db_spawn_vehicles.pl --instance 1 --host localhost --user changeme --pass changeme --name dayz --port 3306 --cleanup
+- perl db_spawn_vehicles.pl --instance 1 --host localhost --user changeme --pass changeme --name dayz --port 3306 --cleanup vehicle
 - perl db_spawn_vehicles.pl --instance 1 --host localhost --user changeme --pass changeme --name dayz --port 3306 --cleanup tents
 - perl db_spawn_vehicles.pl --instance 1 --host localhost --user changeme --pass changeme --name dayz --port 3306 --cleanup bounds
 - perl db_spawn_vehicles.pl --instance 1 --host localhost --user changeme --pass changeme --name dayz --port 3306 --cleanup all
