@@ -55,7 +55,7 @@ print "INFO: Instance name dayz_$db{'instance'}.$world_name\n";
 
 my $cleanup = ($args{'cleanup'}) ? $args{'cleanup'} : 'none';
 
-if ($cleanup eq 'none' || $cleanup eq 'all') {
+if ($cleanup eq 'damaged' || $cleanup eq 'all') {
 	print "INFO: Cleaning up damaged vehicles\n";
 	my $sth = $dbh->prepare(<<EndSQL
 delete from
@@ -80,7 +80,7 @@ where
 EndSQL
 ) or die "FATAL: SQL Error - " . DBI->errstr . "\n";
 	$sth->execute() or die "FATAL: Could not clean up old deployables - " . $sth->errstr . "\n";
-	if ($cleanup eq 'none') {goto END;}
+	if ($cleanup eq 'damaged') {goto END;}
 }
 
 if ($cleanup eq 'tents' || $cleanup eq 'all') {
