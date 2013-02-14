@@ -17,7 +17,10 @@ else
 
 _distance = _victim distance _attacker;
 
-diag_log format["PHIT: %1 was hit by %2 with %3 from %4m", _victim, _attacker, _weapon, _distance];
+_victimPlayerID = getPlayerUID _victim;
+_attakerPlayerID = getPlayerUID _attacker;
+
+diag_log format["PHIT: %1 (%5) was hit by %2 (%6) with %3 from %4m", _victim, _attacker, _weapon, _distance, _victimPlayerID, _attakerPlayerID];
 
 _victim setVariable["AttackedBy", _attacker, true];
 _victim setVariable["AttackedByName", (name _attacker), true];
