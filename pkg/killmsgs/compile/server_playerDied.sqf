@@ -28,8 +28,9 @@ if (_killerName != "nil") then
 	}
 	else 
 	{
-		_message = format["%1 was killed by %2 with weapon %3",_victimName, _killerName, _weapon];
-		_loc_message = format["PKILL: %1 was killed by %2 with weapon %3 from %4m", _victimName, _killerName, _weapon, _distance];
+		_killerPlayerID = getPlayerUID _killer;
+		_message = format["%1 was killed by %2 with weapon %3 from %4m",_victimName, _killerName, _weapon, _distance];
+		_loc_message = format["PKILL: %1 (%5) was killed by %2 (%6) with weapon %3 from %4m", _victimName, _killerName, _weapon, _distance, _playerID, _killerPlayerID];
 	};
 
 	diag_log _loc_message;
