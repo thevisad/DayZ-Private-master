@@ -1,4 +1,4 @@
-private ["_victim", "_attacker","_weapon","_distance"];
+private ["_victim", "_attacker","_weapon","_distance","_victimPlayerID","_attakerPlayerID"];
 _victim = _this select 0;
 _attacker = _this select 1;
 
