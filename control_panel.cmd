@@ -408,13 +408,13 @@ echo.                            Control Panel by gdscei
 echo.
 echo You are about to build a server package. Select your packages here. 
 echo.
-echo 1 - Buildings? %buildbuildings%
-echo 2 - Carepackages? %buildcarepkg%
-echo 3 - Custom inventory? %buildinvcust% 
-echo 4 - Kill messages? %buildkillmsg%
-echo 5 - Messaging %buildmsg%
-echo 6 - Disable Server Simulation of Zombies? (ziellos2k)? %buildssZeds%
-echo 7 - Wrecks? %buildwreck%
+echo 1 - Buildings? %buildbuildings% (Place buildings on the map)
+echo 2 - Carepackages? %buildcarepkg% (Small packages with random loot on the map)
+echo 3 - Custom inventory? %buildinvcust% (Get a custom starting inventory)
+echo 4 - Kill messages? %buildkillmsg% (Kill messages in chat)
+echo 5 - Messaging %buildmsg% (Send RCon messages in chat automaticly)
+echo 6 - Disable Server Simulation of Zombies? (ziellos2k)? %buildssZeds% (Only spawn zombies client-side)
+echo 7 - Wrecks? %buildwreck% (Random wrecks around the map with loot)
 echo 8 - Build it!
 echo 9 - More Packages
 echo 0 - Main Menu
@@ -441,7 +441,7 @@ echo Make sure you have the requirements given in the readme before trying this.
 echo.
 echo Which world are you going to be using?
 echo Buildings: %buildbuildings% Carepackages: %buildcarepkg% Custom Inv: %buildinvcust% Kill Msgs:%buildkillmsg% %buildmsg%
-echo 1 - DayZPlus? (yes/no) 
+echo 1 - DayZPlus? (yes/no) (DayZ+ support)
 echo 8 - Build it!
 echo 9 - More Packages
 echo 0 - Main Menu
