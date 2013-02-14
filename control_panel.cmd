@@ -408,7 +408,7 @@ echo.                            Control Panel by gdscei
 echo.
 echo You are about to build a server package. Select your packages here. 
 echo.
-echo 1 - Buildings? %buildbuildings% (Place buildings on the map)
+echo 1 - Buildings? %buildbuildings% (Place buildings on the map through DB)
 echo 2 - Carepackages? %buildcarepkg% (Small packages with random loot on the map)
 echo 3 - Custom inventory? %buildinvcust% (Get a custom starting inventory)
 echo 4 - Kill messages? %buildkillmsg% (Kill messages in chat)
