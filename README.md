@@ -214,6 +214,12 @@ A list of Reality-supported packages follows.
   <tr>
     <td>mbg_celle2</td><td>--with-mbg_celle2</td><td>Server-pbo modifications/fixes for celle</b></td>
   </tr>
+  <tr>
+    <td>dayzplus</td><td>--with-dayzplus</td><td>DayZ+ support.</td>	
+  </tr>
+  <tr>
+    <td>ssZeds</td><td>--with-ssZeds</td><td>Disable server-side zombie simulation (may improve server FPS)</td>
+  </tr>
 </table> 
 
 Multiple Instances
