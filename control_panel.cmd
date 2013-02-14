@@ -1,15 +1,28 @@
 @echo off
-title ^>^>Reality Control Panel^<^<
+
+TITLE ^>^>Reality Control Panel^<^<
 color 0A
 if not exist db_utility.pl goto errfiles
 if not exist build.pl goto errfiles
 if not exist db_migrate.pl goto errfiles
 if not exist db_spawn_vehicles.pl goto errfiles
+echo Beginning build session > build.txt
 :menu
 cls
 echo Setting up...
+
+Set buildbuildings=no
+Set buildcarepkg=no
+Set buildinvcust=no
+Set buildkillmsg=no
+Set buildmsg=no
+Set buildssZeds=no
+Set buildwreck=no
+Set builddayzplus=no
+
+
 echo Getting MySQL info...
-if not exist mysql.txt goto menum
+if not exist mysql.txt goto menum1
 for /f "delims=" %%a in ('findstr /b "host:" mysql.txt') do set hostdb=%%a
 set hostdb=%hostdb:~5%
 for /f "delims=" %%a in ('findstr /b "port:" mysql.txt') do set hostport=%%a
@@ -34,34 +47,150 @@ echo.                            Control Panel by gdscei
 echo.
 echo.
 echo Please select an option from the list below (type the number and press enter)
-echo.
+echo Did you download a new version? Goto setup options and run the migrate now!
 echo.
 echo 1 - Build Worlds
-echo 2 - Spawn Vehicles
-echo 3 - Database Migration
-echo 4 - Set up Perl
-echo 5 - Set up MySQL details
-echo 6 - Migrate from Bliss
-echo 7 - Add instance to DB
-echo 8 - Delete instance from DB
-echo 9 - Exit
+echo 2 - Vehicle/Deployable/Item Menu
+echo 3 - Messages Menu
+echo 7 - Clean up directories
+echo 8 - Setup Options
+echo 0 - Exit
 echo.
 Set menuoption=
 set /p menuoption=: 
 if %menuoption%==1 goto buildworlds
-if %menuoption%==2 goto vehspawn
-if %menuoption%==3 goto schemaspec
-if %menuoption%==4 goto perl
-if %menuoption%==5 goto sqlsetup
-if %menuoption%==6 goto mibliss
-if %menuoption%==7 goto instdb
-if %menuoption%==8 goto deldb
-if %menuoption%==9 exit
+if %menuoption%==2 goto menumv
+if %menuoption%==3 goto menumm
+if %menuoption%==7 goto cleanup
+if %menuoption%==8 goto menum1
+if %menuoption%==0 exit
 goto menu
+
+
+:menum1
+cls
+echo          _______  _______  _______  _       __________________         
+echo         (  ____ )(  ____ \(  ___  )( \      \__   __/\__   __/^|\     /^|
+echo         ^| (    )^|^| (    \/^| (   ) ^|^| (         ) (      ) (   ( \   / )
+echo         ^| (____)^|^| (__    ^| (___) ^|^| ^|         ^| ^|      ^| ^|    \ (_) / 
+echo         ^|     __)^|  __)   ^|  ___  ^|^| ^|         ^| ^|      ^| ^|     \   /  
+echo         ^| (\ (   ^| (      ^| (   ) ^|^| ^|         ^| ^|      ^| ^|      ) (   
+echo         ^| ) \ \__^| (____/\^| )   ( ^|^| (____/\___) (___   ^| ^|      ^| ^|   
+echo         ^|/   \__/(_______/^|/     \^|(_______/\_______/   )_(      \_/   
+echo.                            Control Panel by gdscei
+echo.
+echo.
+echo Please select an option from the list below (type the number and press enter)
+echo.
+echo.
+echo 1 - Set up Perl
+echo 2 - Set up MySQL details
+echo 3 - Database Installation
+echo 4 - Update Battleye scripts
+echo 5 - Add instance to DB
+echo 6 - Delete instance from DB
+echo 7 - Delete all references to a world
+echo 8 - Migrate from Bliss
+echo 0 - Main menu
+echo.
+Set menuoption=
+set /p menuoption=: 
+if %menuoption%==1 goto perl
+if %menuoption%==2 goto sqlsetup
+if %menuoption%==3 goto schemaspec
+if %menuoption%==4 goto 
+if %menuoption%==5 goto instdb
+if %menuoption%==6 goto deldb
+if %menuoption%==7 goto 
+if %menuoption%==8 goto mireality
+if %menuoption%==0 goto menu
+goto menu
+
+
+:menumv
+cls
+echo          _______  _______  _______  _       __________________         
+echo         (  ____ )(  ____ \(  ___  )( \      \__   __/\__   __/^|\     /^|
+echo         ^| (    )^|^| (    \/^| (   ) ^|^| (         ) (      ) (   ( \   / )
+echo         ^| (____)^|^| (__    ^| (___) ^|^| ^|         ^| ^|      ^| ^|    \ (_) / 
+echo         ^|     __)^|  __)   ^|  ___  ^|^| ^|         ^| ^|      ^| ^|     \   /  
+echo         ^| (\ (   ^| (      ^| (   ) ^|^| ^|         ^| ^|      ^| ^|      ) (   
+echo         ^| ) \ \__^| (____/\^| )   ( ^|^| (____/\___) (___   ^| ^|      ^| ^|   
+echo         ^|/   \__/(_______/^|/     \^|(_______/\_______/   )_(      \_/   
+echo.                            Control Panel by gdscei
+echo.
+echo.
+echo Please select an option from the list below (type the number and press enter)
+echo.
+echo.
+echo 1 - Spawn Vehicles
+echo 2 - Clean Vehicles
+echo 3 - Clean Tents
+echo 4 - Clean Bounds
+echo 5 - Clean All
+echo 6 - Clean Dead Survivors
+echo 7 - Item Distribution
+echo 8 - Clean Items
+echo 0 - Main menu
+echo.
+Set menuoption=
+set /p menuoption=: 
+if %menuoption%==1 goto vehspawn
+if %menuoption%==2 goto vehclean
+if %menuoption%==3 goto tentsclean
+if %menuoption%==4 goto boundsclean
+if %menuoption%==5 goto allclean
+if %menuoption%==6 goto survclean
+if %menuoption%==7 goto itemdist
+if %menuoption%==8 goto cleanitem
+if %menuoption%==0 goto menu
+goto menu
+
+:menumm
+cls
+echo          _______  _______  _______  _       __________________         
+echo         (  ____ )(  ____ \(  ___  )( \      \__   __/\__   __/^|\     /^|
+echo         ^| (    )^|^| (    \/^| (   ) ^|^| (         ) (      ) (   ( \   / )
+echo         ^| (____)^|^| (__    ^| (___) ^|^| ^|         ^| ^|      ^| ^|    \ (_) / 
+echo         ^|     __)^|  __)   ^|  ___  ^|^| ^|         ^| ^|      ^| ^|     \   /  
+echo         ^| (\ (   ^| (      ^| (   ) ^|^| ^|         ^| ^|      ^| ^|      ) (   
+echo         ^| ) \ \__^| (____/\^| )   ( ^|^| (____/\___) (___   ^| ^|      ^| ^|   
+echo         ^|/   \__/(_______/^|/     \^|(_______/\_______/   )_(      \_/   
+echo.                            Control Panel by gdscei
+echo.
+echo.
+echo Please select an option from the list below (type the number and press enter)
+echo.
+echo.
+echo 1 - Message List
+echo 2 - Message Add
+echo 3 - Message Edit
+echo 4 - Message Delete
+echo 0 - Main Menu
+echo.
+Set menuoption=
+set /p menuoption=: 
+if %menuoption%==1 goto messagelist
+if %menuoption%==2 goto messageadd
+if %menuoption%==3 goto messageedit
+if %menuoption%==4 goto messagedel
+if %menuoption%==0 goto menu
+goto menu
+
 
 :instdb
 if not exist mysql.txt goto errsqlsetup
 cls
+echo          _______  _______  _______  _       __________________         
+echo         (  ____ )(  ____ \(  ___  )( \      \__   __/\__   __/^|\     /^|
+echo         ^| (    )^|^| (    \/^| (   ) ^|^| (         ) (      ) (   ( \   / )
+echo         ^| (____)^|^| (__    ^| (___) ^|^| ^|         ^| ^|      ^| ^|    \ (_) / 
+echo         ^|     __)^|  __)   ^|  ___  ^|^| ^|         ^| ^|      ^| ^|     \   /  
+echo         ^| (\ (   ^| (      ^| (   ) ^|^| ^|         ^| ^|      ^| ^|      ) (   
+echo         ^| ) \ \__^| (____/\^| )   ( ^|^| (____/\___) (___   ^| ^|      ^| ^|   
+echo         ^|/   \__/(_______/^|/     \^|(_______/\_______/   )_(      \_/   
+echo.                            Control Panel by gdscei
+echo.
 echo Please give the world you want to add.
 echo.
 echo 1 - Chernarus
@@ -70,16 +199,15 @@ echo 3 - Thirsk
 echo 4 - Thirskw
 echo 5 - Celle
 echo 6 - Lingor (Skaronator.com)
-echo 0 - Back to menu
+echo 0 - Main Menu
 echo.
 Set worldins=
 set /p worldins=: 
-if %worldins%==1 Set worldins = chernarus & goto addInstance
-if %worldins%==2 Set worldins = utes & goto addInstance
-if %worldins%==3 Set worldins = thirsk & goto addInstance
-if %worldins%==4 Set worldins = thirskw & goto addInstance
-if %worldins%==5 Set worldins = celle & goto addInstance
-if %worldins%==6 Set worldins = skaro.lingor & goto addInstance
+if %worldins%==1 Set worldins=chernarus & goto addInstance
+if %worldins%==2 Set worldins=utes & goto addInstance
+if %worldins%==3 Set worldins=thirsk & goto addInstance
+if %worldins%==4 Set worldins=thirskw & goto addInstance
+if %worldins%==5 Set worldins=celle & goto addInstance
 if %worldins%==9 goto moreworlds
 if %worldins%==0 goto menu
 cls
@@ -88,6 +216,16 @@ goto menu
 :moreworlds
 if not exist mysql.txt goto errsqlsetup
 cls
+echo          _______  _______  _______  _       __________________         
+echo         (  ____ )(  ____ \(  ___  )( \      \__   __/\__   __/^|\     /^|
+echo         ^| (    )^|^| (    \/^| (   ) ^|^| (         ) (      ) (   ( \   / )
+echo         ^| (____)^|^| (__    ^| (___) ^|^| ^|         ^| ^|      ^| ^|    \ (_) / 
+echo         ^|     __)^|  __)   ^|  ___  ^|^| ^|         ^| ^|      ^| ^|     \   /  
+echo         ^| (\ (   ^| (      ^| (   ) ^|^| ^|         ^| ^|      ^| ^|      ) (   
+echo         ^| ) \ \__^| (____/\^| )   ( ^|^| (____/\___) (___   ^| ^|      ^| ^|   
+echo         ^|/   \__/(_______/^|/     \^|(_______/\_______/   )_(      \_/   
+echo.                            Control Panel by gdscei
+echo.
 echo Please give the world you want to add.
 echo.
 echo 1 - Taviana - Not Supported Yet
@@ -98,16 +236,15 @@ echo 5 - Zargabad - Not Supported Yet
 echo 6 - Panthera - Not Supported Yet
 echo 8 - Goto Main
 echo 9 - More Worlds
-echo 0 - Back to menu
+echo 0 - Main Menu
 echo.
 Set worldins=
 set /p worldins=: 
-if %worldins%==1 Set worldins = chernarus & goto addInstance
-if %worldins%==2 Set worldins = utes & goto addInstance
-if %worldins%==3 Set worldins = thirsk & goto addInstance
-if %worldins%==4 Set worldins = thirskw & goto addInstance
-if %worldins%==5 Set worldins = celle & goto addInstance
-if %worldins%==6 Set worldins = skaro.lingor & goto addInstance
+if %worldins%==1 Set worldins=chernarus & goto addInstance
+if %worldins%==2 Set worldins=utes & goto addInstance
+if %worldins%==3 Set worldins=thirsk & goto addInstance
+if %worldins%==4 Set worldins=thirskw & goto addInstance
+if %worldins%==5 Set worldins=mbg_celle2 & goto addInstance
 if %worldins%==8 goto instdb
 if %worldins%==9 goto moreworlds
 if %worldins%==0 goto menu
@@ -116,6 +253,16 @@ goto menu
 
 :addInstance
 echo Adding instance...
+echo          _______  _______  _______  _       __________________         
+echo         (  ____ )(  ____ \(  ___  )( \      \__   __/\__   __/^|\     /^|
+echo         ^| (    )^|^| (    \/^| (   ) ^|^| (         ) (      ) (   ( \   / )
+echo         ^| (____)^|^| (__    ^| (___) ^|^| ^|         ^| ^|      ^| ^|    \ (_) / 
+echo         ^|     __)^|  __)   ^|  ___  ^|^| ^|         ^| ^|      ^| ^|     \   /  
+echo         ^| (\ (   ^| (      ^| (   ) ^|^| ^|         ^| ^|      ^| ^|      ) (   
+echo         ^| ) \ \__^| (____/\^| )   ( ^|^| (____/\___) (___   ^| ^|      ^| ^|   
+echo         ^|/   \__/(_______/^|/     \^|(_______/\_______/   )_(      \_/   
+echo.                            Control Panel by gdscei
+echo.
 db_utility.pl addinstance %worldins% --host %hostdb% --user %hostun% --pass %hostpw% --name %hostnm% --port %hostport%
 pause
 goto menu
@@ -123,6 +270,16 @@ goto menu
 :deldb
 if not exist mysql.txt goto errsqlsetup
 cls
+echo          _______  _______  _______  _       __________________         
+echo         (  ____ )(  ____ \(  ___  )( \      \__   __/\__   __/^|\     /^|
+echo         ^| (    )^|^| (    \/^| (   ) ^|^| (         ) (      ) (   ( \   / )
+echo         ^| (____)^|^| (__    ^| (___) ^|^| ^|         ^| ^|      ^| ^|    \ (_) / 
+echo         ^|     __)^|  __)   ^|  ___  ^|^| ^|         ^| ^|      ^| ^|     \   /  
+echo         ^| (\ (   ^| (      ^| (   ) ^|^| ^|         ^| ^|      ^| ^|      ) (   
+echo         ^| ) \ \__^| (____/\^| )   ( ^|^| (____/\___) (___   ^| ^|      ^| ^|   
+echo         ^|/   \__/(_______/^|/     \^|(_______/\_______/   )_(      \_/   
+echo.                            Control Panel by gdscei
+echo.
 echo Please give the instance you want to delete.
 echo.
 echo 1 - ??
@@ -135,17 +292,39 @@ db_utility.pl deleteinstance %instance% --host %hostdb% --user %hostun% --pass %
 pause
 goto menu
 
-:mibliss
+:mireality
 if not exist mysql.txt goto errsqlsetup
 cls
+echo          _______  _______  _______  _       __________________         
+echo         (  ____ )(  ____ \(  ___  )( \      \__   __/\__   __/^|\     /^|
+echo         ^| (    )^|^| (    \/^| (   ) ^|^| (         ) (      ) (   ( \   / )
+echo         ^| (____)^|^| (__    ^| (___) ^|^| ^|         ^| ^|      ^| ^|    \ (_) / 
+echo         ^|     __)^|  __)   ^|  ___  ^|^| ^|         ^| ^|      ^| ^|     \   /  
+echo         ^| (\ (   ^| (      ^| (   ) ^|^| ^|         ^| ^|      ^| ^|      ) (   
+echo         ^| ) \ \__^| (____/\^| )   ( ^|^| (____/\___) (___   ^| ^|      ^| ^|   
+echo         ^|/   \__/(_______/^|/     \^|(_______/\_______/   )_(      \_/   
+echo.                            Control Panel by gdscei
+echo.
 db_migrate.pl --host %hostdb% --user %hostun% --pass %hostpw% --name %hostnm% --port %hostport% --schema RealityMigrate --version 0.01
 pause
 goto menu
 
+:cleanup
+build.pl --clean
+goto menu
+
 :buildworlds
 cls
-echo You are about to build a server package.
-echo Make sure you have the requirements given in the readme before trying this.
+echo          _______  _______  _______  _       __________________         
+echo         (  ____ )(  ____ \(  ___  )( \      \__   __/\__   __/^|\     /^|
+echo         ^| (    )^|^| (    \/^| (   ) ^|^| (         ) (      ) (   ( \   / )
+echo         ^| (____)^|^| (__    ^| (___) ^|^| ^|         ^| ^|      ^| ^|    \ (_) / 
+echo         ^|     __)^|  __)   ^|  ___  ^|^| ^|         ^| ^|      ^| ^|     \   /  
+echo         ^| (\ (   ^| (      ^| (   ) ^|^| ^|         ^| ^|      ^| ^|      ) (   
+echo         ^| ) \ \__^| (____/\^| )   ( ^|^| (____/\___) (___   ^| ^|      ^| ^|   
+echo         ^|/   \__/(_______/^|/     \^|(_______/\_______/   )_(      \_/   
+echo.                            Control Panel by gdscei
+echo.
 echo.
 echo Which world are you going to be using?
 echo.
@@ -155,8 +334,9 @@ echo 3 - Thirsk
 echo 4 - Thirskw
 echo 5 - Celle
 echo 6 - Lingor (Skaronator.com)
+echo 7 - Dayz+
 echo 9 - More Worlds
-echo 0 - Back to menu
+echo 0 - Main Menu
 echo.
 Set worldbuild=
 Set choosenworld=
@@ -167,6 +347,7 @@ if %worldbuild%==3 Set choosenworld=thirsk & goto build2
 if %worldbuild%==4 Set choosenworld=thirskw & goto build2
 if %worldbuild%==5 Set choosenworld=mbg_celle2 & goto build2
 if %worldbuild%==6 Set choosenworld=skaro.lingor & goto build2
+if %worldbuild%==7 Set choosenworld=dayzplus & goto build2
 if %worldbuild%==9 goto buildworlds1
 if %worldbuild%==0 goto menu
 cls
@@ -174,8 +355,16 @@ goto menu
 
 :buildworlds1
 cls
-echo You are about to build a server package.
-echo Make sure you have the requirements given in the readme before trying this.
+echo          _______  _______  _______  _       __________________         
+echo         (  ____ )(  ____ \(  ___  )( \      \__   __/\__   __/^|\     /^|
+echo         ^| (    )^|^| (    \/^| (   ) ^|^| (         ) (      ) (   ( \   / )
+echo         ^| (____)^|^| (__    ^| (___) ^|^| ^|         ^| ^|      ^| ^|    \ (_) / 
+echo         ^|     __)^|  __)   ^|  ___  ^|^| ^|         ^| ^|      ^| ^|     \   /  
+echo         ^| (\ (   ^| (      ^| (   ) ^|^| ^|         ^| ^|      ^| ^|      ) (   
+echo         ^| ) \ \__^| (____/\^| )   ( ^|^| (____/\___) (___   ^| ^|      ^| ^|   
+echo         ^|/   \__/(_______/^|/     \^|(_______/\_______/   )_(      \_/   
+echo.                            Control Panel by gdscei
+echo.
 echo.
 echo Which world are you going to be using?
 echo.
@@ -187,17 +376,17 @@ echo 5 - Zargabad - Not Supported Yet
 echo 6 - Panthera - Not Supported Yet
 echo 8 - Goto Main Worlds Panel
 echo 9 - More Worlds (Main Worlds Panel Currently)
-echo 0 - Back to menu
+echo 0 - Main Menu
 echo.
 Set worldbuild=
 Set choosenworld=
 set /p worldbuild=: 
-if %worldbuild%==1 Set choosenworld=tavi & goto build2
-if %worldbuild%==2 Set choosenworld=takistan & goto build2
-if %worldbuild%==3 Set choosenworld=fallujah & goto build2
-if %worldbuild%==4 Set choosenworld=lingor & goto build2
-if %worldbuild%==5 Set choosenworld=zargabad & goto build2
-if %worldbuild%==6 Set choosenworld=panthera2 & goto build2
+if %worldbuild%==1 Set choosenworld=tavi & goto build23
+if %worldbuild%==2 Set choosenworld=takistan & goto build23
+if %worldbuild%==3 Set choosenworld=fallujah & goto build23
+if %worldbuild%==4 Set choosenworld=lingor & goto build23
+if %worldbuild%==5 Set choosenworld=zargabad & goto build23
+if %worldbuild%==6 Set choosenworld=panthera2 & goto build23
 if %worldbuild%==8 goto buildworlds
 if %worldbuild%==9 goto buildworlds
 if %worldbuild%==0 goto menu
@@ -207,48 +396,74 @@ goto menu
 
 :build2
 cls
-echo Which packages do you want?
+echo          _______  _______  _______  _       __________________         
+echo         (  ____ )(  ____ \(  ___  )( \      \__   __/\__   __/^|\     /^|
+echo         ^| (    )^|^| (    \/^| (   ) ^|^| (         ) (      ) (   ( \   / )
+echo         ^| (____)^|^| (__    ^| (___) ^|^| ^|         ^| ^|      ^| ^|    \ (_) / 
+echo         ^|     __)^|  __)   ^|  ___  ^|^| ^|         ^| ^|      ^| ^|     \   /  
+echo         ^| (\ (   ^| (      ^| (   ) ^|^| ^|         ^| ^|      ^| ^|      ) (   
+echo         ^| ) \ \__^| (____/\^| )   ( ^|^| (____/\___) (___   ^| ^|      ^| ^|   
+echo         ^|/   \__/(_______/^|/     \^|(_______/\_______/   )_(      \_/   
+echo.                            Control Panel by gdscei
 echo.
-echo Buildings? (yes/no)
+echo You are about to build a server package. Select your packages here. 
 echo.
-Set buildbuildings=
-set /p buildbuildings=: 
+echo 1 - Buildings? %buildbuildings%
+echo 2 - Carepackages? %buildcarepkg%
+echo 3 - Custom inventory? %buildinvcust% 
+echo 4 - Kill messages? %buildkillmsg%
+echo 5 - Messaging %buildmsg%
+echo 6 - Disable Server Simulation of Zombies? (ziellos2k)? %buildssZeds%
+echo 7 - Wrecks? %buildwreck%
+echo 8 - Build it!
+echo 9 - More Packages
+echo 0 - Main Menu
+echo.
+Set buildworldsswitch=
+set /p buildworldsswitch=: 
+if %buildworldsswitch%==1 Set buildbuildings=yes & echo hello
+if %buildworldsswitch%==2 Set buildcarepkg=yes
+if %buildworldsswitch%==3 Set buildinvcust=yes
+if %buildworldsswitch%==4 Set buildkillmsg=yes
+if %buildworldsswitch%==5 Set buildmsg=yes
+if %buildworldsswitch%==6 Set buildssZeds=yes
+if %buildworldsswitch%==7 Set buildwreck=yes
+if %buildworldsswitch%==8 goto build3
+if %buildworldsswitch%==9 goto build21
+if %buildworldsswitch%==0 goto menu
 cls
-echo Carepackages? (yes/no)
-echo.
-Set buildcarepkg=
-set /p buildcarepkg=: 
+goto build2
+
+:build21
 cls
-echo Custom inventory? (yes/no)
+echo You are about to build a server package.
+echo Make sure you have the requirements given in the readme before trying this.
 echo.
-Set buildinvcust=
-set /p buildinvcust=: 
-cls
-echo Kill messages? (yes/no)
+echo Which world are you going to be using?
+echo Buildings: %buildbuildings% Carepackages: %buildcarepkg% Custom Inv: %buildinvcust% Kill Msgs:%buildkillmsg% %buildmsg%
+echo 1 - DayZPlus? (yes/no) 
+echo 8 - Build it!
+echo 9 - More Packages
+echo 0 - Main Menu
 echo.
-Set buildkillmsg=
-set /p buildkillmsg=: 
+Set buildworldsswitch=
+set /p buildworldsswitch=: 
+if %buildworldsswitch%==1 Set builddayzplus=yes
+if %buildworldsswitch%==8 goto build3
+if %buildworldsswitch%==9 goto build2
+if %buildworldsswitch%==0 goto menu
 cls
-echo Messaging? (yes/no)
-echo.
-Set buildmsg=
-set /p buildmsg=: 
-cls
-echo Wrecks? (yes/no)
-echo.
-Set buildwreck=
-set /p buildwreck=: 
-cls
-echo Disable Server Simulation of Zombies? (ziellos2k)? (yes/no)
-echo.
-Set buildssZeds=
-set /p buildssZeds=: 
-cls
+goto build21
+
+
+:build3
 echo What should be the instance number? (1 is default)
 echo.
 Set buildinst=
 set /p buildinst=: 
 cls
+
+:build4
 echo You are about to build a %choosenworld% server with instance number %buildinst%, incl. the following packages:
 echo.
 echo Buildings: %buildbuildings%
@@ -257,23 +472,117 @@ echo Custom Inventroy: %buildinvcust%
 echo Kill Messages: %buildkillmsg%
 echo Messaging: %buildmsg%
 echo Wrecks: %buildwreck%
-echo ssZeds: %buildssZeds%
+echo ssZeds: %ssZeds%
+echo DayZPlus: %dayzplus%
 echo.
 echo If you do not wish to continue, please close the window. Else, press any key.
 echo.
 pause
-cls
+
 echo Building server...
 if %buildbuildings%==yes set buildbuild=--with-buildings
+echo buildbuildings %buildbuildings%>> build.txt
 if %buildcarepkg%==yes set buildcare=--with-carepkgs
+echo buildcarepkg %buildcarepkg%>> build.txt
 if %buildinvcust%==yes set buildinv=--with-invcust
+echo buildinvcust %buildinvcust%>> build.txt
 if %buildkillmsg%==yes set buildkill=--with-killmsgs
+echo buildkillmsg %buildkillmsg% >> build.txt
 if %buildmsg%==yes set buildmes=--with-messaging
+echo buildmsg %buildmsg%>> build.txt
 if %buildwreck%==yes set buildwrecks=--with-wrecks
-if %buildssZeds%==yes set buildss=--with-ssZeds
-build.pl --world %choosenworld% --instance %buildinst% %buildbuild% %buildcare% %buildinv% %buildkill% %buildmes% %buildwrecks% %buildss%
-pause
+echo buildwreck %buildwreck%>> build.txt
+if %buildssZeds%==yes set ssZeds=--with-ssZeds
+echo buildssZeds %buildssZeds%>> build.txt
+if %builddayzplus%==yes set dayzplus = --with-dayzplus
+echo builddayzplus %builddayzplus%>> build.txt 
+build.pl --world %choosenworld% --instance %buildinst% %buildbuild% %buildcare% %dayzplus% %buildinv% %buildkill% %buildmes% %buildwrecks% %ssZeds% 
+echo built --world %choosenworld% --instance %buildinst% %buildbuild% %buildcare% %dayzplus% %buildinv% %buildkill% %buildmes% %buildwrecks% %ssZeds%  >> build.txt & pause
 goto menu
+
+
+:messagelist
+if not exist mysql.txt goto errsqlsetup
+cls
+echo Please specify the search phrase (optional)
+echo.
+Set phrase=
+set /p phrase=: 
+cls
+db_utility.pl --host %hostdb% --user %hostun% --pass %hostpw% --name %hostnm% --port %hostport% --instance %instn% messages list %phrase%
+pause
+goto menumm
+
+:messageadd
+if not exist mysql.txt goto errsqlsetup
+cls 
+echo Please specify the instance number
+echo.
+Set instn=
+set /p instn=: 
+cls
+echo Please specify the start delay
+echo.
+Set startdelay=
+set /p startdelay=: 
+cls
+echo Please specify the loop interval
+echo.
+Set looptime=
+set /p looptime=: 
+cls
+echo Please specify the message
+echo.
+Set message=
+set /p message=: 
+cls
+db_utility.pl --host %hostdb% --user %hostun% --pass %hostpw% --name %hostnm% --port %hostport% --instance %instn% messages add %instn% %startdelay% %looptime% %message%
+pause
+goto menumm
+
+:messageedit
+if not exist mysql.txt goto errsqlsetup
+cls 
+echo Please specify the instance number
+echo.
+Set instn=
+set /p instn=: 
+cls
+echo Please specify the Message ID
+echo.
+Set messageid=
+set /p messageid=: 
+cls
+echo Please specify the start delay
+echo.
+Set startdelay=
+set /p startdelay=: 
+cls
+echo Please specify the loop interval
+echo.
+Set looptime=
+set /p looptime=: 
+cls
+echo Please specify the message
+echo.
+Set message=
+set /p message=: 
+cls
+db_utility.pl --host %hostdb% --user %hostun% --pass %hostpw% --name %hostnm% --port %hostport% --instance %instn% messages edit %messageid% %instn% %startdelay% %looptime% %message%
+pause
+goto menumm
+
+:messagedel
+if not exist mysql.txt goto errsqlsetup
+cls
+echo Please specify the message ID
+echo.
+Set messageid=
+set /p messageid=: 
+cls
+db_utility.pl --host %hostdb% --user %hostun% --pass %hostpw% --name %hostnm% --port %hostport% --instance %instn% messages del %messageid%
+pause
+goto menumm
 
 :vehspawn
 if not exist mysql.txt goto errsqlsetup
@@ -284,6 +593,99 @@ Set instn=
 set /p instn=: 
 cls
 db_spawn_vehicles.pl --host %hostdb% --user %hostun% --pass %hostpw% --name %hostnm% --port %hostport% --instance %instn% --cleanup bounds
+pause
+goto menumv
+
+:vehclean
+if not exist mysql.txt goto errsqlsetup
+cls
+echo Please specify the instance number (default is 1)
+echo.
+Set instn=
+set /p instn=: 
+cls
+db_spawn_vehicles.pl --host %hostdb% --user %hostun% --pass %hostpw% --name %hostnm% --port %hostport% --instance %instn% --cleanup
+pause
+goto menumv
+
+:tentsclean
+if not exist mysql.txt goto errsqlsetup
+cls
+echo Please specify the instance number (default is 1)
+echo.
+Set instn=
+set /p instn=: 
+cls
+db_spawn_vehicles.pl --host %hostdb% --user %hostun% --pass %hostpw% --name %hostnm% --port %hostport% --instance %instn% --cleandeploy tents
+pause
+goto menumv
+
+:boundsclean
+if not exist mysql.txt goto errsqlsetup
+cls
+echo Please specify the instance number (default is 1)
+echo.
+Set instn=
+set /p instn=: 
+cls
+db_spawn_vehicles.pl --host %hostdb% --user %hostun% --pass %hostpw% --name %hostnm% --port %hostport% --instance %instn% --cleanup bounds
+pause
+goto menumv
+
+:allclean
+if not exist mysql.txt goto errsqlsetup
+cls
+echo Please specify the instance number (default is 1)
+echo.
+Set instn=
+set /p instn=: 
+cls
+db_spawn_vehicles.pl --host %hostdb% --user %hostun% --pass %hostpw% --name %hostnm% --port %hostport% --instance %instn% --cleanup all 
+pause
+goto menumv
+
+:survclean
+if not exist mysql.txt goto errsqlsetup
+cls
+echo Please specify the instance number (default is 1)
+echo.
+Set instn=
+set /p instn=: 
+cls
+echo Please specify the number of days to clean
+Set daystoClean=
+set /p daystoClean=: 
+cls
+db_utility.pl --host %hostdb% --user %hostun% --pass %hostpw% --name %hostnm% --port %hostport% --instance %instn% --cleandead %daystoClean%
+pause
+goto menu
+
+:cleanitem
+if not exist mysql.txt goto errsqlsetup
+cls
+echo Please specify the instance number (default is 1)
+echo.
+Set instn=
+set /p instn=: 
+cls
+echo Please specify the items to clean (seperated by a comma)
+echo.
+Set itemtoclean=
+set /p itemtoclean=: 
+cls
+db_utility.pl --host %hostdb% --user %hostun% --pass %hostpw% --name %hostnm% --port %hostport% --instance %instn% --cleanitem %itemtoclean%
+pause
+goto menu
+
+:itemdist
+if not exist mysql.txt goto errsqlsetup
+cls
+echo Please specify the instance number (default is 1)
+echo.
+Set instn=
+set /p instn=: 
+cls
+db_utility.pl --host %hostdb% --user %hostun% --pass %hostpw% --name %hostnm% --port %hostport% --instance %instn% --itemdistr
 pause
 goto menu
 
@@ -339,15 +741,31 @@ echo 1 - Reality main (required)
 echo 2 - RealityBuildings
 echo 3 - RealityMessaging
 echo 4 - RealityInvCust
-echo 5 - Thirsk
-echo 6 - Thirsk Winter
-echo 7 - Lingor (Skaronator.com)
 echo 8 - Back to menu
+echo 9 - Goto Schema Page 2
 echo.
 Set scheme=:
 set /p scheme=: 
 if %scheme%==8 goto menu
+if %scheme%==9 goto schemaspec1
 goto schemaspecs
+
+:schemaspec1
+cls
+echo Here you can select what you want to put into the DB.
+echo.
+echo 1 - DayzPlus
+echo 2 - Thirsk
+echo 3 - Thirsk Winter
+echo 4 - Lingor (Skaronator.com)
+echo 8 - Back to menu
+echo 9 - Goto Schema Page 1
+echo.
+Set scheme=:
+set /p scheme=: 
+if %scheme%==8 goto menu
+if %scheme%==9 goto schemaspec
+goto schemaspecs1
 
 :schemaspecs
 cls
@@ -355,11 +773,18 @@ if %scheme%==1 db_migrate.pl --host %hostdb% --user %hostun% --pass %hostpw% --n
 if %scheme%==2 db_migrate.pl --host %hostdb% --user %hostun% --pass %hostpw% --name %hostnm% --port %hostport% --schema RealityBuildings --version 0.01
 if %scheme%==3 db_migrate.pl --host %hostdb% --user %hostun% --pass %hostpw% --name %hostnm% --port %hostport% --schema RealityMessaging --version 0.01
 if %scheme%==4 db_migrate.pl --host %hostdb% --user %hostun% --pass %hostpw% --name %hostnm% --port %hostport% --schema RealityInvCust --version 0.02
-if %scheme%==5 db_migrate.pl --host %hostdb% --user %hostun% --pass %hostpw% --name %hostnm% --port %hostport% --schema RealityThirsk --version 0.01
-if %scheme%==6 db_migrate.pl --host %hostdb% --user %hostun% --pass %hostpw% --name %hostnm% --port %hostport% --schema RealityThirskWinter --version 0.01
-if %scheme%==7 db_migrate.pl --host %hostdb% --user %hostun% --pass %hostpw% --name %hostnm% --port %hostport% --schema RealitySkaroLingor --version 0.01
+
 pause
 goto schemaspec
+
+:schemaspecs1
+cls
+if %scheme%==1 db_migrate.pl --host %hostdb% --user %hostun% --pass %hostpw% --name %hostnm% --port %hostport% --schema RealityDayzPlus --version 0.01
+if %scheme%==2 db_migrate.pl --host %hostdb% --user %hostun% --pass %hostpw% --name %hostnm% --port %hostport% --schema RealityThirsk --version 0.01
+if %scheme%==3 db_migrate.pl --host %hostdb% --user %hostun% --pass %hostpw% --name %hostnm% --port %hostport% --schema RealityThirskWinter --version 0.01
+if %scheme%==4 db_migrate.pl --host %hostdb% --user %hostun% --pass %hostpw% --name %hostnm% --port %hostport% --schema RealitySkaroLingor --version 0.01
+pause
+goto schemaspec1
 
 :perl
 cls

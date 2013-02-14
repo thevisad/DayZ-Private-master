@@ -130,7 +130,7 @@ Manual installation
     <td>Namalsk Island</td><td>namalsk</td><td>@dayz;@dayz_namalsk</td><td>0.60</td><td>ftp://dayzcommander:dayzcommander@94.242.227.3/DayZNamalsk-0.60.rar</td>
   </tr>
   <tr>
-    <td>Celle</td><td>mbg_celle</td><td>@mbg_celle;@dayz_celle;@dayz_conflicts</td><td>1.7.5.1</td><td>http://cdn.dayz.st/dayzcommander/DayZCelle-1.7.5.1.rar</td>
+    <td>Celle</td><td>mbg_celle2</td><td>@mbg_celle;@dayz_celle;@dayz_conflicts</td><td>1.7.5.1</td><td>http://cdn.dayz.st/dayzcommander/DayZCelle-1.7.5.1.rar</td>
   </tr>
   <tr>
     <td>Taviana</td><td>tavi</td><td>@taviana</td><td>1.7.4.4</td><td>http://cdn.dayz.st/dayzcommander/Taviana-1.7.4.4.rar</td>
@@ -148,7 +148,8 @@ This will add an instance for chernarus to the dayz database. It looks at the la
 - perl db_utility.pl addworld chernarus --host 127.0.0.1 --user changeme --pass changeme --name dayz --port 3306
 
 This will delete an instance number that you specify from the database, it will also delete all relevant data from the instance_vehicle, instance_deployable and instance_building.
-perl db_utility.pl deleteinstance 3 --host 127.0.0.1 --user changeme --pass changeme --name tavi --port 3306
+
+- perl db_utility.pl deleteinstance 3 --host 127.0.0.1 --user changeme --pass changeme --name tavi --port 3306
 
 
 Upgrading
@@ -169,6 +170,13 @@ Vehicles
 ========
 
 Run `perl db_spawn_vehicles.pl --help` to get help information on how to invoke the vehicle spawn script correctly. You will need to run the vehicle script and point it to your database to get vehicles to spawn in-game. The script can be run periodically - it will not delete all vehicles every time it runs. It will clean up user-deployed objects (wire fence, tents, tank traps, etc) in the same way that official DayZ does. If you run db_spawn_vehicles.pl with the `--cleanup bounds` argument, it will also check for out-of-bounds objects and delete them.
+
+Your options for cleanup are as follows. Default --cleanup will remove all items that are destroyed.
+
+- perl db_spawn_vehicles.pl --instance 1 --host localhost --user changeme --pass changeme --name dayz --port 3306 --cleanup damaged
+- perl db_spawn_vehicles.pl --instance 1 --host localhost --user changeme --pass changeme --name dayz --port 3306 --cleanup tents
+- perl db_spawn_vehicles.pl --instance 1 --host localhost --user changeme --pass changeme --name dayz --port 3306 --cleanup bounds
+- perl db_spawn_vehicles.pl --instance 1 --host localhost --user changeme --pass changeme --name dayz --port 3306 --cleanup all
 
 **NOTE:** Vehicles added/updated via database manipulation are only available after a server restart.
 
@@ -202,6 +210,9 @@ A list of Reality-supported packages follows.
   </tr>
   <tr>
     <td>invcust</td><td>--with-invcust</td><td>Allows you to grant custom spawn loadouts to individuals or group, see <b>Custom Inventory</b></td>
+  </tr>
+  <tr>
+    <td>mbg_celle2</td><td>--with-mbg_celle2</td><td>Server-pbo modifications/fixes for celle</b></td>
   </tr>
 </table> 
 

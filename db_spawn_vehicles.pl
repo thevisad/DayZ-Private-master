@@ -55,7 +55,7 @@ print "INFO: Instance name dayz_$db{'instance'}.$world_name\n";
 
 my $cleanup = ($args{'cleanup'}) ? $args{'cleanup'} : 'none';
 
-if ($cleanup eq 'none') {
+if ($cleanup eq 'none' || $cleanup eq 'all') {
 	print "INFO: Cleaning up damaged vehicles\n";
 	my $sth = $dbh->prepare(<<EndSQL
 delete from
@@ -80,6 +80,7 @@ where
 EndSQL
 ) or die "FATAL: SQL Error - " . DBI->errstr . "\n";
 	$sth->execute() or die "FATAL: Could not clean up old deployables - " . $sth->errstr . "\n";
+	if ($cleanup eq 'none') {goto END;}
 }
 
 if ($cleanup eq 'tents' || $cleanup eq 'all') {
@@ -95,6 +96,8 @@ where
 EndSQL
 ) or die "FATAL: SQL Error - " . DBI->errstr . "\n";
 	$sth->execute() or die "FATAL: Could not clean up orphaned tents - " . $sth->errstr . "\n";
+	if ($cleanup eq 'tents')
+	{ goto END;}
 }
 
 if ($cleanup eq 'bounds' || $cleanup eq 'all') {
@@ -145,6 +148,8 @@ EndSQL
 	}
 	$depDelSth->finish();
 	$vehDelSth->finish();
+	if ($cleanup eq 'bounds' || $cleanup eq 'all')
+	{ goto END;}
 }
 
 # Determine if we are over the vehicle limit
@@ -221,4 +226,4 @@ print "INFO: Spawned $spawnCount vehicles\n";
 $spawns->finish();
 $insert->finish();
 $dbh->disconnect();
-
+END:
