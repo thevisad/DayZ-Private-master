@@ -442,6 +442,7 @@ echo.
 echo Which world are you going to be using?
 echo Buildings: %buildbuildings% Carepackages: %buildcarepkg% Custom Inv: %buildinvcust% Kill Msgs:%buildkillmsg% %buildmsg%
 echo 1 - DayZPlus? (yes/no) (DayZ+ support)
+echo 2 - Celle? (yes/no) (Celle support)
 echo 8 - Build it!
 echo 9 - More Packages
 echo 0 - Main Menu
@@ -449,6 +450,7 @@ echo.
 Set buildworldsswitch=
 set /p buildworldsswitch=: 
 if %buildworldsswitch%==1 Set builddayzplus=yes
+if %buildworldsswitch%==2 Set buildcelle=yes
 if %buildworldsswitch%==8 goto build3
 if %buildworldsswitch%==9 goto build2
 if %buildworldsswitch%==0 goto menu
@@ -472,8 +474,9 @@ echo Custom Inventroy: %buildinvcust%
 echo Kill Messages: %buildkillmsg%
 echo Messaging: %buildmsg%
 echo Wrecks: %buildwreck%
-echo ssZeds: %ssZeds%
-echo DayZPlus: %dayzplus%
+echo ssZeds: %buildssZeds%
+echo DayZPlus: %builddayzplus%
+echo Celle: %buildcelle%
 echo.
 echo If you do not wish to continue, please close the window. Else, press any key.
 echo.
@@ -496,8 +499,10 @@ if %buildssZeds%==yes set ssZeds=--with-ssZeds
 echo buildssZeds %buildssZeds%>> build.txt
 if %builddayzplus%==yes set dayzplus = --with-dayzplus
 echo builddayzplus %builddayzplus%>> build.txt 
-build.pl --world %choosenworld% --instance %buildinst% %buildbuild% %buildcare% %dayzplus% %buildinv% %buildkill% %buildmes% %buildwrecks% %ssZeds% 
-echo built --world %choosenworld% --instance %buildinst% %buildbuild% %buildcare% %dayzplus% %buildinv% %buildkill% %buildmes% %buildwrecks% %ssZeds%  >> build.txt & pause
+if %buildcelle%==yes set celle = --with-mbg_celle2
+echo buildcelle %buildcelle%>> build.txt
+build.pl --world %choosenworld% --instance %buildinst% %buildbuild% %buildcare% %dayzplus% %buildinv% %buildkill% %buildmes% %buildwrecks% %ssZeds% %celle%
+echo built --world %choosenworld% --instance %buildinst% %buildbuild% %buildcare% %dayzplus% %buildinv% %buildkill% %buildmes% %buildwrecks% %ssZeds% %celle% >> build.txt & pause
 goto menu
 
 
