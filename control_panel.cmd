@@ -592,7 +592,7 @@ echo.
 Set instn=
 set /p instn=: 
 cls
-db_spawn_vehicles.pl --host %hostdb% --user %hostun% --pass %hostpw% --name %hostnm% --port %hostport% --instance %instn% --cleanup bounds
+db_spawn_vehicles.pl --host %hostdb% --user %hostun% --pass %hostpw% --name %hostnm% --port %hostport% --instance %instn% 
 pause
 goto menumv
 
@@ -604,7 +604,7 @@ echo.
 Set instn=
 set /p instn=: 
 cls
-db_spawn_vehicles.pl --host %hostdb% --user %hostun% --pass %hostpw% --name %hostnm% --port %hostport% --instance %instn% --cleanup
+db_spawn_vehicles.pl --host %hostdb% --user %hostun% --pass %hostpw% --name %hostnm% --port %hostport% --instance %instn% --cleanup damaged
 pause
 goto menumv
 
@@ -616,7 +616,7 @@ echo.
 Set instn=
 set /p instn=: 
 cls
-db_spawn_vehicles.pl --host %hostdb% --user %hostun% --pass %hostpw% --name %hostnm% --port %hostport% --instance %instn% --cleandeploy tents
+db_spawn_vehicles.pl --host %hostdb% --user %hostun% --pass %hostpw% --name %hostnm% --port %hostport% --instance %instn% --cleanup tents
 pause
 goto menumv
 
