@@ -112,28 +112,10 @@ Manual installation
     <td>Lingor Island (Skaronator.com)</td><td>lingor-skaro</td><td>@dayzlingorskaro</td><td>2.0</td><td>http://dl.skaronator.com/DayZLingorSkaro-2.0.rar</td>
   </tr>
   <tr>
-    <td>Takistan</td><td>takistan</td><td>@dayztakistan</td><td>1.6</td><td>ftp://dayzcommander:dayzcommander@94.242.227.3/DayZTakistan-1.6.rar</td>
-  </tr>
-  <tr>
     <td>Utes</td><td>utes</td><td>@dayz</td><td>1.7.5.1</td><td>http://dayzmod.com/?Download</td>
   </tr>
   <tr>
-    <td>Panthera</td><td>panthera2</th><td>@dayzpanthera</td><td>1.7</td><td>ftp://dayzcommander:dayzcommander@94.242.227.3/DayZPanthera-1.7.rar</td>
-  </tr>
-  <tr>
-    <td>Fallujah</td><td>fallujah</td><td>@dayzfallujah</td><td>1.4</td><td>ftp://dayzcommander:dayzcommander@94.242.227.3/DayZFallujah-1.4.rar</td>
-  </tr>
-  <tr>
-    <td>Zargabad</td><td>zargabad</td><td>@dayzzargabad</td><td>1.4</td><td>ftp://dayzcommander:dayzcommander@94.242.227.3/DayZZargabad-1.4.rar</td>
-  </tr>
-  <tr>
-    <td>Namalsk Island</td><td>namalsk</td><td>@dayz;@dayz_namalsk</td><td>0.60</td><td>ftp://dayzcommander:dayzcommander@94.242.227.3/DayZNamalsk-0.60.rar</td>
-  </tr>
-  <tr>
     <td>Celle</td><td>mbg_celle2</td><td>@mbg_celle;@dayz_celle;@dayz_conflicts</td><td>1.7.5.1</td><td>http://cdn.dayz.st/dayzcommander/DayZCelle-1.7.5.1.rar</td>
-  </tr>
-  <tr>
-    <td>Taviana</td><td>tavi</td><td>@taviana</td><td>1.7.4.4</td><td>http://cdn.dayz.st/dayzcommander/Taviana-1.7.4.4.rar</td>
   </tr>
 </table>
 11. If you are using a world other than Chernarus, run `perl db_utility.pl setworld <world_name>`, where `<world_name>` is the name of the world you specified when running `build.pl`.
@@ -171,8 +153,9 @@ Vehicles
 
 Run `perl db_spawn_vehicles.pl --help` to get help information on how to invoke the vehicle spawn script correctly. You will need to run the vehicle script and point it to your database to get vehicles to spawn in-game. The script can be run periodically - it will not delete all vehicles every time it runs. It will clean up user-deployed objects (wire fence, tents, tank traps, etc) in the same way that official DayZ does. If you run db_spawn_vehicles.pl with the `--cleanup bounds` argument, it will also check for out-of-bounds objects and delete them.
 
-Your options for cleanup are as follows. Default --cleanup will remove all items that are destroyed.
+Your options for cleanup are as follows. Default --cleanup will remove all items that are destroyed. Running it with nothing will spawn vehicles. 
 
+- perl db_spawn_vehicles.pl --instance 1 --host localhost --user changeme --pass changeme --name dayz --port 3306
 - perl db_spawn_vehicles.pl --instance 1 --host localhost --user changeme --pass changeme --name dayz --port 3306 --cleanup damaged
 - perl db_spawn_vehicles.pl --instance 1 --host localhost --user changeme --pass changeme --name dayz --port 3306 --cleanup tents
 - perl db_spawn_vehicles.pl --instance 1 --host localhost --user changeme --pass changeme --name dayz --port 3306 --cleanup bounds
