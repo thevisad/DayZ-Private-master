@@ -110,8 +110,7 @@ if (-d $src && !-d $conf_dir) {
 	replace_text("s/template\\s=\\sdayz_[0-9]+.[a-z]+/template = $profile/", "$conf_dir/config.cfg");
 
 	my $mods = {
-		'skaro.lingor'=> '@dayzlingorskaro',
-		'lingor'      => '@dayzlingor',
+		'lingor'      => '@dayzlingorskaro',
 		'takistan'    => '@dayztakistan',
 		'fallujah'    => '@dayzfallujah',
 		'zargabad'    => '@dayzzargabad',

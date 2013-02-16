@@ -1,8 +1,0 @@
-mission/skaro.lingor/description.ext
-mission/skaro.lingor/init.sqf
-mission/skaro.lingor/mission.sqm
-pkg/world/lingor/
-schema/RealitySkaroLingor/mysql/0.01/40_world.sql
-schema/RealitySkaroLingor/mysql/0.01/41_vehicle.sql
-schema/RealitySkaroLingor/mysql/0.01/42_world_vehicle.sql
-util/deploy/Keys/skaronator.bikey

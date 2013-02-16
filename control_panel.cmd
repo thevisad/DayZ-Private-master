@@ -209,6 +209,7 @@ if %worldins%==2 Set worldins=utes & goto addInstance
 if %worldins%==3 Set worldins=thirsk & goto addInstance
 if %worldins%==4 Set worldins=thirskw & goto addInstance
 if %worldins%==5 Set worldins=celle & goto addInstance
+if %worldins%==6 Set worldins=lingor & goto addInstance
 if %worldins%==9 goto moreworlds
 if %worldins%==0 goto menu
 cls
@@ -232,9 +233,8 @@ echo.
 echo 1 - Taviana - Not Supported Yet
 echo 2 - Takistan - Not Supported Yet
 echo 3 - Fallujah - Not Supported Yet
-echo 4 - Lingor - Not Supported Yet
-echo 5 - Zargabad - Not Supported Yet
-echo 6 - Panthera - Not Supported Yet
+echo 4 - Zargabad - Not Supported Yet
+echo 5 - Panthera - Not Supported Yet
 echo 8 - Goto Main
 echo 9 - More Worlds
 echo 0 - Main Menu
@@ -347,7 +347,7 @@ if %worldbuild%==2 Set choosenworld=utes & goto build2
 if %worldbuild%==3 Set choosenworld=thirsk & goto build2
 if %worldbuild%==4 Set choosenworld=thirskw & goto build2
 if %worldbuild%==5 Set choosenworld=mbg_celle2 & goto build2
-if %worldbuild%==6 Set choosenworld=skaro.lingor & goto build2
+if %worldbuild%==6 Set choosenworld=lingor & goto build2
 if %worldbuild%==7 Set choosenworld=dayzplus & goto build2
 if %worldbuild%==9 goto buildworlds1
 if %worldbuild%==0 goto menu
@@ -372,9 +372,8 @@ echo.
 echo 1 - Taviana - Not Supported Yet
 echo 2 - Takistan - Not Supported Yet
 echo 3 - Fallujah - Not Supported Yet
-echo 4 - Lingor - Not Supported Yet
-echo 5 - Zargabad - Not Supported Yet
-echo 6 - Panthera - Not Supported Yet
+echo 4 - Zargabad - Not Supported Yet
+echo 5 - Panthera - Not Supported Yet
 echo 8 - Goto Main Worlds Panel
 echo 9 - More Worlds (Main Worlds Panel Currently)
 echo 0 - Main Menu
@@ -385,9 +384,8 @@ set /p worldbuild=:
 if %worldbuild%==1 Set choosenworld=tavi & goto build23
 if %worldbuild%==2 Set choosenworld=takistan & goto build23
 if %worldbuild%==3 Set choosenworld=fallujah & goto build23
-if %worldbuild%==4 Set choosenworld=lingor & goto build23
-if %worldbuild%==5 Set choosenworld=zargabad & goto build23
-if %worldbuild%==6 Set choosenworld=panthera2 & goto build23
+if %worldbuild%==4 Set choosenworld=zargabad & goto build23
+if %worldbuild%==5 Set choosenworld=panthera2 & goto build23
 if %worldbuild%==8 goto buildworlds
 if %worldbuild%==9 goto buildworlds
 if %worldbuild%==0 goto menu
@@ -788,7 +786,7 @@ cls
 if %scheme%==1 db_migrate.pl --host %hostdb% --user %hostun% --pass %hostpw% --name %hostnm% --port %hostport% --schema RealityDayzPlus --version 0.01
 if %scheme%==2 db_migrate.pl --host %hostdb% --user %hostun% --pass %hostpw% --name %hostnm% --port %hostport% --schema RealityThirsk --version 0.01
 if %scheme%==3 db_migrate.pl --host %hostdb% --user %hostun% --pass %hostpw% --name %hostnm% --port %hostport% --schema RealityThirskWinter --version 0.01
-if %scheme%==4 db_migrate.pl --host %hostdb% --user %hostun% --pass %hostpw% --name %hostnm% --port %hostport% --schema RealitySkaroLingor --version 0.01
+if %scheme%==4 db_migrate.pl --host %hostdb% --user %hostun% --pass %hostpw% --name %hostnm% --port %hostport% --schema Reality --version 0.39
 pause
 goto schemaspec1
 
