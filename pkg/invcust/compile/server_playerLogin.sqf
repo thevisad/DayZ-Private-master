@@ -68,6 +68,7 @@ _charID = 		_primary select 2;
 _randomSpot = false;
 
 //diag_log ("LOGIN RESULT: " + str(_primary));
+
 /* PROCESS */
 _hiveVer = 0;
 
@@ -78,23 +79,8 @@ if (!_isNew) then {
 	_survival =		_primary select 6;
 	_model =		_primary select 7;
 	_hiveVer =		_primary select 8;
-
-	if (!(_model in ["SurvivorW2_DZ","Survivor2_DZ","Sniper1_DZ","Soldier1_DZ","Camo1_DZ","BanditW1_DZ","Bandit1_DZ","SurvivorW2_DZ"])) then {
-		_model = "Survivor2_DZ";
-	};
 	
-} else {
-
-
-	_model =		_primary select 3;
-	_hiveVer =		_primary select 4;
-	if (isNil "_model") then {
-		_model = "Survivor2_DZ";
-	} else {
-		if (_model == "") then {
-			_model = "Survivor2_DZ";
-		};
-	};
+	if (_model == "") then {
 		_key = format["CHILD:999:select replace(cl.`inventory`, '""', '""""') inventory, replace(cl.`backpack`, '""', '""""') backpack, replace(coalesce(cl.`model`, 'Survivor2_DZ'), '""', '""""') model from `cust_loadout` cl join `cust_loadout_profile` clp on clp.`cust_loadout_id` = cl.`id` where clp.`unique_id` = '?':[%1]:",str(_playerID)];
 		_data = "HiveEXT" callExtension _key;
 		//Process result
@@ -109,6 +95,22 @@ if (!_isNew) then {
 				_model = call compile (_result select 2);
 			};
 		};
+	};
+	if (!(_model in ["SurvivorW2_DZ","Survivor2_DZ","Sniper1_DZ","Soldier1_DZ","Camo1_DZ","BanditW1_DZ","Bandit1_DZ","SurvivorW2_DZ"])) then {
+		_model = "Survivor2_DZ";
+	};
+	
+} else {
+	_model =		_primary select 3;
+	_hiveVer =		_primary select 4;
+	if (isNil "_model") then {
+		_model = "Survivor2_DZ";
+	} else {
+		if (_model == "") then {
+			_model = "Survivor2_DZ";
+		};
+	};
+
 	//Record initial inventory
 	_config = (configFile >> "CfgSurvival" >> "Inventory" >> "Default");
 	_mags = getArray (_config >> "magazines");
