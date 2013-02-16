@@ -19,6 +19,7 @@ Set buildmsg=no
 Set buildssZeds=no
 Set buildwreck=no
 Set builddayzplus=no
+Set buildcelle=no
 
 
 echo Getting MySQL info...
