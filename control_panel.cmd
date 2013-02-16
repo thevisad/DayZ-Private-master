@@ -408,13 +408,13 @@ echo.                            Control Panel by gdscei
 echo.
 echo You are about to build a server package. Select your packages here. 
 echo.
-echo 1 - Buildings? %buildbuildings%
-echo 2 - Carepackages? %buildcarepkg%
-echo 3 - Custom inventory? %buildinvcust% 
-echo 4 - Kill messages? %buildkillmsg%
-echo 5 - Messaging %buildmsg%
-echo 6 - Disable Server Simulation of Zombies? (ziellos2k)? %buildssZeds%
-echo 7 - Wrecks? %buildwreck%
+echo 1 - Buildings? %buildbuildings% (Place buildings on the map through DB)
+echo 2 - Carepackages? %buildcarepkg% (Small packages with random loot on the map)
+echo 3 - Custom inventory? %buildinvcust% (Get a custom starting inventory)
+echo 4 - Kill messages? %buildkillmsg% (Kill messages in chat)
+echo 5 - Messaging %buildmsg% (Send RCon messages in chat automaticly)
+echo 6 - Disable Server Simulation of Zombies? (ziellos2k)? %buildssZeds% (Only spawn zombies client-side)
+echo 7 - Wrecks? %buildwreck% (Random wrecks around the map with loot)
 echo 8 - Build it!
 echo 9 - More Packages
 echo 0 - Main Menu
@@ -441,7 +441,8 @@ echo Make sure you have the requirements given in the readme before trying this.
 echo.
 echo Which world are you going to be using?
 echo Buildings: %buildbuildings% Carepackages: %buildcarepkg% Custom Inv: %buildinvcust% Kill Msgs:%buildkillmsg% %buildmsg%
-echo 1 - DayZPlus? (yes/no) 
+echo 1 - DayZPlus? (yes/no) (DayZ+ support)
+echo 2 - Celle? (yes/no) (Celle support)
 echo 8 - Build it!
 echo 9 - More Packages
 echo 0 - Main Menu
@@ -449,6 +450,7 @@ echo.
 Set buildworldsswitch=
 set /p buildworldsswitch=: 
 if %buildworldsswitch%==1 Set builddayzplus=yes
+if %buildworldsswitch%==2 Set buildcelle=yes
 if %buildworldsswitch%==8 goto build3
 if %buildworldsswitch%==9 goto build2
 if %buildworldsswitch%==0 goto menu
@@ -472,8 +474,9 @@ echo Custom Inventroy: %buildinvcust%
 echo Kill Messages: %buildkillmsg%
 echo Messaging: %buildmsg%
 echo Wrecks: %buildwreck%
-echo ssZeds: %ssZeds%
-echo DayZPlus: %dayzplus%
+echo ssZeds: %buildssZeds%
+echo DayZPlus: %builddayzplus%
+echo Celle: %buildcelle%
 echo.
 echo If you do not wish to continue, please close the window. Else, press any key.
 echo.
@@ -496,8 +499,10 @@ if %buildssZeds%==yes set ssZeds=--with-ssZeds
 echo buildssZeds %buildssZeds%>> build.txt
 if %builddayzplus%==yes set dayzplus = --with-dayzplus
 echo builddayzplus %builddayzplus%>> build.txt 
-build.pl --world %choosenworld% --instance %buildinst% %buildbuild% %buildcare% %dayzplus% %buildinv% %buildkill% %buildmes% %buildwrecks% %ssZeds% 
-echo built --world %choosenworld% --instance %buildinst% %buildbuild% %buildcare% %dayzplus% %buildinv% %buildkill% %buildmes% %buildwrecks% %ssZeds%  >> build.txt & pause
+if %buildcelle%==yes set celle = --with-mbg_celle2
+echo buildcelle %buildcelle%>> build.txt
+build.pl --world %choosenworld% --instance %buildinst% %buildbuild% %buildcare% %dayzplus% %buildinv% %buildkill% %buildmes% %buildwrecks% %ssZeds% %celle%
+echo built --world %choosenworld% --instance %buildinst% %buildbuild% %buildcare% %dayzplus% %buildinv% %buildkill% %buildmes% %buildwrecks% %ssZeds% %celle% >> build.txt & pause
 goto menu
 
 
@@ -592,7 +597,7 @@ echo.
 Set instn=
 set /p instn=: 
 cls
-db_spawn_vehicles.pl --host %hostdb% --user %hostun% --pass %hostpw% --name %hostnm% --port %hostport% --instance %instn% --cleanup bounds
+db_spawn_vehicles.pl --host %hostdb% --user %hostun% --pass %hostpw% --name %hostnm% --port %hostport% --instance %instn% 
 pause
 goto menumv
 
@@ -604,7 +609,7 @@ echo.
 Set instn=
 set /p instn=: 
 cls
-db_spawn_vehicles.pl --host %hostdb% --user %hostun% --pass %hostpw% --name %hostnm% --port %hostport% --instance %instn% --cleanup
+db_spawn_vehicles.pl --host %hostdb% --user %hostun% --pass %hostpw% --name %hostnm% --port %hostport% --instance %instn% --cleanup damaged
 pause
 goto menumv
 
@@ -616,7 +621,7 @@ echo.
 Set instn=
 set /p instn=: 
 cls
-db_spawn_vehicles.pl --host %hostdb% --user %hostun% --pass %hostpw% --name %hostnm% --port %hostport% --instance %instn% --cleandeploy tents
+db_spawn_vehicles.pl --host %hostdb% --user %hostun% --pass %hostpw% --name %hostnm% --port %hostport% --instance %instn% --cleanup tents
 pause
 goto menumv
 
