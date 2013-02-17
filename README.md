@@ -299,7 +299,7 @@ Each of these packages is a part of Reality and makes what we do possible.
 <table>
   <tr><th>Name</th><th>Author</th><th>URL</th></tr>
   <tr><td>cPBO</td><td>Kegetys</td><td>http://www.kegetsys.fi</td></tr>
-  <tr><td>GnuWin32 (wget)</td><td></td><td>http://gnuwin32.sourceforge.net</td></tr>
+  <tr><td>GnuWin32 (wget/sed)</td><td></td><td>http://gnuwin32.sourceforge.net</td></tr>
   <tr><td>MySQL</td><td></td><td>http://www.mysql.com/</td></tr>
   <tr><td>Strawberry Perl</td><td></td><td>http://strawberryperl.com/</td></tr>
 </table>
