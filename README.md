@@ -47,10 +47,9 @@ Automatic installation
 5. Now, you will need a database to be set up. The application cannot do this for you, you'll need an utility that let's you do this. You can use graphical interfaces such as HeidiSQL (http://www.heidisql.com) for this. Make sure all rights are granted to the user.
 6. Go to the 'Set up MySQL details' page in the application now. Here you can fill in the details of your database, and the application will remember them for you.
 7. Now choose 'Database Migration' And put the things you want into your database. Note that Reality main is required, and any packages you installed during build, you'll also need to put them in the database. (e.g, if you ran the builder with buildings, you'll need RealityBuildings in your database)
-8. Make sure that the database information in **Config**\\HiveExt.ini is matching the details you used in the previous steps.
-9. If you'd like to change server time/date, change the options in **Config**\\HiveExt.ini
-10. Adjust any server settings (name, password etc) in **Config**\\config_deadbeef.cfg (deadbeef is a randomly generated string)
-11. If you would like to customize the starting loadout, it is highly recommended that you use the Reality Inventory manager located here http://opendayz.net/index.php?threads/reality-dayz-inventory-manager-c.6835/  You may also run `perl db_utility.pl loadout <inventory> <backpack>`, replacing `<inventory>` with a valid inventory string and `<backpack>` with a valid backpack string. Some examples:  
+8. If you'd like to change server time/date, change the options in **Config**\\HiveExt.ini
+9. Adjust any server settings (name, password etc) in **Config**\\config_deadbeef.cfg (deadbeef is a randomly generated string)
+10. If you would like to customize the starting loadout, it is highly recommended that you use the Reality Inventory manager located here http://opendayz.net/index.php?threads/reality-dayz-inventory-manager-c.6835/  You may also run `perl db_utility.pl loadout <inventory> <backpack>`, replacing `<inventory>` with a valid inventory string and `<backpack>` with a valid backpack string. Some examples:  
 <table>
   <tr>
     <td>Description</td><td>Inventory</td><td>Backpack</td>
@@ -299,7 +298,7 @@ Each of these packages is a part of Reality and makes what we do possible.
 <table>
   <tr><th>Name</th><th>Author</th><th>URL</th></tr>
   <tr><td>cPBO</td><td>Kegetys</td><td>http://www.kegetsys.fi</td></tr>
-  <tr><td>GnuWin32 (wget)</td><td></td><td>http://gnuwin32.sourceforge.net</td></tr>
+  <tr><td>GnuWin32 (wget/sed)</td><td></td><td>http://gnuwin32.sourceforge.net</td></tr>
   <tr><td>MySQL</td><td></td><td>http://www.mysql.com/</td></tr>
   <tr><td>Strawberry Perl</td><td></td><td>http://strawberryperl.com/</td></tr>
 </table>

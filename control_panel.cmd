@@ -292,13 +292,13 @@ echo.
 Set worldbuild=
 Set choosenworld=
 set /p worldbuild=: 
-if %worldbuild%==1 Set choosenworld=chernarus & goto buildins
-if %worldbuild%==2 Set choosenworld=utes & goto buildins
-if %worldbuild%==3 Set choosenworld=thirsk & goto buildins
-if %worldbuild%==4 Set choosenworld=thirskw & goto buildins
-if %worldbuild%==5 Set choosenworld=mbg_celle2 & Set buildcelle=yes & goto buildins
-if %worldbuild%==6 Set choosenworld=skaro.lingor & goto buildins
-if %worldbuild%==7 Set choosenworld=dayzplus & Set builddayzplus=yes & goto buildins
+if %worldbuild%==1 Set choosenworld=chernarus&goto buildins
+if %worldbuild%==2 Set choosenworld=utes&goto buildins
+if %worldbuild%==3 Set choosenworld=thirsk&goto buildins
+if %worldbuild%==4 Set choosenworld=thirskw&goto buildins
+if %worldbuild%==5 Set choosenworld=mbg_celle2&Set buildcelle=yes & goto buildins
+if %worldbuild%==6 Set choosenworld=skaro.lingor&goto buildins
+if %worldbuild%==7 Set choosenworld=dayzplus&Set builddayzplus=yes & goto buildins
 if %worldbuild%==0 goto menu
 goto buildworlds
 
@@ -421,6 +421,25 @@ if %builddayzplus%==yes set dayzplus = --with-dayzplus
 if %buildcelle%==yes set celle = --with-mbg_celle2
 build.pl --world %choosenworld% --instance %buildinst% %buildbuild% %buildcare% %dayzplus% %buildinv% %buildkill% %buildmes% %buildwrecks% %ssZeds% %celle%
 echo built --world %choosenworld% --instance %buildinst% %buildbuild% %buildcare% %dayzplus% %buildinv% %buildkill% %buildmes% %buildwrecks% %ssZeds% %celle% >> build.txt
+set hiveext="deploy/dayz_%buildinst%.%choosenworld%/HiveExt.ini"
+mkdir "deploy/dayz_%buildinst%.%choosenworld%/temp"
+set hivetemp="deploy/dayz_%buildinst%.%choosenworld%/temp/HiveTemp.ini"
+set hivetemp1="deploy/dayz_%buildinst%.%choosenworld%/temp/HiveTemp1.ini"
+set hivetemp2="deploy/dayz_%buildinst%.%choosenworld%/temp/HiveTemp2.ini"
+set hivetemp3="deploy/dayz_%buildinst%.%choosenworld%/temp/HiveTemp3.ini"
+set hostsed=Host ^= %hostdb%
+set portsed=Port ^= %hostport%
+set namesed=Database ^= %hostnm%
+set usersed=Username ^= %hostun%
+set passsed=Password ^= %hostpw%
+"util/sed.exe" "24 c\%hostsed%" %hiveext% > %hivetemp%
+"util/sed.exe" "27 c\%portsed%" %hivetemp% > %hivetemp1%
+"util/sed.exe" "29 c\%namesed%" %hivetemp1% > %hivetemp2%
+"util/sed.exe" "31 c\%usersed%" %hivetemp2% > %hivetemp3%
+"util/sed.exe" "33 c\%passsed%" %hivetemp3% > %hiveext%
+rmdir /s /q "deploy/dayz_%buildinst%.%choosenworld%/temp"
+echo Written MySQL details to HiveExt.ini >> build.txt
+echo Written MySQL details to HiveExt.ini
 echo.
 echo Server has been built. Build.txt will contain a log of this.
 pause
