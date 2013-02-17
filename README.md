@@ -105,9 +105,6 @@ Manual installation
     <td>Chernarus</td><td>chernarus</td><td>@dayz</td><td>1.7.5.1</td><td>http://dayzmod.com/?Download</td>
   </tr>
   <tr>
-    <td>Lingor Island</td><td>lingor</td><td>@dayzlingor</td><td>1.2</td><td>ftp://dayzcommander:dayzcommander@94.242.227.3/DayZLingor-1.2.rar</td>
-  </tr>
-  <tr>
     <td>Lingor Island (Skaronator.com)</td><td>lingor-skaro</td><td>@dayzlingorskaro</td><td>2.0</td><td>http://dl.skaronator.com/DayZLingorSkaro-2.0.rar</td>
   </tr>
   <tr>
