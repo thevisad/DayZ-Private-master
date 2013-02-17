@@ -105,9 +105,6 @@ Manual installation
     <td>Chernarus</td><td>chernarus</td><td>@dayz</td><td>1.7.5.1</td><td>http://dayzmod.com/?Download</td>
   </tr>
   <tr>
-    <td>Lingor Island</td><td>lingor</td><td>@dayzlingor</td><td>1.2</td><td>ftp://dayzcommander:dayzcommander@94.242.227.3/DayZLingor-1.2.rar</td>
-  </tr>
-  <tr>
     <td>Lingor Island (Skaronator.com)</td><td>lingor-skaro</td><td>@dayzlingorskaro</td><td>2.0</td><td>http://dl.skaronator.com/DayZLingorSkaro-2.0.rar</td>
   </tr>
   <tr>
@@ -168,6 +165,8 @@ Optional Features
 When running `build.pl`, you may specify additional options to merge in optional features. To get a list of optional features, run `perl build.pl --list`.
 
 To install new optional features, use the `package_manager.pl` script. Run `perl package_manager.pl install <package-name>`, replacing `<package-name>` with the name of a package. 
+
+NOTE: make sure to put these alphabetically in the command line!
 
 A list of Reality-supported packages follows.
 

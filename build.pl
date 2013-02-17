@@ -79,6 +79,7 @@ if ($args{'help'}) {
 	foreach my $pkg (@pkgs) {
 		print "    --with-$pkg\n" unless ($pkg =~ m/(^\.|world|reality)/);
 	}
+	print "Note that packages need to be entered in the command line alphabetically.";
 	exit;
 } elsif ($args{'clean'}) {
 	print "INFO: Removing $dst_dir\n";
