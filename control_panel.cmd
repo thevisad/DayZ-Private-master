@@ -417,8 +417,8 @@ if %buildwreck%==yes set buildwrecks=--with-wrecks
 echo Wrecks: %buildwreck% >> build.txt
 if %buildssZeds%==yes set ssZeds=--with-ssZeds
 echo ssZeds: %buildssZeds% >> build.txt
-if %builddayzplus%==yes set dayzplus = --with-dayzplus
-if %buildcelle%==yes set celle = --with-mbg_celle2
+if %builddayzplus%==yes set dayzplus=--with-dayzplus
+if %buildcelle%==yes set celle=--with-mbg_celle2
 build.pl --world %choosenworld% --instance %buildinst% %buildbuild% %buildcare% %dayzplus% %buildinv% %buildkill% %buildmes% %buildwrecks% %ssZeds% %celle%
 echo built --world %choosenworld% --instance %buildinst% %buildbuild% %buildcare% %dayzplus% %buildinv% %buildkill% %buildmes% %buildwrecks% %ssZeds% %celle% >> build.txt
 set hiveext="deploy/dayz_%buildinst%.%choosenworld%/HiveExt.ini"
