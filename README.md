@@ -166,6 +166,8 @@ When running `build.pl`, you may specify additional options to merge in optional
 
 To install new optional features, use the `package_manager.pl` script. Run `perl package_manager.pl install <package-name>`, replacing `<package-name>` with the name of a package. 
 
+NOTE: make sure to put these alphabetically in the command line!
+
 A list of Reality-supported packages follows.
 
 <table>
