@@ -121,6 +121,9 @@
 5 "norrnRACarUp"
 5 "norrnRAPicUp"
 5 "getVariable"
+5 "BIS_fnc_AAN"
+5 "BIS_fnc_customGPSvideo"
+5 "BIS_fnc_infoText"
 //all below detected already by above
 //5 "removeAllWeapons"
 //5 "removeAllItems"

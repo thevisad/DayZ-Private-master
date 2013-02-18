@@ -88,11 +88,11 @@ echo.
 echo 1 - Set up Perl
 echo 2 - Set up MySQL details
 echo 3 - Database Installation
-REM echo 4 - Update Battleye scripts
 echo 4 - Add instance to DB
 echo 5 - Delete instance from DB
 REM echo 6 - Delete all references to a world
 echo 6 - Migrate from Bliss
+echo 7 - Update Battleye scripts
 echo 0 - Main menu
 echo.
 Set menuoption=
@@ -100,11 +100,11 @@ set /p menuoption=:
 if %menuoption%==1 goto perl
 if %menuoption%==2 goto sqlsetup
 if %menuoption%==3 goto schemaspec
-REM if %menuoption%==4 goto 
 if %menuoption%==4 goto instdb
 if %menuoption%==5 goto deldb
 REM if %menuoption%==7 goto 
 if %menuoption%==6 goto mireality
+if %menuoption%==7 goto updatescripts
 if %menuoption%==0 goto menu
 goto menu
 
@@ -177,6 +177,10 @@ if %menuoption%==2 goto messageadd
 if %menuoption%==3 goto messageedit
 if %menuoption%==4 goto messagedel
 if %menuoption%==0 goto menu
+goto menu
+
+:updatescripts
+perl update_scripts.pl .\util\dayz_config\BattlEye
 goto menu
 
 
