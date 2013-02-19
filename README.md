@@ -6,9 +6,7 @@ This is a private server project for DayZ which would not be possible without th
 
 Users Migrating from Bliss
 ==========================
-Users migrating from Bliss to Reality using an existing database will need to run the following against the database. 
-
-db_migrate.pl --host 127.0.0.1 --user CHANGEME --pass CHANGEME --name chernarus --port 3306 --schema RealityMigrate --version 0.01
+Users migrating from Bliss to Reality using an existing database will need to run the "Migrate from Bliss" option in the "Setup / DB"->"Database" window.
 
 
 Prerequisites
@@ -17,6 +15,7 @@ Prerequisites
  - Windows (tested with 7 and Server 2008)
  - A working ArmA 2 Combined Ops dedicated server (Steam users must merge ArmA2 and ArmA2 OA directories) with beta patch **101480** installed (http://www.arma2.com/beta-patch.php)
  - Microsoft Visual C++ 2010 SP1 x86 Redistributable (http://www.microsoft.com/en-us/download/details.aspx?id=8328)
+ - Microsoft .NET Framework 4 or higher
  - MySQL Server 5.x with TCP/IP Networking enabled **NOTE:** You **must** use the official MySQL installer, not XAMPP (http://dev.mysql.com/get/Downloads/MySQL-5.5/mysql-5.5.27-win32.msi/from/http://cdn.mysql.com)
  - The decimal separator on your server MUST BE a period. If it is a comma, vehicle spawning (at least) will not work correctly. **NOTE:** If you use FireDaemon to start your server, you must re-create the service if you change the comma separator in Windows.
  - Strawberry Perl >= 5.16 (http://strawberryperl.com/)
@@ -39,33 +38,20 @@ Installation
 Automatic installation
 ======================
 
-1. Run 'control_panel.cmd'. Here, the UI will guide you through everything and you won't have to enter commands yourself. If you are not the best at typing commands, this might be a better option for you, though it may limit you in the possibilities.
-2. Begin by doing 'Set up Perl'.
-3. After that, do 'Build'. Here you actually set-up the build files for your server. You'll find them in the 'deploy' folder after finishing.
-4. Copy all files from **Repository**\\deploy into **ArmA2**\\
-5. Make sure you also have the required client files in the **ArmA2**\\ directory. Check below for a table with download links.
-5. Now, you will need a database to be set up. The application cannot do this for you, you'll need an utility that let's you do this. You can use graphical interfaces such as HeidiSQL (http://www.heidisql.com) for this. Make sure all rights are granted to the user.
-6. Go to the 'Set up MySQL details' page in the application now. Here you can fill in the details of your database, and the application will remember them for you.
-7. Now choose 'Database Migration' And put the things you want into your database. Note that Reality main is required, and any packages you installed during build, you'll also need to put them in the database. (e.g, if you ran the builder with buildings, you'll need RealityBuildings in your database)
-8. If you'd like to change server time/date, change the options in **Config**\\HiveExt.ini
-9. Adjust any server settings (name, password etc) in **Config**\\config_deadbeef.cfg (deadbeef is a randomly generated string)
-10. If you would like to customize the starting loadout, it is highly recommended that you use the Reality Inventory manager located here http://opendayz.net/index.php?threads/reality-dayz-inventory-manager-c.6835/  You may also run `perl db_utility.pl loadout <inventory> <backpack>`, replacing `<inventory>` with a valid inventory string and `<backpack>` with a valid backpack string. Some examples:  
-<table>
-  <tr>
-    <td>Description</td><td>Inventory</td><td>Backpack</td>
-  </tr>
-  <tr>
-    <td>Default</td><td>[]</td><td>["DZ_Patrol_Pack_EP1",[[],[]],[[],[]]]</td>
-  </tr>
-  <tr>
-    <td>Survival</td><td>[["ItemMap","ItemCompass","ItemMatchbox","FoodCanBakedBeans","ItemKnife","FoodCanBakedBeans"],["ItemTent","ItemBandage","ItemBandage"]]</td><td>["DZ_Patrol_Pack_EP1",[[],[]],[[],[]]]</td>
-  </tr>
-  <tr>
-    <td>PvP</td><td>[["Mk_48_DZ","NVGoggles","Binocular_Vector","M9SD","ItemGPS","ItemToolbox","ItemCompass","FoodCanBakedBeans","ItemMap","ItemWatch"],[["100Rnd_762x51_M240",47],"ItemPainkiller","ItemBandage","15Rnd_9x19_M9SD","100Rnd_762x51_M240","ItemBandage","ItemBandage","15Rnd_9x19_M9SD","15Rnd_9x19_M9SD","15Rnd_9x19_M9SD","ItemMorphine"]]</td><td>["DZ_Backpack_EP1",[[],[]],[[],[]]]</td>
-  </tr>
-</table>
+1. Run the RealityCP program. This is an UI replacement for the command-line.
+2. Upon opening the app, you will be prompted entering your MySQL details. Make sure you've got a database set up and enter the details in the window (to set up a database, you can use a graphical interface such as HeidiSQL (http://www.heidisql.com).
+3. Begin by clicking "Setup / DB" and "Set-Up Perl". This will get Perl ready on your Reality package.
+4. After that, click 'Build'. Here you actually set-up the build files for your server. You'll find them in the 'deploy' folder after finishing. If you need info on what packages do, click the "?" button.
+5. Copy all files from **Repository**\\deploy into **ArmA2**\\
+6. Make sure you also have the required client files in the **ArmA2**\\ directory. Check below for a table with download links.
+7. Now choose 'Setup / DB' and "Database". Here you can select packages for your database in the 'Import scheme' list. Note that Reality Main is required. If you installed any packages during build, you'll need to put them in the database as well. (e.g: you ran the build with Buildings, you need to import the Buildings scheme as well)
+8. Also add an instance with the correct world from the same window, if you're not using Chernarus.
+9. If you'd like to change server time/date, change the options in **Config**\\HiveExt.ini
+10. Adjust any server settings (name, password etc) in **Config**\\config_deadbeef.cfg (deadbeef is a randomly generated string)
+11. If you would like to customize the starting loadout, it is highly recommended that you use the Reality Inventory manager located here http://opendayz.net/index.php?threads/reality-dayz-inventory-manager-c.6835/
 
-Manual installation
+
+Manual installation (advanced)
 ===================
 
 1. Run `setup_perl.bat`. If you are prompted to provide a schema path, press enter to continue. If you are prompted Yes/No to run tests, type "n" and press Enter.  
@@ -120,54 +106,33 @@ Manual installation
 
 Adding/Removing Instances
 =========================
-To add an instance run the db_utility with the following commands
 
-This will add an instance for chernarus to the dayz database. It looks at the last instance number and increments it by one. 
-- perl db_utility.pl addworld chernarus --host 127.0.0.1 --user changeme --pass changeme --name dayz --port 3306
-
-This will delete an instance number that you specify from the database, it will also delete all relevant data from the instance_vehicle, instance_deployable and instance_building.
-
-- perl db_utility.pl deleteinstance 3 --host 127.0.0.1 --user changeme --pass changeme --name tavi --port 3306
+You can add/remove instances from the RealityCP application (from Setup/DB->Database)
 
 
 Upgrading
 =========
 
-**EXTREMELY IMPORTANT:** If you are migrating from **ANY** previous version of Reality you will lose vehicles during the upgrade to schema 0.27.
-
 Depending on what has changed since you deployed your server, you may need to perform one or more steps to do a clean upgrade to the latest code. Look for the following in the commit log (specifically, the files that were changed) when you update to the latest version of the repository:
 
-If you see that SQL files or `db_migrate.pl` have changed, then you **must** run `db_migrate.pl` (with appropriate options, run it with `--help` for more information) to upgrade your database to the latest version.
-If SQF files (game script) has changed, then you **must** run `build.pl` and copy the `**Repository**\\deploy\\@reality_<id>.<world>\\` directory into **ArmA2**\\ (where `<id>` and `<world>` are the values you specified when running build.pl).
+If you see that SQL files or `db_migrate.pl` have changed, then you **must** do "Import Scheme" on 'Reality Main' in the "Setup / DB"->"Database" window of the application to update your database.
+If SQF files (game script) has changed, then you **must** rebuild your server from the application and copy the `**Repository**\\deploy\\@reality_<id>.<world>\\` directory into **ArmA2**\\ (where `<id>` and `<world>` are the values you specified when building).
 If configuration files and BattlEye anti-cheat files have changed in **Repository**\\deploy\\, you will need to backup and overwrite your existing versions of these files. Take care to change any default server names, passwords or similar back to their customized values after copying the new versions into your **ArmA2** directory.
-If you receive an error like `Cannot locate Some::Module.pm in @INC` when running a Perl script after an upgrade, run `setup_perl.bat` and then try the Perl script again.
+If you receive an error like `Cannot locate Some::Module.pm in @INC` when trying to do anything in the application, you need to change the application's config file (RealityCP.exe.config) and make the "perl" value (where it says "done") empty, and then run the Set-up Perl again from the app.
 
-These are the areas you will need to inspect to ensure a smooth upgrade. If database and code changes were not made at the same time and you do not read the history thoroughly, you may miss important changes and skip vital steps. It will save you frustration in the long run if you rebuild and redeploy, run `db_migrate.pl` and check for any new or changed files in **Repository**\\deploy\\ whenever you would like to update.
+These are the areas you will need to inspect to ensure a smooth upgrade. If database and code changes were not made at the same time and you do not read the history thoroughly, you may miss important changes and skip vital steps. It will save you frustration in the long run if you rebuild and redeploy, re-run the Reality Main scheme and check for any new or changed files in **Repository**\\deploy\\ whenever you would like to update.
 
 Vehicles
 ========
 
-Run `perl db_spawn_vehicles.pl --help` to get help information on how to invoke the vehicle spawn script correctly. You will need to run the vehicle script and point it to your database to get vehicles to spawn in-game. The script can be run periodically - it will not delete all vehicles every time it runs. It will clean up user-deployed objects (wire fence, tents, tank traps, etc) in the same way that official DayZ does. If you run db_spawn_vehicles.pl with the `--cleanup bounds` argument, it will also check for out-of-bounds objects and delete them.
-
-Your options for cleanup are as follows. Default --cleanup will remove all items that are destroyed. Running it with nothing will spawn vehicles. 
-
-- perl db_spawn_vehicles.pl --instance 1 --host localhost --user changeme --pass changeme --name dayz --port 3306
-- perl db_spawn_vehicles.pl --instance 1 --host localhost --user changeme --pass changeme --name dayz --port 3306 --cleanup damaged
-- perl db_spawn_vehicles.pl --instance 1 --host localhost --user changeme --pass changeme --name dayz --port 3306 --cleanup tents
-- perl db_spawn_vehicles.pl --instance 1 --host localhost --user changeme --pass changeme --name dayz --port 3306 --cleanup bounds
-- perl db_spawn_vehicles.pl --instance 1 --host localhost --user changeme --pass changeme --name dayz --port 3306 --cleanup all
+You can spawn vehicles / cleanup tents/vehicles/bounds etc from the application. For spawning vehicles, go to "Vehicles/Items", for cleaning anything, go to "Cleanup".
 
 **NOTE:** Vehicles added/updated via database manipulation are only available after a server restart.
 
 Optional Features
 =================
 
-When running `build.pl`, you may specify additional options to merge in optional features. To get a list of optional features, run `perl build.pl --list`.
-
-To install new optional features, use the `package_manager.pl` script. Run `perl package_manager.pl install <package-name>`, replacing `<package-name>` with the name of a package. 
-
-NOTE: make sure to put these alphabetically in the command line!
-
+You can enable custom packages when building your server files.
 A list of Reality-supported packages follows.
 
 <table>
@@ -208,11 +173,8 @@ Multiple Instances
 
 You can run multiple server instances connected to the same database to provide a private cluster of servers all using the same character information.
  
-1. Run `perl build.pl --world WORLD --instance ID` from the **Repository** directory, replacing WORLD with a valid world name and ID with a valid instance ID (the default is 1, so 2 would be sensible for a second instance).  
-2. Copy all new directories and files from **Repository**\\deploy\\ to **ArmA2**\\.  
-3. Edit **Config**\\HiveExt.ini and set the database / time zone parameters appropriately.
-4. Insert a row into the instance table that has the instance ID you used previously and the correct world_id and starting loadout.  
-5. Stop and start Restarter.exe for your new instance to start up.
+1. Build server files using the application, make sure to note the Instance number.
+2. Go to "Setup / DB"->"Database" and add the instance with the appropriate world. You might need to change the ID number manually in the database.
 
 Care must be taken to ensure that all paths and options have been set correctly. With this system you can run as many instances as your server can support simultaneously.
 
@@ -221,9 +183,9 @@ Messaging / Scheduler
 
 You may optionally enable an in-game announcement system for Reality. To do so, follow these steps:
 
-1. Run `perl db_migrate.pl --schema RealityMessaging --version 0.01`. Be sure to include any parameters needed for your specific database passwords / configuration.  
-2. When building Reality, you must add `--with-messaging` to your arguments, for example `perl build.pl --with-messaging`.  
-3. Use `perl db_utility.pl --help` to learn how to use the `messages` command to manage your messages without any direct database interaction.  
+1. Go into the RealityCP application, select "Setup / DB"->"Database", and import the Messaging scheme.
+2. Make sure to have build Reality with the Messaging package.
+3. From the main menu of the application, go to "Messaging" to add, edit, remove or list messages.
 
 **NOTE:** Messages added/updated via database manipulation are only available after a server restart.
 
@@ -232,9 +194,9 @@ Buildings
 
 You may optionally enable a system that reads structure information from the database and spawns a set of static structures on the map on each server start. To do so, follow these steps:
 
-1. Run `perl db_migrate.pl --schema RealityBuildings --version 0.01`. Be sure to include any parameters needed for your specific database passwords / configuration.  
-2. When building Reality, you must add `--with-buildings` to your arguments, for example `perl build.pl --with-buildings`.  
-3. You must manually insert any building class names you wish to use into the building table and then insert the spawn coordinates / associated building IDs into the instance_building table.  
+1. Go into the RealityCP application, select "Setup / DB"->"Database", and import the Buildings scheme.
+2. Make sure to have build Reality with the Buildings package.
+3. You can insert buildings manually in the database with their class names in the building table and then insert the coordinates / IDs in the instance_building table.
 
 **NOTE:** Buildings added/updated via database manipulation are only available after a server restart.
 
@@ -243,8 +205,8 @@ Custom Inventory
 
 You may optionally enable a system that allows you to define custom spawn loadouts for individuals and/or group. To do so, follow these steps:
 
-1. Run `perl db_migrate.pl --schema RealityInvCust --version 0.02`. Be sure to include any parameters needed for your specific database passwords / configuration.  
-2. When building Reality, you must add `--with-invcust` to your arguments, for example `perl build.pl --with-invcust`.  
+1. Go into the RealityCP application, select "Setup / DB"->"Database", and import the Custom Inventory scheme.
+2. Make sure to have build Reality with the Custom Inventory package.  
 
 There are two tables which you must insert values into to use this feature. The `cust_loadout` table defines unique sets of inventory/backpack to give the player(s) on spawn. The `cust_loadout_profile` table then ties these cust_loadout rows to player profile IDs. You can associate multiple profile IDs to a single loadout with this relationship.
 
