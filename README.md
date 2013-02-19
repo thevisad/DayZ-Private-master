@@ -6,9 +6,7 @@ This is a private server project for DayZ which would not be possible without th
 
 Users Migrating from Bliss
 ==========================
-Users migrating from Bliss to Reality using an existing database will need to run the following against the database. 
-
-db_migrate.pl --host 127.0.0.1 --user CHANGEME --pass CHANGEME --name chernarus --port 3306 --schema RealityMigrate --version 0.01
+Users migrating from Bliss to Reality using an existing database will need to run the "Migrate from Bliss" option in the "Setup / DB"->"Database" window.
 
 
 Prerequisites
@@ -115,16 +113,14 @@ You can add/remove instances from the RealityCP application (from Setup/DB->Data
 Upgrading
 =========
 
-**EXTREMELY IMPORTANT:** If you are migrating from **ANY** previous version of Reality you will lose vehicles during the upgrade to schema 0.27.
-
 Depending on what has changed since you deployed your server, you may need to perform one or more steps to do a clean upgrade to the latest code. Look for the following in the commit log (specifically, the files that were changed) when you update to the latest version of the repository:
 
-If you see that SQL files or `db_migrate.pl` have changed, then you **must** run `db_migrate.pl` (with appropriate options, run it with `--help` for more information) to upgrade your database to the latest version.
-If SQF files (game script) has changed, then you **must** run `build.pl` and copy the `**Repository**\\deploy\\@reality_<id>.<world>\\` directory into **ArmA2**\\ (where `<id>` and `<world>` are the values you specified when running build.pl).
+If you see that SQL files or `db_migrate.pl` have changed, then you **must** do "Import Scheme" on 'Reality Main' in the "Setup / DB"->"Database" window of the application to update your database.
+If SQF files (game script) has changed, then you **must** rebuild your server from the application and copy the `**Repository**\\deploy\\@reality_<id>.<world>\\` directory into **ArmA2**\\ (where `<id>` and `<world>` are the values you specified when building).
 If configuration files and BattlEye anti-cheat files have changed in **Repository**\\deploy\\, you will need to backup and overwrite your existing versions of these files. Take care to change any default server names, passwords or similar back to their customized values after copying the new versions into your **ArmA2** directory.
-If you receive an error like `Cannot locate Some::Module.pm in @INC` when running a Perl script after an upgrade, run `setup_perl.bat` and then try the Perl script again.
+If you receive an error like `Cannot locate Some::Module.pm in @INC` when trying to do anything in the application, you need to change the application's config file (RealityCP.exe.config) and make the "perl" value (where it says "done") empty, and then run the Set-up Perl again from the app.
 
-These are the areas you will need to inspect to ensure a smooth upgrade. If database and code changes were not made at the same time and you do not read the history thoroughly, you may miss important changes and skip vital steps. It will save you frustration in the long run if you rebuild and redeploy, run `db_migrate.pl` and check for any new or changed files in **Repository**\\deploy\\ whenever you would like to update.
+These are the areas you will need to inspect to ensure a smooth upgrade. If database and code changes were not made at the same time and you do not read the history thoroughly, you may miss important changes and skip vital steps. It will save you frustration in the long run if you rebuild and redeploy, re-run the Reality Main scheme and check for any new or changed files in **Repository**\\deploy\\ whenever you would like to update.
 
 Vehicles
 ========
