@@ -207,6 +207,7 @@
 1 "waypointAttachObject" !"\"waypointAttachObject\"," 
 5 "remoteControl" !"\"remoteControl\","
 1 "switchCamera" !"\"switchCamera\"," !"rswitchCamera = 'switchCamera'" !"rswitchCameracode = compile PreprocessFile (BIS_PathMPscriptCommands + 'switchCamera.sqf')"
+1 "BIS_fnc_AAN"
 //little tries //#+12
 1 "rsetTask" !"rsetTaskState = 'setTaskState'" !"rsetTaskStatecode = compile PreprocessFile (BIS_PathMPscriptCommands + 'setTaskState.sqf')"
 1 "rsay" !"rsay = 'say'" !"rsaycode" !"if (_local) then {\n_unit say [_sound, _dis];\n} else {\n[nil,_unit,rSAY,[_sound, _dis]] call RE;\n};\n};" !"[nil,_trap,rSAY,[\"trap_bear_0\",60]] call RE;" 
