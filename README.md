@@ -16,6 +16,19 @@ Starting with database schema 0.39+ (Oring support) we will be reseting portions
 We understand that this may be inconvienent for admins who have hand done large portions of vehicles; however, we feel that this will better support all users of this software in the long run and allow maps to be ported faster to the Reality system. 
 
 
+Scripts Conversions
+===================
+Adding in your own scripts every time you compile a world can be a pain. Especially if the world you are hoping to support has a large number of scripts. I have created the RealityScriptEncoder to handle this aspect for you. 
+
+Find the script line that contains the item you wish to add as a filter. Namalsk added a large number of scripts for 1.7.5.1, we will use this as an example. 
+
+1. Find line skipTime ( this differs from the community scripts )and add that text script item text box. 
+2. Find the difference from the community filters (use a diff program like Beyond Compare). You will find the difference in this line is !"skipTime _posun;"
+3. Add this line to the Script text textbox and click DoIt! The program will output the line as "skipTime": "!\\\"skipTime _posun;\\\""
+4. Open the \filter\namalsk filter (this has already been done for you if you are using the latest) and add this line as a new line in between the brackets.
+5. Test your new script implementation, this line will now automatically be added to the end of any community scripts that are downloaded during the build process.
+
+
 Prerequisites
 =============
 
