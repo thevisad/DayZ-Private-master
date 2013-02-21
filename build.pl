@@ -79,7 +79,6 @@ if ($args{'help'}) {
 	foreach my $pkg (@pkgs) {
 		print "    --with-$pkg\n" unless ($pkg =~ m/(^\.|world|reality)/);
 	}
-	print "Note that packages need to be entered in the command line alphabetically.";
 	exit;
 } elsif ($args{'clean'}) {
 	print "INFO: Removing $dst_dir\n";
@@ -111,8 +110,7 @@ if (-d $src && !-d $conf_dir) {
 	replace_text("s/template\\s=\\sdayz_[0-9]+.[a-z]+/template = $profile/", "$conf_dir/config.cfg");
 
 	my $mods = {
-		'skaro.lingor'=> '@dayzlingorskaro',
-		'lingor'      => '@dayzlingor',
+		'lingor'      => '@dayzlingorskaro',
 		'takistan'    => '@dayztakistan',
 		'fallujah'    => '@dayzfallujah',
 		'zargabad'    => '@dayzzargabad',
