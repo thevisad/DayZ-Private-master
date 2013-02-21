@@ -271,6 +271,12 @@ Common Issues
 **Problem**: "Bad CD Key" messages  
 **Solution**: Buy the game.
 
+Source code
+===========
+
+Source for the Hive is available at: https://github.com/thevisad/Hive
+Source for the RealityCP is available at: https://github.com/gdscei/RealityCP
+
 Thanks To
 =========
 
