@@ -120,7 +120,7 @@ Manual installation (advanced)
     <td>Celle</td><td>mbg_celle2</td><td>@mbg_celle;@dayz_celle;@dayz_conflicts</td><td>1.7.5.1</td><td>http://cdn.dayz.st/dayzcommander/DayZCelle-1.7.5.1.rar</td>
   </tr>
   <tr>
-    <td>Namalsk</td><td>namalsk</td><td>@dayz;@dayz_namalsk</td><td>0.74</td><td></td>
+    <td>Namalsk</td><td>namalsk</td><td>@dayz;@dayz_namalsk</td><td>0.74</td><td>http://cdn.dayz.st/dayzcommander/DayZNamalsk-0.7.4.rar</td>
   </tr>
   <tr>
     <td>Oring</td><td>oring</td><td>@dayz_oring</td><td>1.0.7</td><td>http://deoring.dayzfiles.com/DayZOring-1.0.7.rar</td>
