@@ -11,5 +11,9 @@ cd ..\File-DirCompare-0.6
 perl Makefile.PL
 dmake
 dmake install
+cd ..\Net-GitHub-0.50
+perl Makefile.PL
+dmake
+dmake install
 cd ..\..
 cpan File::Basename::Object Text::Diff Text::Patch Config::IniFiles

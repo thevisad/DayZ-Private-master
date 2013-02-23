@@ -1,0 +1,39 @@
+---
+abstract: 'Perl Interface for github.com'
+author:
+  - 'Fayland Lam, C<< <fayland at gmail.com> >>'
+  - 'Fayland Lam <fayland@gmail.com>'
+build_requires:
+  ExtUtils::MakeMaker: 6.36
+  File::Slurp: 0
+  Test::MockModule: 0
+  Test::More: 0
+configure_requires:
+  ExtUtils::MakeMaker: 6.36
+dynamic_config: 0
+generated_by: 'Module::Install version 1.06, CPAN::Meta::Converter version 2.120921'
+license: perl
+meta-spec:
+  url: http://module-build.sourceforge.net/META-spec-v1.4.html
+  version: 1.4
+name: Net-GitHub
+no_index:
+  directory:
+    - inc
+    - t
+    - xt
+requires:
+  Any::Moose: 0
+  Crypt::SSLeay: 0
+  HTML::TreeBuilder: 0
+  HTTP::Request::Common: 0
+  JSON::Any: 0
+  JSON::XS: 0
+  MIME::Base64: 0
+  URI: 0
+  URI::Escape: 0
+  WWW::Mechanize::GZip: 0
+resources:
+  license: http://dev.perl.org/licenses/
+  repository: https://github.com/fayland/perl-net-github
+version: 0.50
