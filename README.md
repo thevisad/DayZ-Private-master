@@ -114,7 +114,7 @@ Manual installation (advanced)
     <td>Lingor Island (Skaronator.com)</td><td>lingor</td><td>@dayzlingorskaro</td><td>2.1</td><td>http://dl.skaronator.com/DayZLingorSkaro-2.1.rar</td>
   </tr>
   <tr>
-    <td>Utes</td><td>utes</td><td>@dayz</td><td>1.7.5.1</td><td>http://dayzmod.com/?Download</td>
+    <td>Utes</td><td>utes</td><td>@dayz</td><td>1.7.6</td><td>http://dayzmod.com/?Download</td>
   </tr>
 </table>
 11. If you are using a world other than Chernarus, run `perl db_utility.pl setworld <world_name>`, where `<world_name>` is the name of the world you specified when running `build.pl`.
