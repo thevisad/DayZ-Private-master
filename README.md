@@ -12,6 +12,26 @@ Users of command line or bash may use this comment as an alternative.
 
 db_migrate.pl --host yourdatabaseip --user changeme --pass changeme --name yourdatabasename --port 3306 --schema RealityMigrate --version 0.01
 
+GitHub Support Issues
+=====================
+When submitting a github issue please add all of the following information. Failure to do so will cause your support ticket to be delayed or worse, closed without resolution.
+
+In order to obtain your HiveEXT version, right click on the file and choose properties, then choose details. You will want to provide File Version and Product version.
+To obtain your MySQL version type **mysql --version** at the command line.
+Downloads for dayz_server.pbo and mission pbo are only required for servers running into issues with the server running after a successful compile.
+
+Service Provider:
+Server Type (dedicated, vps, dayz server only):
+World Name:
+Reality branch(1.7.5 or 1.7.6):
+DayZ_Code version:
+Download for RPT/HiveLog:
+Download for dayz_server.pbo/mission.pbo:
+HiveEXT.DLL version:
+MySQL Version: 
+Server name:
+Deatiled description of issue:
+
 
 MYSQL Security
 ==============
