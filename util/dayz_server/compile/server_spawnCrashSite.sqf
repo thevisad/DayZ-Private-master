@@ -30,6 +30,7 @@ while {true} do {
 	//Table without 50 cals
 	//_lootTable = ["Military","HeliCrash_No50s","MilitarySpecial"] call BIS_fnc_selectRandom;
 	
+	
 	_crashName	= getText (configFile >> "CfgVehicles" >> _crashModel >> "displayName");
 
 	diag_log(format["CRASHSPAWNER: %1%2 chance to spawn '%3' with loot table '%4' at %5", round(_spawnChance * 100), '%', _crashName, _lootTable, _timeToSpawn]);
@@ -75,20 +76,17 @@ while {true} do {
 		_crash setVariable ["ObjectID",1,true];
 
 		if (_spawnFire) then {
-			//["dayzFire",[_crash,2,time,false,_fadeFire]] call broadcastRpcCallAll;
-			dayzFire = [_crash,2,time,false,_fadeFire];
-			publicVariable "dayzFire";
+			["dayzFire",[_crash,2,time,false,_fadeFire]] call broadcastRpcCallAll;
 			_crash setvariable ["fadeFire",_fadeFire,true];
 		};
 
 		_num		= round(random _randomizedLoot) + _guaranteedLoot;
 		
-		_config = 		configFile >> "CfgBuildingLoot" >> _lootTable;
+		_config = 		configFile >> "CfgBuildingLoot" >> "HeliCrash";
 		_itemTypes =	[] + getArray (_config >> "itemType");
-		_index =        dayz_CBLBase  find "HeliCrash";
+		_index =		dayz_CBLCounts find (count _itemTypes);
 		_weights =		dayz_CBLChances select _index;
 		_cntWeights = count _weights;
-
 
 		for "_x" from 1 to _num do {
 			//create loot
@@ -105,5 +103,6 @@ while {true} do {
 				_x setVariable ["permaLoot",true];
 			} forEach _nearBy;
 		};
+
 	};
 };

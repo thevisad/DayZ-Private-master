@@ -22,6 +22,7 @@ _magazines =	_this select 1;
 _force =	_this select 2;
 _force =	true;
 
+
 _characterID =	_character getVariable ["characterID","0"];
 _charPos = 		getPosATL _character;
 _isInVehicle = 	vehicle _character != _character;
@@ -96,7 +97,6 @@ if (_characterID != "0") then {
 	if (_isNewGear) then {
 		//diag_log ("gear..."); sleep 0.05;
 		_playerGear = [weapons _character,_magazines];
-//diag_log ("playerGear: " +str(_playerGear));
 		_backpack = unitBackpack _character;
 		_playerBackp = [typeOf _backpack,getWeaponCargo _backpack,getMagazineCargo _backpack];
 	};
@@ -163,14 +163,14 @@ if (_characterID != "0") then {
 			_currentWpn = "";
 		} else {
 			if ( typeName(_currentWpn) == "STRING" ) then {
-				_muzzles = getArray(configFile >> "cfgWeapons" >> _currentWpn >> "muzzles");
-				if (count _muzzles > 1) then {
-					_currentWpn = currentMuzzle _character;
-				};	
+			_muzzles = getArray(configFile >> "cfgWeapons" >> _currentWpn >> "muzzles");
+			if (count _muzzles > 1) then {
+				_currentWpn = currentMuzzle _character;
+			};	
 			} else {
 				//diag_log ("DW_DEBUG: _currentWpn: " + str(_currentWpn));
 			_currentWpn = "";
-			};
+				};
 		};
 		_temp = round(_character getVariable ["temperature",100]);
 		_currentState = [_currentWpn,_currentAnim,_temp];
@@ -198,11 +198,7 @@ if (_characterID != "0") then {
 		
 		// If player is in a vehicle, keep its position updated
 		if (vehicle _character != _character) then {
-//			[vehicle _character, "position"] call server_updateObject;
-			if (!(vehicle _character in needUpdate_objects)) then {
-				//diag_log format["DEBUG: Added to NeedUpdate=%1",_object];
-				needUpdate_objects set [count needUpdate_objects, vehicle _character];
-			};
+			[vehicle _character, "position"] call server_updateObject;
 		};
 		
 		// Force gear updates for nearby vehicles/tents
