@@ -1,6 +1,5 @@
-delete from world_vehicle where vehicle_id > 94 and vehicle_id < 102;
+delete from instance_vehicle where instance_id = (SELECT instance.id FROM world INNER JOIN instance ON world.id = instance.world_id WHERE world.`name` = 'oring');
 delete from world_vehicle where world_id = 16;
-delete from instance_vehicle where world_vehicle_id > 94 and world_vehicle_id < 102;
 delete from vehicle where id > 94 and id < 102;
 ALTER TABLE `vehicle`
 AUTO_INCREMENT=94;
