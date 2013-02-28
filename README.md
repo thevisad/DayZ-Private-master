@@ -108,22 +108,13 @@ Manual installation (advanced)
     <td>World</td><td>World Name (Database)</td><td>Mod Folders</td><td>Version</td><td>URL</td>
   </tr>
   <tr>
-    <td>Chernarus</td><td>chernarus</td><td>@dayz</td><td>1.7.5.1</td><td>http://dayzmod.com/?Download</td>
+    <td>Chernarus</td><td>chernarus</td><td>@dayz</td><td>1.7.6</td><td>http://dayzmod.com/?Download</td>
   </tr>
   <tr>
-    <td>Lingor Island (Skaronator.com)</td><td>lingor-skaro</td><td>@dayzlingorskaro</td><td>2.0</td><td>http://dl.skaronator.com/DayZLingorSkaro-2.0.rar</td>
+    <td>Lingor Island (Skaronator.com)</td><td>lingor</td><td>@dayzlingorskaro</td><td>2.1</td><td>http://dl.skaronator.com/DayZLingorSkaro-2.1.rar</td>
   </tr>
   <tr>
-    <td>Utes</td><td>utes</td><td>@dayz</td><td>1.7.5.1</td><td>http://dayzmod.com/?Download</td>
-  </tr>
-  <tr>
-    <td>Celle</td><td>mbg_celle2</td><td>@mbg_celle;@dayz_celle;@dayz_conflicts</td><td>1.7.5.1</td><td>http://cdn.dayz.st/dayzcommander/DayZCelle-1.7.5.1.rar</td>
-  </tr>
-  <tr>
-    <td>Namalsk</td><td>namalsk</td><td>@dayz;@dayz_namalsk</td><td>0.74</td><td>http://cdn.dayz.st/dayzcommander/DayZNamalsk-0.7.4.rar</td>
-  </tr>
-  <tr>
-    <td>Oring</td><td>oring</td><td>@dayz_oring</td><td>1.0.7</td><td>http://deoring.dayzfiles.com/DayZOring-1.0.7.rar</td>
+    <td>Utes</td><td>utes</td><td>@dayz</td><td>1.7.6</td><td>http://dayzmod.com/?Download</td>
   </tr>
 </table>
 11. If you are using a world other than Chernarus, run `perl db_utility.pl setworld <world_name>`, where `<world_name>` is the name of the world you specified when running `build.pl`.
