@@ -32,6 +32,7 @@ Download for dayz_server.pbo/mission.pbo:<br>
 HiveEXT.DLL version:<br>
 MySQL Version: <br>
 Server name: <br>
+Packages used to build: <br>
 Deatiled description of issue:<br>
 
 
