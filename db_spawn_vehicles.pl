@@ -21,6 +21,7 @@ GetOptions(
 	'port|dbport=s',
 	'limit|l=s',
 	'cleanup=s',
+	'cleanonly',
 	'help'
 );
 
@@ -35,7 +36,7 @@ my %db = (
 );
 
 if ($args{'help'}) {
-	print "usage: db_spawn_vehicles.pl [--instance <id>] [--limit <limit>] [--host <hostname>] [--user <username>] [--pass <password>] [--name <dbname>] [--port <port>] [--cleanup tents|bounds|all]\n";
+	print "usage: db_spawn_vehicles.pl [--instance <id>] [--limit <limit>] [--host <hostname>] [--user <username>] [--pass <password>] [--name <dbname>] [--port <port>] [--cleanup tents|bounds|all] [--cleanonly]\n";
 	exit;
 }
 
@@ -80,7 +81,6 @@ where
 EndSQL
 ) or die "FATAL: SQL Error - " . DBI->errstr . "\n";
 	$sth->execute() or die "FATAL: Could not clean up old deployables - " . $sth->errstr . "\n";
-	if ($cleanup eq 'damaged') {goto END;}
 }
 
 if ($cleanup eq 'tents' || $cleanup eq 'all') {
@@ -96,8 +96,6 @@ where
 EndSQL
 ) or die "FATAL: SQL Error - " . DBI->errstr . "\n";
 	$sth->execute() or die "FATAL: Could not clean up orphaned tents - " . $sth->errstr . "\n";
-	if ($cleanup eq 'tents')
-	{ goto END;}
 }
 
 if ($cleanup eq 'bounds' || $cleanup eq 'all') {
@@ -148,9 +146,10 @@ EndSQL
 	}
 	$depDelSth->finish();
 	$vehDelSth->finish();
-	if ($cleanup eq 'bounds' || $cleanup eq 'all')
-	{ goto END;}
 }
+
+$sth->finish();
+if($args{'cleanonly'}) { goto END; }
 
 # Determine if we are over the vehicle limit
 my $vehicleCount = $dbh->selectrow_array("select count(*) from instance_vehicle where instance_id = ?", undef, $db{'instance'});
@@ -161,6 +160,7 @@ my $spawns = $dbh->prepare(<<EndSQL
 select
   wv.id world_vehicle_id,
   v.id vehicle_id,
+  v.class_name class_name,
   wv.worldspace,
   v.inventory,
   coalesce(v.parts, '') parts,
@@ -210,7 +210,10 @@ while (my $vehicle = $spawns->fetchrow_hashref) {
 
 	# If over the per-type limit, skip this spawn
 	my $count = $dbh->selectrow_array("select count(iv.id) from instance_vehicle iv join world_vehicle wv on iv.world_vehicle_id = wv.id where iv.instance_id = ? and wv.vehicle_id = ?", undef, ($db{'instance'}, $vehicle->{vehicle_id}));
-	next unless ($count < $vehicle->{limit_max});
+	if($count >= $vehicle->{limit_max}) {
+		printf "INFO:   vehicle %s is at count %d which is at limit_max of %d\n", $vehicle->{class_name}, $count, $vehicle->{limit_max};
+		next;
+	}
 
 	# Generate parts damage
 	my $health = "[" . join(',', map { (sprintf(rand(), "%.3f") > 0.85) ? "[\"$_\",1]" : () } split(/,/, $vehicle->{parts})) . "]";
@@ -218,12 +221,12 @@ while (my $vehicle = $spawns->fetchrow_hashref) {
 	# Execute insert
 	$spawnCount++;
 	$insert->execute($vehicle->{world_vehicle_id}, $vehicle->{worldspace}, $vehicle->{inventory}, $health, $vehicle->{damage}, $vehicle->{fuel}, $db{'instance'});
-	print "INFO: Called insert with ($vehicle->{world_vehicle_id}, $vehicle->{worldspace}, $vehicle->{inventory}, $health, $vehicle->{damage}, $vehicle->{fuel}, $db{'instance'})\n";
+	print "INFO: Called insert for $vehicle->{class_name} with ($vehicle->{world_vehicle_id}, $vehicle->{worldspace}, $vehicle->{inventory}, $health, $vehicle->{damage}, $vehicle->{fuel}, $db{'instance'})\n";
 }
 
 print "INFO: Spawned $spawnCount vehicles\n";
 
 $spawns->finish();
 $insert->finish();
-$dbh->disconnect();
 END:
+$dbh->disconnect();
