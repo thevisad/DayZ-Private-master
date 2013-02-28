@@ -105,16 +105,19 @@ Manual installation (advanced)
 10. Ensure the required client mods are present in **ArmA2**\\. Refer to the following table for specific information based on your desired world.  
 <table>
   <tr>
-    <td>World</td><td>World Name (Database)</td><td>Mod Folders</td><td>Version</td><td>URL</td>
+    <td>World</td><td>World Name (Database)</td><td> World ID</td><td>Mod Folders</td><td>Version</td><td>Download</td>
   </tr>
   <tr>
-    <td>Chernarus</td><td>chernarus</td><td>@dayz</td><td>1.7.6</td><td>http://dayzmod.com/?Download</td>
+    <td>Chernarus</td><td>chernarus</td><td>1</td><td>@dayz</td><td>1.7.6</td><td><b><a href="http://cdn.armafiles.info/latest/1.7.6/%40Server-1.7.6.1-Full.rar" >RAR</a></b></td>
   </tr>
   <tr>
-    <td>Lingor Island (Skaronator.com)</td><td>lingor</td><td>@dayzlingorskaro</td><td>2.1</td><td>http://dl.skaronator.com/DayZLingorSkaro-2.1.rar</td>
+    <td>DayZ Lingor Island</td><td>lingor</td><td>2</td><td>@dayzlingorskaro</td><td>2.1</td><td><b><a href="http://dl.skaronator.com/DayZLingorSkaro-2.1.rar" >RAR</a></b></td>
   </tr>
   <tr>
-    <td>Utes</td><td>utes</td><td>@dayz</td><td>1.7.6</td><td>http://dayzmod.com/?Download</td>
+    <td>Utes</td><td>utes</td><td>3</td><td>@dayz</td><td>1.7.6</td><td><b><a href="http://cdn.armafiles.info/latest/1.7.6/%40Server-1.7.6.1-Full.rar" >RAR</a></b></td>
+  </tr>
+   <tr>
+    <td>DayZ Invasion 1944</td><td>i44.chernarus</td><td>17</td><td>@DayZ_i44 @I44 @CBA @CBA_A2 @CBA_OA @CBA_CO</td><td>0.2.0</td><td><b><a href="http://dl.skaronator.com/DayZInvasion-0.2.0.zip" >ZIP</a></b></td>
   </tr>
 </table>
 11. If you are using a world other than Chernarus, run `perl db_utility.pl setworld <world_name>`, where `<world_name>` is the name of the world you specified when running `build.pl`.
