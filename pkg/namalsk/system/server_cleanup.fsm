@@ -1,4 +1,4 @@
-/*%FSM<COMPILE "P:\Personal Tools\FSM Editor Personal Edition\scriptedFSM.cfg, DayZ Server Cleanup">*/
+/*%FSM<COMPILE "scriptedFSM.cfg, DayZ Server Cleanup">*/
 /*%FSM<HEAD>*/
 /*
 item0[] = {"init",0,250,-75.000000,-400.000000,25.000000,-350.000000,0.000000,"init"};
@@ -18,7 +18,7 @@ item13[] = {"",7,210,221.000000,-79.000000,229.000000,-71.000000,0.000000,""};
 item14[] = {"",7,210,221.000000,146.000000,229.000000,154.000000,0.000000,""};
 item15[] = {"initialized",4,218,-75.000000,-325.000000,25.000000,-275.000000,0.000000,"initialized"};
 item16[] = {"prepare",2,250,-75.000000,-250.000000,25.000000,-200.000000,0.000000,"prepare"};
-item17[] = {"update_objects",2,250,100.000000,50.000000,200.000000,100.000000,0.000000,"update objects"};
+item17[] = {"update_objects",2,4346,100.000000,50.000000,200.000000,100.000000,0.000000,"update objects"};
 item18[] = {"need_update",4,218,100.000000,-25.000000,200.000000,25.000000,1.000000,"need update"};
 item19[] = {"",7,210,221.000000,-79.000000,229.000000,-71.000000,0.000000,""};
 link0[] = {0,15};
@@ -45,8 +45,8 @@ link20[] = {15,16};
 link21[] = {16,1};
 link22[] = {17,9};
 link23[] = {18,17};
-globals[] = {25.000000,1,0,0,0,640,480,1,24,6316128,1,-413.883698,371.575104,441.872192,-726.817871,951,1415,1};
-window[] = {0,-1,-1,-1,-1,782,1226,2555,2,1,969};
+globals[] = {25.000000,1,0,0,0,640,480,1,24,6316128,1,-396.580658,354.272186,463.204498,-386.553192,911,1031,1};
+window[] = {2,-1,-1,-1,-1,1020,322,1651,78,3,929};
 *//*%FSM</HEAD>*/
 class FSM
 {
@@ -79,22 +79,7 @@ class FSM
     {
       name = "waiting";
       init = /*%FSM<STATEINIT""">*/"//diag_log ""CLEANUP: Waiting for next task"";" \n
-       "_numDead = {local _x} count allDead;" \n
-       "" \n
-       "private [""_payload"", ""_interval"",""_delay""];" \n
-       "{" \n
-       "	_payload = _x select 0;" \n
-       "	_interval = _x select 1;" \n
-       "	_delay = _x select 2;" \n
-       "	if (time - _delay > _interval && _interval != -1) then {" \n
-       "		[nil, nil, rSPAWN, [_crier, _payload], { (_this select 0) globalChat (_this select 1) }] call RE;" \n
-       "		if (_interval == 0) then {" \n
-       "			_msgList set [_forEachIndex, [_payload, -1, time]];" \n
-       "		} else {" \n
-       "			_msgList set [_forEachIndex, [_payload, _interval, time]];" \n
-       "		};" \n
-       "	};" \n
-       "} forEach _msgList;"/*%FSM</STATEINIT""">*/;
+      ""/*%FSM</STATEINIT""">*/;
       precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
       class Links
       {
@@ -104,8 +89,8 @@ class FSM
           priority = 2.000000;
           to="cleanup_dead";
           precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
-          condition=/*%FSM<CONDITION""">*/"(_numDead > 300)"/*%FSM</CONDITION""">*/;
-          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+          condition=/*%FSM<CONDITION""">*/"((time - _lastCleanDead) > 1200)"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/"_lastCleanDead = time;"/*%FSM</ACTION""">*/;
         };
         /*%FSM</LINK>*/
         /*%FSM<LINK "time_sync">*/
@@ -114,18 +99,18 @@ class FSM
           priority = 1.000000;
           to="sync_the_time";
           precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
-          condition=/*%FSM<CONDITION""">*/"((time - _lastUpdate) > 300)"/*%FSM</CONDITION""">*/;
-          action=/*%FSM<ACTION""">*/"_lastUpdate = time;"/*%FSM</ACTION""">*/;
+          condition=/*%FSM<CONDITION""">*/"((time - _lastSyncTime) > 3600)"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/"_lastSyncTime = time;"/*%FSM</ACTION""">*/;
         };
-        /*%FSM</LINK>*/
+		/*%FSM</LINK>*/
         /*%FSM<LINK "need_update">*/
         class need_update
         {
           priority = 1.000000;
           to="update_objects";
           precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
-          condition=/*%FSM<CONDITION""">*/"( (count needUpdate_objects) > 0 && (time-_lastNeedUpdate>20) )"/*%FSM</CONDITION""">*/;
-          action=/*%FSM<ACTION""">*/"_lastNeedUpdate = time;"/*%FSM</ACTION""">*/;
+          condition=/*%FSM<CONDITION""">*/"((count needUpdate_objects) > 0 && (time - _lastUpdateVeh > 10))"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/"_lastUpdateVeh = time;"/*%FSM</ACTION""">*/;
         };
         /*%FSM</LINK>*/
         /*%FSM<LINK "true">*/
@@ -144,8 +129,8 @@ class FSM
           priority = 0.000000;
           to="cleanup_objects";
           precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
-          condition=/*%FSM<CONDITION""">*/"((time - _timeNem) > 60)"/*%FSM</CONDITION""">*/;
-          action=/*%FSM<ACTION""">*/"_timeNem = time;"/*%FSM</ACTION""">*/;
+          condition=/*%FSM<CONDITION""">*/"(time - _lastCleanObjs) > 600"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/"_lastCleanObjs = time;"/*%FSM</ACTION""">*/;
         };
         /*%FSM</LINK>*/
       };
@@ -155,80 +140,50 @@ class FSM
     class cleanup_dead
     {
       name = "cleanup_dead";
-      init = /*%FSM<STATEINIT""">*/"diag_log (""CLEANUP: TOO MANY DEAD BODIES"");" \n
+      init = /*%FSM<STATEINIT""">*/"diag_log (""CLEANUP: PERFORMING BODY CLEANUP"");" \n
        "" \n
-       "diag_log (""CLEANUP: PERFORMING BODY CLEANUP ON "" + str(_numDead) + "" BODIES"");" \n
-       "" \n
+       "_delQtyP = 0;" \n
        "_delQtyZ = 0;" \n
-       "_numZombie = {_x isKindOf ""zZombie_Base""} count allDead;" \n
+       "_delQtyFL = 0;" \n
+       "_delQtyFP = 0;" \n
+       "" \n
        "{" \n
        "	if (local _x) then {" \n
        "		if (_x isKindOf ""zZombie_Base"") then {" \n
        "			deleteVehicle _x;" \n
        "			_delQtyZ = _delQtyZ + 1;" \n
        "		} else {" \n
-       "			_exists = _x in _deadBodies;" \n
-       "			if(!_exists) then {" \n
-       "				_deadBodies set [count _deadBodies,_x];" \n
+       "			if (_x isKindOf ""CAManBase"") then {" \n
+       "				_deathTime = _x getVariable [""processedDeath"", time];" \n
+       "				if (time - _deathTime > 1200) then {" \n
+       "					_flies = nearestObject [_x, ""Sound_Flies""];" \n
+       "					if (!isNull _flies) then {" \n
+       "						deleteVehicle _flies;" \n
+       "						_delQtyFL = _delQtyFL + 1;" \n
+       "					};" \n
+       "					deleteVehicle _x;" \n
+       "					_delQtyP = _delQtyP + 1;" \n
+       "				};" \n
        "			};" \n
        "		};" \n
        "	};" \n
        "} forEach allDead;" \n
        "" \n
-       "//Cleanup players" \n
-       "_body = objNull;" \n
-       "_delQtyP = 0;" \n
-       "_delDo = _numDead - _numZombie;" \n
-       "_delDo = ((_delDo min (count _deadBodies)) -1);" \n
-       "if (_delDo<1) then {_delDo=1};" \n
-       "for ""_i"" from 0 to _delDo do {" \n
-       "	_body = _deadBodies select _i;" \n
-       "	if(!isNil ""_body"") then {" \n
-       "		_pos = getPosATL _body;" \n
-       "		_sfx = nearestObject [_pos,""Sound_Flies""];" \n
-       "		if (!(isNull _sfx)) then {" \n
-       "			deleteVehicle _sfx;" \n
-       "		};" \n
-       "		deleteVehicle _body;" \n
-       "		_delQtyP = _delQtyP + 1;" \n
-       "	};" \n
-       "	_deadBodies set [_i,""DEL""];" \n
-       "" \n
-       "//Let's move this into the body removal sequence so uncontrolled flies are removed only if corpses are cleaned" \n
-       "//Check Flies" \n
-       "_isOK=-1;" \n
-       "_dwUSOFC=0;" \n
        "{" \n
-       "	//_isOk = {!alive _x} count (nearestObjects [_x, [""CAManBase""], 2]);" \n
-       "	_isOk = {!alive _x} count (_x nearEntities [[""CAManBase""], 2]);" \n
-       "	if (_isOk>-1) then {" \n
-       "		diag_log (""DW_DEBUG _isOK: "" + str(_isOK) );" \n
-       "	};" \n
-       "	if ((_isOk>-1) AND (_isOK<1)) then {" \n
-       "		//diag_log (""CLEANUP: DELETING A SOUND OF FLIES"");" \n
-       "_dwUSOFC=_dwUSOFC+1;" \n
+       "	if ({!alive _x} count (nearestObjects [_x, [""CAManBase""], 10]) >= 0) then {" \n
        "		deleteVehicle _x;" \n
-       "		diag_log (""CLEANUP: DELETED AN UNCONTROLLED SOUND OF FLIES:"" + str(_dwUSOFC) );" \n
+       "		_delQtyFL = _delQtyFL + 1;" \n
        "	};" \n
        "} forEach allMissionObjects ""Sound_Flies"";" \n
-       "" \n
-       "" \n
-       "//Let's move this into the body removal sequence so uncontrolled fireplaces are removed only if corpses are cleaned" \n
-       "//clean fireplaces" \n
-       "_dwUFPC=0;" \n
+       "" \n 
        "{" \n
        "	if (local _x) then {" \n
-       "		//diag_log (""CLEANUP: DELETING A UNCONTROLLED FIREPLACE"");" \n
        "		deleteVehicle _x;" \n
-       "_dwUFPC=_dwUFPC+1;" \n
-       "		diag_log (""CLEANUP: DELETED AN UNCONTROLLED FIREPLACE:"" + str(_dwUFPC) );" \n
+       "		_delQtyFP = _delQtyFP + 1;" \n
        "	};" \n
        "} forEach allMissionObjects ""Land_Fire_DZ"";" \n
        "" \n
-       "};" \n
-       "_deadBodies = _deadBodies - [""DEL""];" \n
-       "" \n
-       "diag_log (""CLEANUP: DELETED "" + str(_delQtyP) + "" PLAYER BODIES AND "" + str(_delQtyZ) + "" BODIES"");" \n
+       "diag_log (""CLEANUP: Deleted "" + str(_delQtyP) + "" players, "" + str(_delQtyZ) + "" zombies, "" + str(_delQtyFL) + "" flies, and "" + str(_delQtyFP) +  "" fireplaces"");" \n
        ""/*%FSM</STATEINIT""">*/;
       precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
       class Links
@@ -250,24 +205,18 @@ class FSM
     class cleanup_objects
     {
       name = "cleanup_objects";
-      init = /*%FSM<STATEINIT""">*/"_missionObjs = allMissionObjects ""WeaponHolder"";" \n
-       "_qty = count _missionObjs;" \n
-       "" \n
-       "//diag_log (""CLEANUP: PERFORMING ITEM CLEANUP: TOTAL "" + str(_qty) + "" LOOT BAGS"");" \n
-       "_delQty = 0;" \n
-       "{" \n
-       "	if (local _x) then {" \n
-       "		_keep = _x getVariable [""permaLoot"",false];" \n
-       "                _nearby = {isPlayer _x} count (_x nearEntities [[""CAManBase""], 100]);" \n
-       "		if ( (!_keep) && (_nearby==0) ) then {" \n
-       "			deleteVehicle _x;" \n
-       "			_delQty = _delQty + 1;" \n
-       "		};" \n
-       "	};" \n
-       "} forEach _missionObjs;" \n
-       "if (_delQty > 0) then {" \n
-       "	diag_log (""CLEANUP: DELETED "" + str(_delQty) + "" LOOT BAGS"");" \n
-       "};" \n
+      init = /*%FSM<STATEINIT""">*/"_delQty = 0;" \n
+       "//{" \n
+       "//	if (local _x) then {" \n
+       "//		_keep = _x getVariable [""permaLoot"",false];" \n
+       "//		_keep = (_keep || (({isPlayer _x} count (_x nearEntities [[""CAManBase""], 100])) > 0));" \n
+       "//		if (!_keep) then {" \n
+       "//			deleteVehicle _x;" \n
+       "//			_delQty = _delQty + 1;" \n
+       "//		};" \n
+       "//	};" \n
+       "//} forEach allMissionObjects ""WeaponHolder"";" \n
+       "//diag_log (""CLEANUP: Deleted "" + str(_delQty) + "" loot drops"");" \n
        ""/*%FSM</STATEINIT""">*/;
       precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
       class Links
@@ -291,13 +240,12 @@ class FSM
       name = "sync_the_time";
       init = /*%FSM<STATEINIT""">*/"//Send request" \n
        "_key = ""CHILD:307:"";" \n
-       "_result = _key call server_hiveReadWrite;" \n
+       "_result = [_key] call server_hiveReadWrite;" \n
        "_outcome = _result select 0;" \n
        "if(_outcome == ""PASS"") then {" \n
        "	_date = _result select 1; " \n
-       "	_dateNum = dateToNumber(_date); " \n
-       "	_diff = ( _dateNum - dateToNumber (date) )*365*24*60;" \n
-       "	if ( abs(_diff)>5 ) then {" \n
+       "	_dateDiff = (dateToNumber(_date) - dateToNumber(date)) * 365 * 24 * 60;" \n
+       "	if (abs(_dateDiff) > 5) then {" \n
        "		setDate _date;" \n
        "		dayzSetDate = _date;" \n
        "		publicVariable ""dayzSetDate"";" \n
@@ -334,16 +282,6 @@ class FSM
        "	};" \n
        "} forEach allGroups;" \n
        "" \n
-       "/*" \n
-       "//Check for Ammobox" \n
-       " {" \n
-       "	if(!(_x isKindOf ""WeaponHolder"")) then {" \n
-       "		diag_log (""CLEANUP: DELETING AN AMMOBOX "" + (typeOf _x));" \n
-       "		deleteVehicle _x;" \n
-       "	};" \n
-       " } forEach allMissionObjects ""ReammoBox"";" \n
-       "*/" \n
-       "" \n
        "//Check for hackers" \n
        " {" \n
        "  	if(vehicle _x != _x && !(vehicle _x in _safety) && (typeOf vehicle _x) != ""ParachuteWest"") then {" \n
@@ -352,26 +290,6 @@ class FSM
        "   		_x setDamage 1;" \n
        "	 };" \n
        " } forEach allUnits;" \n
-       "" \n
-       "/*" \n
-       "//Let's move this into the body removal sequence so uncontrolled flies are removed only if corpses are cleaned" \n
-       "//Check Flies" \n
-       "_isOK=-1;" \n
-       "_dwUSOFC=0;" \n
-       "{" \n
-       "	//_isOk = {!alive _x} count (nearestObjects [_x, [""CAManBase""], 2]);" \n
-       "	_isOk = {!alive _x} count (_x nearEntities [[""CAManBase""], 2]);" \n
-       "	if (_isOk>-1) then {" \n
-       "		diag_log (""DW_DEBUG _isOK: "" + str(_isOK) );" \n
-       "	};" \n
-       "	if ((_isOk>-1) AND (isOK<1)) then {" \n
-       "		//diag_log (""CLEANUP: DELETING A SOUND OF FLIES"");" \n
-       "_dwUSOFC=_dwUSOFC+1;" \n
-       "		deleteVehicle _x;" \n
-       "		diag_log (""CLEANUP: DELETED AN UNCONTROLLED SOUND OF FLIES:"" + str(_dwUSOFC) );" \n
-       "	};" \n
-       "} forEach allMissionObjects ""Sound_Flies"";" \n
-       "*/" \n
        "" \n
        "dayz_serverObjectMonitor = _safety;"/*%FSM</STATEINIT""">*/;
       precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
@@ -394,20 +312,15 @@ class FSM
     class prepare
     {
       name = "prepare";
-      init = /*%FSM<STATEINIT""">*/"diag_log (""CLEANUP: INITIALIZING CLEANUP SCRIPT"");" \n
+      init = /*%FSM<STATEINIT""">*/"private [""_safety"", ""_lastSyncTime"", ""_lastCleanDead"", ""_lastCleanObjs"", ""_lastUpdateVeh""];" \n
+       "diag_log (""CLEANUP: INITIALIZING CLEANUP SCRIPT"");" \n
        "" \n
        "_safety = dayz_serverObjectMonitor;" \n
        "" \n
-       "_msgList = msgList;" \n
-       "_crierGrp = createGroup sideLogic;" \n
-       "_crier = _crierGrp createUnit [""Survivor2_DZ"", [-2500, 0, 0], [], 0, ""NONE""];" \n
-       "" \n
-       "_lastUpdate = time;" \n
-       "_timeNem = time;" \n
-       "_deadBodies = [];" \n
-       "_lastNeedUpdate = time;" \n
-       "_maxBodies = 15;" \n
-       ""/*%FSM</STATEINIT""">*/;
+       "_lastSyncTime = time;" \n
+       "_lastCleanDead = time;" \n
+       "_lastCleanObjs = time;" \n
+       "_lastUpdateVeh = time;"/*%FSM</STATEINIT""">*/;
       precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
       class Links
       {
@@ -432,7 +345,7 @@ class FSM
        "{" \n
        "//	_x setVariable [""needUpdate"",false,true];" \n
        "	needUpdate_objects = needUpdate_objects - [_x];" \n
-       "	[_x,""all""] call server_updateObject;" \n
+       "	[_x,""all""] spawn server_updateObject;" \n
        "" \n
        "} forEach needUpdate_objects;" \n
        ""/*%FSM</STATEINIT""">*/;

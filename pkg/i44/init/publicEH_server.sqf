@@ -14,8 +14,6 @@ registerServerRpc = {
 ["dayzDeleteObj",		{ (_this select 1) call server_deleteObj; }				] call registerServerRpc;
 ["dayzLogin",			{ (_this select 1) call server_playerLogin; }			] call registerServerRpc;
 ["dayzLogin2",			{ (_this select 1) call server_playerSetup; }			] call registerServerRpc;
-//missing sqf for server_playerMorph
-//["dayzPlayerMorph",		{ (_this select 1) call server_playerMorph; }			] call registerServerRpc;
 ["dayzLoginRecord",		{ (_this select 1) call dayz_recordLogin; }				] call registerServerRpc;
 ["dayzCharDisco",		{ (_this select 1) call server_characterSync; }			] call registerServerRpc;
-["dayzSpawnZed",    { (_this select 1) call server_handleZedSpawn; }    ] call registerServerRpc;
+["dayzSpawnZed",    	{ (_this select 1) call server_handleZedSpawn; }   		] call registerServerRpc;
