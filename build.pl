@@ -117,7 +117,8 @@ if (-d $src && !-d $conf_dir) {
 		'panthera2'   => '@dayzpanthera',
 		'namalsk'     => '@dayz;@dayz_namalsk',
 		'mbg_celle2'  => '@Dayz_Conflicts;@dayz_celle;@mbg_celle',
-		'tavi'        => '@taviana'
+		'tavi'        => '@taviana',
+		'i44.chernarus'        => '@DayZ_i44;@I44;@CBA;@CBA_A2;@CBA_OA;@CBA_CO'
 	};
 	my $mod = ((defined $mods->{$args{'world'}}) ? "$mods->{$args{'world'}}" : '@dayz') . ";\@reality_$args{'instance'}.$args{'world'}";
 
@@ -334,6 +335,10 @@ sub complex_merge {
 			my $diffOutput = `$cmd $srcPath $origPath $dstPath`;
 
 			$diffOutput =~ s/^[<=>\|]{7}.*//mg;
+			#$diffOutput =~ s/<{7,}.*={7,}(.*)>{7,}.*/$1/mg;
+			#$diffOutput =~ s/<<<<<<<[^>]*=======//mg;
+			#$diffOutput =~ s/<<<<<<<[^>>>>>>>>]*=======|>>>>>>>.*|<<<<<<<.*|=======.*//mg;
+			#$diffOutput =~ s/>>>>>>>[^>].*//mg;
 			$diffOutput =~ s/(\n){2,}/\n/sg;
 
 			make_path(dirname($dstPath)) unless (-d dirname($dstPath));
