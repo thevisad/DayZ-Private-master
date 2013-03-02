@@ -4,6 +4,21 @@ DayZ Reality Private Server
 This is a private server project for DayZ which would not be possible without the work of Rocket, Guru Abdul and ayan4m1.   
 **NOTE**: No support is implied or offered for pirated copies of ArmA 2.
 
+Multiple Server versions now supported in Reality 
+=================================================
+We are now supporting multiple server versions within Reality. This will allow the current package of Reality to support all older worlds that are currently not supported any longer due to newer server versions being placed into the project. This will also cause the branchs to cease to be named after the server version it supports since it will support all versions in the future. 
+
+Adding server version support is simple at this stage, simply drag the dayz_server for the proper version you want to support into the \util\ folder and rename it to dayz_server_XXXX where XXXX is the version number. 
+
+version usage<br>
+perl build.pl --world chernarus --serverversion 1761 --instance 1
+
+Versions supported at this time<br>
+1.7.4.4 = --serverversion 1744<br>
+1.7.5.1 = --serverversion 1751<br>
+1.7.6.1 = --serverversion 1761<br>
+
+
 Users Migrating from Bliss
 ==========================
 Users migrating from Bliss to Reality using an existing database will need to run the "Migrate from Bliss" option in the "Setup / DB"->"Database" window.
