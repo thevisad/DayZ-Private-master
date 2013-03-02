@@ -10,13 +10,13 @@ We are now supporting multiple server versions within Reality. This will allow t
 
 Adding server version support is simple at this stage, simply drag the dayz_server for the proper version you want to support into the \util\ folder and rename it to dayz_server_XXXX where XXXX is the version number. 
 
-version usage
+version usage<br>
 perl build.pl --world chernarus --serverversion 1761 --instance 1
 
-Versions supported at this time
-1.7.4.4 = --serverversion 1744
-1.7.5.1 = --serverversion 1751
-1.7.6.1 = --serverversion 1761
+Versions supported at this time<br>
+1.7.4.4 = --serverversion 1744<br>
+1.7.5.1 = --serverversion 1751<br>
+1.7.6.1 = --serverversion 1761<br>
 
 
 Users Migrating from Bliss
