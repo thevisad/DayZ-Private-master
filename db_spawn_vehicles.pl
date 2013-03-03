@@ -27,7 +27,7 @@ GetOptions(
 my %db = (
 	'host' => $args{'hostname'} ? $args{'hostname'} : 'localhost',
 	'instance' => $args{'instance'} ? $args{'instance'} : '1',
-	'limit' => $args{'limit'} ? $args{'limit'} : '500',
+	'limit' => $args{'limit'} ? $args{'limit'} : '200',
 	'user' => $args{'username'} ? $args{'username'} : 'dayz',
 	'pass' => $args{'password'} ? $args{'password'} : 'dayz',
 	'name' => $args{'database'} ? $args{'database'} : 'dayz',
@@ -74,9 +74,9 @@ delete from
   inner join deployable d on id.deployable_id = d.id
 where
   (d.class_name = 'Wire_cat1' and id.last_updated < now() - interval 3 day)
-  or (d.class_name = 'Hedgehog_DZ' and id.last_updated < now() - interval 4 day)
-  or (d.class_name = 'TrapBear' and id.last_updated < now() - interval 5 day)
-  or (d.class_name = 'Sandbag1_DZ' and id.last_updated < now() - interval 8 day)
+  or (d.class_name = 'Hedgehog_DZ' and id.last_updated < now() - interval 3 day)
+  or (d.class_name = 'TrapBear' and id.last_updated < now() - interval 3 day)
+  or (d.class_name = 'Sandbag1_DZ' and id.last_updated < now() - interval 3 day)
 EndSQL
 ) or die "FATAL: SQL Error - " . DBI->errstr . "\n";
 	$sth->execute() or die "FATAL: Could not clean up old deployables - " . $sth->errstr . "\n";
@@ -84,7 +84,7 @@ EndSQL
 }
 
 if ($cleanup eq 'tents' || $cleanup eq 'all') {
-	print "INFO: Cleaning up tents with dead owners older than four days\n";
+	print "INFO: Cleaning up tents with dead owners older than 10 days\n";
 	$sth = $dbh->prepare(<<EndSQL
 delete from
   id using instance_deployable id
@@ -92,7 +92,7 @@ delete from
   inner join survivor s on id.owner_id = s.id and s.is_dead = 1
 where
   d.class_name = 'TentStorage'
-  and id.last_updated < now() - interval 4 day
+  and id.last_updated < now() - interval 10 day
 EndSQL
 ) or die "FATAL: SQL Error - " . DBI->errstr . "\n";
 	$sth->execute() or die "FATAL: Could not clean up orphaned tents - " . $sth->errstr . "\n";
