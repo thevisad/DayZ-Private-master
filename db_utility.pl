@@ -185,16 +185,7 @@ if ($cmd eq 'messages') {
 } elsif ($cmd eq 'cleandead') {
 	my $days = shift(@ARGV);
 	defined $days or die "FATAL: Invalid arguments\n";
-	$dbh->do(<<EndSQL
-delete from
-  id using instance_deployable id
-  inner join survivor s on id.owner_id = s.id
-where
-  s.is_dead = 1
-  and s.last_updated < now() - interval ? day
-EndSQL
-, undef, ($days));
-	my $sth = $dbh->prepare("delete from survivor where is_dead = 1 and last_updated < now() - interval ? day");
+	my $sth = $dbh->prepare("DELETE FROM survivor WHERE id NOT IN (SELECT owner_id FROM instance_deployable) AND is_dead = 1 AND last_updated < NOW() - INTERVAL ? DAY");
 	$sth->execute($days);
 	print "INFO: Removed " . $sth->rows . " rows from the survivor table\n";
 	$sth->finish();
