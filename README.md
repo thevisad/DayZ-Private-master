@@ -4,6 +4,10 @@ DayZ Reality Private Server
 This is a private server project for DayZ which would not be possible without the work of Rocket, Guru Abdul and ayan4m1.   
 **NOTE**: No support is implied or offered for pirated copies of ArmA 2.
 
+Questions?
+==========
+Visit the Wiki https://github.com/thevisad/DayZ-Private-master/wiki/_pages
+
 Database Schema 0.39+
 =====================
 Starting with database schema 0.39+ (Oring support) we will be reseting portions of the vehicle tables. The resets are part of trying to resolve multiple issues with the old database schemas. Any custom added vehicles will need to be moved prior to update due to the refactoring of the vehilce numbers. It is suggested that custom vehicles be given a number higher then 1000 to leave room for any and all maps that will be added in the future. 
