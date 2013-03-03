@@ -9,7 +9,6 @@ class Mission
 		"dayz_weapons",
 		"dayz_equip",
 		"dayz_vehicles",
-		"dayz_extras",
 		"cacharacters_pmc",
 		"ca_modules_functions"
 	};
@@ -22,8 +21,8 @@ class Mission
 	randomSeed=11171215;
 	class Intel
 	{
-		briefingName="DayZ+";
-		briefingDescription="DayZ+";
+		briefingName="DayZ Chernarus";
+		briefingDescription="DayZ";
 		startWeather=0.067362607;
 		forecastWeather=0.52341133;
 		year=2008;

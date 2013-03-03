@@ -40,6 +40,22 @@ if ((!isServer) && (player != player)) then
   waitUntil {time > 3};
 };
 
+//1st person lock in Air Vehicles
+if (!isDedicated) then
+{
+	0 spawn 
+	{
+		while {true} do 
+		{
+			if((cameraView == "EXTERNAL" || cameraView == "GROUP") && (vehicle player isKindOf "Air")) then 
+			{
+				vehicle player switchCamera "INTERNAL"; titleText["This type of vehicle is 1st Person only!!", "PLAIN DOWN", 5]
+			};
+		sleep 0.1;
+		};
+	};
+};
+
 if (isServer) then {
 	_serverMonitor = 	[] execVM "\z\addons\dayz_code\system\server_monitor.sqf";
 };

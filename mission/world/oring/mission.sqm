@@ -14,15 +14,6 @@ class Mission
 		"CAMisc",
 		"castructureshouse_a_fuelstation",
 		"ind_tank",
-		"KPFS_Weapons",
-		"KPFS_SKS",
-		"KPFS_P88",
-		"KPFS_PM63",
-		"KPFS_MG1",
-		"KPFS_mp5",
-		"KPFS_p226",
-		"KPFS_german_police_vest_des",
-		"KPFS_GSG9_E",
 		"kpfs_bw_unosom",
 		"kyo_Bravo_November",
 		"GLT_Objects",
@@ -1247,7 +1238,7 @@ class Mission
 		class Item3
 		{
 			position[]={8410.2422,52.614635,5331.4531};
-			azimut=89.903999;
+			azimut=89.903171;
 			id=3;
 			side="EMPTY";
 			vehicle="Land_A_BuildingWIP";
@@ -2153,12 +2144,12 @@ class Mission
 		};
 		class Item100
 		{
-			position[]={1768.1753,27.057142,6999.106};
+			position[]={1768.1753,27.057142,6171.106};
 			id=166;
 			side="EMPTY";
 			vehicle="Body1";
 			skill=0.2;
-			init="this setpos [1768.1753, 6999.106, 1.7166138e-005];";
+			init="this setpos [1768.1753, 6171.106, 1.7166138e-005];";
 		};
 		class Item101
 		{
@@ -2327,12 +2318,12 @@ class Mission
 		};
 		class Item119
 		{
-			position[]={1281.7919,59.347816,3218.9998};
+			position[]={1281.7919,59.347816,3218.1718};
 			id=185;
 			side="EMPTY";
 			vehicle="Land_Misc_Garb_Heap_EP1";
 			skill=0.2;
-			init="this setpos [1281.7919, 3218.9998, -7.6293945e-006];";
+			init="this setpos [1281.7919, 3218.1718, -7.6293945e-006];";
 		};
 		class Item120
 		{
@@ -2364,12 +2355,12 @@ class Mission
 		};
 		class Item123
 		{
-			position[]={985.94543,59.329361,1999.6199};
+			position[]={985.94543,59.329361,1171.6199};
 			id=189;
 			side="EMPTY";
 			vehicle="Land_Misc_Rubble_EP1";
 			skill=0.2;
-			init="this setpos [985.94543, 1999.6199, -6.1035156e-005];";
+			init="this setpos [985.94543, 1171.6199, -6.1035156e-005];";
 		};
 		class Item124
 		{
@@ -3026,13 +3017,13 @@ class Mission
 		};
 		class Item196
 		{
-			position[]={8564.1162,52.614635,4999.4907};
+			position[]={8564.1162,52.614635,4171.4907};
 			azimut=68.824417;
 			id=262;
 			side="EMPTY";
 			vehicle="UralWreck";
 			skill=0.2;
-			init="this setpos [8564.1162, 4999.4907, -2.2888184e-005];";
+			init="this setpos [8564.1162, 4171.4907, -2.2888184e-005];";
 		};
 		class Item197
 		{
@@ -3162,12 +3153,12 @@ class Mission
 		};
 		class Item211
 		{
-			position[]={8494.999,52.614635,4921.1084};
+			position[]={8494.171,52.614635,4921.1084};
 			id=277;
 			side="EMPTY";
 			vehicle="UAZWreck";
 			skill=0.2;
-			init="this setpos [8494.999, 4921.1084, 3.8146973e-006];";
+			init="this setpos [8494.171, 4921.1084, 3.8146973e-006];";
 		};
 		class Item212
 		{

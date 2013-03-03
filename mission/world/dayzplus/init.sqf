@@ -2,7 +2,7 @@ startLoadingScreen ["","DayZ_loadingScreen"];
 enableSaving [false, false];
 
 dayZ_hivePipe1 = 	"\\.\pipe\dayz";
-dayZ_instance =	1;
+dayZ_instance = 1;	//The instance
 hiveInUse	=	true;
 dayzHiveRequest = [];
 initialized = false;

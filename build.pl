@@ -26,6 +26,7 @@ GetOptions(
 	'world|w|map|mission|m=s',
 	'instance|id|i=s',
 	'channels|chat=s',
+	'serverversion|sver=s',
 	'list',
 	'clean',
 	'help'
@@ -34,6 +35,7 @@ GetOptions(
 # Set defaults if options are not specified
 $args{'world'} = ($args{'world'}) ? lc($args{'world'}) : 'chernarus';
 $args{'instance'} = '1' unless $args{'instance'};
+$args{'serverversion'} = '1761' unless $args{'serverversion'};
 
 # Initialize paths
 our $base_dir = dirname(__FILE__);
@@ -41,10 +43,9 @@ our $tmp_dir  = "$base_dir/tmp";
 our $wld_dir  = "$base_dir/pkg/world";
 our $bls_dir  = "$base_dir/pkg/reality";
 our $msn_dir  = "$base_dir/mission";
-our $src_dir  = "$base_dir/util/dayz_server";
+our $src_dir  = "$base_dir/util/dayz_server_" . $args{'serverversion'};
 our $dst_dir  = "$base_dir/deploy";
 our $flt_dir  = "$base_dir/filter";
-
 our $build_dir     = "$tmp_dir/dayz_server";
 our $msn_build_dir = "$tmp_dir/mission_tmp";
 our $pkg_build_dir = "$tmp_dir/package_tmp";
@@ -58,6 +59,7 @@ if ($args{'help'}) {
 	print "    --clean: remove all files in ./tmp/ and perform no further action\n";
 	print "    --channels: set comma-separated list of channel ids to disable\n";
 	print "    --rcon: set rcon/admin password\n";
+	print "    --serverversion: set which server version to work with\n";
 	print "    --list: lists all available worlds and packages\n";
 	exit;
 } elsif ($args{'list'}) {
@@ -117,7 +119,7 @@ if (-d $src && !-d $conf_dir) {
 		'panthera2'   => '@dayzpanthera',
 		'namalsk'     => '@dayz;@dayz_namalsk',
 		'mbg_celle2'  => '@Dayz_Conflicts;@dayz_celle;@mbg_celle',
-		'tavi'        => '@taviana',
+		'tavi'        => '@Taviana',
 		'i44.chernarus'        => '@DayZ_i44;@I44;@CBA;@CBA_A2;@CBA_OA;@CBA_CO'
 	};
 	my $mod = ((defined $mods->{$args{'world'}}) ? "$mods->{$args{'world'}}" : '@dayz') . ";\@reality_$args{'instance'}.$args{'world'}";

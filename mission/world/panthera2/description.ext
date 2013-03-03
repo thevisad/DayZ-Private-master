@@ -1,25 +1,25 @@
 respawn = "BASE";
 respawndelay = 5;
-onLoadMission= "DayZ Panthera";
+onLoadMission = "DayZ Panthera";
 OnLoadIntro = "Welcome to Panthera";
 OnLoadIntroTime = False;
 OnLoadMissionTime = False;
 disabledAI = true;
 disableChannels[]={0,1,2,6};
 enableItemsDropping = 0;
+aiKills = 1;
+diagRadio = 1;
+diagHit = 1;
 onPauseScript = "\z\addons\dayz_code\compile\player_onPause.sqf";
 loadScreen = "\z\addons\dayz_code\gui\dayz_logo_ca.paa";
 
 class Header
 {
- gameType = COOP;            //DM, Team, Coop, ...
- minPlayers = 1;             //min # of players the mission supports
- maxPlayers = 100;            //Max # of players the mission supports
+	gameType = COOP;
+	minPlayers = 1;
+	maxPlayers = 100;
 };
 
-aiKills = 1;
-diagRadio = 1;
-diagHit = 1;
 
 class RscText
 {
