@@ -1,1 +1,2 @@
-1 ""  !="_this spawn fnc_plyrHit;"
+1 "WeaponHolder" !"WeaponHolder" !"WeaponHolder_ItemTent" !"WeaponHolder_PartWheel" !"WeaponHolder_MeleeCrowbar" !"WeaponHolder_PartGlass" !"WeaponHolder_PartGeneric" !"WeaponHolder_PartVRotor" !"WeaponHolder_ItemHatchet" !"WeaponHolder_ItemJerrycan" !"WeaponHolder_PartEngine" !"WeaponHolder_PartFueltank"
+1 "_DZ" !"Sandbag1_DZ" !"Hedgehog_DZ"
