@@ -40,8 +40,8 @@ $args{'serverversion'} = '1761' unless $args{'serverversion'};
 # Initialize paths
 our $base_dir = dirname(__FILE__);
 our $tmp_dir  = "$base_dir/tmp";
-our $wld_dir  = "$base_dir/pkg/world";
-our $bls_dir  = "$base_dir/pkg/reality";
+our $wld_dir  = "$base_dir/pkg". $args{'serverversion'} ."/world";
+our $bls_dir  = "$base_dir/pkg". $args{'serverversion'} ."/reality";
 our $msn_dir  = "$base_dir/mission";
 our $src_dir  = "$base_dir/util/dayz_server_" . $args{'serverversion'};
 our $dst_dir  = "$base_dir/deploy";
