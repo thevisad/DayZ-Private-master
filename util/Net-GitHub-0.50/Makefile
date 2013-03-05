@@ -1,7 +1,7 @@
 # This Makefile is for the Net::GitHub extension to perl.
 #
 # It was generated automatically by MakeMaker version
-# 6.6302 (Revision: 66302) from the contents of
+# 6.64 (Revision: 66400) from the contents of
 # Makefile.PL. Don't edit this file, edit Makefile.PL instead.
 #
 #       ANY CHANGES MADE HERE WILL BE LOST!
@@ -20,6 +20,7 @@
 #     NAME => q[Net::GitHub]
 #     NO_META => q[1]
 #     PREREQ_PM => { URI=>q[0], Test::MockModule=>q[0], URI::Escape=>q[0], ExtUtils::MakeMaker=>q[6.36], JSON::XS=>q[0], HTML::TreeBuilder=>q[0], WWW::Mechanize::GZip=>q[0], HTTP::Request::Common=>q[0], Test::More=>q[0], MIME::Base64=>q[0], Any::Moose=>q[0], Crypt::SSLeay=>q[0], File::Slurp=>q[0], JSON::Any=>q[0] }
+#     TEST_REQUIRES => {  }
 #     VERSION => q[0.50]
 #     VERSION_FROM => q[lib/Net/GitHub.pm]
 #     dist => {  }
@@ -147,8 +148,8 @@ PERM_RW = 644
 PERM_RWX = 755
 
 MAKEMAKER   = C:/strawberry/perl/lib/ExtUtils/MakeMaker.pm
-MM_VERSION  = 6.6302
-MM_REVISION = 66302
+MM_VERSION  = 6.64
+MM_REVISION = 66400
 
 # FULLEXT = Pathname for extension directory (eg Foo/Bar/Oracle).
 # BASEEXT = Basename part of FULLEXT. May be just equal FULLEXT. (eg Oracle)
@@ -236,7 +237,7 @@ PM_TO_BLIB = lib/Net/GitHub/V3/Query.pm \
 
 
 # --- MakeMaker platform_constants section:
-MM_Win32_VERSION = 6.63_02
+MM_Win32_VERSION = 6.64
 
 
 # --- MakeMaker tool_autosplit section:
@@ -869,20 +870,20 @@ checkdeps ::
 	$(PERL) Makefile.PL --checkdeps
 
 installdeps ::
-	$(PERL) Makefile.PL --config= --installdeps=Test::MockModule,0,WWW::Mechanize::GZip,0,JSON::Any,0
+	$(PERL) Makefile.PL --config= --installdeps=Test::MockModule,0,Any::Moose,0,WWW::Mechanize::GZip,0,JSON::Any,0
 
 installdeps_notest ::
-	$(PERL) Makefile.PL --config=notest,1 --installdeps=Test::MockModule,0,WWW::Mechanize::GZip,0,JSON::Any,0
+	$(PERL) Makefile.PL --config=notest,1 --installdeps=Test::MockModule,0,Any::Moose,0,WWW::Mechanize::GZip,0,JSON::Any,0
 
 upgradedeps ::
-	$(PERL) Makefile.PL --config= --upgradedeps=Test::MockModule,0,WWW::Mechanize::GZip,0,JSON::Any,0,Test::More,0,File::Slurp,0,MIME::Base64,0,URI,0,URI::Escape,0,Any::Moose,0,Crypt::SSLeay,0,JSON::XS,0,HTML::TreeBuilder,0,HTTP::Request::Common,0
+	$(PERL) Makefile.PL --config= --upgradedeps=Test::MockModule,0,Any::Moose,0,WWW::Mechanize::GZip,0,JSON::Any,0,Test::More,0,File::Slurp,0,MIME::Base64,0,URI,0,URI::Escape,0,Crypt::SSLeay,0,JSON::XS,0,HTML::TreeBuilder,0,HTTP::Request::Common,0
 
 upgradedeps_notest ::
-	$(PERL) Makefile.PL --config=notest,1 --upgradedeps=Test::MockModule,0,WWW::Mechanize::GZip,0,JSON::Any,0,Test::More,0,File::Slurp,0,MIME::Base64,0,URI,0,URI::Escape,0,Any::Moose,0,Crypt::SSLeay,0,JSON::XS,0,HTML::TreeBuilder,0,HTTP::Request::Common,0
+	$(PERL) Makefile.PL --config=notest,1 --upgradedeps=Test::MockModule,0,Any::Moose,0,WWW::Mechanize::GZip,0,JSON::Any,0,Test::More,0,File::Slurp,0,MIME::Base64,0,URI,0,URI::Escape,0,Crypt::SSLeay,0,JSON::XS,0,HTML::TreeBuilder,0,HTTP::Request::Common,0
 
 listdeps ::
-	@$(PERL) -le "print for @ARGV" Test::MockModule WWW::Mechanize::GZip JSON::Any
+	@$(PERL) -le "print for @ARGV" Test::MockModule Any::Moose WWW::Mechanize::GZip JSON::Any
 
 listalldeps ::
-	@$(PERL) -le "print for @ARGV" Test::MockModule WWW::Mechanize::GZip JSON::Any Test::More File::Slurp MIME::Base64 URI URI::Escape Any::Moose Crypt::SSLeay JSON::XS HTML::TreeBuilder HTTP::Request::Common
+	@$(PERL) -le "print for @ARGV" Test::MockModule Any::Moose WWW::Mechanize::GZip JSON::Any Test::More File::Slurp MIME::Base64 URI URI::Escape Crypt::SSLeay JSON::XS HTML::TreeBuilder HTTP::Request::Common
 
