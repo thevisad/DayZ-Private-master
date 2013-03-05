@@ -1,7 +1,0 @@
-mission/world/thirskw/description.ext
-mission/world/thirskw/init.sqf
-mission/world/thirskw/mission.sqm
-pkg/world/thirskw/compile/server_playerSetup.sqf
-schema/RealityThirskWinter/mysql/0.01/40_world.sql
-schema/RealityThirskWinter/mysql/0.01/41_world_vehicle.sql
-util/deploy/Keys/Stapo.bikey

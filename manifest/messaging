@@ -1,5 +1,0 @@
-mission/messaging/init.sqf
-pkg/messaging/system/server_cleanup.fsm
-pkg/messaging/system/server_monitor.sqf
-schema/RealityMessaging/mysql/0.01/10_messsage.sql
-schema/RealityMessaging/mysql/0.01/20_procedures.sql
