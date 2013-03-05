@@ -32,6 +32,28 @@ Installation
 **NOTE**: The importance of following each of these steps correctly and in order cannot be understated. 
 **NOTE**: It is highly recommended to disable UAC during the install portion; especially, the perl setup portion. Right clicking and running as Administration **DOES NOT WORK PROPERLY*** due to the way that the Perl setup application works. 
 
+Supported Maps
+==============
+<table>
+  <tr>
+    <td>World</td><td>World Name (Database)</td><td> World ID</td><td>Mod Folders</td><td>Version</td><td>Download</td>
+  </tr>
+  <tr>
+    <td>Chernarus</td><td>chernarus</td><td>1</td><td>@dayz</td><td>1.7.6.1</td><td><b><a href="http://cdn.armafiles.info/latest/1.7.6/%40Server-1.7.6.1-Full.rar" >RAR</a></b></td>
+  </tr>
+  <tr>
+    <td>DayZ Lingor Island</td><td>lingor</td><td>2</td><td>@dayzlingorskaro</td><td>2.1</td><td><b><a href="http://dl.skaronator.com/DayZLingorSkaro-2.1.rar" >RAR</a></b></td>
+  </tr>
+  <tr>
+    <td>Utes</td><td>utes</td><td>3</td><td>@dayz</td><td>1.7.6.1</td><td><b><a href="http://cdn.armafiles.info/latest/1.7.6/%40Server-1.7.6.1-Full.rar" >RAR</a></b></td>
+  </tr>
+   <tr>
+    <td>DayZ Celle</td><td>mbg_celle2</td><td>9</td><td>@DayZ_Celle @Dayz_Conflicts @mbg_celle</td><td>1.9</td><td><b><a href="http://dl.skaronator.com/DayZCelle-1.9.zip" >ZIP</a></b></td>.
+  </tr>
+   <tr>
+    <td>DayZ Invasion 1944</td><td>i44.chernarus</td><td>17</td><td>@DayZ_i44 @I44 @CBA @CBA_A2 @CBA_OA @CBA_CO</td><td>0.2.0</td><td><b><a href="http://dl.skaronator.com/DayZInvasion-0.2.0.zip" >ZIP</a></b></td>
+  </tr>
+</table>
 
 
 Optional Features
