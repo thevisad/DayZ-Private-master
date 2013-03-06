@@ -5,9 +5,9 @@ insert ignore INTO `vehicle` (`id`, `class_name`, `limit_min`, `limit_max`, `par
 (98, 'ibr_as350_pol', 0, 1, NULL),
 (99, 'JetSkiYanahui_Case_Yellow', 0, 1, NULL),
 (100, 'JetSkiYanahui_Case_Green', 0, 1, NULL),
-(101, 'JetSkiYanahui_Case_White', 0, 1, NULL),
+(101, 'JetSkiYanahui_Case_Blue', 0, 1, NULL),
 (102, 'JetSkiYanahui_Case_Red', 0, 1, NULL),
 (103, 'JetSkiYanahui_Yellow', 0, 1, NULL),
 (104, 'JetSkiYanahui_Green', 0, 1, NULL),
-(105, 'JetSkiYanahui_White', 0, 1, NULL),
+(105, 'JetSkiYanahui_Blue', 0, 1, NULL),
 (106, 'JetSkiYanahui_Red', 0, 1, NULL);
