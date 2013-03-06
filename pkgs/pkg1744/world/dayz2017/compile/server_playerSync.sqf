@@ -4,10 +4,13 @@ private ["_characterID","_temp","_currentWpn","_magazines","_force","_isNewPos",
 
 //waituntil {(typeName(_this) == "ARRAY");sleep 0.01;};	//seems to cause often infinite waits (but not for first n players)
 
-if ( typeName(_this) == "OBJECT" ) then {
+//this only happens when we don't follow the correct parameter format...
+//(like supplying just the player object instead of the array in player_eat.sqf)
+//i've fixed this in player_eat so i can comment this part out
+/*if ( typeName(_this) == "OBJECT" ) then {
 	_this = [_this,[],true];
 	//diag_log ("DW_DEBUG: #manual fix _this: " + str(_this));
-};
+};*/
 
 //correct
 //"UPDATE: [B 1-1-B:1 (THE BEAST) REMOTE,[],true]"
@@ -18,7 +21,6 @@ _character = 	_this select 0;
 _magazines =	_this select 1;
 _force =	_this select 2;
 _force =	true;
-
 
 _characterID =	_character getVariable ["characterID","0"];
 _charPos = 		getPosATL _character;
@@ -48,6 +50,8 @@ if (_characterID == "0") exitWith {
 private["_debug","_distance"];
 _debug = getMarkerpos "respawn_west";
 _distance = _debug distance _charPos;
+//diag_log ("debug _charPos = " + str(_charPos));
+//diag_log ("debug _distance = " + str(_distance));
 if (_distance < 2000) exitWith { 
 	diag_log format["ERROR: server_playerSync: Cannot Sync Player %1 [%2]. Position in debug! %3",name _character,_characterID,_charPos];
 };
@@ -81,6 +85,11 @@ if (_characterID != "0") then {
 			if (count _lastPos > 2 and count _charPos > 2) then {
 				if (!_isInVehicle) then {
 					_distanceFoot = round(_charPos distance _lastPos);
+					if ( _distanceFoot > 2000 ) then 
+					{
+					_distanceFoot = 0;
+					};
+					//diag_log ("debug _distanceFoot = " + str(_distanceFoot));
 				};
 				_character setVariable["lastPos",_charPos];
 			};
@@ -94,6 +103,7 @@ if (_characterID != "0") then {
 	if (_isNewGear) then {
 		//diag_log ("gear..."); sleep 0.05;
 		_playerGear = [weapons _character,_magazines];
+//diag_log ("playerGear: " +str(_playerGear));
 		_backpack = unitBackpack _character;
 		_playerBackp = [typeOf _backpack,getWeaponCargo _backpack,getMagazineCargo _backpack];
 	};
@@ -122,6 +132,7 @@ if (_characterID != "0") then {
 		_headShots = 	["headShots",_character] call server_getDiff;
 		_humanity = 	["humanity",_character] call server_getDiff2;
 		//_humanity = 	_character getVariable ["humanity",0];
+		_playerSleep =  _character getVariable ["dayz_sleep",0];
 		_character addScore _kills;		
 		/*
 			Assess how much time has passed, for recording total time on server
@@ -160,14 +171,14 @@ if (_characterID != "0") then {
 			_currentWpn = "";
 		} else {
 			if ( typeName(_currentWpn) == "STRING" ) then {
-			_muzzles = getArray(configFile >> "cfgWeapons" >> _currentWpn >> "muzzles");
-			if (count _muzzles > 1) then {
-				_currentWpn = currentMuzzle _character;
-			};	
+				_muzzles = getArray(configFile >> "cfgWeapons" >> _currentWpn >> "muzzles");
+				if (count _muzzles > 1) then {
+					_currentWpn = currentMuzzle _character;
+				};	
 			} else {
 				//diag_log ("DW_DEBUG: _currentWpn: " + str(_currentWpn));
 			_currentWpn = "";
-				};
+			};
 		};
 		_temp = round(_character getVariable ["temperature",100]);
 		_currentState = [_currentWpn,_currentAnim,_temp];
@@ -187,7 +198,7 @@ if (_characterID != "0") then {
 			if (alive _character) then {
 				//Wait for HIVE to be free
 				//Send request
-				_key = format["CHILD:201:%1:%2:%3:%4:%5:%6:%7:%8:%9:%10:%11:%12:%13:%14:%15:%16:",_characterID,_playerPos,_playerGear,_playerBackp,_medical,false,false,_kills,_headShots,_distanceFoot,_timeSince,_currentState,_killsH,_killsB,_currentModel,_humanity];
+				_key = format["CHILD:201:%1:%2:%3:%4:%5:%6:%7:%8:%9:%10:%11:%12:%13:%14:%15:%16:%17:",_characterID,_playerPos,_playerGear,_playerBackp,_medical,false,false,_kills,_headShots,_distanceFoot,_timeSince,_currentState,_killsH,_killsB,_currentModel,_humanity,_playerSleep];
 				//diag_log ("HIVE: WRITE: "+ str(_key) + " / " + _characterID);
 				_key call server_hiveWrite;
 			};
@@ -195,7 +206,11 @@ if (_characterID != "0") then {
 		
 		// If player is in a vehicle, keep its position updated
 		if (vehicle _character != _character) then {
-			[vehicle _character, "position"] call server_updateObject;
+//			[vehicle _character, "position"] call server_updateObject;
+			if (!(vehicle _character in needUpdate_objects)) then {
+				//diag_log format["DEBUG: Added to NeedUpdate=%1",_object];
+				needUpdate_objects set [count needUpdate_objects, vehicle _character];
+			};
 		};
 		
 		// Force gear updates for nearby vehicles/tents

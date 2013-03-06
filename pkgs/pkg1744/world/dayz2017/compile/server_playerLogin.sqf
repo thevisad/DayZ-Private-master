@@ -21,7 +21,7 @@ _items = 		[];
 _magazines = 	[];
 _weapons = 		[];
 _medicalStats =	[];
-_survival =		[0,0,0];
+_survival =		[0,0,0,0];
 _tent =			[];
 _state = 		[];
 _direction =	0;
@@ -36,14 +36,14 @@ if ((_playerID == "") or (isNil "_playerID")) exitWith {
 	diag_log ("LOGIN FAILED: Player [" + _playerName + "] has no login ID");
 };
 
-endLoadingScreen;
+//endLoadingScreen;
 diag_log ("LOGIN ATTEMPT: " + str(_playerID) + " " + _playerName);
 
 //Do Connection Attempt
 _doLoop = 0;
 while {_doLoop < 5} do {
 	_key = format["CHILD:101:%1:%2:%3:",_playerID,dayZ_instance,_playerName];
-	_primary = [_key,false,dayZ_hivePipeAuth] call server_hiveReadWrite;
+	_primary = _key call server_hiveReadWrite;
 	if (count _primary > 0) then {
 		if ((_primary select 0) != "ERROR") then {
 			_doLoop = 9;
@@ -62,7 +62,7 @@ if ((_primary select 0) == "ERROR") exitWith {
 
 //Process request
 _newPlayer = 	_primary select 1;
-_isNew = 		count _primary < 6; //_result select 1;
+_isNew = 		_primary select 9; //_result select 1;
 _charID = 		_primary select 2;
 _randomSpot = false;
 
@@ -84,8 +84,8 @@ if (!_isNew) then {
 	};
 	
 } else {
-	_model =		_primary select 3;
-	_hiveVer =		_primary select 4;
+	_model =		_primary select 7;
+	_hiveVer =		_primary select 8;
 	if (isNil "_model") then {
 		_model = "Survivor2_DZ";
 	} else {
@@ -103,7 +103,7 @@ if (!_isNew) then {
 	
 	//Wait for HIVE to be free
 	_key = format["CHILD:203:%1:%2:%3:",_charID,[_wpns,_mags],[_bcpk,[],[]]];
-	_key spawn server_hiveWrite;
+	_key call server_hiveWrite;
 	
 };
 diag_log ("LOGIN LOADED: " + str(_playerObj) + " Type: " + (typeOf _playerObj));
