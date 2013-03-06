@@ -9,6 +9,8 @@ use List::Util qw(min);
 use Getopt::Long qw(:config pass_through);
 use DBIx::Transaction;
 use DBI;
+use POSIX;
+use DBD::mysql;
 
 our %args;
 GetOptions(
@@ -18,6 +20,7 @@ GetOptions(
 	'password|pass|p=s',
 	'database|name|dbname|d=s',
 	'instance|index|i=s',
+	'cleanup|c=s',
 	'port=s',
 	'help',
 );
@@ -38,6 +41,7 @@ if ($args{'help'}) {
 	print "  addinstance <world_name>       - add an instance for a world\n";
 	print "  deleteinstance <instance_id>   - delete an instance for a world\n";
 	print "  itemdistr                      - look at all live player inventories and show counts of each item in descending order\n";
+	print "  cleanup tents|bounds|all       - clean up of \n";
 	print "  cleanitem <classname>          - remove comma-separated list of classnames from all survivor inventories\n";
 	print "  cleandead <days>               - delete dead survivors who were last updated more than <days> days ago\n";
 	print "  cleanvehicle [<vehicle_id>]    - deletes all spawned vehicles (only of <vehicle_id> if specified)\n";
@@ -61,6 +65,106 @@ my $dbh = DBI->connect(
 ) or die "FATAL: Could not connect to MySQL -  " . DBI->errstr . "\n";
 
 $dbh->{AutoCommit} = 0;
+
+
+my $cleanup = ($args{'cleanup'}) ? $args{'cleanup'} : 'none';
+
+if ($cleanup eq 'damaged' || $cleanup eq 'all') {
+	print "INFO: Cleaning up damaged vehicles\n";
+	my $sth = $dbh->prepare(<<EndSQL
+delete from
+  instance_vehicle 
+where
+  instance_id = ?
+  and damage = 1
+EndSQL
+) or die "FATAL: SQL Error - " . DBI->errstr . "\n";
+	$sth->execute($db{'instance'}) or die "FATAL: Could not clean up destroyed vehicles - " . $sth->errstr . "\n";
+
+	print "INFO: Cleaning up old deployables\n";
+	$sth = $dbh->prepare(<<EndSQL
+delete from
+  id using instance_deployable id
+  inner join deployable d on id.deployable_id = d.id
+where
+  (d.class_name = 'Wire_cat1' and id.last_updated < now() - interval 3 day)
+  or (d.class_name = 'Hedgehog_DZ' and id.last_updated < now() - interval 4 day)
+  or (d.class_name = 'TrapBear' and id.last_updated < now() - interval 5 day)
+  or (d.class_name = 'Sandbag1_DZ' and id.last_updated < now() - interval 8 day)
+EndSQL
+) or die "FATAL: SQL Error - " . DBI->errstr . "\n";
+	$sth->execute() or die "FATAL: Could not clean up old deployables - " . $sth->errstr . "\n";
+	if ($cleanup eq 'damaged') {goto END;}
+}
+
+if ($cleanup eq 'tents' || $cleanup eq 'all') {
+	print "INFO: Cleaning up tents with dead owners older than four days\n";
+	my $sth = $dbh->prepare(<<EndSQL
+delete from
+  id using instance_deployable id
+  inner join deployable d on id.deployable_id = d.id
+  inner join survivor s on id.owner_id = s.id and s.is_dead = 1
+where
+  d.class_name = 'TentStorage'
+  and id.last_updated < now() - interval 4 day
+EndSQL
+) or die "FATAL: SQL Error - " . DBI->errstr . "\n";
+	$sth->execute() or die "FATAL: Could not clean up orphaned tents - " . $sth->errstr . "\n";
+	if ($cleanup eq 'tents')
+	{ goto END;}
+}
+
+if ($cleanup eq 'bounds' || $cleanup eq 'all') {
+	print "INFO: Starting boundary check for objects\n";
+	my $sth = $dbh->prepare(<<EndSQL
+select
+  id.id dep_id,
+  0 veh_id,
+  id.worldspace,
+  w.max_x,
+  w.max_y
+from
+  instance_deployable id
+  inner join instance i on id.instance_id = i.id
+  inner join world w on i.world_id = w.id
+union
+select
+  0 dep_id,
+  iv.id veh_id,
+  iv.worldspace,
+  w.max_x,
+  w.max_y
+from
+  instance_vehicle iv
+  join instance i on iv.instance_id = i.id
+  join world_vehicle wv on iv.world_vehicle_id = wv.id
+  join vehicle v on wv.vehicle_id = v.id
+  join world w on i.world_id = w.id
+EndSQL
+);
+	$sth->execute() or die "FATAL: Couldn't get list of object positions\n";
+	my $depDelSth = $dbh->prepare("delete from instance_deployable where id = ?");
+	my $vehDelSth = $dbh->prepare("delete from instance_vehicle where id = ?");
+	while (my $row = $sth->fetchrow_hashref()) {
+		$row->{worldspace} =~ s/[\[\]\s]//g;
+		$row->{worldspace} =~ s/\|/,/g;
+		my @pos = split(',', $row->{worldspace});
+
+		# Skip valid positions
+		next unless ($pos[1] < 0 || $pos[2] < 0 || $pos[1] > $row->{max_x} || $pos[2] > $row->{max_y});
+
+		if ($row->{veh_id} == 0) {
+			$depDelSth->execute($row->{dep_id}) or die "FATAL: Error deleting out-of-bounds deployable\n";
+		} else {
+			$vehDelSth->execute($row->{veh_id}) or die "FATAL: Error deleting out-of-bounds vehicle\n";
+		}
+		print "INFO: Object at $pos[1], $pos[2] was OUT OF BOUNDS and was deleted\n";
+	}
+	$depDelSth->finish();
+	$vehDelSth->finish();
+	if ($cleanup eq 'bounds' || $cleanup eq 'all')
+	{ goto END;}
+}
 
 my $cmd = shift(@ARGV);
 defined $cmd or die "FATAL: No command supplied, try --help for usage information\n";
@@ -253,5 +357,7 @@ EndSQL
 	die "FATAL: Unrecognized command.\n";
 }
 
+END:
 $dbh->commit();
 $dbh->disconnect();
+
