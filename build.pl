@@ -181,7 +181,7 @@ my @flt_lookups = ();
 while (my $option = shift(@ARGV)) {
 	next unless ($option =~ m/with-([-\w]+)/);
 
-	my $pkg_dir = "$base_dir/pkg/$1";
+	my $pkg_dir = "$base_dir/pkgs/pkg".$args{'serverversion'}."/$1";
 	if (!-d $pkg_dir && !-d "$msn_dir/$1" && !-f "$flt_dir/$1") {
 		print "ERROR: Package $1 does not exist\n";
 		next;
