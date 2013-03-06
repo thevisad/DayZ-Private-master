@@ -42,7 +42,7 @@ our $base_dir = dirname(__FILE__);
 our $tmp_dir  = "$base_dir/tmp";
 our $wld_dir  = "$base_dir/pkg". $args{'serverversion'} ."/world";
 our $bls_dir  = "$base_dir/pkg". $args{'serverversion'} ."/reality";
-our $msn_dir  = "$base_dir/mission";
+our $msn_dir  = "$base_dir/mission". $args{'serverversion'};
 our $src_dir  = "$base_dir/util/dayz_server_" . $args{'serverversion'};
 our $dst_dir  = "$base_dir/deploy";
 our $flt_dir  = "$base_dir/filter";
@@ -117,10 +117,10 @@ if (-d $src && !-d $conf_dir) {
 		'fallujah'    => '@dayzfallujah',
 		'zargabad'    => '@dayzzargabad',
 		'panthera2'   => '@dayzpanthera',
-		'namalsk'     => '@dayz;@dayz_namalsk',
+		'namalsk'     => '@dayz_namalsk_@dayz;@dayz_namalsk',
 		'mbg_celle2'  => '@Dayz_Conflicts;@dayz_celle;@mbg_celle',
 		'tavi'        => '@Taviana',
-		'i44.chernarus'        => '@DayZ_i44;@I44;@CBA;@CBA_A2;@CBA_OA;@CBA_CO'
+		'i44.chernarus'        => 'expansion\beta;expansion\beta\expansion;@DayZ_i44;@I44;@CBA;@CBA_A2;@CBA_OA;@CBA_CO'
 	};
 	my $mod = ((defined $mods->{$args{'world'}}) ? "$mods->{$args{'world'}}" : '@dayz') . ";\@reality_$args{'instance'}.$args{'world'}";
 
