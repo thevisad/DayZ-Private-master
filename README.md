@@ -48,7 +48,7 @@ A list of Reality-supported packages follows.
     <td>carepkgs</td><td>--with-carepkgs</td><td>Drops care packages with various loot types across the map (similar to heli crash sites)</td>
   </tr>
   <tr>
-    <td>killmsgs</td><td>--with-killmsgs</td><td>Shows in-game messages when one player kills another (not needed for Lingor). Custom BE filters must be used (Download Pending)</td>
+    <td>killmsgs</td><td>--with-killmsgs</td><td>Shows in-game messages when one player kills another. Custom BE filters must be used (Download Pending)</td>
   </tr>
   <tr>
     <td>messaging</td><td>--with-messaging</td><td>Replacement for the old scheduler feature, see <b>Messaging/Scheduler</b> below</td>
