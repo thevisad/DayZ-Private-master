@@ -13,4 +13,4 @@ insert ignore into world_vehicle ( vehicle_id, world_id, worldspace, chance, las
 ( 106, 2, '[75,[7590.3486, 8260.0996, -0.082376719]]', 0.500, 0.40);
 
 update world_vehicle set worldspace='[222,[2926.8052, 7965.2969, 0]]' where worldspace='[291,[5873.05,5326.02,0.00148487]]';
-update spawns set last_modified='0.40' where worldspace='[222,[2926.8052, 7965.2969, 0]]';
+update world_vehicle set last_modified='0.40' where worldspace='[222,[2926.8052, 7965.2969, 0]]';
