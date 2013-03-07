@@ -120,7 +120,8 @@ if (-d $src && !-d $conf_dir) {
 		'namalsk'     => '@dayz;@dayz_namalsk',
 		'mbg_celle2'  => '@Dayz_Conflicts;@dayz_celle;@mbg_celle',
 		'tavi'        => '@Taviana',
-		'i44.chernarus'        => 'expansion\beta;expansion\beta\expansion;@DayZ_i44;@I44;@CBA;@CBA_A2;@CBA_OA;@CBA_CO'
+		'i44.chernarus'        => 'expansion\beta;expansion\beta\expansion;@DayZ_i44;@I44;@CBA;@CBA_A2;@CBA_OA;@CBA_CO',
+		'dayz2017'    => '@DayZ2017'
 	};
 	my $mod = ((defined $mods->{$args{'world'}}) ? "$mods->{$args{'world'}}" : '@dayz') . ";\@reality_$args{'instance'}.$args{'world'}";
 
@@ -456,7 +457,11 @@ sub pack_world {
 	make_path($dst) unless (-d $dst);
 	pack_pbo($src, "$dst/dayz_server.pbo");
 
-	copy("$base_dir/util/HiveExt.dll", "$dst_dir/\@reality_$args{'instance'}.$args{'world'}/HiveExt.dll");
+	if($args{'world'} eq "dayz2017") {
+		copy("$base_dir/util/HiveExt_2017.dll", "$dst_dir/\@reality_$args{'instance'}.$args{'world'}/HiveExt.dll");
+	} else {
+		copy("$base_dir/util/HiveExt.dll", "$dst_dir/\@reality_$args{'instance'}.$args{'world'}/HiveExt.dll");
+	}
 }
 
 sub pack_mission {
