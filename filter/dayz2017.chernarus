@@ -6,5 +6,6 @@
 "setPos": "!\\\"CSJ_GyroPboat\\\"\\,!\\\"CSJ_GyroP\\\"\\, !\\\"CSJ_GyroPboat\\\"\\, !\\\"CSJ_GyroFloat\\\"\\, !\\\"CSJ_FloatWash\\\"\\, !\\\"CSJ_GyroC\\\"\\, !\\\"CSJ_GyroCfloat\\\"\\, !\\\"CSJ_Cfloat\\\"\\, !\\\"CSJ_GyroCover\\\"",
 "setDamage": "!\\\"CSJ_GyroPboat\\\"\\,!\\\"CSJ_GyroP\\\"\\, !\\\"CSJ_GyroPboat\\\"\\, !\\\"CSJ_GyroFloat\\\"\\, !\\\"CSJ_FloatWash\\\"\\, !\\\"CSJ_GyroC\\\"\\, !\\\"CSJ_GyroCfloat\\\"\\, !\\\"CSJ_Cfloat\\\"\\, !\\\"CSJ_GyroCover\\\"",
 "enableCamShake": "!\\\"addCamShake\\\"",
-"\\\"R_M136_AT\\\"": "!\\\"e+\\\""
+"\\\"R_M136_AT\\\"": "!\\\"e+\\\"",
+"setDammage": "!\\\"_Veh setDammage _VehStatus\\\""
 }
