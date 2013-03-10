@@ -4,6 +4,14 @@ DayZ Reality Private Server
 This is a private server project for DayZ which would not be possible without the work of Rocket, Guru Abdul and ayan4m1.   
 **NOTE**: No support is implied or offered for pirated copies of ArmA 2.
 
+Reality Builder Auto Updater
+============================
+We have created an updater for the software. This will allow the users to get the latest supported software from the system without having to go through github. This updater will only download the most current stable version available. Users may still use the github which will have the absolute latest version, but is only recommended for advanced users and users who will be doing pull requests to the system. With the auto updater you can ensure that the latest supported version will be available for your user. <br>
+
+Download the Reality Builder Auto updater here http://abighole.hngamers.com/10kli <br>
+
+After download, run it and it will install to the c:\RealityBuilder file location. <br>
+
 Questions?
 ==========
 Visit the Wiki https://github.com/thevisad/DayZ-Private-master/wiki/_pages
