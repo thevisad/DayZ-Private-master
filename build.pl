@@ -117,7 +117,7 @@ if (-d $src && !-d $conf_dir) {
 		'fallujah'    => '@dayzfallujah',
 		'zargabad'    => '@dayzzargabad',
 		'panthera2'   => '@dayzpanthera',
-		'namalsk'     => '@dayz;@dayz_namalsk',
+		'namalsk'     => '@DayZ_Namalsk;@DayZ_Namalsk_@DayZ',
 		'mbg_celle2'  => '@Dayz_Conflicts;@dayz_celle;@mbg_celle',
 		'tavi'        => '@Taviana',
 		'i44.chernarus'        => 'expansion\beta;expansion\beta\expansion;@DayZ_i44;@I44;@CBA;@CBA_A2;@CBA_OA;@CBA_CO',
