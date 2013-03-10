@@ -1,0 +1,10 @@
+{
+"\\\"_AP\\\"": "!\\\"ice_apo_pack1\\\" !\\\"ice_apo_pack2\\\" !\\\"ice_apo_pack3\\\" !\\\"ice_apo_pack4\\\"",
+"createMine": "!\\\"L player)] spawn player_alertZombies;sleep 5;_tent = createVehicle [\\\\\\\"tent2017\\\\\\\"\\, _location\\, []\\, 0\\, \\\\\\\"CAN_COLLIDE\\\\\\\"];_tent setd\\\"",
+"createVehicle": "!\\\"_object =  _type createVehicleLocal _position;\\\\n_object setPos _position;\\\\n_object setDir _dir;\\\\n_object allowDamage false;\\\"\\, !\\\"CSJ_GyroFloat\\\"\\, !\\\"CSJ_FloatWash\\\"\\, !\\\"csj_gyrop\\\"\\, !\\\"csj_gyroc\\\"\\,!\\\"L player)] spawn player_alertZombies;sleep 5;_tent = createVehicle [\\\\\\\"tent2017\\\\\\\"\\, _location\\, []\\, 0\\, \\\\\\\"CAN_COLLIDE\\\\\\\"];_tent setd\\\"\\, !\\\"tent2017\\\" ",
+"publicVariable": "!\\\"tent2017\\\" ",
+"setPos": "!\\\"CSJ_GyroPboat\\\"\\,!\\\"CSJ_GyroP\\\"\\, !\\\"CSJ_GyroPboat\\\"\\, !\\\"CSJ_GyroFloat\\\"\\, !\\\"CSJ_FloatWash\\\"\\, !\\\"CSJ_GyroC\\\"\\, !\\\"CSJ_GyroCfloat\\\"\\, !\\\"CSJ_Cfloat\\\"\\, !\\\"CSJ_GyroCover\\\"",
+"setDamage": "!\\\"CSJ_GyroPboat\\\"\\,!\\\"CSJ_GyroP\\\"\\, !\\\"CSJ_GyroPboat\\\"\\, !\\\"CSJ_GyroFloat\\\"\\, !\\\"CSJ_FloatWash\\\"\\, !\\\"CSJ_GyroC\\\"\\, !\\\"CSJ_GyroCfloat\\\"\\, !\\\"CSJ_Cfloat\\\"\\, !\\\"CSJ_GyroCover\\\"",
+"enableCamShake": "!\\\"addCamShake\\\"",
+"\\\"R_M136_AT\\\"": "!\\\"e+\\\""
+}
