@@ -16,8 +16,8 @@
 1 "Bo_"
 5 "_AA"
 5 "_AT" !="R_M136_AT"
-1 "R_M136_AT" //keep monitoring to catch obvious abuse
-5 "_AP" //"_APHE"
+1 "R_M136_AT"
+5 "_AP"
 5 "_80"
 5 "_57"
 5 "_85"
