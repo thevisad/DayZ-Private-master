@@ -1176,15 +1176,15 @@ class Mission
 	class Markers
 	{
 		items=7;
-		class Item0
+			class Item0
 		{
-			position[]={7143.7998,293.89642,7752.3491};
+			position[]={7839.6055,381.33774,8414.7324};
 			name="center";
 			type="Empty";
 		};
 		class Item1
 		{
-			position[]={1730.5564,283.8649,7797.5605};
+			position[]={-18697.58,379.53012,25815.256};
 			name="respawn_west";
 			type="Empty";
 		};
