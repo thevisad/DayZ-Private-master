@@ -4,6 +4,12 @@ DayZ Reality Private Server
 This is a private server project for DayZ which would not be possible without the work of Rocket, Guru Abdul and ayan4m1.   
 **NOTE**: No support is implied or offered for pirated copies of ArmA 2.
 
+Support Requests
+================
+
+We are moving to community support for this, Please go to the following forum for any and all support requests. http://opendayz.net/index.php?forums/support.100/
+
+
 Reality Builder Auto Updater
 ============================
 We have created an updater for the software. This will allow the users to get the latest supported software from the system without having to go through github. This updater will only download the most current stable version available. Users may still use the github which will have the absolute latest version, but is only recommended for advanced users and users who will be doing pull requests to the system. With the auto updater you can ensure that the latest supported version will be available for your user. <br>
@@ -16,10 +22,6 @@ Questions?
 ==========
 Visit the Wiki https://github.com/thevisad/DayZ-Private-master/wiki/_pages
 
-Support Requests
-================
-
-We are moving to community support for this, Please go to the following forum for any and all support requests. http://opendayz.net/index.php?forums/support.100/
 
 Database Schema 0.39+
 =====================
