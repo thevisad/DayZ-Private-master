@@ -16,6 +16,11 @@ Questions?
 ==========
 Visit the Wiki https://github.com/thevisad/DayZ-Private-master/wiki/_pages
 
+Support Requests
+================
+
+We are moving to community support for this, Please go to the following forum for any and all support requests. http://opendayz.net/index.php?forums/support.100/
+
 Database Schema 0.39+
 =====================
 Starting with database schema 0.39+ (Oring support) we will be reseting portions of the vehicle tables. The resets are part of trying to resolve multiple issues with the old database schemas. Any custom added vehicles will need to be moved prior to update due to the refactoring of the vehilce numbers. It is suggested that custom vehicles be given a number higher then 1000 to leave room for any and all maps that will be added in the future. 
