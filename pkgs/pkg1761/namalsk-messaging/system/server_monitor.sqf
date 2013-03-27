@@ -26,6 +26,31 @@ if (_script != "") then
 
 	//Stream in objects
 	/* STREAM OBJECTS */
+	
+	//Send the key
+_key = format["CHILD:999:select payload, loop_interval, start_delay from message where instance_id = ?:[%1]:", dayZ_instance];
+_data = "HiveEXT" callExtension _key;
+
+diag_log("SERVER: Fetching messages...");
+
+//Process result
+_result = call compile format ["%1", _data];
+_status = _result select 0;
+
+msgList = [];
+_msgCount = 0;
+if (_status == "CustomStreamStart") then {
+	_val = _result select 1;
+	for "_i" from 1 to _val do {
+		_data = "HiveEXT" callExtension _key;
+		_result = call compile format ["%1",_data];
+
+		_status = _result select 0;
+		msgList set [count msgList, _result];
+		_msgCount = _msgCount + 1;
+	};
+	diag_log ("SERVER: Added " + str(_msgCount) + " messages!");
+};
 		//Send the key
 		_key = format["CHILD:302:%1:",dayZ_instance];
 		_result = _key call server_hiveReadWrite;
@@ -201,7 +226,7 @@ if (isDedicated) then {
 allowConnection = true;
 
 // [_guaranteedLoot, _randomizedLoot, _frequency, _variance, _spawnChance, _spawnMarker, _spawnRadius, _spawnFire, _fadeFire]
-
+// nul = [3, 4, (50 * 60), (15 * 60), 0.75, 'center', 4000, true, false] spawn server_spawnCrashSite;
 
 //Spawn static helicrash loot - DayZ: Namalsk
 for "_x" from 1 to 9 do {
