@@ -20,10 +20,6 @@ server_updateNearbyObjects =	compile preprocessFileLineNumbers "\z\addons\dayz_s
 server_spawnCrashSite  =    compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\server_spawnCrashSite.sqf";
 fnc_plyrHit   = compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\fnc_plyrHit.sqf";
 
-//Get instance name (e.g. dayz_1.chernarus)
-fnc_instanceName = {
-	"dayz_" + str(dayz_instance) + "." + worldName
-};
 vehicle_handleInteract = {
 	private["_object"];
 	_object = _this select 0;

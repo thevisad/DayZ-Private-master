@@ -15,15 +15,7 @@ if (_script != "") then
 	};
 };
 
-if ((count playableUnits == 0) and !isDedicated) then {
-	isSinglePlayer = true;
-};
-
-waitUntil{initialized}; //means all the functions are now defined
-
-diag_log "HIVE: Starting";
-
-//Stream in objects
+	//Stream in objects
 	/* STREAM OBJECTS */
 		//Send the key
 		_key = format["CHILD:302:%1:",dayZ_instance];
