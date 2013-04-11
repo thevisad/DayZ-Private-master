@@ -2,6 +2,7 @@
 
 dayz_versionNo = 		getText(configFile >> "CfgMods" >> "DayZ" >> "version");
 dayz_hiveVersionNo = 	getNumber(configFile >> "CfgMods" >> "DayZ" >> "hiveVersion");
+dayzNam_versionNo = getText(configFile >> "CfgMods" >> "nc_dzn" >> "version");
 _script = getText(missionConfigFile >> "onPauseScript");
 
 if ((count playableUnits == 0) and !isDedicated) then {
@@ -202,3 +203,12 @@ allowConnection = true;
 // [_guaranteedLoot, _randomizedLoot, _frequency, _variance, _spawnChance, _spawnMarker, _spawnRadius, _spawnFire, _fadeFire]
 // nul = [3, 4, (50 * 60), (15 * 60), 0.75, 'center', 4000, true, false] spawn server_spawnCrashSite;
 
+//Spawn static helicrash loot - DayZ: Namalsk
+for "_x" from 1 to 9 do {
+	_id = [_x] spawn server_heliCrash_dzn;
+};
+
+// Spawn medical care packages - DayZ: Namalsk
+for "_x" from 1 to 6 do {
+	_id = [] spawn server_medical_ckg_dzn;
+};

@@ -22,6 +22,9 @@ server_spawnCrashSite  =    compile preprocessFileLineNumbers "\z\addons\dayz_se
 fnc_instanceName = {
 	"dayz_" + str(dayz_instance) + "." + worldName
 };
+// DayZ: Namalsk functions
+server_heliCrash_dzn = 		compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\server_heliCrash_dzn.sqf";
+server_medical_ckg_dzn = 	compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\server_medical_ckg_dzn.sqf";
 
 vehicle_handleInteract = {
 	private["_object"];
