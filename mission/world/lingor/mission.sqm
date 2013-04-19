@@ -40,7 +40,7 @@ class Mission
 	class Intel
 	{
 		briefingName="DayZ Lingor";
-		briefingDescription="DayZ";
+		briefingDescription="DayZ Lingor (Skaronator.com Version)";
 		startWeather=0.067362607;
 		forecastWeather=0.52341133;
 		year=2008;

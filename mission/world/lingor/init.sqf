@@ -8,6 +8,7 @@ enableSaving [false, false];
 //]
 
 dayZ_instance = 1;	//The instance
+//dayZ_serverName="DayZLingor (Skaronator.com)"; // server name (country code + server number)
 hiveInUse	=	true;
 initialized = false;
 dayz_previousID = 0;
