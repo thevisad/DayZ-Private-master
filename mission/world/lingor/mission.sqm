@@ -3,14 +3,32 @@ class Mission
 {
 	addOns[]=
 	{
+		"brg_africa",
+		"ibr"
 		"ibr_lingor",
+		"ibr_airports",
+		"ibr_hangars",
+		"ibr_lcivilians",
+		"lingor",
+		"lingor_bank",
+		"lingor_fuel",
+		"lingor_objects",
+		"lingor_roads",
+		"lingor_sounds",
 		"ca_modules_animals",
-		"dayz_code",
-		"dayz_weapons",
-		"dayz_equip",
-		"dayz_vehicles",
 		"cacharacters_pmc",
-		"ca_modules_functions"
+		"ca_modules_functions",
+		"dayz",
+		"dayz_anim",
+		"dayz_code",
+		"dayz_communityassets",
+		"dayz_equip",
+		"dayz_sfx",
+		"dayz_vehicles",
+		"dayz_weapons",
+		"jetskiyanahui",
+		"ibr_as350lingor",
+		"mbg_buildings_2",
 	};
 	addOnsAuto[]=
 	{
