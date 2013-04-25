@@ -19,7 +19,6 @@ private ["_characterID","_temp","_currentWpn","_magazines","_force","_isNewPos",
 
 _character = 	_this select 0;
 _magazines =	_this select 1;
-_force =	_this select 2;
 _force =	true;
 
 _characterID =	_character getVariable ["characterID","0"];
