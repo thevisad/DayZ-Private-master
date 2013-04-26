@@ -95,9 +95,9 @@ server_hiveWrite = {
 
 server_hiveReadWrite = {
 	private["_key","_resultArray","_data"];
-	_key = _this;
+	_key = _this select 0;
 	//diag_log ("ATTEMPT READ/WRITE: " + _key);
-	_data = "HiveExt" callExtension [_key];
+	_data = "HiveExt" callExtension _key;
 	//diag_log ("READ/WRITE: " +str(_data));
 	_resultArray = call compile format ["%1",_data];
 	_resultArray
