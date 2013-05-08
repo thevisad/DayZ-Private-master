@@ -2,7 +2,7 @@
 mission.sqm for DayZ Lingor - Skaronator.com Version
 @Autor: DayZ Community & Skaronator
 @Version: For Clientversion +2.2
-@Last Edit: 03/05/2013
+@Last Edit: 08/05/2013
 *****************************************************************************/
 version=11;
 class Mission
@@ -21,6 +21,8 @@ class Mission
 		"dayz_sfx",
 		"dayz_vehicles",
 		"dayz_weapons",
+		"cacharacters_pmc",
+		"ca_modules_functions",
 		"mbg_buildings_2"
 	};
 	addOnsAuto[]=
