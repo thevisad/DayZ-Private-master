@@ -10,7 +10,7 @@ insert ignore INTO `vehicle` (`id`, `class_name`, `limit_min`, `limit_max`, `par
 (103, 'JetSkiYanahui_Yellow', 0, 1, NULL),
 (104, 'JetSkiYanahui_Green', 0, 1, NULL),
 (105, 'JetSkiYanahui_Blue', 0, 1, NULL),
-(106, 'JetSkiYanahui_Red', 0, 1, NULL);
+(106, 'JetSkiYanahui_Red', 0, 1, NULL),
 (107, 'SUV_SpecialSkaro', 0, 1, NULL);
 
 update vehicle set parts='motor,elektronika,mala vrtule,velka vrtule' where id='35';
