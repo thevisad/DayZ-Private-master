@@ -5,3 +5,4 @@ publicVariableServer "dayzSpawnZed";
  if (_doLoiter) then {
    _agent setPosATL _position;
    //_agent setVariable ["doLoiter",true,true];
+   };
