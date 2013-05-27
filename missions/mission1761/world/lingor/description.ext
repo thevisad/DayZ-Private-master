@@ -1,12 +1,20 @@
+/****************************************************************************
+description.ext for DayZ Lingor - Skaronator.com Version
+@Autor: DayZ Community & Skaronator
+@Version: For Clientversion +2.2
+@Last Edit: 03/05/2013
+*****************************************************************************/
 respawn = "BASE";
 respawndelay = 5;
-onLoadMission="DayZ Lingor";
+onLoadMission = "DayZ Lingor";
 OnLoadIntro = "Welcome to Lingor Island";
 OnLoadIntroTime = False;
 OnLoadMissionTime = False;
 disabledAI = true;
 disableChannels[]={0,1,2,6};
 enableItemsDropping = 0;
+briefing = 0;
+debriefing = 0;
 onPauseScript = "\z\addons\dayz_code\compile\player_onPause.sqf";
 loadScreen = "\z\addons\dayz_code\gui\loadingscreen.paa";
 
@@ -102,17 +110,6 @@ class DayZ_loadingScreen
 			colorText[] = {0,0,0,0};
 			colorBackground[] = {0,0,0,1};
 		};
-		/*
-		class nicePic : RscPicture
-		{
-			style = 48 + 0x800; // ST_PICTURE + ST_KEEP_ASPECT_RATIO
-			x = safezoneX + safezoneW/2 - 0.25;
-			y = safezoneY + safezoneH/2 - 0.2;
-			w = 0.5;
-			h = 0.4;
-			text = "img\nicePic.paa";
-		};
-		*/
 	};
 	class controls
 	{
