@@ -27,7 +27,7 @@ class Mission
 	class Intel
 	{
 		briefingName="DayZ Isladuala";
-		briefingDescription="DayZ Isladuala 1.1 by Pwnoz0r";
+		briefingDescription="DayZ Isladuala 2.0 by Pwnoz0r";
 		startWeather=0.067362607;
 		forecastWeather=0.52341133;
 		year=2008;
