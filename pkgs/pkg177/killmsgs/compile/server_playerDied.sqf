@@ -7,9 +7,11 @@ _playerID = 	_this select 3;
 _playerName = 	name _newObject;
 
 _victim removeAllEventHandlers "MPHit";
-
+_victim setVariable["processedDeath",time];
+_victim setVariable ["bodyName", _playerName, true];
 _victim = _this select 2;
 _victimName = _victim getVariable["bodyName", "nil"];
+
 
 _killer = _victim getVariable["AttackedBy", "nil"];
 _killerName = _victim getVariable["AttackedByName", "nil"];
