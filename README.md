@@ -33,13 +33,13 @@ Prerequisites
 =============
 
  - Windows (tested with 7 and Server 2008)
- - A working ArmA 2 Combined Ops dedicated server (Steam users must merge ArmA2 and ArmA2 OA directories) with beta patch **102285+** installed (http://www.arma2.com/beta-patch.php)
+ - A working ArmA 2 Combined Ops dedicated server (Steam users must merge ArmA2 and ArmA2 OA directories) with the latest beta patch installed (http://www.arma2.com/beta-patch.php)
  - Microsoft Visual C++ 2010 SP1 x86 Redistributable (http://www.microsoft.com/en-us/download/details.aspx?id=8328)
  - Microsoft .NET Framework 4 or higher
  - MySQL Server 5.x with TCP/IP Networking enabled **NOTE:** You **must** use the official MySQL installer, not XAMPP (http://dev.mysql.com/downloads/mysql/)
  - The decimal separator on your server MUST BE a period. (https://github.com/thevisad/DayZ-Private-master/wiki/Decimal-Separator)
  - Strawberry Perl 32 Bit (NOT 64 Bit)>= 5.16 (http://strawberryperl.com/) (64 bit does not have all the dependencies properly setup)
- - DayZ 1.7.6.1 client (http://cdn.armafiles.info/latest/1.7.6/) 
+ - DayZ 1.7.7 client (http://cdn.armafiles.info/latest/1.7.7/%40Client-1.7.7-Full.rar) 
 
 Installation
 ============
