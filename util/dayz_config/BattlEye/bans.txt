@@ -846,7 +846,6 @@
 4bbff7f0d2fe80239fddf1ebfe88da9d -1 Seen by Dw #538
 4bd20a4a581f229d041b19e3e90eb913 -1 W 4d9b2182 0x0f44d938
 4bd29a291b61599230188cac4fb8c7b0 -1 banzunion.com (#446) Scripting/Cheating
-4c0dead730e1f1b078c659aee82dd09f -1 banzunion.com (#39) Scripting/Cheating
 4c2f7fda5c48452f71b3b1801c1d0ca8 -1 W 404bd532 0xe7c36cee
 4c2f7fda5c48452f71b3b1801c1d0ca8 -1 W 4d9b2182 0x0f44d938
 4c2f7fda5c48452f71b3b1801c1d0ca8 -1 W 91d9cb59 0xDEADBEEF
@@ -922,7 +921,6 @@
 52ce10b2d92fbe642c36a6e1d8350bda -1 banzunion.com (#400) Scripting/Cheating (remex)
 52d35569dc7f71fd3dd0d94d7704d906 -1 W 4d9b2182 0x0f44d938
 52dcc0aaf801340411bb831bdf535307 -1 banzunion.com (#436) Scripting/Cheating
-52f650eb73b62b5339371c7352606c09 -1 CommunityBanlistReport
 52fb680044aed1428ed87cab55b1f492 -1 banzunion.com (#82) Scripting/Cheating
 530fdac612dfc176e3ca0dc06a97c080 -1 banzunion.com (#776) setpos - TP
 531f730c87aaa40b75564b7813f67a41 -1 W 4d9b2182 0x0f44d938
@@ -1399,7 +1397,6 @@
 7c0fa6d19509d8dc9159c5ff4aa8cbf6 -1 W 4d9b2182 0x0f44d938
 7c27312f2c7a049b2435bd6424529606 -1 W 4d9b2182 0x0f44d938
 7c4f2a63c294ef17eeb0a685e1e7c3cb -1 W 4d9b2182 0x0f44d938
-7c6301f55ddab1f20f1f14e643167b8d -1 banzunion.com (#507) remoteexec
 7c6e54eda13c36ae596affa1e51e81bb -1 W 4d9b2182 0x0f44d938
 7c96d3cd167a5ddc507ac1f6ba4c3154 -1 W 03f07a25 0xf093faea
 7c96d3cd167a5ddc507ac1f6ba4c3154 -1 W 4d9b2182 0x0f44d938
@@ -1448,7 +1445,6 @@
 802848970d47abe61e437865454b6ab2 -1 W 4d9b2182 0x0f44d938
 80286a9db082ce701a6b11718ef4109e -1 Seen by Dw #220
 8032fd2ddb93b93e02fdaf541eb376b7 -1 W 4d9b2182 0x0f44d938
-803f72938942ef80a2d537bedd424d78 -1 banzunion.com (#158) 30.12.2012 14:29:08: -eXpo- Simon on #2 - addmagazinecargo
 804b640a442a7d5f3c05c9de5bd32b5a -1 banzunion.com (#332) Scripting/Cheating
 806e9f5e84bb1aaf6e97f6f33adab10c -1 CommunityBanlistReport
 807d1ee8d359d5bdf91636c6bb6c1cca -1 W 4d9b2182 0x0f44d938
@@ -1524,7 +1520,6 @@
 88058a8d775043e22d948ad12a4decde -1 Seen by Dw #300
 8809858936b6eecabca8570cab6b6af3 -1 Seen by DW #21
 8809858936b6eecabca8570cab6b6af3 -1 W 91d9cb59 0xDEADBEEF
-880c470b7a38975a220c567e7d44d264 -1 banzunion.com (#161) 30.12.2012 23:10:41: SkogisMcSvart on #2 - scripts
 882fb01ed3b766a33a78c5442f305b8d -1 W 4d9b2182 0x0f44d938
 88438ff4a3645d5e8fb660ab5832aa79 -1 Seen by Dw #282
 884695b379b1d470a3e0540f20e1968e -1 W 03f07a25 0xf093faea
@@ -1775,7 +1770,6 @@
 9d50564737fc11a80079df7da4d22950 -1 Seen by Dw #293
 9d5c7c93ddd0f2a2114c5ba3e2cbb2dd -1 W 03f07a25 0xf093faea 
 9d68913c949b9773e202d6bd8d30cfaf -1 W 4d9b2182 0x0f44d938
-9d6b9d12213469aacf3f9cb080474bf3 -1 banzunion.com (#7) Scripting/Cheating
 9d8b2de41bbcd76c0ad20e852a8864c9 -1 W 91d9cb59 0xDEADBEEF
 9d8b2de41bbcd76c0ad20e852a8864c9 -1 seen by Dw #95 fail
 9d90d95d192bf1d22cc68b57075a3d6f -1 Seen by Dw #133
@@ -1971,7 +1965,6 @@ acd2090d55bcf98e44a97245e2fb3819 -1 banzunion.com (#460) Scripting/Cheating (hac
 acda418e3462249299a2daabc4615448 -1 Seen by Dw #404
 acff91aebf6b800b731a87055f07e756 -1 Seen by Dw #449
 ad178db8353e0b1c3368f080cb452752 -1 W 4d9b2182 0x0f44d938
-ad251828e58c37719ab0a35bda15d671 -1 banzunion.com (#152) 28.12.2012 06:38:58: f0rz1k on #2 - scripts-unknown-kicks.txt
 ad29a4c1f90bf5325013e569311456c1 -1 banzunion.com (#512) attachto
 ad35bbf25c6c770b52bd2f0b38ff70e6 -1 W 4d9b2182 0x0f44d938
 ad4788f8d8ae776f3f754cf253802f96 -1 banzunion.com (#727) publicvariable
@@ -1995,7 +1988,6 @@ ae47dd83c46f24964b88f520c1fa7856 -1 W 4d9b2182 0x0f44d938
 ae552f0e5f3e810dbf2bacf2c0b857a8 -1 W 03f07a25 0xf093faea
 ae6eb8f78dd5168055f53ddeaaf430ff -1 W 4d9b2182 0x0f44d938
 aeadd853748de632849dcf27cf318259 -1 W 0db499da 0x3b9ed5f4
-aefc468328cdd3bb163e2f949dfcb303 -1 banzunion.com (#145) 28.12.2012 00:56:55: brekki on #2 - addmagazinecargo
 af2072101136ae3f159d2c46b3c4a4e1 -1 W 4d9b2182 0x0f44d938
 af471afb5b9da69fd8c290825808c4e3 -1 banzunion.com (#485) remoteexec
 af496670f08df9bd95192f68142b2bca -1 Seen by Dw #523
@@ -2161,10 +2153,10 @@ baf09f609b6983d0a04df15cc543bcce -1 CommunityBanlistReport
 baf09f609b6983d0a04df15cc543bcce -1 banzunion.com (#130) 21.12.2012 18:25:57: Andy[RGSS unit 11] on #2 - publicvariable
 banzbanzbanzbanzbanzbanzbanzbanz -1 ########## END OF BANZ BANFILE ##########
 banzbanzbanzbanzbanzbanzbanzbanz -1 #########################################
-banzbanzbanzbanzbanzbanzbanzbanz -1 (775 bans) generated on 22-02-2013 00:00:02 
-banzbanzbanzbanzbanzbanzbanzbanz -1 BanZ Banfile v1.0.51
+banzbanzbanzbanzbanzbanzbanzbanz -1 (767 bans) generated on 15-06-2013 00:00:02 
+banzbanzbanzbanzbanzbanzbanzbanz -1 BanZ Banfile v1.0.54
 banzbanzbanzbanzbanzbanzbanzbanz -1 Forum Thread http://opendayz.net/index.php?threads/banz-union-shared-ban-list-between-reputable-server-owners.6779/
-banzbanzbanzbanzbanzbanzbanzbanz -1 HASH bc77c59198a0cc0504237a13b23db9fb
+banzbanzbanzbanzbanzbanzbanzbanz -1 HASH c5c0e74492c44e43a7e0d352891abf83
 banzbanzbanzbanzbanzbanzbanzbanz -1 stay up-to-date at www.BanZunion.com (automatically updated every 12 hours)
 bb5559c7b0ed49127102c7189eafaf4f -1 Seen by DW #29
 bb5559c7b0ed49127102c7189eafaf4f -1 W 91d9cb59 0xDEADBEEF
@@ -2454,7 +2446,6 @@ d3dc8b8ed63ee0a2285f4c86ddc957fa -1 banzunion.com (#720) publicvariable
 d421ee681b0edc8ed768030f16caa576 -1 W 91d9cb59 0xDEADBEEF
 d421ee681b0edc8ed768030f16caa576 -1 seen by DW #72
 d4385d9f45108c768d3d1d2bedabe61c -1 banzunion.com (#143) 27.12.2012 22:44:22: Santa on #2 - remoteexec
-d43b070e15ca3b1bc3b6c70aab73058d -1 banzunion.com (#592) addmagazinecargo
 d445c7e32878154facb8b713c0d92fbb -1 Seen by Dw #345
 d476f676095b7d371888ef772e55b42f -1 W 4d9b2182 0x0f44d938
 d48573e22b42e8e9f0df29ba3d99ccaa -1 banzunion.com (#346) Scripting/Cheating
