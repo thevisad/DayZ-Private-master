@@ -39,7 +39,7 @@ Prerequisites
  - MySQL Server 5.x with TCP/IP Networking enabled **NOTE:** You **must** use the official MySQL installer, not XAMPP (http://dev.mysql.com/downloads/mysql/)
  - The decimal separator on your server MUST BE a period. (https://github.com/thevisad/DayZ-Private-master/wiki/Decimal-Separator)
  - Strawberry Perl 32 Bit (NOT 64 Bit)>= 5.16 (http://strawberryperl.com/) (64 bit does not have all the dependencies properly setup)
- - DayZ 1.7.7 client (http://cdn.armafiles.info/latest/1.7.7/%40Client-1.7.7-Full.rar) 
+ - DayZ 1.7.7.1 client (http://cdn.armafiles.info/latest/1.7.7.1/%40Client-1.7.7.1-Full.rar) 
 
 Installation
 ============
