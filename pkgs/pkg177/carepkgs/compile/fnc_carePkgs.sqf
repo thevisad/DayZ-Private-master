@@ -16,33 +16,63 @@ if (isDedicated) then {
 	if (_randomvehicle == "Misc_cargo_cont_net3") then { _num = round(random 12) + 5; };
 
 	switch (_vehicleloottype) do {
-		case "Military": {
-			_itemType = [["M9", "weapon"], ["M16A2", "weapon"], ["M16A2GL", "weapon"], ["M9SD", "weapon"], ["AK_47_M", "weapon"], ["AK_74", "weapon"], ["M4A1_Aim", "weapon"], ["AKS_74_kobra", "weapon"], ["AKS_74_U", "weapon"], ["AK_47_M", "weapon"], ["M24", "weapon"], ["M1014", "weapon"], ["DMR", "weapon"], ["M4A1", "weapon"], ["M14_EP1", "weapon"], ["UZI_EP1", "weapon"], ["Remington870_lamp", "weapon"], ["glock17_EP1", "weapon"], ["MP5A5", "weapon"], ["MP5SD", "weapon"], ["M4A3_CCO_EP1", "weapon"], ["Binocular", "weapon"], ["ItemFlashlightRed", "military"], ["ItemKnife", "military"], ["ItemGPS", "weapon"], ["ItemMap", "military"], ["DZ_Assault_Pack_EP1", "object"], ["DZ_Patrol_Pack_EP1", "object"], ["DZ_Backpack_EP1", "object"], ["", "medical"], ["", "generic"], ["", "military"], ["ItemEtool", "weapon"], ["ItemSandbag", "magazine"]];
-			_itemChance = [0.05, 0.05, 0.01, 0.02, 0.2, 0.15, 0.01, 0.08, 0.05, 0.05, 0.01, 0.1, 0.01, 0.02, 0.01, 0.05, 0.08, 0.1, 0.04, 0.02, 0.01, 0.06, 0.1, 0.1, 0.01, 0.05, 0.06, 0.04, 0.02, 0.1, 1.0, 2.5, 0.05, 0.02];
+		case "Military":  {
+		  lootType[] = {
+				{"M9","weapon",0.05}, {"M16A2","weapon",0.05}, {"M16A2GL","weapon",0.02}, {"M9SD","weapon",0.01}, {"MakarovSD","weapon",0.01}, {"AK_74","weapon",0.06}, {"M4A1_Aim","weapon",0.03}, {"AKS_74_kobra","weapon",0.06}, {"AKS_74_U","weapon",0.04}, 
+				{"AK_47_M","weapon",0.04}, {"M24","weapon",0.03}, {"M1014","weapon",0.06}, {"DMR_DZ","weapon",0.03}, {"M4A1","weapon",0.04}, {"M14_EP1","weapon",0.03}, {"UZI_EP1","weapon",0.05}, {"Remington870_lamp","weapon",0.05}, {"glock17_EP1","weapon",0.08},
+				{"MP5A5","weapon",0.04}, {"MP5SD","weapon",0.01}, {"M4A3_CCO_EP1","weapon",0.02}, {"Binocular","weapon",0.05}, {"ItemFlashlightRed","military",0.06}, {"ItemKnife","military",0.06}, {"ItemGPS","weapon",0.01}, {"ItemMap","military",0.03}, {"DZ_British_ACU","object",0.02}, 
+				{"DZ_CivilBackpack_EP1","object",0.01}, {"ItemEtool","weapon",0.03}, {"ItemSandbag","magazine",0.04}, {"","military",0.70}, {"","generic",0.10}, {"","trash",0.30}
+			};
 		};
+
 		case "Residential": {
-			_itemType = [["ItemSodaMdew", "magazine"], ["ItemWatch", "generic"], ["ItemCompass", "generic"], ["ItemMap", "weapon"], ["Makarov", "weapon"], ["Colt1911", "weapon"], ["ItemFlashlight", "generic"], ["ItemKnife", "generic"], ["ItemMatchbox", "generic"], ["", "generic"], ["LeeEnfield", "weapon"], ["revolver_EP1", "weapon"], ["CZ_VestPouch_EP1", "object"], ["DZ_CivilBackpack_EP1", "object"], ["DZ_ALICE_Pack_EP1", "object"], ["Winchester1866", "weapon"], ["WeaponHolder_ItemTent", "object"], ["", "military"], ["", "trash"], ["Crossbow", "weapon"], ["Binocular", "weapon"], ["PartWoodPile", "magazine"], ["Skin_Camo1_DZ", "magazine"], ["Skin_Sniper1_DZ", "magazine"], ["WeaponHolder_MeleeCrowbar", "object"], [MR43, "weapon"]];
-			_itemChance = [0.01, 0.15, 0.05, 0.03, 0.13, 0.05, 0.03, 0.08, 0.06, 2, 0.06, 0.04, 0.01, 0.03, 0.03, 0.01, 0.01, 0.03, 0.5, 0.01, 0.06, 0.06, 0.01, 0.01, 0.08, 0.03];
+			lootType[] = {
+				{"ItemSodaMdew","magazine",0.01}, {"ItemWatch","generic",0.05}, {"ItemCompass","generic",0.05}, {"ItemMap","weapon",0.03}, {"Makarov","weapon",0.04}, {"Colt1911","weapon",0.04}, {"ItemFlashlight","generic",0.06}, 
+				{"ItemKnife","generic",0.07}, {"ItemMatchbox","generic",0.06}, {"LeeEnfield","weapon",0.03}, {"revolver_EP1","weapon",0.04}, {"DZ_Patrol_Pack_EP1","object",0.05}, {"DZ_Assault_Pack_EP1","object",0.04}, 
+				{"DZ_Czech_Vest_Puch","object",0.03}, {"DZ_ALICE_Pack_EP1","object",0.01}, {"DZ_TK_Assault_Pack_EP1","object",0.02}, {"Winchester1866","weapon",0.03}, {"MeleeBaseBallBat","weapon",0.02}, {"WeaponHolder_ItemTent","object",0.01}, 
+				{"Crossbow_DZ","weapon",0.01}, {"Binocular","weapon",0.06}, {"PartWoodPile","magazine",0.06}, {"Skin_Camo1_DZ","magazine",0.01}, {"Skin_Sniper1_DZ","magazine",0.01}, {"WeaponHolder_ItemCrowbar","object",0.08}, 
+				{"MR43","weapon",0.03}, {"ItemBookBible","magazine",0.02}, {"WeaponHolder_ItemFuelcan","object",0.03}, {"","military",0.10}, {"","generic",0.60}, {"","trash",0.40}
+			};
 		};
+
 		case "Industrial": {
-			_itemType = [["", "generic"], ["", "trash"], ["", "military"], ["WeaponHolder_PartGeneric", "object"], ["WeaponHolder_PartWheel", "object"], ["WeaponHolder_PartFueltank", "object"], ["WeaponHolder_PartEngine", "object"], ["WeaponHolder_PartGlass", "object"], ["WeaponHolder_PartVRotor", "object"], ["WeaponHolder_ItemJerrycan", "object"], ["WeaponHolder_ItemHatchet", "object"], ["ItemKnife", "military"], ["ItemToolbox", "weapon"], ["ItemWire", "magazine"], ["ItemTankTrap", "magazine"]];
-			_itemChance = [0.18, 0.29, 0.04, 0.04, 0.05, 0.02, 0.01, 0.04, 0.01, 0.04, 0.11, 0.07, 0.02, 0.06, 0.04];	
+			lootType[] = {
+				{"WeaponHolder_PartGeneric","object",0.04}, {"WeaponHolder_PartWheel","object",0.05}, {"WeaponHolder_PartFueltank","object",0.02}, {"WeaponHolder_PartEngine","object",0.02}, {"WeaponHolder_PartGlass","object",0.04}, 
+				{"WeaponHolder_PartVRotor","object",0.01}, {"WeaponHolder_ItemJerrycan","object",0.04}, {"WeaponHolder_ItemHatchet","object",0.05}, {"WeaponHolder_ItemFuelcan","object",0.03}, {"ItemKnife","military",0.03}, 
+				{"ItemToolbox","weapon",0.06}, {"ItemWire","magazine",0.01}, {"ItemTankTrap","magazine",0.04}, {"","military",0.10}, {"","generic",0.60}, {"","trash",0.40}
+			};
 		};
-		case "HeliCrash": {
-			_itemType = [[FN_FAL, "weapon"], ["bizon_silenced", "weapon"], [M14_EP1, "weapon"], [FN_FAL_ANPVS4, "weapon"], [M107_DZ, "weapon"], ["BAF_AS50_scoped", "weapon"], ["Mk_48_DZ", "weapon"], [M249_DZ, "weapon"], [BAF_L85A2_RIS_CWS, "weapon"], [DMR, "weapon"], ["", "military"], ["", "medical"], ["MedBox0", "object"], ["NVGoggles", "weapon"], ["AmmoBoxSmall_556", "object"], ["AmmoBoxSmall_762", "object"], ["Skin_Camo1_DZ", "magazine"], ["Skin_Sniper1_DZ", "magazine"]];
-			_itemChance = [0.02, 0.05, 0.05, 0.02, 0.01, 0.02, 0.03, 0.05, 0.01, 0.1, 1, 0.5, 0.1, 0.01, 0.1, 0.1, 0.08, 0.05];
-		};
+
+		case "HeliCrash":  {
+			lootType[] = {
+				{"FN_FAL","weapon",0.04}, {"bizon_silenced","weapon",0.05}, {"M14_EP1","weapon",0.05}, {"FN_FAL_ANPVS4","weapon",0.01}, {"Mk_48_DZ","weapon",0.03}, {"M249_DZ","weapon",0.04}, {"BAF_L85A2_RIS_SUSAT","weapon",0.03}, {"DMR","weapon",0.06},
+				{"MedBox0","object",0.05}, {"NVGoggles","weapon",0.01}, {"AmmoBoxSmall_556","object",0.05}, {"AmmoBoxSmall_762","object",0.05}, {"Skin_Camo1_DZ","magazine",0.08}, {"Skin_Sniper1_DZ","magazine",0.05},	{"G36C","weapon",0.03}, {"G36C_camo","weapon",0.03},
+				{"G36A_camo","weapon",0.03}, {"G36K_camo","weapon",0.03}, {"100Rnd_762x54_PK","magazine",0.05}, {"","military",1.00}, {"","medical",0.5}
+			};
+		};	
+
 		case "Farm": {
-			itemType = [["WeaponHolder_ItemJerrycan", "object"], ["", "generic"], ["huntingrifle", "weapon"], ["LeeEnfield", "weapon"], ["Winchester1866", "weapon"], ["", "trash"], ["Crossbow", "weapon"], ["PartWoodPile", "magazine"], ["WeaponHolder_ItemHatchet", "object"], [MR43, "weapon"], ["TrapBear", "magazine"]];
-			itemChance = [0.06, 0.28, 0.01, 0.04, 0.03, 0.22, 0.03, 0.11, 0.17, 0.06, 0.01];	
+			lootType[] =	{
+				{"WeaponHolder_ItemJerrycan","object",0.03}, {"huntingrifle","weapon",0.02}, {"LeeEnfield","weapon",0.03}, {"Winchester1866","weapon",0.03}, {"Crossbow_DZ","weapon",0.03}, {"PartWoodPile","magazine",0.08}, 
+				{"WeaponHolder_ItemHatchet","object",0.05},	{"MR43","weapon",0.01}, {"MeleeMachete","weapon",0.04}, {"","military",0.10}, {"","generic",0.60}, {"","trash",0.40}
+			};
 		};
+
+
 		case "Supermarket": {	
-			_itemType = [["ItemWatch", "generic"], ["ItemCompass", "generic"], ["ItemMap", "weapon"], ["Makarov", "weapon"], ["Colt1911", "weapon"], ["ItemFlashlight", "generic"], ["ItemKnife", "generic"], ["ItemMatchbox", "generic"], ["", "generic"], ["LeeEnfield", "weapon"], ["revolver_EP1", "weapon"], ["CZ_VestPouch_EP1", "object"], ["DZ_CivilBackpack_EP1", "object"], ["DZ_ALICE_Pack_EP1", "object"], ["Winchester1866", "weapon"], ["WeaponHolder_ItemTent", "object"], ["", "food"], ["", "trash"], ["Crossbow", "weapon"], ["Binocular", "weapon"], ["PartWoodPile", "magazine"], [MR43, "weapon"]];
-			_itemChance = [0.15, 0.01, 0.05, 0.02, 0.02, 0.05, 0.02, 0.05, 0.05, 0.01, 0.01, 0.01, 0.02, 0.03, 0.01, 0.01, 0.3, 0.15, 0.01, 0.05, 0.02, 0.01];
+			lootType[] = {
+				{"ItemWatch","generic",0.05}, {"ItemCompass","generic",0.01}, {"ItemMap","weapon",0.06}, {"Makarov","weapon",0.02}, {"Colt1911","weapon",0.02}, {"ItemFlashlight","generic",0.05}, {"ItemKnife","generic",0.02}, 
+				{"ItemMatchbox","generic",0.05}, {"LeeEnfield","weapon",0.01}, {"revolver_EP1","weapon",0.01}, {"DZ_Patrol_Pack_EP1","object",0.05}, {"DZ_Assault_Pack_EP1","object",0.04}, {"DZ_Czech_Vest_Puch","object",0.03}, 
+				{"DZ_ALICE_Pack_EP1","object",0.02}, {"DZ_TK_Assault_Pack_EP1","object",0.02}, {"Winchester1866","weapon",0.03}, {"WeaponHolder_ItemTent","object",0.01}, {"Crossbow_DZ","weapon",0.01}, {"Binocular","weapon",0.03}, 
+				{"PartWoodPile","magazine",0.04}, {"MR43","weapon", 0.01}, {"","food",0.07}, {"","military",0.03}, {"","generic",0.60}, {"","trash",0.40}
+			};
 		};
-		case "Hospital": {
-			_itemType = [["", "trash"], ["", "hospital"], ["MedBox0", "object"]];
-			_itemChance = [0.2, 0.5, 0.5];
+
+
+		case "Hospital": {	
+			lootType[] = {
+				{"","trash",0.2}, {"","hospital",0.5}, {"MedBox0","object",0.5}
+			};
 		};
 	};
 
