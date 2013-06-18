@@ -46,36 +46,38 @@ foreach my $filter (@filters) {
 }
 
 my @scripts = (
-	"scripts.txt",
-	"remoteexec.txt",
-	"createvehicle.txt",
-	"publicvariable.txt",
-	"publicvariableval.txt",
-	"publicvariablevar.txt",
-	"setpos.txt",
-	"mpeventhandler.txt",
-	"setdamage.txt",
+	"addbackpackcargo.txt",
 	"addmagazinecargo.txt",
 	"addweaponcargo.txt",
+	"attachto.txt",
+	"createvehicle.txt",
 	"deleteVehicle.txt",
-	"teamswitch.txt",
-	"addbackpackcargo.txt",
+	"mpeventhandler.txt",
+	"publicvariable.txt",
+	"publicvariableval.txt",
+	"remotecontrol.txt",
+	"remoteexec.txt",
+	"scripts.txt",
+	"selectplayer.txt",
+	"setdamage.txt",
+	"setpos.txt",
 	"setvariable.txt",
 	"setvariableval.txt",
-	"attachto.txt",
-	"remotecontrol.txt",
-	"selectplayer.txt"
+	"teamswitch.txt",
+	"waypointcondition.txt",
+	"waypointstatement.txt"
 );
 
 foreach my $script (@scripts) {
-	my $uri = "https://dayz-community-banlist.googlecode.com/git/filters/$script";
+	my $uri = "https://raw.github.com/DayZMod/Battleye-Filters/1.7.7/$script";
+	#my $uri = "https://dayz-community-banlist.googlecode.com/git/filters/$script";
 	my $cmd = (($^O =~ m/MSWin32/) ? 'util/wget' : 'wget');
 	$cmd = "$cmd --no-check-certificate -q -N -O \"$dst/$script\" $uri";
 
 	print "INFO: Fetching URI $uri\n";
 	my $ret = system($cmd);
 
-	die "FATAL: Could not fetch URI!" unless ($ret == 0);
+	print "FATAL: Could not fetch URI!" unless ($ret == 0);
 
 	while (($pattern, $exception) = each %{$lookups{'global'}}) {
 		my $regex = "s/([0-9]{1})\\s$pattern\\s(.*)([\\\/]{2}.*)*/" . (($exception) ? "\\1 $pattern \\2 $exception\n/g" : "/g");
