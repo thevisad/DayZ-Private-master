@@ -1,4 +1,5 @@
 []execVM "\z\addons\dayz_server\system\s_fps.sqf"; //server monitor FPS (writes each ~181s diag_fps+181s diag_fpsmin*)
+#include "\z\addons\dayz_server\compile\server_toggle_debug.hpp"
 
 dayz_versionNo = 		getText(configFile >> "CfgMods" >> "DayZ" >> "version");
 dayz_hiveVersionNo = 	getNumber(configFile >> "CfgMods" >> "DayZ" >> "hiveVersion");
@@ -192,38 +193,32 @@ diag_log "HIVE: Starting";
 		} forEach _myArray;
 		
 	// # END OF STREAMING #
-
 */
-//Send the key
-_key = format["CHILD:999:select b.class_name, ib.worldspace from instance_building ib join building b on ib.building_id = b.id where ib.instance_id = ?:[%1]:", dayZ_instance];
-_data = "HiveEXT" callExtension _key;
 
-diag_log("SERVER: Fetching buildings...");
+	//Send the key
+	_key = format["CHILD:999:select payload, loop_interval, start_delay from message where instance_id = ?:[%1]:", dayZ_instance];
+	_data = "HiveEXT" callExtension _key;
 
-//Process result
-_result = call compile format ["%1", _data];
-_status = _result select 0;
+	diag_log("SERVER: Fetching messages...");
 
-_bldList = [];
-_bldCount = 0;
-if (_status == "CustomStreamStart") then {
-	_val = _result select 1;
-	for "_i" from 1 to _val do {
-		_data = "HiveEXT" callExtension _key;
-		_result = call compile format ["%1",_data];
+	//Process result
+	_result = call compile format ["%1", _data];
+	_status = _result select 0;
 
-		_pos = call compile (_result select 1);
-		_dir = _pos select 0;
-		_pos = _pos select 1;
+	msgList = [];
+	_msgCount = 0;
+	if (_status == "CustomStreamStart") then {
+		_val = _result select 1;
+		for "_i" from 1 to _val do {
+			_data = "HiveEXT" callExtension _key;
+			_result = call compile format ["%1",_data];
 
-		_building = createVehicle [_result select 0, _pos, [], 0, "CAN_COLLIDE"];
-		_building setDir _dir;
-		_bldCount = _bldCount + 1;
+			_status = _result select 0;
+			msgList set [count msgList, _result];
+			_msgCount = _msgCount + 1;
+		};
+		diag_log ("SERVER: Added " + str(_msgCount) + " messages!");
 	};
-	diag_log ("SERVER: Spawned " + str(_bldCount) + " buildings!");
-};
-
-
 waituntil{isNil "sm_done"}; // prevent server_monitor be called twice (bug during login of the first player)
 
 #include "\z\addons\dayz_server\compile\fa_hiveMaintenance.hpp"
@@ -264,7 +259,7 @@ if (isServer and isNil "sm_done") then {
 	};
 
 	{
-		private["_action","_ObjectID","_class","_CharacterID","_worldspace","_inventory", "_hitpoints","_fuel","_damage","_entity","_dir","_point","_res",  "_rawData","_class","_worldspace","_uid", "_selection", "_dam", "_booleans", "_point"];
+		private["_action","_ObjectID","_class","_CharacterID","_worldspace","_inventory", "_hitpoints","_fuel","_damage","_entity","_dir","_point","_res",  "_rawData","_class","_worldspace","_uid", "_selection", "_dam", "_booleans", "_point", "_wantExplosiveParts"];
 
 		_action = _x select 0; // values : "OBJ"=object got from hive  "CREATED"=vehicle just created ...
 		_ObjectID = _x select 1;
@@ -336,17 +331,31 @@ if (isServer and isNil "sm_done") then {
 #endif
 				_entity setDamage _damage;
 				{
-					_selection = _x select 0;
-					_dam = _x select 1;
-					if (_selection in dayZ_explosiveParts and _dam > 0.8) then {_dam = 0.8};
-					[_entity, _selection, _dam] call fnc_veh_handleDam;
-				} forEach _hitpoints;
+					_wantExplosiveParts = _x;
+					{
+						_selection = _x select 0;
+						_dam = _x select 1;
+						if (_selection in dayZ_explosiveParts) then {
+							if (_wantExplosiveParts) then {
+								if (_dam > 0.8) then { _dam = 0.8; };
+								[_entity, _selection, _dam] call fnc_veh_handleDam;
+							};
+						}
+						else {
+							if (!_wantExplosiveParts) then {
+								[_entity, _selection, _dam] call fnc_veh_handleDam;
+							};
+						};
+					} forEach _hitpoints;
+				} forEach [false, true]; // we set non explosive part first, then explosive parts
 				_entity setvelocity [0,0,1];
 				_entity setFuel _fuel;
 				_entity call fnc_veh_ResetEH;
 			};
-			diag_log (format["VEHICLE %1 %2 at %3, damage=%4, fuel=%5",
-				 _action, _entity call fa_veh2str, (getPosASL _entity) call fa_coor2str, damage _entity, _fuel ]); // , hitpoints:%6, inventory=%7"  , _hitpoints, _inventory 
+#ifdef OBJECT_DEBUG
+			diag_log (format["VEHICLE %1 %2 at %3, original damage=%4, effective damage=%6, fuel=%5",
+				 _action, _entity call fa_veh2str, (getPosASL _entity) call fa_coor2str, _damage, _fuel, damage _entity]); // , hitpoints:%6, inventory=%7"  , _hitpoints, _inventory 
+#endif
 		}
 		else { // else for object or non legit vehicle
 			if (!(_class in SafeObjects )) then {  
@@ -362,7 +371,9 @@ if (isServer and isNil "sm_done") then {
 					if ((_class != "TentStorage") OR {(_inventory call fa_tentEmpty)}) then {
 						_action = "FAILED";
 						_damage = 5;
-						//diag_log(format["Won't spawn object #%1(%4) in/close to a building, _point:%3, inventory: %5 booleans:%2",_ObjectID, _booleans, _point, _class, _inventory]);
+#ifdef OBJECT_DEBUG
+						diag_log(format["Won't spawn object #%1(%4) in/close to a building, _point:%3, inventory: %5 booleans:%2",_ObjectID, _booleans, _point, _class, _inventory]);
+#endif
 					};
 				};
 			};
@@ -391,8 +402,10 @@ if (isServer and isNil "sm_done") then {
 				_rawData = "HiveEXT" callExtension _key;
 				_key = format["CHILD:304:%1:",_ObjectID]; // delete by ID (not UID which is handler 310)
 				_rawData = "HiveEXT" callExtension _key;*/
+#ifdef OBJECT_DEBUG
 				diag_log (format["IGNORED %1 oid#%2 cid:%3 ",
 					_class, _ObjectID, _CharacterID ]);
+#endif
 			};
 		};
 //diag_log(format["VEH MAINTENANCE DEBUG %1 %2", __FILE__, __LINE__]);
@@ -464,4 +477,5 @@ if (isServer and isNil "sm_done") then {
 	call compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\fa_antiwallhack.sqf";
 	
 	sm_done = true;
+	publicVariable "sm_done";
 };

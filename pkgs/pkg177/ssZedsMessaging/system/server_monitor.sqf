@@ -40,32 +40,7 @@ diag_log "HIVE: Starting";
 	};
 
 	//Stream in objects
-	/* STREAM OBJECTS */
-	
-	//Send the key
-	_key = format["CHILD:999:select payload, loop_interval, start_delay from message where instance_id = ?:[%1]:", dayZ_instance];
-	_data = "HiveEXT" callExtension _key;
-
-	diag_log("SERVER: Fetching messages...");
-
-	//Process result
-	_result = call compile format ["%1", _data];
-	_status = _result select 0;
-
-	msgList = [];
-	_msgCount = 0;
-	if (_status == "CustomStreamStart") then {
-		_val = _result select 1;
-		for "_i" from 1 to _val do {
-			_data = "HiveEXT" callExtension _key;
-			_result = call compile format ["%1",_data];
-
-			_status = _result select 0;
-			msgList set [count msgList, _result];
-			_msgCount = _msgCount + 1;
-		};
-		diag_log ("SERVER: Added " + str(_msgCount) + " messages!");
-	};
+	/* STREAM OBJECTS
 		//Send the key
 		_key = format["CHILD:302:%1:",dayZ_instance];
 		_result = _key call server_hiveReadWrite;
@@ -131,7 +106,7 @@ diag_log "HIVE: Starting";
 				//Create it
 				_object = createVehicle [_type, _pos, [], 0, "CAN_COLLIDE"];
 				_object setVariable ["lastUpdate",time];
-				if (_ownerID == "0") then {_object setVariable ["ObjectID", str(_idKey), true];} else {_object setVariable ["ObjectUID", str(_idKey),true];}; //_object setVariable ["ObjectID", _idKey, true];
+				_object setVariable ["ObjectID", _idKey, true];
 				_object setVariable ["CharacterID", _ownerID, true];
 				
 				clearWeaponCargoGlobal  _object;
@@ -218,6 +193,32 @@ diag_log "HIVE: Starting";
 		
 	// # END OF STREAMING #
 */
+
+	//Send the key
+	_key = format["CHILD:999:select payload, loop_interval, start_delay from message where instance_id = ?:[%1]:", dayZ_instance];
+	_data = "HiveEXT" callExtension _key;
+
+	diag_log("SERVER: Fetching messages...");
+
+	//Process result
+	_result = call compile format ["%1", _data];
+	_status = _result select 0;
+
+	msgList = [];
+	_msgCount = 0;
+	if (_status == "CustomStreamStart") then {
+		_val = _result select 1;
+		for "_i" from 1 to _val do {
+			_data = "HiveEXT" callExtension _key;
+			_result = call compile format ["%1",_data];
+
+			_status = _result select 0;
+			msgList set [count msgList, _result];
+			_msgCount = _msgCount + 1;
+		};
+		diag_log ("SERVER: Added " + str(_msgCount) + " messages!");
+	};
+	
 waituntil{isNil "sm_done"}; // prevent server_monitor be called twice (bug during login of the first player)
 
 #include "\z\addons\dayz_server\compile\fa_hiveMaintenance.hpp"
@@ -314,7 +315,7 @@ if (isServer and isNil "sm_done") then {
 				_entity = createVehicle [_class, _point, [], 0, 
 					if ((_class isKindOf "Air") OR {(_action != "OBJ")}) then {"NONE"} else {"CAN_COLLIDE"}
 				]; 
-				_entity setVariable ["ObjectID", _ObjectID, true]; // this variable must be set very early
+				if (_ownerID == "0") then {_entity setVariable ["ObjectID", str(_idKey), true];} else {_entity setVariable ["ObjectUID", str(_idKey),true];};  // this variable must be set very early
 				_entity setVariable ["CharacterID", _CharacterID, true];	
 				_entity setVariable ["lastUpdate",time]; // prevent immediate hive write when vehicle parts are set up
 				// setPos will be done again just after setDir, see below....
