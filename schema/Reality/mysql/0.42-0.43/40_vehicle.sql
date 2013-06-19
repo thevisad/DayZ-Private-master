@@ -1,0 +1,1 @@
+update vehicle set class_name='SUV_DZ' where class_name='SUV_TK_CIV_EP1';

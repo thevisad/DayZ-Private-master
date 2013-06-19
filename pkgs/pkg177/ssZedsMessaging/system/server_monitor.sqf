@@ -259,7 +259,7 @@ if (isServer and isNil "sm_done") then {
 	};
 
 	{
-		private["_action","_ObjectID","_class","_CharacterID","_worldspace","_inventory", "_hitpoints","_fuel","_damage","_entity","_dir","_point","_res",  "_rawData","_class","_worldspace","_uid", "_selection", "_dam", "_booleans", "_point"];
+		private["_action","_ObjectID","_class","_CharacterID","_worldspace","_inventory", "_hitpoints","_fuel","_damage","_entity","_dir","_point","_res",  "_rawData","_class","_worldspace","_uid", "_selection", "_dam", "_booleans", "_point", "_wantExplosiveParts"];
 
 		_action = _x select 0; // values : "OBJ"=object got from hive  "CREATED"=vehicle just created ...
 		_ObjectID = _x select 1;
@@ -371,7 +371,7 @@ if (isServer and isNil "sm_done") then {
 				_entity = createVehicle [_class, _point, [], 0, 
 					if (_class=="TentStorage") then {"NONE"} else {"CAN_COLLIDE"}
 				];	
-				_entity setVariable ["ObjectID", _ObjectID, true];
+				_entity setVariable ["ObjectUID", _ObjectID, true];
 				_entity setVariable ["CharacterID", _CharacterID, true];	
 				_entity setVariable ["lastUpdate",time];
 				_entity setDamage _damage;
