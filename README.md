@@ -44,9 +44,14 @@ Prerequisites
 Installation
 ============
 
-**NOTE**: The importance of following each of these steps correctly and in order cannot be understated. 
+**NOTE**: The importance of following each of the steps in the wiki correctly and in order cannot be understated. 
 **NOTE**: It is highly recommended to disable UAC during the install portion; especially, the perl setup portion. Right clicking and running as Administration **DOES NOT WORK PROPERLY*** due to the way that the Perl setup application works. 
 
+Updating
+========
+ 1. Run update_scripts.pl .\util\dayz_config\BattlEye (if using Battleye)
+ 2. Run update_bans.pl --dwarden --banz --cbl --save .\util\dayz_config\BattlEye\bans.txt (if desired)
+ 3. Build your world, if you do this in reverse then the scripts will be old or you will need to merge them into your Battleye folder manually. The above method provides the scripts/bans inside of the server build prior to copying it to your folder. 
 
 
 Optional Features
