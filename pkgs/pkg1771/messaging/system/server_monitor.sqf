@@ -314,7 +314,7 @@ if (isServer and isNil "sm_done") then {
 				_entity = createVehicle [_class, _point, [], 0, 
 					if ((_class isKindOf "Air") OR {(_action != "OBJ")}) then {"NONE"} else {"CAN_COLLIDE"}
 				]; 
-				_entity setVariable ["ObjectID", _ObjectID, true]; // this variable must be set very early
+				if (_CharacterID == "0") then {_entity setVariable ["ObjectID", str(_idKey), true];} else {_entity setVariable ["ObjectUID", str(_idKey),true];};  // this variable must be set very early
 				_entity setVariable ["CharacterID", _CharacterID, true];	
 				_entity setVariable ["lastUpdate",time]; // prevent immediate hive write when vehicle parts are set up
 				// setPos will be done again just after setDir, see below....

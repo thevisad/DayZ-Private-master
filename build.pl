@@ -204,50 +204,7 @@ if(-f "$flt_dir/$args{'world'}") {
 	push(@flt_lookups, $json_data);
 }
 
-my @scripts = (
-	"scripts.txt",
-	"remoteexec.txt",
-	"createvehicle.txt",
-	"publicvariable.txt",
-	"publicvariableval.txt",
-	"publicvariablevar.txt",
-	"setpos.txt",
-	"mpeventhandler.txt",
-	"setdamage.txt",
-	"addmagazinecargo.txt",
-	"addweaponcargo.txt",
-	"deleteVehicle.txt",
-	"teamswitch.txt",
-	"addbackpackcargo.txt",
-	"setvariable.txt",
-	"setvariableval.txt",
-	"attachto.txt",
-	"remotecontrol.txt",
-	"selectplayer.txt"
-);
 
-#TODO: optionally download the latest battleye filters from dayz-community-banlist?
-
-if(scalar (@flt_lookups)) {
-	print "INFO: Merging BattlEye filter exceptions\n";
-	foreach my $script (@scripts) {
-		#Make sure the exceptions are only added once when you run the same build.pl command several times
-		#copy_dir("$src/BattlEye/$script","$conf_dir/BattlEye");
-		my $cmd = (($^O =~ m/MSWin32/) ? 'xcopy /q /y' : 'cp');
-		my $path = "\"$src/BattlEye/$script\" \"$conf_dir/BattlEye/\"";
-		$path =~ s/\//\\/g if ($^O =~ m/MSWin32/);
-		system("$cmd $path");
-		
-		foreach my $filter (@flt_lookups) {
-			while (($pattern, $exception) = each %{$filter}) {
-				my $regex = "s/([0-9]{1})\\s$pattern\\s(.*)([\\\/]{2}.*)*/" . (($exception) ? "\\1 $pattern \\2 $exception\n/g" : "/g");
-				replace_text($regex, "$conf_dir/BattlEye/$script");
-			}
-		}
-		replace_text("s#^//((?!new).*)\\\$##sg", "$conf_dir/BattlEye/$script");
-		replace_text("s/^\\n\$//", "$conf_dir/BattlEye/$script");
-	}
-}
 
 # Create the dayz_server PBO
 if (scalar(@pkgs) > 0) {
