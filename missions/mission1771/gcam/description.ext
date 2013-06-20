@@ -1,3 +1,5 @@
+#include "gcam\gcam_component.hpp"
+
 respawn = "BASE";
 respawndelay = 5;
 onLoadMission= "DayZ Chernarus";
@@ -5,14 +7,13 @@ OnLoadIntro = "Welcome to Chernarus";
 OnLoadIntroTime = False;
 OnLoadMissionTime = False;
 disabledAI = true;
-disableChannels[] = {0,2,6};
+disableChannels[] = {2,6};
 enableItemsDropping = 0;
 onPauseScript = "";
 briefing = 0;
 debriefing = 0;
 
 loadScreen = "\z\addons\dayz_code\gui\loadingscreen.paa";
-#include "gcam\gcam_component.hpp"
 
 class Header
 {

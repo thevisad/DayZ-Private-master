@@ -12,6 +12,9 @@ dayzHiveRequest = [];
 initialized = false;
 dayz_previousID = 0;
 
+//start spectating
+execVM "initSpec.sqf";
+
 //disable greeting menu
 player setVariable ["BIS_noCoreConversations", true];
 //disable radio messages to be heard and shown in the left lower corner of the screen
@@ -80,16 +83,6 @@ if (!isDedicated) then {
 	0 fadeSound 0;
 	waitUntil {!isNil "dayz_loadScreenMsg"};
 	dayz_loadScreenMsg = (localize "STR_AUTHENTICATING");
-	
-	#include "gcam\gcam_config.hpp"
-	#include "gcam\gcam_functions.sqf"
-	
-	#ifdef GCAM
-		waitUntil {(!isNull Player) and (alive Player) and (player == player)};
-		waituntil {!(IsNull (findDisplay 46))};
-
-		if (serverCommandAvailable "#kick") then { (findDisplay 46) displayAddEventHandler ["keyDown", "_this call fnc_keyDown"]; };
-	#endif
 
 	//Run the player monitor
 	_id = player addEventHandler ["Respawn", {_id = [] spawn player_death;}];

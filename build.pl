@@ -120,7 +120,7 @@ if (-d $src && !-d $conf_dir) {
 		'namalsk'     => '@DayZ_Namalsk;@DayZ_Namalsk_@DayZ',
 		'mbg_celle2'  => '@Dayz_Conflicts;@dayz_celle;@mbg_celle',
 		'tavi'        => '@Taviana',
-		'i44.chernarus'        => 'expansion\beta;expansion\beta\expansion;@DayZ_i44;@I44;@CBA;@CBA_A2;@CBA_OA;@CBA_CO',
+		'i44.chernarus'        => 'expansion\beta;expansion\beta\expansion;Expansion\beta\expansion\addons;@DayZ_i44;@I44;@CBA;@CBA_A2;@CBA_OA;@CBA_CO',
 		'dayz2017.chernarus'       => '@DayZ2017'
 	};
 	my $mod = ((defined $mods->{$args{'world'}}) ? "$mods->{$args{'world'}}" : '@dayz') . ";\@reality_$args{'instance'}.$args{'world'}";
