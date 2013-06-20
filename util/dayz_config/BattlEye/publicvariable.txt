@@ -1,4 +1,4 @@
-5 !="remExField" !="remExFP" !="drn_AskServerDynamicWeatherEventArgs" !="BIS_effects_gepv" !"PVDZ_" !"SRVFACO4567"
+5 !="remExField" !="remExFP" !="drn_AskServerDynamicWeatherEventArgs" !="BIS_effects_gepv" !"PVDZ_"
 ////////////////////////// From server only: Broadcast PV without EH (no code executed on change)
 5="drn_var_DynamicWeather_rain"  
 5="drn_var_DynamicWeather_ServerInitialized"  

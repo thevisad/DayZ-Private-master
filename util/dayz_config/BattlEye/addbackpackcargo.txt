@@ -1,2 +1,1 @@
-1 ""  !="_this spawn fnc_plyrHit;"
 5 "" !"DZ_" !"CZ_VestPouch_EP1" !="_this spawn fnc_plyrHit;"
