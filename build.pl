@@ -178,9 +178,12 @@ if (-d "$wld_dir/$args{'world'}") {
 my @pkgs = ();
 my @msn_pkgs = ();
 my @flt_lookups = ();
+$custominv = 0;
 while (my $option = shift(@ARGV)) {
 	next unless ($option =~ m/with-([-\w]+)/);
-
+	my $option1 = shift(@ARGV);
+	my $comparestring = "--with-invcust";
+	if ($option1 eq $comparestring) { $custominv = 1 };
 	my $pkg_dir = "$base_dir/pkgs/pkg".$args{'serverversion'}."/$1";
 	if (!-d $pkg_dir && !-d "$msn_dir/$1" && !-f "$flt_dir/$1") {
 		print "ERROR: Package $1 does not exist\n";
@@ -417,7 +420,9 @@ sub pack_world {
 	if($args{'world'} eq "dayz2017.chernarus") {
 		copy("$base_dir/util/HiveExt_2017.dll", "$dst_dir/\@reality_$args{'instance'}.$args{'world'}/HiveExt.dll");
 	} else {
-		copy("$base_dir/util/HiveExt.dll", "$dst_dir/\@reality_$args{'instance'}.$args{'world'}/HiveExt.dll");
+	if ($custominv == 1 ) { copy("$base_dir/util/HiveExt.dll", "$dst_dir/\@reality_$args{'instance'}.$args{'world'}/HiveExt.dll");}
+	else { copy("$base_dir/util/genderselection/HiveExt.dll", "$dst_dir/\@reality_$args{'instance'}.$args{'world'}/HiveExt.dll");};
+		
 	}
 }
 
