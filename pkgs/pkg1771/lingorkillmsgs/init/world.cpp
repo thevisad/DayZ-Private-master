@@ -1,12 +1,4 @@
-class CfgPatches {
-	class dayz_server {
-		units[] = {};
-		weapons[] = {};
-		requiredVersion = 0.1;
-		requiredAddons[] = {"dayz_code"};
-	};
-
-	class vehMaint {
+class vehMaint {
 		class CAWorld {};
 		class Lingor:CAWorld { 
 			center[] = {4400,4400}; // x y
