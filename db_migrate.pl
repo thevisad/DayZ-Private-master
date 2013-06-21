@@ -41,7 +41,7 @@ if ($args{'help'}) {
 die "FATAL: Schema version must be specified for non-standard schema!\n" if ($args{'schema'} && !defined $args{'version'});
 
 my $schema  = $args{'schema'} ? $args{'schema'} : "Reality";
-my $version = $args{'version'} ? $args{'version'} : "0.43";
+my $version = $args{'version'} ? $args{'version'} : "0.44";
 
 print "INFO: Trying to connect to $db{'host'}, database $db{'name'} as $db{'user'}\n";
 
