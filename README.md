@@ -71,6 +71,10 @@ A list of Reality-supported packages follows.
     <td>killmsgs</td><td>--with-killmsgs</td><td>Shows in-game messages when one player kills another. Custom BE filters must be used (Download Pending)</td>
   </tr>
   <tr>
+    <td>lingorkillmsgs</td><td>--with-lingorkillmsgs</td>
+    <td>Shows in-game messages when one player kills another AND add the lingor package all rolled into one. if you want both packages, please use this one so there are no merging issues.</td>
+  </tr>
+  <tr>
     <td>messaging</td><td>--with-messaging</td><td>Replacement for the old scheduler feature, see <b>Messaging/Scheduler</b> below</td>
   </tr>
   <tr>
@@ -81,9 +85,6 @@ A list of Reality-supported packages follows.
   </tr>
   <tr>
     <td>invcust</td><td>--with-invcust</td><td>Allows you to grant custom spawn loadouts to individuals or group, see <b>Custom Inventory</b></td>
-  </tr>
-  <tr>
-    <td>mbg_celle2</td><td>--with-mbg_celle2</td><td>Server-pbo modifications/fixes for celle</b></td>
   </tr>
   <tr>
     <td>ssZeds</td><td>--with-ssZeds</td><td>Disable server-side zombie simulation (may improve server FPS)</td>
