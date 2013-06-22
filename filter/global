@@ -4,6 +4,7 @@
  "\\\"this\\\"": "!=\\\"_this spawn fnc_plyrHit;\\\"",
  "fnc_": "!=\\\"_this spawn fnc_plyrHit;\\\"",
  "this": "!=\\\"_this spawn fnc_plyrHit;\\\"",
+ "_this": "!=\\\"_this spawn fnc_plyrHit;\\\"",
  "spawn": "!=\\\"_this spawn fnc_plyrHit;\\\"",
  "addMPEventHandler": "!=\\\"_this spawn fnc_plyrHit;\\\""
 }
