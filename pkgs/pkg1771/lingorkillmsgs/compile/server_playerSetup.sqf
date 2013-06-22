@@ -189,9 +189,9 @@ if (_randomSpot) then {
 	_position = [0,0,0];
 	for [{_j=0},{_j<=100 AND _findSpot},{_j=_j+1}] do {
 		_mkr = getMarkerPos ("spawn" + str(floor(random 5)));
-		_position = ([_mkr,0,1400,10,0,2,1] call BIS_fnc_findSafePos);
+		_position = ([_mkr,0,500,10,0,2,1] call BIS_fnc_findSafePos);
 		if ((count _position >= 2) // !bad returned position
-			AND {(_position distance _mkr < 1400)}) then { // !ouside the disk
+			AND {(_position distance _mkr < 500)}) then { // !ouside the disk
 			_position set [2, 0];
 			if (((ATLtoASL _position) select 2 > 2.5) //! player's feet too wet
 			AND {({alive _x} count (_position nearEntities ["Man",150]) == 0)}) then { // !too close from other players/zombies
