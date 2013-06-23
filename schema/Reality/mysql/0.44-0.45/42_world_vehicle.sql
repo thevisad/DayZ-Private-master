@@ -1,0 +1,2 @@
+update world_vehicle set worldspace='[0,[7217.437, 2314.2693, -0.055636108]]' where worldspace='[0[7217.437, 2314.2693, -0.055636108]]';
+update world_vehicle set last_modified='0.45' where worldspace='[0,[7217.437, 2314.2693, -0.055636108]]';
