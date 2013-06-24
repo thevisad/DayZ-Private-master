@@ -73,11 +73,11 @@ if ($args{'help'}) {
 	}
 	print "\n";
 
-	opendir $dh, "$base_dir/pkg";
+	opendir $dh, "$base_dir/pkgs/pkg" . $args{'serverversion'};
 	my @pkgs = readdir $dh;
 	closedir $dh;
 
-	print "Available options:\n";
+	print "Available options for server version " . $args{'serverversion'} . "\n";
 	foreach my $pkg (@pkgs) {
 		print "    --with-$pkg\n" unless ($pkg =~ m/(^\.|world|reality)/);
 	}
