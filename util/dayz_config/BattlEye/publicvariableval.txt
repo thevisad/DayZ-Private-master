@@ -10,7 +10,7 @@
 1 "disable"
 1 "copy"
 1 "switch" !="\"switchmove\"" !="\"remExField\" = [,<NULL-object>,\"switchmove\",\"ActsPercMrunSlowWrflDf_FlipFlopPara\"]" !="[<NULL-object>,<NULL-object>,\"switchmove\",\"amovpercmstpsnonwnondnon_zevl\"]" !="[<NULL-object>,<NULL-object>,\"switchmove\",\"amovpercmstpslowwrfldnon_gear\"]" !="[<NULL-object>,<NULL-object>,\"switchmove\",\"aidlpercmstpsnonwnondnon_player_idlesteady03\"]" !="[<NULL-object>,<NULL-object>,\"switchmove\",\"aidlpercmstpsraswpstdnon_player_idlesteady02\"]" !="[<NULL-object>,<NULL-object>,\"switchmove\",\"aidlpercmstpsraswpstdnon_player_idlesteady03\"]" !="[<NULL-object>,<NULL-object>,\"switchmove\",\"aswmpercmstpsnonwnondnon\"]" !="[<NULL-object>,<NULL-object>,\"switchmove",\"aidlpercmstpslowwrfldnon_player_idlesteady04\"]"
-1 "text"
+1 "text" !"\"titleText\""
 1 "init"
 1 "hide" !"hideObject"
 1 "group"
@@ -407,4 +407,4 @@
 5 world_sunrise
 5 world_surfacenoise
 5 zombie_
-1 _this
+1 _this  !="_this spawn fnc_plyrHit;"

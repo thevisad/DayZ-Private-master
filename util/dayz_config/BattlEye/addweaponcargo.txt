@@ -1,4 +1,4 @@
-1 !item !part !rnd_ !food !dz_ !melee !blueprint !equip !empty !swing !hand !=10x_303 !=5x_22_LR_17_HMR !=AK_47_M !=AK_74 !=AKS_74_kobra !=AKS_74_U !=AmmoBoxSmall_556 !=AmmoBoxSmall_762 !=AngelCookies !=Attachment_ACG !=Attachment_AIM !=Attachment_CAMO !=Attachment_GL !=Attachment_Kobra !=Attachment_Pso !=Attachment_Silencer !=Attachment_sniper_scope !=Attachment_Sniper_Scope !=BAF_AS50_scoped !=BAF_L85A2_RIS_Holo !=BAF_L85A2_RIS_SUSAT !=Binocular !=Binocular_Vector !=bizon !=bizon_silenced !=Colt1911 !=Crossbow_DZ !=DMR !=DMR2 !=FlareGreen_M203 !=FlareWhite_M203 !=FN_FAL !=FN_FAL_ANPVS4 !=G36A !=G36A_camo !=G36A_CAMO !=G36C !=G36C_camo !=G36C_CAMO !=G36K !=G36K_camo !=G36K_CAMO !=glock17_EP1 !=huntingrifle !=LeeEnfield !=M1014 !=M107_DZ !=M14_EP1 !=M16A2 !=M16A2GL !=M16A4_ACG !=M24 !=M240_DZ !=M249_DZ !=M40A3 !=M4A1 !=M4A1_Aim !=M4A1_AIM !=M4A1_Aim_CAMO !=M4A1_AIM_SD_camo !=M4A1_HWS_GL !=M4A1_HWS_GL_camo !=M4A1_HWS_GL_CAMO !=M4A3_CCO_EP1 !=M9 !=M9SD !=Makarov !=MakarovSD !=MedBox0 !=Mk_48_DZ !=MP5A5 !=MP5SD !=MR43 !=NVGoggles !=PipeBomb !=Quiver !=Remington870_lamp !=revolver_EP1 !=RPK_74 !=Sa58P_EP1 !=Sa58V_CCO_EP1 !=Sa58V_EP1 !=Sa58V_RCO_EP1 !=SkinBase !=Skin_Camo1_DZ !=Skin_Sniper1_DZ !=Skin_Soldier1_DZ !=Skin_Survivor2_DZ !=SmokeShell !=SmokeShellGreen !=SmokeShellRed !=SVD !=SVD_CAMO !=TrapBear !=TrashJackDaniels !=TrashTinCan !=UZI_EP1 !=Winchester1866 !=WoodenArrow !=WoodenArrowF
+1 !item !part !rnd_ !food !dz_ !melee !blueprint !equip !empty !swing !hand !=10x_303 !=5x_22_LR_17_HMR !=AK_47_M !=AK_74 !=AKS_74_kobra !=AKS_74_U !=AmmoBoxSmall_556 !=AmmoBoxSmall_762 !=AngelCookies !=Attachment_ACG !=Attachment_AIM !=Attachment_CAMO !=Attachment_GL !=Attachment_Kobra !=Attachment_Pso !=Attachment_Silencer !=Attachment_sniper_scope !=Attachment_Sniper_Scope !=BAF_AS50_scoped !=BAF_L85A2_RIS_Holo !=BAF_L85A2_RIS_SUSAT !=Binocular !=Binocular_Vector !=bizon !=bizon_silenced !=Colt1911 !=Crossbow_DZ !=DMR_DZ !=DMR_DZ2 !=FlareGreen_M203 !=FlareWhite_M203 !=FN_FAL !=FN_FAL_ANPVS4 !=G36A !=G36A_camo !=G36A_CAMO !=G36C !=G36C_camo !=G36C_CAMO !=G36K !=G36K_camo !=G36K_CAMO !=glock17_EP1 !=huntingrifle !=LeeEnfield !=M1014 !=M107_DZ !=M14_EP1 !=M16A2 !=M16A2GL !=M16A4_ACG !=M24 !=M240_DZ !=M249_DZ !=M40A3 !=M4A1 !=M4A1_Aim !=M4A1_AIM !=M4A1_Aim_CAMO !=M4A1_AIM_SD_camo !=M4A1_HWS_GL !=M4A1_HWS_GL_camo !=M4A1_HWS_GL_CAMO !=M4A3_CCO_EP1 !=M9 !=M9SD !=Makarov !=MakarovSD !=MedBox0 !=Mk_48_DZ !=MP5A5 !=MP5SD !=MR43 !=NVGoggles !=PipeBomb !=Quiver !=Remington870_lamp !=revolver_EP1 !=RPK_74 !=Sa58P_EP1 !=Sa58V_CCO_EP1 !=Sa58V_EP1 !=Sa58V_RCO_EP1 !=SkinBase !=Skin_Camo1_DZ !=Skin_Sniper1_DZ !=Skin_Soldier1_DZ !=Skin_Survivor2_DZ !=SmokeShell !=SmokeShellGreen !=SmokeShellRed !=SVD !=SVD_CAMO !=TrapBear !=TrashJackDaniels !=TrashTinCan !=UZI_EP1 !=Winchester1866 !=WoodenArrow !=WoodenArrowF
 1 Melee !=MeleeBaseball !=MeleeBaseBallBat !=MeleeBaseBallBatBarbed !=MeleeBaseBallBatNails !=MeleeCrowbar !=MeleeFlashlight !=MeleeFlashlightRed !=MeleeHatchet !=MeleeMachete !=Melee_Swing !=WeaponHolder_MeleeBaseBallBat !=WeaponHolder_MeleeBaseBallBatNails !=WeaponHolder_MeleeBatBarbed !=WeaponHolder_MeleeMachete
 1 00Rnd_ !=100Rnd_762x51_M240 !=100Rnd_762x54_PK !=200Rnd_556x45_M249 !=200Rnd_762x51_M240
 1 0Rnd_ !00Rnd_ !=10Rnd_127x99_m107 !=10Rnd_762x54_SVD !=20Rnd_762x51_DMR !=20Rnd_762x51_FNFAL !=30Rnd_545x39_AK !=30Rnd_556x45_G36 !=30Rnd_556x45_G36SD !=30Rnd_556x45_Stanag !=30Rnd_556x45_StanagSD !=30Rnd_762x39_AK47 !=30Rnd_762x39_SA58 !=30Rnd_9x19_MP5 !=30Rnd_9x19_MP5SD !=30Rnd_9x19_UZI !=30Rnd_9x19_UZI_SD
@@ -11,7 +11,7 @@
 1 Food !FoodCan !Empty !=FoodbaconCooked !=FoodbaconRaw !=FoodbeefCooked !=FoodbeefRaw !=FoodchickenCooked !=FoodchickenRaw !=FoodChipsChocolate !=FoodChipsMysticales !=FoodChipsSulahoops !=FoodCooked !=FoodgoatCooked !=FoodgoatRaw !=FoodmeatCooked !=FoodmeatRaw !=FoodMRE !=FoodmuttonCooked !=FoodmuttonRaw !=FoodNutmix !=FoodPistachio !=FoodrabbitCooked !=FoodrabbitRaw !=FoodRaw !=FoodSteakCooked !=FoodSteakRaw
 1 Food !FoodCan Empty !=FoodChipsChocolateEmpty !=FoodChipsMysticalesEmpty !=FoodChipsSulahoopsEmpty
 1 DZ_ !DZ_ALICE_Pack_EP1 !DZ_Assault_Pack_EP1 !DZ_Backpack_EP1 !DZ_British_ACU !DZ_CivilBackpack_EP1 !DZ_Czech_Vest_Puch !DZ_Patrol_Pack_EP1 !DZ_TK_Assault_Pack_EP1
-1 Blueprint !=Blueprint_Bandage !=Blueprint_BaseBallBatBarbed !=Blueprint_bizonSD !=Blueprint_Compass !=Blueprint_DMR2 !=Blueprint_G36A_camo !=Blueprint_G36C_camo !=Blueprint_G36K_camo !=Blueprint_M4A1_AIM !=Blueprint_M4A1_Aim_CAMO !=Blueprint_M4A1_HWS_GL_CAMO !=Blueprint_M9SD !=Blueprint_MAKAROVSD !=Blueprint_NailedBaseballBat !=Blueprint_SVD_CAMO
+1 Blueprint !=Blueprint_Bandage !=Blueprint_BaseBallBatBarbed !=Blueprint_bizonSD !=Blueprint_Compass !=Blueprint_DMR_DZ2 !=Blueprint_G36A_camo !=Blueprint_G36C_camo !=Blueprint_G36K_camo !=Blueprint_M4A1_AIM !=Blueprint_M4A1_Aim_CAMO !=Blueprint_M4A1_HWS_GL_CAMO !=Blueprint_M9SD !=Blueprint_MAKAROVSD !=Blueprint_NailedBaseballBat !=Blueprint_SVD_CAMO
 1 equip !=equip_1inch_metal_pipe !=equip_2inch_metal_pipe !=equip_aa_battery !=equip_cable_tie !=equip_d_battery !=equip_duct_tape !=equip_empty_barrel !=equip_gauze !=equip_hose_clamp !=equip_laser !=equip_metal_sheet !=equip_nail !=equip_needle !=equip_note !=equip_paint !=equip_paper_sheet !=equip_part_loupe !=equip_pvc_box !=equip_rag !=equip_rail_screws !=equip_rope !=equip_scrap_electronics !=equip_scrap_metal !=equip_string !=equip_weapon_rails !=equip_wood_pallet
 1 swing !=BatBarbed_Swing !=BatBarbed_Swing_Ammo !=BatNails_Swing !=Bat_Swing !=Bat_Swing_Ammo !=crowbar_swing !=Crowbar_Swing !=Crowbar_Swing_Ammo !=hatchet_swing !=Hatchet_Swing !=Hatchet_Swing_Ammo !=Machete_swing !=Machete_Swing !=Machete_Swing_Ammo !=Melee_Swing
 1 hand !=HandChemBlue !=HandChemGreen !=HandChemRed !=HandGrenade_east !=HandGrenade_west !=HandRoadFlare
@@ -46,9 +46,9 @@
 5=BAF_L86A2_ACOG
 5=BAF_LRR_scoped
 5=BAF_LRR_scoped_W
-5=Bizon
+// 5=Bizon  // referenced in dayzmod code
 5=G36_C_SD_eotech
-5=G36a
+//5=G36a
 5=IR_Strobe_Marker
 5=IRStrobe
 5=ItemRadio
@@ -68,9 +68,9 @@
 5=M249_EP1
 5=M249_m145_EP1
 5=M32_EP1
-5=M4A1_Aim_camo
-//5=M4A1_HWS_GL   // 1.7.7 weapon ?
-//5=M4A1_HWS_GL_SD_Camo // 1.7.7 weapon ?
+//5=M4A1_Aim_camo
+//5=M4A1_HWS_GL   // referenced in dayzmod code
+5=M4A1_HWS_GL_SD_Camo
 5=M4A1_RCO_GL
 5=M4A3_RCO_GL_EP1
 5=M4SPR
@@ -105,6 +105,8 @@
 5=ksvk
 5=HandGrenade
 5=PMC_AS50_TWS_Large
+//5=DMR // was in 1.7.6
+5=BAF_AS50_scoped_Large
 // Black list of illegal Ammo:
 5="TimeBomb"
 5="Mine"
