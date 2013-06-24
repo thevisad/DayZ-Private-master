@@ -53,7 +53,7 @@ $args{'serverdifficulty'} = ($args{'serverdifficulty'}) ? lc($args{'serverdiffic
 $args{'dayzversion'} = ($args{'dayzversion'}) ? lc($args{'dayzversion'}) : 'CHANGEME';
 $args{'world'} = ($args{'world'}) ? lc($args{'world'}) : 'chernarus';
 $args{'instance'} = '1' unless $args{'instance'};
-$args{'serverversion'} = '1761' unless $args{'serverversion'};
+$args{'serverversion'} = '1771' unless $args{'serverversion'};
 
 # Initialize paths
 our $base_dir = dirname(__FILE__);
