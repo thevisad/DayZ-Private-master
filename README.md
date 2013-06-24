@@ -28,15 +28,15 @@ a new file has been added to the repository to assist in identifying which versi
 
 New Build Parameters
 ====================
-serveradminpassword ( Example: --serveradminpassword serverspassword )
-serverpassword ( Example: --serverpassword serverspassword )
-servername ( Example: --servername "Official Reality Guppy Build" )
-locationid ( Example: --locationid US1235 )
-serverbuild ( Example: --serverbuild 103718 )
-hostedby ( Example: -hostedby HNGamers )
-battleyepassword ( Example: --battleyepassword ThisPassword )
-serverdifficulty ( Example: --serverdifficulty regular )
-dayzversion ( Example: --dayzversion 1.7.7.1 )
+serveradminpassword ( Example: --serveradminpassword serverspassword )<br>
+serverpassword ( Example: --serverpassword serverspassword )<br>
+servername ( Example: --servername "Official Reality Guppy Build" )<br>
+locationid ( Example: --locationid US1235 )<br>
+serverbuild ( Example: --serverbuild 103718 )<br>
+hostedby ( Example: -hostedby HNGamers )<br>
+battleyepassword ( Example: --battleyepassword ThisPassword )<br>
+serverdifficulty ( Example: --serverdifficulty regular )<br>
+dayzversion ( Example: --dayzversion 1.7.7.1 )<br>
 
 
 Database Schema 0.40+
