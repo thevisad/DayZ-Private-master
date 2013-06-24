@@ -199,7 +199,7 @@ diag_log "HIVE: Starting";
 _key = format["CHILD:999:select b.class_name, ib.worldspace from instance_building ib join building b on ib.building_id = b.id where ib.instance_id = ?:[%1]:", dayZ_instance];
 _data = "HiveEXT" callExtension _key;
 
-diag_log("SERVER: Fetching buildings...");
+diag_log("SERVER: Fetching buildings for instance " + str(dayZ_instance));
 
 //Process result
 _result = call compile format ["%1", _data];

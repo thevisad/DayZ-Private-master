@@ -96,5 +96,3 @@ if (!isNil "dayZ_serverName") then {
 		((uiNamespace getVariable "wm_disp") displayCtrl 1) ctrlSetText dayZ_serverName;
 	};
 };
-
-#include "\z\addons\dayz_code\system\REsec.sqf"
