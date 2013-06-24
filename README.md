@@ -22,6 +22,22 @@ Questions?
 ==========
 Visit the Wiki https://github.com/thevisad/DayZ-Private-master/wiki/_pages
 
+Github Version Date
+===================
+a new file has been added to the repository to assist in identifying which version you are using. repository_version.txt will always contain the date of the last repository upload. This will ensure that the local repository you are using is up to date. 
+
+New Build Parameters
+====================
+serveradminpassword ( Example: --serveradminpassword serverspassword )
+serverpassword ( Example: --serverpassword serverspassword )
+servername ( Example: --servername "Official Reality Guppy Build" )
+locationid ( Example: --locationid US1235 )
+serverbuild ( Example: --serverbuild 103718 )
+hostedby ( Example: -hostedby HNGamers )
+battleyepassword ( Example: --battleyepassword ThisPassword )
+serverdifficulty ( Example: --serverdifficulty regular )
+dayzversion ( Example: --dayzversion 1.7.7.1 )
+
 
 Database Schema 0.40+
 =====================
