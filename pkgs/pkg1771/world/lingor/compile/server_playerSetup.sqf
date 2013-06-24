@@ -3,6 +3,7 @@ private ["_characterID","_playerObj","_playerID","_dummy","_worldspace","_state"
 //diag_log(format["%1 DEBUG %2", __FILE__, _this]);
 _characterID = _this select 0;
 _playerObj = _this select 1;
+_spawnSelection = _this select 3;
 _playerID = getPlayerUID _playerObj;
 
 #include "\z\addons\dayz_server\compile\server_toggle_debug.hpp"
@@ -184,7 +185,14 @@ if (_randomSpot) then {
 	_mkr = [];
 	_position = [0,0,0];
 	for [{_j=0},{_j<=100 AND _findSpot},{_j=_j+1}] do {
-		_mkr = getMarkerPos ("spawn" + str(floor(random 5)));
+		if (_spawnSelection == 4) then {
+		// random spawn location selected, lets get the marker and spawn in somewhere
+			_mkr = getMarkerPos ("spawn" + str(floor(random 3)));
+			
+			} else {
+			// spawn is not random, lets spawn in our location that was selected
+			_mkr = getMarkerPos ("spawn" + str(_spawnSelection));
+		};
 		_position = ([_mkr,0,500,10,0,2,1] call BIS_fnc_findSafePos);
 		if ((count _position >= 2) // !bad returned position
 			AND {(_position distance _mkr < 500)}) then { // !ouside the disk

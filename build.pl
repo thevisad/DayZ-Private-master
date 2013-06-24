@@ -26,6 +26,15 @@ GetOptions(
 	'world|w|map|mission|m=s',
 	'instance|id|i=s',
 	'channels|chat=s',
+	'serverpassword|spass=s',
+	'serveradminpassword|admpass=s',
+	'servername|sname=s',
+	'locationid|lid=s',
+	'serverbuild|sbuild=s',
+	'hostedby|host=s',
+	'battleyepassword|bepass=s',
+	'serverdifficulty|diff=s',
+	'dayzversion|dz=s',
 	'serverversion|sver=s',
 	'list',
 	'clean',
@@ -33,6 +42,15 @@ GetOptions(
 );
 
 # Set defaults if options are not specified
+$args{'serverpassword'} = ($args{'serverpassword'}) ? lc($args{'serverpassword'}) : 'CHANGEME';
+$args{'serveradminpassword'} = ($args{'serveradminpassword'}) ? lc($args{'serveradminpassword'}) : 'CHANGEME';
+$args{'servername'} = ($args{'servername'}) ? lc($args{'servername'}) : 'CHANGEME';
+$args{'locationid'} = ($args{'locationid'}) ? lc($args{'locationid'}) : 'CHANGEME';
+$args{'serverbuild'} = ($args{'serverbuild'}) ? lc($args{'serverbuild'}) : 'CHANGEME';
+$args{'hostedby'} = ($args{'hostedby'}) ? lc($args{'hostedby'}) : 'CHANGEME';
+$args{'battleyepassword'} = ($args{'battleyepassword'}) ? lc($args{'battleyepassword'}) : 'CHANGEME';
+$args{'serverdifficulty'} = ($args{'serverdifficulty'}) ? lc($args{'serverdifficulty'}) : 'CHANGEME';
+$args{'dayzversion'} = ($args{'dayzversion'}) ? lc($args{'dayzversion'}) : 'CHANGEME';
 $args{'world'} = ($args{'world'}) ? lc($args{'world'}) : 'chernarus';
 $args{'instance'} = '1' unless $args{'instance'};
 $args{'serverversion'} = '1761' unless $args{'serverversion'};
@@ -53,6 +71,13 @@ our $pkg_build_dir = "$tmp_dir/package_tmp";
 if ($args{'help'}) {
 	print "usage: build.pl [--world <world>] [--instance <id>] [--with-<option>] [--clean] [--channels <channels>] [--rcon <password>] [--list]\n";
 	print "    --world <world>: build an instance for the specified map/world\n";
+	print "    --serverpassword <>";
+	print "    --serveradminpassword <>";
+	print "    --servername <>";
+	print "    --locationid <>";
+	print "    --serverbuild <>";
+	print "    --hostedby <>";
+	print "    --battleyepassword <>";
 	print "    --instance <id>: build an instance with the specified integer instance id\n";
 	print "\n";
 	print "    --with-<package>: merge in changes from ./pkg/<package>/ during build\n";
@@ -112,6 +137,7 @@ if (-d $src && !-d $conf_dir) {
 	replace_text("s/template\\s=\\sdayz_[0-9]+.[a-z]+/template = $profile/", "$conf_dir/config.cfg");
 
 	my $mods = {
+		'chernarus'      => '@dayz;expansion\beta;expansion\beta\expansion;Expansion\beta\expansion\addons',
 		'lingor'      => '@dayzlingorskaro',
 		'takistan'    => '@dayztakistan',
 		'fallujah'    => '@dayzfallujah',
@@ -148,8 +174,18 @@ if (-d $src && !-d $conf_dir) {
 
 		# Copy config.cfg to secured path and substitute values
 		rename("$conf_dir/config.cfg", "$conf_dir/config_$hash.cfg");
-		replace_text("s/passwordAdmin\\s=\\s\\\"\\\"/passwordAdmin = \\\"$hash\\\"/", "$conf_dir/config_$hash.cfg");
-		replace_text("s/RConPassword\\s[0-9a-fA-F]{8}/RConPassword $hash/", "$conf_dir/BattlEye/BEServer.cfg");
+
+		replace_text("s/passwordAdmin\\s=\\s\\\"\\\"/passwordAdmin = \\\"$args{'serveradminpassword'}\\\"/", "$conf_dir/config_$hash.cfg");
+		replace_text("s/password\\s=\\s\\\"\\\"/password = \\\"$args{'serverpassword'}\\\"/", "$conf_dir/config_$hash.cfg");
+		
+		replace_text("s/AAAAAA/$args{'servername'}/", "$conf_dir/config_$hash.cfg");
+		replace_text("s/BBBBBB/$args{'locationid'}/", "$conf_dir/config_$hash.cfg");
+		replace_text("s/CCCCCC/$args{'dayzversion'}/", "$conf_dir/config_$hash.cfg");
+		replace_text("s/DDDDDD/$args{'serverbuild'}/", "$conf_dir/config_$hash.cfg");
+		replace_text("s/EEEEEE/$args{'hostedby'}/", "$conf_dir/config_$hash.cfg");
+		replace_text("s/FFFFFF/$args{'serverdifficulty'}/", "$conf_dir/config_$hash.cfg");
+		
+		replace_text("s/RConPassword\\s[0-9a-fA-F]{8}/RConPassword $args{'battleyepassword'}/", "$conf_dir/BattlEye/BEServer.cfg");
 
 		# Change config path in Restarter.ini
 		$ini->newval($profile_sect, 'config', "dayz_$args{'instance'}.$args{'world'}\\config_$hash.cfg");
