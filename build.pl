@@ -35,6 +35,14 @@ GetOptions(
 	'battleyepassword|bepass=s',
 	'serverdifficulty|diff=s',
 	'dayzversion|dz=s',
+	'hivehost|hhost=s',
+	'hiveport|hport=s',
+	'hivedatabase|hdb=s',
+	'hiveusername|huser=s',
+	'hivepassword|hpass=s',
+	'hiveloglevel|hll=s',
+	'hiveconsolelevel|hcl=s',
+	'hiveconsole|hc=s',
 	'serverversion|sver=s',
 	'list',
 	'clean',
@@ -42,15 +50,28 @@ GetOptions(
 );
 
 # Set defaults if options are not specified
-$args{'serverpassword'} = ($args{'serverpassword'}) ? lc($args{'serverpassword'}) : 'CHANGEME';
-$args{'serveradminpassword'} = ($args{'serveradminpassword'}) ? lc($args{'serveradminpassword'}) : 'CHANGEME';
-$args{'servername'} = ($args{'servername'}) ? lc($args{'servername'}) : 'CHANGEME';
-$args{'locationid'} = ($args{'locationid'}) ? lc($args{'locationid'}) : 'CHANGEME';
-$args{'serverbuild'} = ($args{'serverbuild'}) ? lc($args{'serverbuild'}) : 'CHANGEME';
-$args{'hostedby'} = ($args{'hostedby'}) ? lc($args{'hostedby'}) : 'CHANGEME';
-$args{'battleyepassword'} = ($args{'battleyepassword'}) ? lc($args{'battleyepassword'}) : 'CHANGEME';
-$args{'serverdifficulty'} = ($args{'serverdifficulty'}) ? lc($args{'serverdifficulty'}) : 'CHANGEME';
-$args{'dayzversion'} = ($args{'dayzversion'}) ? lc($args{'dayzversion'}) : 'CHANGEME';
+# Config File Settings
+$args{'serverpassword'} = ($args{'serverpassword'}) ? ($args{'serverpassword'}) : '';
+$args{'serveradminpassword'} = ($args{'serveradminpassword'}) ? ($args{'serveradminpassword'}) : '';
+$args{'servername'} = ($args{'servername'}) ? ($args{'servername'}) : 'CHANGEME';
+$args{'locationid'} = ($args{'locationid'}) ? ($args{'locationid'}) : 'CHANGEME';
+$args{'serverbuild'} = ($args{'serverbuild'}) ? ($args{'serverbuild'}) : 'CHANGEME';
+$args{'hostedby'} = ($args{'hostedby'}) ? ($args{'hostedby'}) : 'CHANGEME';
+$args{'battleyepassword'} = ($args{'battleyepassword'}) ? ($args{'battleyepassword'}) : 'CHANGEME';
+$args{'serverdifficulty'} = ($args{'serverdifficulty'}) ? ($args{'serverdifficulty'}) : 'CHANGEME';
+$args{'dayzversion'} = ($args{'dayzversion'}) ? ($args{'dayzversion'}) : 'CHANGEME';
+
+# Hive settings
+$args{'hivehost'} = ($args{'hivehost'}) ? ($args{'hivehost'}) : '127.0.0.1';
+$args{'hiveport'} = ($args{'hiveport'}) ? ($args{'hiveport'}) : '3306';
+$args{'hivedatabase'} = ($args{'hivedatabase'}) ? ($args{'hivedatabase'}) : 'dayz';
+$args{'hiveusername'} = ($args{'hiveusername'}) ? ($args{'hiveusername'}) : 'CHANGEME';
+$args{'hivepassword'} = ($args{'hivepassword'}) ? ($args{'hivepassword'}) : 'CHANGEME';
+$args{'hiveconsole'} = ($args{'hiveconsole'}) ? ($args{'hiveconsole'}) : 'true';
+$args{'hiveconsolelevel'} = ($args{'hiveconsolelevel'}) ? ($args{'hiveconsolelevel'}) : 'CHANGEME';
+$args{'hiveloglevel'} = ($args{'hiveloglevel'}) ? ($args{'hiveloglevel'}) : 'CHANGEME';
+
+# Generic Settings for build purposes
 $args{'world'} = ($args{'world'}) ? lc($args{'world'}) : 'chernarus';
 $args{'instance'} = '1' unless $args{'instance'};
 $args{'serverversion'} = '1771' unless $args{'serverversion'};
@@ -174,7 +195,7 @@ if (-d $src && !-d $conf_dir) {
 
 		# Copy config.cfg to secured path and substitute values
 		rename("$conf_dir/config.cfg", "$conf_dir/config_$hash.cfg");
-
+		# Config file edits
 		replace_text("s/passwordAdmin\\s=\\s\\\"\\\"/passwordAdmin = \\\"$args{'serveradminpassword'}\\\"/", "$conf_dir/config_$hash.cfg");
 		replace_text("s/password\\s=\\s\\\"\\\"/password = \\\"$args{'serverpassword'}\\\"/", "$conf_dir/config_$hash.cfg");
 		
@@ -184,7 +205,18 @@ if (-d $src && !-d $conf_dir) {
 		replace_text("s/DDDDDD/$args{'serverbuild'}/", "$conf_dir/config_$hash.cfg");
 		replace_text("s/EEEEEE/$args{'hostedby'}/", "$conf_dir/config_$hash.cfg");
 		replace_text("s/FFFFFF/$args{'serverdifficulty'}/", "$conf_dir/config_$hash.cfg");
+
+		# Hive Edits
+		replace_text("s/HHHHHH/$args{'hivehost'}/", "$conf_dir/HiveExt.ini");
+		replace_text("s/IIIIII/$args{'hiveport'}/", "$conf_dir/HiveExt.ini");
+		replace_text("s/JJJJJJ/$args{'hivedatabase'}/", "$conf_dir/HiveExt.ini");
+		replace_text("s/KKKKKK/$args{'hiveusername'}/", "$conf_dir/HiveExt.ini");
+		replace_text("s/LLLLLL/$args{'hivepassword'}/", "$conf_dir/HiveExt.ini");
+		replace_text("s/MMMMMM/$args{'hiveloglevel'}/", "$conf_dir/HiveExt.ini");
+		replace_text("s/NNNNNN/$args{'hiveconsolelevel'}/", "$conf_dir/HiveExt.ini");
+		replace_text("s/OOOOOO/$args{'hiveconsole'}/", "$conf_dir/HiveExt.ini");
 		
+		# BE Edits
 		replace_text("s/RConPassword\\s[0-9a-fA-F]{8}/RConPassword $args{'battleyepassword'}/", "$conf_dir/BattlEye/BEServer.cfg");
 
 		# Change config path in Restarter.ini

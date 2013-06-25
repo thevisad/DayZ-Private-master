@@ -37,6 +37,17 @@ hostedby ( Example: -hostedby HNGamers )<br>
 battleyepassword ( Example: --battleyepassword ThisPassword )<br>
 serverdifficulty ( Example: --serverdifficulty regular )<br>
 dayzversion ( Example: --dayzversion 1.7.7.1 )<br>
+hivehost ( Example: --hivehost 127.0.0.1 ) <br>
+hiveport ( Example: --hiveport 3306 ) <br>
+hivedatabase ( Example: --hivedatabase dayz ) <br>
+hiveusername ( Example: --hiveusername root ) <br>
+hivepassword ( Example: --hivepassword omgmyrootpassword ) <br>
+hiveconsole ( Example: -- ) <br><br>
+
+Possible values: trace, debug, information, notice, warning, error, critical, fatal, none <br>
+hiveloglevel ( Example: --hiveloglevel trace  ) <br>
+hiveconsolelevel ( Example: --hiveconsolelevel trace ) <br>
+
 
 
 Database Schema 0.40+
