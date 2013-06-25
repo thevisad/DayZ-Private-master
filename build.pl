@@ -44,6 +44,26 @@ GetOptions(
 	'hiveconsolelevel|hcl=s',
 	'hiveconsole|hc=s',
 	'serverversion|sver=s',
+	'datetype=s',
+	'year=s',
+	'month=s',
+	'date=s',
+	'timetype=s',
+	'timeoffset=s',
+	'hour=s',
+	'minbandwidth=s',
+	'maxbandwidth=s',
+	'maxmsgsend=s',
+	'maxsizeguaranteed=s',
+	'maxsizenonguaranteed=s',
+	'minerrortosendnear=s',
+	'minerrortosend=s',
+	'maxcustomfilesize=s',
+	'windowed=s',
+	'adapter=s',
+	'3D_performance=s',
+	'resolution_bpp=s',
+	'maxpacketsize=s',
 	'list',
 	'clean',
 	'help'
@@ -68,8 +88,31 @@ $args{'hivedatabase'} = ($args{'hivedatabase'}) ? ($args{'hivedatabase'}) : 'day
 $args{'hiveusername'} = ($args{'hiveusername'}) ? ($args{'hiveusername'}) : 'CHANGEME';
 $args{'hivepassword'} = ($args{'hivepassword'}) ? ($args{'hivepassword'}) : 'CHANGEME';
 $args{'hiveconsole'} = ($args{'hiveconsole'}) ? ($args{'hiveconsole'}) : 'true';
-$args{'hiveconsolelevel'} = ($args{'hiveconsolelevel'}) ? ($args{'hiveconsolelevel'}) : 'CHANGEME';
-$args{'hiveloglevel'} = ($args{'hiveloglevel'}) ? ($args{'hiveloglevel'}) : 'CHANGEME';
+$args{'hiveconsolelevel'} = ($args{'hiveconsolelevel'}) ? ($args{'hiveconsolelevel'}) : 'warning';
+$args{'hiveloglevel'} = ($args{'hiveloglevel'}) ? ($args{'hiveloglevel'}) : 'warning';
+
+$args{'datetype'} = ($args{'datetype'}) ? lc($args{'datetype'}) : 'local';
+$args{'year'} = ($args{'year'}) ? ($args{'year'}) : ';Year = 2012';
+$args{'month'} = ($args{'month'}) ? ($args{'month'}) : ';Month = 1';
+$args{'date'} = ($args{'date'}) ? ($args{'date'}) : ';Date = 1';
+$args{'timetype'} = ($args{'timetype'}) ? lc($args{'timetype'}) : 'local';
+$args{'timeoffset'} = ($args{'timeoffset'}) ? ($args{'timeoffset'}) : ';Offset = 0';
+$args{'hour'} = ($args{'hour'}) ? ($args{'hour'}) : ';Hour = 8';
+
+# Basic.cfg settings
+$args{'minbandwidth'} = ($args{'minbandwidth'}) ? ($args{'minbandwidth'}) : '104857600';
+$args{'maxbandwidth'} = ($args{'maxbandwidth'}) ? ($args{'maxbandwidth'}) : '1073741824';
+$args{'maxmsgsend'} = ($args{'maxmsgsend'}) ? ($args{'maxmsgsend'}) : '256';
+$args{'maxsizeguaranteed'} = ($args{'maxsizeguaranteed'}) ? ($args{'maxsizeguaranteed'}) : '128';
+$args{'maxsizenonguaranteed'} = ($args{'maxsizenonguaranteed'}) ? ($args{'maxsizenonguaranteed'}) : '256';
+$args{'minerrortosendnear'} = ($args{'minerrortosendnear'}) ? ($args{'minerrortosendnear'}) : '0.03';
+$args{'minerrortosend'} = ($args{'minerrortosend'}) ? ($args{'minerrortosend'}) : '0.003';
+$args{'maxcustomfilesize'} = ($args{'maxcustomfilesize'}) ? ($args{'maxcustomfilesize'}) : '0';
+$args{'windowed'} = ($args{'windowed'}) ? ($args{'windowed'}) : '0';
+$args{'adapter'} = ($args{'adapter'}) ? ($args{'adapter'}) : '-1';
+$args{'3D_performance'} = ($args{'3D_performance'}) ? ($args{'3D_performance'}) : '1';
+$args{'resolution_bpp'} = ($args{'resolution_bpp'}) ? ($args{'resolution_bpp'}) : '32';
+$args{'maxpacketsize'} = ($args{'maxpacketsize'}) ? ($args{'maxpacketsize'}) : '1400';
 
 # Generic Settings for build purposes
 $args{'world'} = ($args{'world'}) ? lc($args{'world'}) : 'chernarus';
@@ -215,6 +258,48 @@ if (-d $src && !-d $conf_dir) {
 		replace_text("s/MMMMMM/$args{'hiveloglevel'}/", "$conf_dir/HiveExt.ini");
 		replace_text("s/NNNNNN/$args{'hiveconsolelevel'}/", "$conf_dir/HiveExt.ini");
 		replace_text("s/OOOOOO/$args{'hiveconsole'}/", "$conf_dir/HiveExt.ini");
+		
+		
+		if ($args{'datetype'} eq "local"){
+			replace_text("s/FGHJGFJ/type = $args{'datetype'}/", "$conf_dir/HiveExt.ini");
+			replace_text("s/JSDFHGXCCBNX/$args{'year'}/", "$conf_dir/HiveExt.ini");
+			replace_text("s/FHKDFJHDFJ/$args{'month'}/", "$conf_dir/HiveExt.ini");
+			replace_text("s/DJDHZZ/$args{'date'}/", "$conf_dir/HiveExt.ini");
+		}
+		else 
+		{
+			replace_text("s/FGHJGFJ/type = $args{'datetype'}/", "$conf_dir/HiveExt.ini");
+			replace_text("s/JSDFHGXCCBNX/year = $args{'year'}/", "$conf_dir/HiveExt.ini");
+			replace_text("s/FHKDFJHDFJ/month = $args{'month'}/", "$conf_dir/HiveExt.ini");
+			replace_text("s/DJDHZZ/date = $args{'date'}/", "$conf_dir/HiveExt.ini");
+		}
+		if ($args{'datetype'} eq "local"){
+			replace_text("s/TYLTJU/type = $args{'timetype'}/", "$conf_dir/HiveExt.ini");
+			replace_text("s/OSNDDRTR/$args{'timeoffset'}/", "$conf_dir/HiveExt.ini");
+			replace_text("s/WEMSHWQ/$args{'hour'}/", "$conf_dir/HiveExt.ini");
+		}
+		else 
+		{
+			replace_text("s/TYLTJU/type = $args{'timetype'}/", "$conf_dir/HiveExt.ini");
+			replace_text("s/OSNDDRTR/offset = $args{'timeoffset'}/", "$conf_dir/HiveExt.ini");
+			replace_text("s/WEMSHWQ/hour = $args{'hour'}/", "$conf_dir/HiveExt.ini");
+		}
+		
+		
+		# Basic.cfg edits
+		replace_text("s/KLJKJJ/$args{'minbandwidth'}/", "$conf_dir/basic.cfg");
+		replace_text("s/JHLJKHG/$args{'maxbandwidth'}/", "$conf_dir/basic.cfg");
+		replace_text("s/UFIYCDY/$args{'maxmsgsend'}/", "$conf_dir/basic.cfg");
+		replace_text("s/IHGKHB/$args{'maxsizeguaranteed'}/", "$conf_dir/basic.cfg");
+		replace_text("s/IBGKHVCV/$args{'maxsizenonguaranteed'}/", "$conf_dir/basic.cfg");
+		replace_text("s/CUCCGS/$args{'minerrortosendnear'}/", "$conf_dir/basic.cfg");
+		replace_text("s/JGCJFXC/$args{'minerrortosend'}/", "$conf_dir/basic.cfg");
+		replace_text("s/IHHVSS/$args{'maxcustomfilesize'}/", "$conf_dir/basic.cfg");
+		replace_text("s/ILJHGIF/$args{'windowed'}/", "$conf_dir/basic.cfg");
+		replace_text("s/YYDYSS/$args{'adapter'}/", "$conf_dir/basic.cfg");
+		replace_text("s/YTFIYF/$args{'3D_performance'}/", "$conf_dir/basic.cfg");
+		replace_text("s/LVHKLJ/$args{'resolution_bpp'}/", "$conf_dir/basic.cfg");
+		replace_text("s/IHGUIDG/$args{'maxpacketsize'}/", "$conf_dir/basic.cfg");
 		
 		# BE Edits
 		replace_text("s/RConPassword\\s[0-9a-fA-F]{8}/RConPassword $args{'battleyepassword'}/", "$conf_dir/BattlEye/BEServer.cfg");
