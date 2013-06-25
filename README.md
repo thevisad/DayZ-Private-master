@@ -28,49 +28,49 @@ a new file has been added to the repository to assist in identifying which versi
 
 New Build Parameters
 ====================
-serveradminpassword ( Example: --serveradminpassword serverspassword )
-serverpassword ( Example: --serverpassword serverspassword )
-servername ( Example: --servername "Official Reality Guppy Build" )
-locationid ( Example: --locationid US1235 )
-serverbuild ( Example: --serverbuild 103718 )
-hostedby ( Example: -hostedby HNGamers )
-battleyepassword ( Example: --battleyepassword ThisPassword )
-serverdifficulty ( Example: --serverdifficulty regular )
-dayzversion ( Example: --dayzversion 1.7.7.1 )
+serveradminpassword ( Example: --serveradminpassword serverspassword )<br>
+serverpassword ( Example: --serverpassword serverspassword )<br>
+servername ( Example: --servername "Official Reality Guppy Build" )<br>
+locationid ( Example: --locationid US1235 )<br>
+serverbuild ( Example: --serverbuild 103718 )<br>
+hostedby ( Example: -hostedby HNGamers )<br>
+battleyepassword ( Example: --battleyepassword ThisPassword )<br>
+serverdifficulty ( Example: --serverdifficulty regular )<br>
+dayzversion ( Example: --dayzversion 1.7.7.1 )<br>
 
-hivehost ( Example: --hivehost 127.0.0.1 ) 
-hiveport ( Example: --hiveport 3306 ) 
-hivedatabase ( Example: --hivedatabase dayz ) 
-hiveusername ( Example: --hiveusername root ) 
-hivepassword ( Example: --hivepassword omgmyrootpassword ) 
-hiveconsole ( Example: --hiveconsole true )
+hivehost ( Example: --hivehost 127.0.0.1 ) <br>
+hiveport ( Example: --hiveport 3306 ) <br>
+hivedatabase ( Example: --hivedatabase dayz ) <br>
+hiveusername ( Example: --hiveusername root ) <br>
+hivepassword ( Example: --hivepassword omgmyrootpassword ) <br>
+hiveconsole ( Example: --hiveconsole true )<br>
 
-Possible values: trace, debug, information, notice, warning, error, critical, fatal, none 
-hiveloglevel ( Example: --hiveloglevel trace )
+Possible values: trace, debug, information, notice, warning, error, critical, fatal, none <br>
+hiveloglevel ( Example: --hiveloglevel trace )<br>
 
-hiveconsolelevel ( Example: --hiveconsolelevel trace ) 
-datetype ( Example:--datetype static)
-year ( Example:--year 2013)
-month ( Example:--month 7)
-date ( Example:--date 13)
-timetype ( Example:--timetype static)
-timeoffset ( Example:--timeoffset -5)
-hour ( Example:--hour 10:00)
+hiveconsolelevel ( Example: --hiveconsolelevel trace ) <br>
+datetype ( Example:--datetype static)<br>
+year ( Example:--year 2013)<br>
+month ( Example:--month 7)<br>
+date ( Example:--date 13)<br>
+timetype ( Example:--timetype static)<br>
+timeoffset ( Example:--timeoffset -5)<br>
+hour ( Example:--hour 10:00)<br>
 
 
-minbandwidth ( Example:--minbandwidth 2342342)
-maxbandwidth ( Example:--maxbandwidth 234234234)
-maxmsgsend ( Example:--maxmsgsend 512)
-maxsizeguaranteed ( Example:--maxsizeguaranteed 256)
-maxsizenonguaranteed ( Example:--maxsizenonguaranteed 128)
-minerrortosendnear ( Example:--minerrortosendnear 0.03)
-minerrortosend ( Example:--minerrortosend 0.005)
-maxcustomfilesize ( Example:--maxcustomfilesize 0)
-windowed ( Example:--windowed -1)
-adapter ( Example:--adapter 1)
-3D_performance ( Example:--3D_performance 1)
-resolution_bpp ( Example:--resolution_bpp 32)
-maxpacketsize ( Example:--maxpacketsize 1400)
+minbandwidth ( Example:--minbandwidth 2342342)<br>
+maxbandwidth ( Example:--maxbandwidth 234234234)<br>
+maxmsgsend ( Example:--maxmsgsend 512)<br>
+maxsizeguaranteed ( Example:--maxsizeguaranteed 256)<br>
+maxsizenonguaranteed ( Example:--maxsizenonguaranteed 128)<br>
+minerrortosendnear ( Example:--minerrortosendnear 0.03)<br>
+minerrortosend ( Example:--minerrortosend 0.005)<br>
+maxcustomfilesize ( Example:--maxcustomfilesize 0)<br>
+windowed ( Example:--windowed -1)<br>
+adapter ( Example:--adapter 1)<br>
+3D_performance ( Example:--3D_performance 1)<br>
+resolution_bpp ( Example:--resolution_bpp 32)<br>
+maxpacketsize ( Example:--maxpacketsize 1400)<br>
 
 
 
