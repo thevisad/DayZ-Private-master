@@ -74,7 +74,7 @@ GetOptions(
 $args{'serverpassword'} = ($args{'serverpassword'}) ? ($args{'serverpassword'}) : '';
 $args{'serveradminpassword'} = ($args{'serveradminpassword'}) ? ($args{'serveradminpassword'}) : '';
 $args{'servername'} = ($args{'servername'}) ? ($args{'servername'}) : 'CHANGEME';
-$args{'locationid'} = ($args{'locationid'}) ? ($args{'locationid'}) : 'CHANGEME';
+$args{'locationid'} = ($args{'locationid'}) ? ($args{'locationid'}) : '';
 $args{'serverbuild'} = ($args{'serverbuild'}) ? ($args{'serverbuild'}) : 'CHANGEME';
 $args{'hostedby'} = ($args{'hostedby'}) ? ($args{'hostedby'}) : 'CHANGEME';
 $args{'battleyepassword'} = ($args{'battleyepassword'}) ? ($args{'battleyepassword'}) : 'CHANGEME';
