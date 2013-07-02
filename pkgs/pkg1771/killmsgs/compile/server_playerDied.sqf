@@ -46,11 +46,6 @@ if (_killerName != "nil") then
 	_victim setVariable["AttackedByName", "nil", true];
 	_victim setVariable["AttackedByWeapon", "nil", true];
 	_victim setVariable["AttackedFromDistance", "nil", true];
-} else {
-	_message = format["%1 was killed by an infected!",_victimName];
-	_death_message = format["PKILL: %1 (%2) was killed by an infected!", _victimName, _playerID];
-	diag_log _death_message;
-	[nil, nil, rspawn, [_killer, _message], { (_this select 0) globalChat (_this select 1) }] call RE;
 };
 
 //dayz_disco = dayz_disco - [_playerID];
