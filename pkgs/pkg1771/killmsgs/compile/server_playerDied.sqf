@@ -8,8 +8,8 @@ _newObject = 	_this select 2;
 _playerID = 	_this select 3;
 _playerName = 	name _newObject;
 
-_victim removeAllEventHandlers "MPHit";
 _victim = _this select 2;
+_victim removeAllEventHandlers "MPHit";
 _victim setVariable["processedDeath",time];
 _victim setVariable ["bodyName", _playerName, true];
 _victimName = _victim getVariable["bodyName", "nil"];
