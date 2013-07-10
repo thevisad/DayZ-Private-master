@@ -41,7 +41,7 @@ if ($args{'help'}) {
 	print "  addinstance <world_name>       - add an instance for a world\n";
 	print "  deleteinstance <instance_id>   - delete an instance for a world\n";
 	print "  itemdistr                      - look at all live player inventories and show counts of each item in descending order\n";
-	print "  cleanup tents|bounds|all       - clean up of \n";
+	print "  cleanup tents|bounds|all|damaged       - clean up of \n";
 	print "  cleanitem <classname>          - remove comma-separated list of classnames from all survivor inventories\n";
 	print "  cleandead <days>               - delete dead survivors who were last updated more than <days> days ago\n";
 	print "  cleanvehicle [<vehicle_id>]    - deletes all spawned vehicles (only of <vehicle_id> if specified)\n";

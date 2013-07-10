@@ -245,6 +245,9 @@ if (isServer and isNil "sm_done") then {
 		_hitpoints=	if ((typeName (_x select 6)) == "ARRAY") then { _x select 6 } else { [] };
 		_fuel =	if ((typeName (_x select 7)) == "SCALAR") then { _x select 7 } else { 0 };
 		_damage = if ((typeName (_x select 8)) == "SCALAR") then { _x select 8 } else { 0.9 };  
+		_combination =	_x select 3;
+
+		//["OBJ","230","TentStorage","913",[61,[15334,15599.7,0.005]],[[[],[]],[[],[]],[[],[]]],[],0.0,0.0,626]
 		_entity = nil;
 	
 		_dir = floor(random(360));
@@ -395,12 +398,20 @@ if (isServer and isNil "sm_done") then {
 	
 			// UPDATE MODIFIED OBJECTS TO THE HIVE 
 			if (_action == "CREATED") then {
+				if (_class == "TentStorage") then { 
+						
+						_combination = 0;
+					} else {
+					_combination = floor(random 899) + 100;
+					};
+				
+				diag_log ("combination of " + str(_combination) + " was used");
 				// insert className damage characterId  worldSpace inventory  hitPoints  fuel uniqueId  
-				_key = format["CHILD:308:%1:%2:%3:%4:%5:%6:%7:%8:%9:", dayZ_instance, 
+				_key = format["CHILD:308:%1:%2:%3:%4:%5:%6:%7:%8:%9:%10:", dayZ_instance, 
 					_class, _damage , 1, 
 					[_dir, _point], 
 					[getWeaponCargo _entity, getMagazineCargo _entity ,getBackpackCargo _entity], 
-					_hitpoints, _fuel, _ObjectID
+					_hitpoints, _fuel, _ObjectID, _combination
 				];
 				//diag_log (_key);
 				_rawData = "HiveEXT" callExtension _key;
