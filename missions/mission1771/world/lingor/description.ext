@@ -1,17 +1,16 @@
 /****************************************************************************
-description.ext for DayZ Lingor - Skaronator.com Version
-@Autor: DayZ Community & Skaronator
-@Version: For Clientversion +2.3
-@Last Edit: 09/06/2013
+description.ext for DayZ Hunting Grounds 
+@Version: For Clientversion 1.0
+@Last Edit: 13/07/2013
 *****************************************************************************/
 respawn = "BASE";
 respawndelay = 5;
-onLoadMission = "DayZ Lingor";
-OnLoadIntro = "Welcome to Lingor Island";
+onLoadMission = "DayZ Hunting Grounds";
+OnLoadIntro = "Welcome to Hunting Grounds";
 OnLoadIntroTime = False;
 OnLoadMissionTime = False;
 disabledAI = true;
-disableChannels[]={2,6};
+disableChannels[]={0,1,2,6};
 enableItemsDropping = 0;
 onPauseScript = "";
 briefing = 0;
