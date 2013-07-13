@@ -1,2 +1,0 @@
-ALTER TABLE `instance_deployable`
-ADD COLUMN `combination`  int(11) NULL DEFAULT 0 AFTER `Damage`;
