@@ -1,4 +1,5 @@
-private ["_characterID","_playerObj","_playerID","_dummy","_worldspace","_state","_doLoop","_key","_primary","_medical","_stats","_humanity","_randomSpot","_position","_debug","_distance","_fractures","_score","_findSpot","_mkr","_j","_isIsland","_w","_clientID"];//diag_log ("SETUP: attempted with " + str(_this));
+private ["_characterID","_playerObj","_playerID","_dummy","_worldspace","_state","_doLoop","_key","_primary","_medical","_stats","_humanity","_randomSpot","_position","_debug","_distance","_fractures","_score","_findSpot","_mkr","_j","_isIsland","_w","_clientID","_spawnSelection"];
+//diag_log ("SETUP: attempted with " + str(_this));
 
 //diag_log(format["%1 DEBUG %2", __FILE__, _this]);
 _characterID = _this select 0;
@@ -179,23 +180,22 @@ if (_randomSpot) then {
 	if (!isDedicated) then {
 		endLoadingScreen;
 	};
-	
+
 	//spawn into random
 	_findSpot = true;
 	_mkr = [];
 	_position = [0,0,0];
 	for [{_j=0},{_j<=100 AND _findSpot},{_j=_j+1}] do {
-		if (_spawnSelection == 4) then {
+		if (_spawnSelection==4) then {
 		// random spawn location selected, lets get the marker and spawn in somewhere
-			_mkr = getMarkerPos ("spawn" + str(floor(random 3)));
-			
-			} else {
-			// spawn is not random, lets spawn in our location that was selected
-			_mkr = getMarkerPos ("spawn" + str(_spawnSelection));
+		_mkr = getMarkerPos ("spawn" + str(floor(random 11)));
+		} else {
+				// spawn is not random, lets spawn in our location that was selected
+				_mkr = getMarkerPos ("spawn" + str(_spawnSelection));
 		};
-		_position = ([_mkr,0,500,10,0,2,1] call BIS_fnc_findSafePos);
+		_position = ([_mkr,0,1400,10,0,2,1] call BIS_fnc_findSafePos);
 		if ((count _position >= 2) // !bad returned position
-			AND {(_position distance _mkr < 500)}) then { // !ouside the disk
+			AND {(_position distance _mkr < 1400)}) then { // !ouside the disk
 			_position set [2, 0];
 			if (((ATLtoASL _position) select 2 > 2.5) //! player's feet too wet
 			AND {({alive _x} count (_position nearEntities ["Man",150]) == 0)}) then { // !too close from other players/zombies

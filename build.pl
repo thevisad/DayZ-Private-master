@@ -201,17 +201,17 @@ if (-d $src && !-d $conf_dir) {
 	replace_text("s/template\\s=\\sdayz_[0-9]+.[a-z]+/template = $profile/", "$conf_dir/config.cfg");
 
 	my $mods = {
-		'chernarus'      => '@dayz;expansion\beta;expansion\beta\expansion;Expansion\beta\expansion\addons',
-		'lingor'      => '@dayzlingorskaro',
-		'takistan'    => '@dayztakistan',
-		'fallujah'    => '@dayzfallujah',
-		'zargabad'    => '@dayzzargabad',
-		'panthera2'   => '@dayzpanthera',
-		'namalsk'     => '@DayZ_Namalsk;@DayZ_Namalsk_@DayZ',
-		'mbg_celle2'  => '@Dayz_Conflicts;@dayz_celle;@mbg_celle',
-		'tavi'        => '@Taviana',
-		'i44.chernarus'        => 'expansion\beta;expansion\beta\expansion;Expansion\beta\expansion\addons;@DayZ_i44;@I44;@CBA;@CBA_A2;@CBA_OA;@CBA_CO',
-		'dayz2017.chernarus'       => '@DayZ2017'
+		'chernarus'           => '@dayz;expansion\beta;expansion\beta\expansion;Expansion\beta\expansion\addons',
+		'lingor'              => '@DayZHuntingGrounds',
+		'takistan'            => '@dayztakistan',
+		'fallujah'            => '@dayzfallujah',
+		'zargabad'            => '@dayzzargabad',
+		'panthera2'           => '@dayzpanthera',
+		'namalsk'             => '@DayZ_Namalsk;@DayZ_Namalsk_@DayZ',
+		'mbg_celle2'          => '@Dayz_Conflicts;@dayz_celle;@mbg_celle',
+		'tavi'                => '@Taviana',
+		'i44.chernarus'       => 'expansion\beta;expansion\beta\expansion;Expansion\beta\expansion\addons;@DayZ_i44;@I44;@CBA;@CBA_A2;@CBA_OA;@CBA_CO',
+		'dayz2017.chernarus'  => '@DayZ2017'
 	};
 	my $mod = ((defined $mods->{$args{'world'}}) ? "$mods->{$args{'world'}}" : '@dayz') . ";\@reality_$args{'instance'}.$args{'world'}";
 
@@ -568,7 +568,15 @@ sub pack_world {
 	print "INFO: Creating dayz_server.pbo\n";
 	make_path($dst) unless (-d $dst);
 	pack_pbo($src, "$dst/dayz_server.pbo");
-
+	
+	if($args{'world'} eq "lingor") {
+		copy("$base_dir/util/genderselection/HiveExt.dll", "$dst_dir/\@reality_$args{'instance'}.$args{'world'}/HiveExt.dll");
+	} else {
+	if ($custominv == 1 ) { copy("$base_dir/util/HiveExt.dll", "$dst_dir/\@reality_$args{'instance'}.$args{'world'}/HiveExt.dll");}
+	else { copy("$base_dir/util/genderselection/HiveExt.dll", "$dst_dir/\@reality_$args{'instance'}.$args{'world'}/HiveExt.dll");};
+		
+	}
+	
 	if($args{'world'} eq "dayz2017.chernarus") {
 		copy("$base_dir/util/HiveExt_2017.dll", "$dst_dir/\@reality_$args{'instance'}.$args{'world'}/HiveExt.dll");
 	} else {
