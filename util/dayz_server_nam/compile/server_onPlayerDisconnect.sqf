@@ -1,38 +1,41 @@
+#include "\z\addons\dayz_server\compile\server_toggle_debug.hpp"
 /*
 
 */
-private ["_object","_myGroup","_id","_playerID","_playerName","_characterID","_playerIDtoarray","_timeout"];
-_playerID = _this select 0;
+private ["_playerObj","_myGroup","_id","_playerUID","_playerName","_characterID","_playerIDtoarray","_timeout"];
+_playerUID = _this select 0;
 _playerName = _this select 1;
-_object = call compile format["player%1",_playerID];
-_characterID =	_object getVariable ["characterID","0"];
-_timeout = _object getVariable["combattimeout",0];
+_playerObj = nil;
+{
+	if (getPlayerUID _x == _playerUID) exitWith { _playerObj = _x; };
+} forEach 	playableUnits;
 
-_playerIDtoarray = [];
-_playerIDtoarray = toArray _playerID;
-
-if (vehicle _object != _object) then {
-	_object action ["eject", vehicle _object];
+if (isNil "_playerObj") exitWith {
+	diag_log format["%1: nil player object, _this:%2", __FILE__, _this];
 };
 
-if (59 in _playerIDtoarray) exitWith { };
-
-if ((_timeout - time) > 0) then {
-	diag_log format["COMBAT LOGGED: %1 (%2)", _playerName,_timeout];
-};
-
-diag_log format["DISCONNECT: %1 (%2) Object: %3, _characterID: %4", _playerName,_playerID,_object,_characterID];
-_id = [_playerID,_characterID,2] spawn dayz_recordLogin;
-dayz_disco = dayz_disco - [_playerID];
-if (!isNull _object) then {
+if (!isNull _playerObj) then {
+// log disconnect
+#ifdef LOGIN_DEBUG
+	_characterID = _playerObj getVariable["characterID", "?"];
+	_timeout = _playerObj getVariable["combattimeout",0];
+	diag_log format["Player UID#%1 CID#%2 %3 as %4, logged off at %5%6", 
+		getPlayerUID _playerObj, _characterID, _playerObj call fa_plr2str, typeOf _playerObj, 
+		(getPosATL _playerObj) call fa_coor2str,
+		if ((_timeout - time) > 0) then {" while in combat"} else {""}
+	]; 
+#endif
 //Update Vehicle
+	if (vehicle _playerObj != _playerObj) then {
+		_playerObj action ["eject", vehicle _playerObj];
+	};
 	{ [_x,"gear"] call server_updateObject } foreach 
-		(nearestObjects [getPosATL _object, ["Car", "Helicopter", "Motorcycle", "Ship", "TentStorage"], 10]);
-	if (alive _object) then {
-		//[_object,(magazines _object),true,(unitBackpack _object)] call server_playerSync;
-		[_object,[],true] call server_playerSync;
-		_myGroup = group _object;
-		deleteVehicle _object;
+		(nearestObjects [getPosATL _playerObj, ["Car", "Helicopter", "Motorcycle", "Ship", "TentStorage", "StashSmall", "StashMedium"], 10]);
+	if (alive _playerObj) then {
+		//[_playerObj,(magazines _playerObj),true,(unitBackpack _playerObj)] call server_playerSync;
+		[_playerObj,[],true] call server_playerSync;
+		_myGroup = group _playerObj;
+		deleteVehicle _playerObj;
 		deleteGroup _myGroup;
 	};
 };

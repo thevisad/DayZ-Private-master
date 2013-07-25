@@ -4,23 +4,22 @@
 item0[] = {"init",0,250,-75.000000,-400.000000,25.000000,-350.000000,0.000000,"init"};
 item1[] = {"true",8,218,-75.000000,-175.000000,25.000000,-125.000000,0.000000,"true"};
 item2[] = {"waiting",2,250,-75.000000,-100.000000,25.000000,-50.000000,0.000000,"waiting"};
-item3[] = {"too_many_dead",4,218,-150.000000,-25.000000,-50.000000,25.000000,2.000000,"too many" \n "dead"};
-item4[] = {"cleanup_dead",2,250,-150.000000,50.000000,-50.000000,100.000000,0.000000,"cleanup" \n "dead"};
-item5[] = {"too_many_objects",4,218,-25.000000,-25.000000,75.000000,25.000000,0.000000,"too many" \n "objects"};
-item6[] = {"cleanup_objects",2,250,-25.000000,50.000000,75.000000,100.000000,0.000000,"cleanup" \n "objects"};
-item7[] = {"time_sync",4,218,-275.000000,-25.000000,-175.000000,25.000000,1.000000,"time" \n "sync"};
+item3[] = {"too_many_dead",4,218,-150.000000,-25.000000,-50.000000,25.000000,3.000000,"too many" \n "dead"};
+item4[] = {"cleanup_dead",2,250,-175.000000,50.000000,-75.000000,100.000000,0.000000,"cleanup" \n "dead"};
+item5[] = {"too_many_objects",4,218,-25.000000,-25.000000,75.000000,25.000000,2.000000,"too many" \n "objects"};
+item6[] = {"cleanup_objects",2,250,25.000000,50.000000,125.000000,100.000000,0.000000,"cleanup" \n "objects"};
+item7[] = {"time_sync",4,218,-200.000000,-50.000000,-100.000000,0.000000,0.000000,"time" \n "sync"};
 item8[] = {"sync_the_time",2,250,-275.000000,50.000000,-175.000000,100.000000,0.000000,"sync" \n "the time"};
-item9[] = {"true",8,218,-75.000000,125.000000,25.000000,175.000000,0.000000,"true"};
+item9[] = {"true",8,218,-75.000000,100.000000,25.000000,150.000000,0.000000,"true"};
 item10[] = {"general_cleanup",2,250,-75.000000,200.000000,25.000000,250.000000,0.000000,"general" \n "cleanup"};
 item11[] = {"",7,210,-304.000000,220.999985,-296.000000,229.000015,0.000000,""};
 item12[] = {"",7,210,-304.000000,-154.000000,-296.000000,-146.000000,0.000000,""};
-item13[] = {"",7,210,221.000000,-79.000000,229.000000,-71.000000,0.000000,""};
-item14[] = {"",7,210,221.000000,146.000000,229.000000,154.000000,0.000000,""};
+item13[] = {"",7,210,308.500000,-79.000000,316.500000,-71.000000,0.000000,""};
+item14[] = {"",7,210,308.500000,121.000008,316.500031,129.000000,0.000000,""};
 item15[] = {"initialized",4,218,-75.000000,-325.000000,25.000000,-275.000000,0.000000,"initialized"};
-item16[] = {"prepare",2,250,-75.000000,-250.000000,25.000000,-200.000000,0.000000,"prepare"};
-item17[] = {"update_objects",2,250,100.000000,50.000000,200.000000,100.000000,0.000000,"update objects"};
-item18[] = {"need_update",4,4314,100.000000,-25.000000,200.000000,25.000000,1.000000,"need update"};
-item19[] = {"",7,210,221.000000,-79.000000,229.000000,-71.000000,0.000000,""};
+item16[] = {"prepare",2,4346,-75.000000,-250.000000,25.000000,-200.000000,0.000000,"prepare"};
+item17[] = {"update_objects",2,250,125.000000,50.000000,225.000000,100.000000,0.000000,"update objects"};
+item18[] = {"need_update",4,218,25.000000,-50.000000,125.000000,0.000000,1.000000,"need update"};
 link0[] = {0,15};
 link1[] = {1,2};
 link2[] = {2,3};
@@ -39,14 +38,13 @@ link14[] = {10,11};
 link15[] = {11,12};
 link16[] = {12,1};
 link17[] = {13,14};
-link18[] = {13,19};
-link19[] = {14,9};
-link20[] = {15,16};
-link21[] = {16,1};
-link22[] = {17,9};
-link23[] = {18,17};
-globals[] = {25.000000,1,0,0,0,640,480,1,24,6316128,1,-396.580658,354.272186,289.802856,-205.002594,912,601,1};
-window[] = {2,-1,-1,-32000,-32000,890,110,1439,110,3,929};
+link18[] = {14,9};
+link19[] = {15,16};
+link20[] = {16,1};
+link21[] = {17,9};
+link22[] = {18,17};
+globals[] = {25.000000,1,0,0,0,640,480,1,27,6316128,1,-396.580658,354.272186,240.490540,-413.513184,690,601,1};
+window[] = {2,-1,-1,-32000,-32000,802,22,1351,22,3,707};
 *//*%FSM</HEAD>*/
 class FSM
 {
@@ -87,21 +85,21 @@ class FSM
         /*%FSM<LINK "too_many_dead">*/
         class too_many_dead
         {
-          priority = 2.000000;
+          priority = 3.000000;
           to="cleanup_dead";
           precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
           condition=/*%FSM<CONDITION""">*/"(_numDead > 300)"/*%FSM</CONDITION""">*/;
           action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
         };
         /*%FSM</LINK>*/
-        /*%FSM<LINK "time_sync">*/
-        class time_sync
+        /*%FSM<LINK "too_many_objects">*/
+        class too_many_objects
         {
-          priority = 1.000000;
-          to="sync_the_time";
+          priority = 2.000000;
+          to="cleanup_objects";
           precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
-          condition=/*%FSM<CONDITION""">*/"((time - _lastUpdate) > 300)"/*%FSM</CONDITION""">*/;
-          action=/*%FSM<ACTION""">*/"_lastUpdate = time;"/*%FSM</ACTION""">*/;
+          condition=/*%FSM<CONDITION""">*/"((diag_tickTime - _timeNem) > 60)"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/"_timeNem = diag_tickTime;"/*%FSM</ACTION""">*/;
         };
         /*%FSM</LINK>*/
         /*%FSM<LINK "need_update">*/
@@ -110,8 +108,8 @@ class FSM
           priority = 1.000000;
           to="update_objects";
           precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
-          condition=/*%FSM<CONDITION""">*/"( (count needUpdate_objects) > 0 && (time-_lastNeedUpdate>20) )"/*%FSM</CONDITION""">*/;
-          action=/*%FSM<ACTION""">*/"_lastNeedUpdate = time;"/*%FSM</ACTION""">*/;
+          condition=/*%FSM<CONDITION""">*/"( (count needUpdate_objects) > 0 && (diag_tickTime -_lastNeedUpdate>40) )"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/"_lastNeedUpdate = diag_tickTime;"/*%FSM</ACTION""">*/;
         };
         /*%FSM</LINK>*/
         /*%FSM<LINK "true">*/
@@ -124,14 +122,14 @@ class FSM
           action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
         };
         /*%FSM</LINK>*/
-        /*%FSM<LINK "too_many_objects">*/
-        class too_many_objects
+        /*%FSM<LINK "time_sync">*/
+        class time_sync
         {
           priority = 0.000000;
-          to="cleanup_objects";
+          to="sync_the_time";
           precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
-          condition=/*%FSM<CONDITION""">*/"((time - _timeNem) > 60)"/*%FSM</CONDITION""">*/;
-          action=/*%FSM<ACTION""">*/"_timeNem = time;"/*%FSM</ACTION""">*/;
+          condition=/*%FSM<CONDITION""">*/"((diag_tickTime - _lastUpdate) > 300)"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/"_lastUpdate = diag_tickTime;"/*%FSM</ACTION""">*/;
         };
         /*%FSM</LINK>*/
       };
@@ -236,21 +234,34 @@ class FSM
     class cleanup_objects
     {
       name = "cleanup_objects";
-      init = /*%FSM<STATEINIT""">*/"_missionObjs = allMissionObjects ""WeaponHolder"";" \n
+      init = /*%FSM<STATEINIT""">*/"//_missionObjs = allMissionObjects ""WeaponHolder"" + allMissionObjects ""WeaponHolderBase"" ;" \n
+       "_missionObjs = allMissionObjects ""ReammoBox"";" \n
        "_qty = count _missionObjs;" \n
        "" \n
-       "//diag_log (""CLEANUP: PERFORMING ITEM CLEANUP: TOTAL "" + str(_qty) + "" LOOT BAGS"");" \n
+       "diag_log (""CLEANUP:TOTAL "" + str(_qty) + "" LOOT BAGS"");" \n
+       "" \n
        "_delQty = 0;" \n
        "{" \n
-       "	if (local _x) then {" \n
-       "		_keep = _x getVariable [""permaLoot"",false];" \n
-       "                _nearby = {isPlayer _x} count (_x nearEntities [[""CAManBase""], 100]);" \n
-       "		if ( (!_keep) && (_nearby==0) ) then {" \n
-       "			deleteVehicle _x;" \n
-       "			_delQty = _delQty + 1;" \n
-       "		};" \n
+       "	_keep = _x getVariable [""permaLoot"",false];" \n
+       "	 _nearby = {isPlayer _x} count (_x nearEntities [[""CAManBase""], 250]);" \n
+       "" \n
+       "	_created = (_x getVariable [""created"",-0.1]);" \n
+       "" \n
+       "	if (_created == -0.1) then {" \n
+       "		_x setVariable [""created"",(DateToNumber date)];" \n
        "	};" \n
+       "" \n
+       "	_age = ((DateToNumber date) - _created) * 525948;" \n
+       "" \n
+       "//diag_log format [""Pile : %1, Created: %2, Age: %3"", _x,  _created, _age];" \n
+       "" \n
+       "	if ( (!_keep) && (_nearby==0) && (_age > 60) ) then {" \n
+       "		deleteVehicle _x;" \n
+       "		_delQty = _delQty + 1;" \n
+       "	};" \n
+       "" \n
        "} forEach _missionObjs;" \n
+       "" \n
        "if (_delQty > 0) then {" \n
        "	diag_log (""CLEANUP: DELETED "" + str(_delQty) + "" LOOT BAGS"");" \n
        "};" \n
@@ -280,15 +291,22 @@ class FSM
        "_result = _key call server_hiveReadWrite;" \n
        "_outcome = _result select 0;" \n
        "if(_outcome == ""PASS"") then {" \n
-       "	_date = _result select 1; " \n
-       "	_dateNum = dateToNumber(_date); " \n
-       "	_diff = ( _dateNum - dateToNumber (date) )*365*24*60;" \n
-       "	if ( abs(_diff)>5 ) then {" \n
-       "		setDate _date;" \n
-       "		dayzSetDate = _date;" \n
-       "		publicVariable ""dayzSetDate"";" \n
-       "		diag_log (""TIME SYNC: Local Time set to "" + str(_date));" \n
-       "	};" \n
+       "	_date = _result select 1;" \n
+       "" \n
+       "	//date setup" \n
+       "	_year = _date select 0;" \n
+       "	_month = _date select 1;" \n
+       "	_day = _date select 2;" \n
+       "	_hour = _date select 3;" \n
+       "	_minute = _date select 4;" \n
+       "" \n
+       "	//Force full moon nights" \n
+       "	_date = [2012,6,6,_hour,_minute];" \n
+       "" \n
+       "	setDate _date;" \n
+       "	dayzSetDate = _date;" \n
+       "	publicVariable ""dayzSetDate"";" \n
+       "	diag_log (""TIME SYNC: Local Time set to "" + str(_date));" \n
        "};" \n
        ""/*%FSM</STATEINIT""">*/;
       precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
@@ -383,11 +401,12 @@ class FSM
       init = /*%FSM<STATEINIT""">*/"diag_log (""CLEANUP: INITIALIZING CLEANUP SCRIPT"");" \n
        "" \n
        "_safety = dayz_serverObjectMonitor;" \n
+       "_dateNow = (DateToNumber date);" \n
        "" \n
-       "_lastUpdate = time;" \n
-       "_timeNem = time;" \n
+       "_lastUpdate = diag_tickTime;" \n
+       "_timeNem =diag_tickTime;" \n
        "_deadBodies = [];" \n
-       "_lastNeedUpdate = time;" \n
+       "_lastNeedUpdate = diag_tickTime;" \n
        "_maxBodies = 15;" \n
        ""/*%FSM</STATEINIT""">*/;
       precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
@@ -414,7 +433,7 @@ class FSM
        "{" \n
        "//	_x setVariable [""needUpdate"",false,true];" \n
        "	needUpdate_objects = needUpdate_objects - [_x];" \n
-       "	[_x,""all""] call server_updateObject;" \n
+       "	[_x,""damage"",true] call server_updateObject;" \n
        "" \n
        "} forEach needUpdate_objects;" \n
        ""/*%FSM</STATEINIT""">*/;

@@ -83,6 +83,11 @@ if (_characterID != "0") then {
 			if (count _lastPos > 2 and count _charPos > 2) then {
 				if (!_isInVehicle) then {
 					_distanceFoot = round(_charPos distance _lastPos);
+					if ( _distanceFoot > 2000 ) then 
+					{
+					_distanceFoot = 0;
+					};
+					//diag_log ("debug _distanceFoot = " + str(_distanceFoot));
 				};
 				_character setVariable["lastPos",_charPos];
 			};
@@ -198,18 +203,14 @@ if (_characterID != "0") then {
 		
 		// If player is in a vehicle, keep its position updated
 		if (vehicle _character != _character) then {
-//			[vehicle _character, "position"] call server_updateObject;
-			if (!(vehicle _character in needUpdate_objects)) then {
-				//diag_log format["DEBUG: Added to NeedUpdate=%1",_object];
-				needUpdate_objects set [count needUpdate_objects, vehicle _character];
-			};
+			[vehicle _character, "position"] call server_updateObject;
 		};
 		
 		// Force gear updates for nearby vehicles/tents
 		_pos = _this select 0;
 		{
 			[_x, "gear"] call server_updateObject;
-		} forEach nearestObjects [_pos, ["Car", "Helicopter", "Motorcycle", "Ship", "TentStorage"], 10];
+		} forEach nearestObjects [_pos, ["Car", "Helicopter", "Motorcycle", "Ship", "TentStorage", "StashSmall","StashMedium"], 10];
 		//[_charPos] call server_updateNearbyObjects;
 
 		//Reset timer

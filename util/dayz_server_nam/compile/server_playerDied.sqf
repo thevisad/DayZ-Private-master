@@ -1,13 +1,17 @@
+#include "\z\addons\dayz_server\compile\server_toggle_debug.hpp"
+
 private ["_characterID","_minutes","_newObject","_playerID","_key"];
 //[unit, weapon, muzzle, mode, ammo, magazine, projectile]
+
 _characterID = 	_this select 0;
 _minutes =	_this select 1;
 _newObject = 	_this select 2;
 _playerID = 	_this select 3;
-_playerName = 	_this select 4;
+_playerName = 	name _newObject;
 
-dayz_disco = dayz_disco - [_playerID];
+//dayz_disco = dayz_disco - [_playerID];
 _newObject setVariable["processedDeath",time];
+_newObject setVariable ["bodyName", _playerName, true];
 
 /*
 diag_log ("DW_DEBUG: (isnil _characterID): " + str(isnil "_characterID"));
@@ -32,7 +36,14 @@ else
 	deleteVehicle _newObject;
 };
 
-diag_log ("PDEATH: Player Died " + _playerID);
+#ifdef PLAYER_DEBUG
+format ["Player UID#%3 CID#%4 %1 as %5 died at %2", 
+	_newObject call fa_plr2str, (getPosATL _newObject) call fa_coor2str,
+	getPlayerUID _newObject,_characterID,
+	typeOf _newObject
+];
+#endif
+
 /*
 _eh = [_newObject] spawn {
 	_body = _this select 0;

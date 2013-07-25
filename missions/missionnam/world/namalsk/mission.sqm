@@ -5,19 +5,23 @@ class Mission
 	{
 		"chernarus",
 		"ca_modules_animals",
+		"cacharacters_pmc",
+		"ca_modules_functions",
+		"dayz_anim",
 		"dayz_code",
+		"dayz_communityassets",
 		"dayz_weapons",
 		"dayz_equip",
 		"dayz_vehicles",
-		"cacharacters_pmc",
-		"ca_modules_functions",
 		"namalsk",
 		"ns_dayz",
 		"ns_modules",
-		"cacharacters_e"
+		"cacharacters_e",
+		"cacharacters2"
 	};
 	addOnsAuto[]=
 	{
+		"cacharacters2",
 		"dayz_weapons",
 		"ca_modules_functions",
 		"ns_modules",
@@ -690,7 +694,7 @@ class Mission
 		};
 		class Item2
 		{
-			position[]={2503.5112,11.133156,6765.4976};
+			position[]={2328.8879,14.480144,5811.2148};
 			name="spawn0";
 			type="Empty";
 		};
@@ -702,19 +706,19 @@ class Mission
 		};
 		class Item4
 		{
-			position[]={4161.3174,5.8500361,10972.366};
+			position[]={5013.6465,11.283978,11317.36};
 			name="spawn2";
 			type="Empty";
 		};
 		class Item5
 		{
-			position[]={8045.7095,5.5550861,8587.2568};
+			position[]={7747.8569,44.694138,9088.4873};
 			name="spawn3";
 			type="Empty";
 		};
 		class Item6
 		{
-			position[]={7472.6685,22.588337,11744.54};
+			position[]={8602.2393,14.709876,10957.529};
 			name="spawn4";
 			type="Empty";
 		};

@@ -1,7 +1,11 @@
 private["_botActive","_int","_newModel","_doLoop","_wait","_hiveVer","_isHiveOk","_playerID","_playerObj","_randomSpot","_publishTo","_primary","_secondary","_key","_result","_charID","_playerObj","_playerName","_finished","_spawnPos","_spawnDir","_items","_counter","_magazines","_weapons","_group","_backpack","_worldspace","_direction","_newUnit","_score","_position","_isNew","_inventory","_backpack","_medical","_survival","_stats","_state"];
 //Set Variables
 
+#include "\z\addons\dayz_server\compile\server_toggle_debug.hpp"
+
+#ifdef LOGIN_DEBUG
 diag_log ("STARTING LOGIN: " + str(_this));
+#endif
 
 _playerID = _this select 0;
 _playerObj = _this select 1;
@@ -9,6 +13,12 @@ _playerName = name _playerObj;
 _worldspace = [];
 
 if (_playerName == '__SERVER__' || _playerID == '' || local player) exitWith {};
+
+// Cancel any login until server_monitor terminates. 
+// This is mandatory since all vehicles must be spawned before the first players spawn on the map.
+// Otherwise, all vehicle event handlers won't be created on players' client side.
+if (isNil "sm_done") exitWith { diag_log ("Login cancelled, server is not ready. " + str(_playerObj)); };
+
 
 if (count _this > 2) then {
 	dayz_players = dayz_players - [_this select 2];
@@ -38,7 +48,9 @@ if ((_playerID == "") or (isNil "_playerID")) exitWith {
 };
 
 //??? endLoadingScreen;
+#ifdef LOGIN_DEBUG
 diag_log ("LOGIN ATTEMPT: " + str(_playerID) + " " + _playerName);
+#endif
 
 //Do Connection Attempt
 _doLoop = 0;
@@ -80,7 +92,7 @@ if (!_isNew) then {
 	_model =		_primary select 7;
 	_hiveVer =		_primary select 8;
 	
-	if (!(_model in ["SurvivorW2_DZ","Survivor2_DZ","Survivor3_DZ","Sniper1_DZ","Soldier1_DZ","Camo1_DZ","Bandit1_DZ","Rocket_DZ","CamoWinter_DZN","CamoWinterW_DZN","Sniper1W_DZN"])) then {
+	if (!(_model in ["SurvivorW2_DZ","Survivor2_DZ","Sniper1_DZ","Soldier1_DZ","Camo1_DZ","BanditW1_DZ","Bandit1_DZ","Survivor3_DZ","CamoWinter_DZN","CamoWinterW_DZN","Sniper1W_DZN"])) then {
 		_model = "Survivor2_DZ";
 	};
 	
@@ -107,7 +119,9 @@ if (!_isNew) then {
 	_key call server_hiveWrite;
 	
 };
+#ifdef LOGIN_DEBUG
 diag_log ("LOGIN LOADED: " + str(_playerObj) + " Type: " + (typeOf _playerObj));
+#endif
 
 _isHiveOk = false;	//EDITED
 if (_hiveVer >= dayz_hiveVersionNo) then {
