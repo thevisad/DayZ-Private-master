@@ -194,4 +194,3 @@ for "_x" from 1 to 5 do {
 	_id = [] spawn server_spawn_heliCrash;
 	//waitUntil{scriptDone _id};
 };
-
