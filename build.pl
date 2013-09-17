@@ -119,7 +119,7 @@ $args{'maxpacketsize'} = ($args{'maxpacketsize'}) ? ($args{'maxpacketsize'}) : '
 # Generic Settings for build purposes
 $args{'world'} = ($args{'world'}) ? lc($args{'world'}) : 'chernarus';
 $args{'instance'} = '1' unless $args{'instance'};
-$args{'serverversion'} = '1771' unless $args{'serverversion'};
+$args{'serverversion'} = '18' unless $args{'serverversion'};
 
 # Initialize paths
 our $base_dir = dirname(__FILE__);
