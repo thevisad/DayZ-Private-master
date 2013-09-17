@@ -92,7 +92,23 @@ if (!_isNew) then {
 	_model =		_primary select 7;
 	_hiveVer =		_primary select 8;
 	
-	if (!(_model in AllPlayers)) then {
+	if (_model == "") then {
+		_key = format["CHILD:999:select replace(cl.`inventory`, '""', '""""') inventory, replace(cl.`backpack`, '""', '""""') backpack, replace(coalesce(cl.`model`, 'Survivor2_DZ'), '""', '""""') model from `cust_loadout` cl join `cust_loadout_profile` clp on clp.`cust_loadout_id` = cl.`id` where clp.`unique_id` = '?':[%1]:",str(_playerID)];
+		_data = "HiveEXT" callExtension _key;
+		//Process result
+		_result = call compile format ["%1", _data];
+		_status = _result select 0;
+		if (_status == "CustomStreamStart") then {
+			if ((_result select 1) > 0) then {
+				_data = "HiveEXT" callExtension _key;
+				_result = call compile format ["%1", _data];
+				_inventory = call compile (_result select 0);
+				_backpack = call compile (_result select 1);
+				_model = call compile (_result select 2);
+			};
+		};
+	};
+	if (!(_model in ["SurvivorW2_DZ","Survivor2_DZ","Sniper1_DZ","Soldier1_DZ","Camo1_DZ","BanditW1_DZ","Bandit1_DZ","SurvivorW2_DZ"])) then {
 		_model = "Survivor2_DZ";
 	};
 	
