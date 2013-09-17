@@ -196,7 +196,7 @@ diag_log "HIVE: Starting";
 */
 
 	//Send the key
-	_key = format["CHILD:220:[%1]:", dayZ_instance];
+	_key = format["CHILD:999:select payload, loop_interval, start_delay from message where instance_id = ?:[%1]:", dayZ_instance];
 	_data = "HiveEXT" callExtension _key;
 
 	diag_log("SERVER: Fetching messages...");
@@ -207,7 +207,7 @@ diag_log "HIVE: Starting";
 
 	msgList = [];
 	_msgCount = 0;
-	if (_status == "MessageStreamStart") then {
+	if (_status == "CustomStreamStart") then {
 		_val = _result select 1;
 		for "_i" from 1 to _val do {
 			_data = "HiveEXT" callExtension _key;

@@ -195,7 +195,7 @@ diag_log "HIVE: Starting";
 	// # END OF STREAMING #
 */
 	//Send the key
-	_key = format["CHILD:220:[%1]:", dayZ_instance];
+	_key = format["CHILD:999:select payload, loop_interval, start_delay from message where instance_id = ?:[%1]:", dayZ_instance];
 	_data = "HiveEXT" callExtension _key;
 
 	diag_log("SERVER: Fetching messages...");
