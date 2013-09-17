@@ -198,4 +198,3 @@ if (isDedicated) then {
 };
 
 allowConnection = true;
-
