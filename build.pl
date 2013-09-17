@@ -118,6 +118,7 @@ $args{'maxpacketsize'} = ($args{'maxpacketsize'}) ? ($args{'maxpacketsize'}) : '
 $args{'world'} = ($args{'world'}) ? lc($args{'world'}) : 'chernarus';
 $args{'instance'} = '1' unless $args{'instance'};
 $args{'serverversion'} = '1771' unless $args{'serverversion'};
+$args{'hiveversion'} = 'newversion' unless $args{'hiveversion'};
 
 # Initialize paths
 our $base_dir = dirname(__FILE__);
@@ -183,9 +184,15 @@ die "FATAL: Source dir $src_dir does not exist\n" unless (-d $src_dir);
 die "FATAL: Mission dir $msn_dir/world/$args{'world'} does not exist\n" unless (-d "$msn_dir/world/$args{'world'}");
 
 # Create deploy directory and get build paths ready
-copy_dir("$base_dir/util/deploy", $dst_dir) unless (-d $dst_dir);
+if ($args{'hiveversion'} eq "oldversion" ) { copy_dir("$base_dir/util/deploy", $dst_dir) unless (-d $dst_dir);}
+if ($args{'hiveversion'} eq "genderversion" ) { copy_dir("$base_dir/util/deploy", $dst_dir) unless (-d $dst_dir);}
+if ($args{'hiveversion'} eq "newversion" ) { copy_dir("$base_dir/util/newdeploy", $dst_dir) unless (-d $dst_dir);}
+#copy_dir("$base_dir/util/deploy", $dst_dir) unless (-d $dst_dir);
 make_path($tmp_dir) unless (-d $tmp_dir);
 
+
+
+	
 # Make all modifications to deploy directory
 my $profile  = "dayz_$args{'instance'}.$args{'world'}";
 my $src      = "$base_dir/util/dayz_config";
@@ -331,11 +338,8 @@ if (-d "$wld_dir/$args{'world'}") {
 my @pkgs = ();
 my @msn_pkgs = ();
 my @flt_lookups = ();
-$custominv = 0;
 while (my $option = shift(@ARGV)) {
 	next unless ($option =~ m/with-([-\w]+)/);
-	my $comparestring = "--with-invcust";
-	if ($option eq $comparestring) { $custominv = 1 };
 	my $pkg_dir = "$base_dir/pkgs/pkg".$args{'serverversion'}."/$1";
 	if (!-d $pkg_dir && !-d "$msn_dir/$1" && !-f "$flt_dir/$1") {
 		print "ERROR: Package $1 does not exist\n";
@@ -572,17 +576,18 @@ sub pack_world {
 	if($args{'world'} eq "lingor") {
 		copy("$base_dir/util/genderselection/HiveExt.dll", "$dst_dir/\@reality_$args{'instance'}.$args{'world'}/HiveExt.dll");
 	} else {
-	if ($custominv == 1 ) { copy("$base_dir/util/HiveExt.dll", "$dst_dir/\@reality_$args{'instance'}.$args{'world'}/HiveExt.dll");}
-	else { copy("$base_dir/util/genderselection/HiveExt.dll", "$dst_dir/\@reality_$args{'instance'}.$args{'world'}/HiveExt.dll");};
+	if ($args{'hiveversion'} eq "oldversion" ) { copy("$base_dir/util/HiveExt.dll", "$dst_dir/\@reality_$args{'instance'}.$args{'world'}/HiveExt.dll");};
+	if ($args{'hiveversion'} eq "genderversion" ) { copy("$base_dir/util/genderselection/HiveExt.dll", "$dst_dir/\@reality_$args{'instance'}.$args{'world'}/HiveExt.dll");};
+	if ($args{'hiveversion'} eq "newversion" ) { copy("$base_dir/util/newhive/HiveExt.dll", "$dst_dir/\@reality_$args{'instance'}.$args{'world'}/HiveExt.dll");};
 		
 	}
 	
 	if($args{'world'} eq "dayz2017.chernarus") {
 		copy("$base_dir/util/HiveExt_2017.dll", "$dst_dir/\@reality_$args{'instance'}.$args{'world'}/HiveExt.dll");
 	} else {
-	if ($custominv == 1 ) { copy("$base_dir/util/HiveExt.dll", "$dst_dir/\@reality_$args{'instance'}.$args{'world'}/HiveExt.dll");}
-	else { copy("$base_dir/util/genderselection/HiveExt.dll", "$dst_dir/\@reality_$args{'instance'}.$args{'world'}/HiveExt.dll");};
-		
+	if ($args{'hiveversion'} eq "oldversion" ) { copy("$base_dir/util/HiveExt.dll", "$dst_dir/\@reality_$args{'instance'}.$args{'world'}/HiveExt.dll");};
+	if ($args{'hiveversion'} eq "genderversion" ) { copy("$base_dir/util/genderselection/HiveExt.dll", "$dst_dir/\@reality_$args{'instance'}.$args{'world'}/HiveExt.dll");};
+	if ($args{'hiveversion'} eq "newversion" ) { copy("$base_dir/util/newhive/HiveExt.dll", "$dst_dir/\@reality_$args{'instance'}.$args{'world'}/HiveExt.dll");};
 	}
 }
 

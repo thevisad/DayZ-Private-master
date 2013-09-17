@@ -69,7 +69,7 @@ my @scripts = (
 );
 
 foreach my $script (@scripts) {
-	my $uri = "https://github.com/DayZMod/Battleye-Filters/raw/Release_1.7.7.1/$script";
+	my $uri = "https://raw.github.com/DayZMod/Battleye-Filters/Release_1.7.7.1/$script";
 	#my $uri = "https://dayz-community-banlist.googlecode.com/git/filters/$script";
 	my $cmd = (($^O =~ m/MSWin32/) ? 'util/wget' : 'wget');
 	$cmd = "$cmd --no-check-certificate -q -N -O \"$dst/$script\" $uri";
