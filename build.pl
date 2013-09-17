@@ -64,6 +64,7 @@ GetOptions(
 	'3D_performance=s',
 	'resolution_bpp=s',
 	'maxpacketsize=s',
+	'hiveversion=s',
 	'list',
 	'clean',
 	'help'
@@ -80,6 +81,7 @@ $args{'hostedby'} = ($args{'hostedby'}) ? ($args{'hostedby'}) : 'CHANGEME';
 $args{'battleyepassword'} = ($args{'battleyepassword'}) ? ($args{'battleyepassword'}) : 'CHANGEME';
 $args{'serverdifficulty'} = ($args{'serverdifficulty'}) ? ($args{'serverdifficulty'}) : 'CHANGEME';
 $args{'dayzversion'} = ($args{'dayzversion'}) ? ($args{'dayzversion'}) : 'CHANGEME';
+$args{'hiveversion'} = ($args{'hiveversion'}) ? ($args{'hiveversion'}) : 'oldversion';
 
 # Hive settings
 $args{'hivehost'} = ($args{'hivehost'}) ? ($args{'hivehost'}) : '127.0.0.1';
@@ -118,7 +120,6 @@ $args{'maxpacketsize'} = ($args{'maxpacketsize'}) ? ($args{'maxpacketsize'}) : '
 $args{'world'} = ($args{'world'}) ? lc($args{'world'}) : 'chernarus';
 $args{'instance'} = '1' unless $args{'instance'};
 $args{'serverversion'} = '1771' unless $args{'serverversion'};
-$args{'hiveversion'} = 'newversion' unless $args{'hiveversion'};
 
 # Initialize paths
 our $base_dir = dirname(__FILE__);
