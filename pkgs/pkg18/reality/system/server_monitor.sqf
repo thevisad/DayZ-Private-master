@@ -31,7 +31,7 @@ diag_log "HIVE: Starting";
 		_minute = _date select 4;
 
 		//Force full moon nights
-		_date = [2013,8,3,_hour,_minute];
+		_date1 = [2013,8,3,_hour,_minute];
 		
 		if(isDedicated) then {
 			//["dayzSetDate",_date] call broadcastRpcCallAll;
