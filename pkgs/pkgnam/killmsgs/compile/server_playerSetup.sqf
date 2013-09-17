@@ -1,10 +1,11 @@
-private ["_characterID","_doLoop","_playerID","_playerObj","_randomSpot","_primary","_key","_worldspace","_score","_position","_pos","_isIsland","_medical","_stats","_state","_dummy","_debug","_distance","_hit","_fractures","_w","_findSpot","_humanity","_clientID"];//Set Variables
-//Wait for HIVE to be free
-//diag_log ("SETUP: attempted with " + str(_this));
+private ["_characterID","_playerObj","_playerID","_dummy","_worldspace","_state","_doLoop","_key","_primary","_medical","_stats","_humanity","_randomSpot","_position","_debug","_distance","_fractures","_score","_findSpot","_mkr","_j","_isIsland","_w","_clientID"];//diag_log ("SETUP: attempted with " + str(_this));
 
+//diag_log(format["%1 DEBUG %2", __FILE__, _this]);
 _characterID = _this select 0;
 _playerObj = _this select 1;
 _playerID = getPlayerUID _playerObj;
+
+#include "\z\addons\dayz_server\compile\server_toggle_debug.hpp"
 
 if (isNull _playerObj) exitWith {
 	diag_log ("SETUP INIT FAILED: Exiting, player object null: " + str(_playerObj));
@@ -30,10 +31,10 @@ if ( _playerID != _dummy ) then {
 };
 
 //Variables
-_worldspace = 	[];
+_worldspace = [];
 
 
-_state = 		[];
+_state = [];
 
 //Do Connection Attempt
 _doLoop = 0;
@@ -55,11 +56,11 @@ if (isNull _playerObj or !isPlayer _playerObj) exitWith {
 //Wait for HIVE to be free
 //diag_log ("SETUP: RESULT: Successful with " + str(_primary));
 
-_medical =		_primary select 1;
-_stats =		_primary select 2;
-_state =		_primary select 3;
-_worldspace = 	_primary select 4;
-_humanity =		_primary select 5;
+_medical = _primary select 1;
+_stats = _primary select 2;
+_state = _primary select 3;
+_worldspace = _primary select 4;
+_humanity = _primary select 5;
 
 //Set position
 _randomSpot = false;
@@ -68,7 +69,7 @@ _randomSpot = false;
 
 if (count _worldspace > 0) then {
 
-	_position = 	_worldspace select 1;
+	_position = _worldspace select 1;
 	if (count _position < 3) then {
 		//prevent debug world!
 		_randomSpot = true;
@@ -111,12 +112,9 @@ if (count _medical > 0) then {
 //		_playerObj setVariable["unconsciousTime",(_medical select 10),true];
 //	};
 	
-	//Add Wounds
+	//Add bleeding Wounds
 	{
-		_playerObj setVariable[_x,true,true];
-		//["usecBleed",[_playerObj,_x,_hit]] call broadcastRpcCallAll;
-		usecBleed = [_playerObj,_x,_hit];
-		publicVariable "usecBleed";
+		_playerObj setVariable["hit_"+_x,true, true];
 	} forEach (_medical select 8);
 	
 	//Add fractures
@@ -130,6 +128,8 @@ if (count _medical > 0) then {
 	};
 	
 } else {
+	//Reset bleedings wounds
+	call fnc_usec_resetWoundPoints;
 	//Reset Fractures
 	_playerObj setVariable ["hit_legs",0,true];
 	_playerObj setVariable ["hit_hands",0,true];
@@ -138,7 +138,7 @@ if (count _medical > 0) then {
 	_playerObj setVariable ["messing",[0,0],true];
 };
 	
-if (count _stats > 0) then {	
+if (count _stats > 0) then { 
 	//register stats
 	_playerObj setVariable["zombieKills",(_stats select 0),true];
 	_playerObj setVariable["headShots",(_stats select 1),true];
@@ -153,8 +153,8 @@ if (count _stats > 0) then {
 	//record for Server JIP checks
 	_playerObj setVariable["zombieKills_CHK",(_stats select 0)];
 	_playerObj setVariable["headShots_CHK",(_stats select 1)];
-	_playerObj setVariable["humanKills_CHK",(_stats select 2)];
-	_playerObj setVariable["banditKills_CHK",(_stats select 3)];
+	//_playerObj setVariable["humanKills_CHK",(_stats select 2)]; // not used???
+	//_playerObj setVariable["banditKills_CHK",(_stats select 3)]; // not used????
 	if (count _stats > 4) then {
 		if (!(_stats select 3)) then {
 			_playerObj setVariable["selectSex",true,true];
@@ -172,8 +172,8 @@ if (count _stats > 0) then {
 	
 	//record for Server JIP checks
 	_playerObj setVariable["zombieKills_CHK",0];
-	_playerObj setVariable["humanKills_CHK",0,true];
-	_playerObj setVariable["banditKills_CHK",0,true];
+	//_playerObj setVariable["humanKills_CHK",0,true]; // not used??
+	//_playerObj setVariable["banditKills_CHK",0,true]; // not used????
 	_playerObj setVariable["headShots_CHK",0];
 };
 
@@ -235,9 +235,11 @@ _clientID publicVariableClient "dayzPlayerLogin2";
 _playerObj setVariable ["lastTime",time];
 //_playerObj setVariable ["model_CHK",typeOf _playerObj];
 
-diag_log ("LOGIN PUBLISHING: " + str(_playerObj) + " Type: " + (typeOf _playerObj));
+#ifdef LOGIN_DEBUG
+diag_log format["LOGIN PUBLISHING: UID#%1 CID#%2 %3 as %4 should spawn at %5", getPlayerUID _playerObj, _characterID, _playerObj call fa_plr2str, typeOf _playerObj, (_worldspace select 1) call fa_coor2str];
+#endif
 
-dayzLogin = null;
-dayzLogin2 = null;
+PVDZ_plr_Login1 = null;
+PVDZ_plr_Login2 = null;
 
 //Save Login

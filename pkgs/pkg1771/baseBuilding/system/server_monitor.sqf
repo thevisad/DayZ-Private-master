@@ -10,7 +10,9 @@ if ((count playableUnits == 0) and !isDedicated) then {
 };
 
 waitUntil{initialized}; //means all the functions are now defined
-
+// ### BASE BUILDING 1.2 ### SERVER SIDE BUILD ARRAYS - START
+call build_baseBuilding_arrays;
+// ### BASE BUILDING 1.2 ### SERVER SIDE BUILD ARRAYS - END
 diag_log "HIVE: Starting";
 
 //Set the Time
@@ -120,7 +122,42 @@ diag_log "HIVE: Starting";
 				};
 				_object setdir _dir;
 				_object setDamage _damage;
-				
+// ##### BASE BUILDING 1.2 Server Side ##### - START
+// This sets objects to appear properly once server restarts
+		if ((_object isKindOf "Static") && !(_object isKindOf "TentStorage")) then {
+			_object setpos [(getposATL _object select 0),(getposATL _object select 1), 0];
+		};
+		//Set Variable
+		if (_object isKindOf "Infostand_2_EP1" && !(_object isKindOf "Infostand_1_EP1")) then {
+			_object setVariable ["ObjectUID", _worldspace call dayz_objectUID2, true];
+			_object enableSimulation false;
+		};
+
+
+				// Set whether or not buildable is destructable
+		if (typeOf(_object) in allbuildables_class) then {
+			diag_log ("SERVER: in allbuildables_class:" + typeOf(_object) + " !");
+			for "_i" from 0 to ((count allbuildables) - 1) do
+			{
+				_classname = (allbuildables select _i) select _i - _i + 1;
+				_result = [_classname,typeOf(_object)] call BIS_fnc_areEqual;
+				if (_result) exitWith {
+					_requirements = (allbuildables select _i) select _i - _i + 2;
+					_isDestructable = _requirements select 13;
+					diag_log ("SERVER: " + typeOf(_object) + " _isDestructable = " + str(_isDestructable));
+					if (!_isDestructable) then {
+						diag_log("Spawned: " + typeOf(_object) + " Handle Damage False");
+						_object addEventHandler ["HandleDamage", {false}];
+					};
+					if (typeOf(_object) == "Grave") then {
+						_object setVariable ["isBomb", true];
+					};
+				};
+			};
+			//gateKeypad = _object addaction ["Defuse", "\z\addons\dayz_server\compile\enterCode.sqf"];
+		};
+// ##### BASE BUILDING 1.2 Server Side ##### - END
+// This sets objects to appear properly once server restarts
 				if (count _inventory > 0) then {
 					//Add weapons
 					_objWpnTypes = (_inventory select 0) select 0;
@@ -194,30 +231,6 @@ diag_log "HIVE: Starting";
 		
 	// # END OF STREAMING #
 */
-	//Send the key
-	_key = format["CHILD:220:[%1]:", dayZ_instance];
-	_data = "HiveEXT" callExtension _key;
-
-	diag_log("SERVER: Fetching messages...");
-
-	//Process result
-	_result = call compile format ["%1", _data];
-	_status = _result select 0;
-
-	msgList = [];
-	_msgCount = 0;
-	if (_status == "CustomStreamStart") then {
-		_val = _result select 1;
-		for "_i" from 1 to _val do {
-			_data = "HiveEXT" callExtension _key;
-			_result = call compile format ["%1",_data];
-
-			_status = _result select 0;
-			msgList set [count msgList, _result];
-			_msgCount = _msgCount + 1;
-		};
-		diag_log ("SERVER: Added " + str(_msgCount) + " messages!");
-	};
 waituntil{isNil "sm_done"}; // prevent server_monitor be called twice (bug during login of the first player)
 
 #include "\z\addons\dayz_server\compile\fa_hiveMaintenance.hpp"
@@ -386,7 +399,7 @@ if (isServer and isNil "sm_done") then {
 				_entity = createVehicle [_class, _point, [], 0, 
 					if (_class=="TentStorage") then {"NONE"} else {"CAN_COLLIDE"}
 				];	
-				_entity setVariable ["ObjectUID", _ObjectID, true];
+				_entity setVariable ["ObjectID", _ObjectID, true];
 				_entity setVariable ["CharacterID", _CharacterID, true];	
 				_entity setVariable ["lastUpdate",time];
 				_entity setDamage _damage;
