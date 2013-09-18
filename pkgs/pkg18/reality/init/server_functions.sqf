@@ -23,9 +23,6 @@ server_spawnCrashSite  =    compile preprocessFileLineNumbers "\z\addons\dayz_se
 server_sendToClient =		compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\server_sendToClient.sqf";
 server_Wildgenerate =		compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\zombie_Wildgenerate.sqf";
 server_plantSpawner =		compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\server_plantSpawner.sqf";
-// DayZ: Namalsk functions
-server_heliCrash_dzn = 		compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\server_heliCrash_dzn.sqf";
-server_medical_ckg_dzn = 	compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\server_medical_ckg_dzn.sqf";
 
 //Get instance name (e.g. dayz_1.chernarus)
 fnc_instanceName = {
