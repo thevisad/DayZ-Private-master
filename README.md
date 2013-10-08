@@ -1,3 +1,7 @@
+DayZ Reality is no longer supported
+===================================
+You will no longer receive any support from me on Reality. We are shutting down the project and working on a new Hive scheme that will support all functionality of Reality and allow for greater functionality in the future. 
+
 DayZ Reality Private Server
 =========================
 
