@@ -7,7 +7,7 @@ item2[] = {"waiting",2,250,-75.000000,-125.000000,25.000000,-75.000000,0.000000,
 item3[] = {"too_many_dead",4,218,-125.000000,0.000000,-25.000000,50.000000,2.000000,"too many" \n "dead"};
 item4[] = {"cleanup_dead",2,250,-125.000000,75.000000,-25.000000,125.000000,0.000000,"cleanup" \n "dead"};
 item5[] = {"too_many_objects",4,218,-25.000000,0.000000,75.000000,50.000000,2.000000,"too many" \n "objects"};
-item6[] = {"cleanup_objects",2,4346,-25.000000,75.000000,75.000000,125.000000,0.000000,"cleanup" \n "objects"};
+item6[] = {"cleanup_objects",2,250,-25.000000,75.000000,75.000000,125.000000,0.000000,"cleanup" \n "objects"};
 item7[] = {"time_sync",4,218,-225.000000,0.000000,-125.000000,50.000000,1.000000,"time" \n "sync"};
 item8[] = {"sync_the_time",2,250,-225.000000,175.000000,-125.000000,225.000000,0.000000,"sync" \n "the time"};
 item9[] = {"true",8,218,-75.000000,250.000000,25.000000,300.000000,0.000000,"true"};
@@ -17,7 +17,7 @@ item12[] = {"",7,210,-304.000000,-179.000000,-296.000000,-171.000000,0.000000,""
 item13[] = {"initialized",4,218,-75.000000,-350.000000,25.000000,-300.000000,0.000000,"initialized"};
 item14[] = {"prepare",2,250,-75.000000,-275.000000,25.000000,-225.000000,0.000000,"prepare"};
 item15[] = {"update_objects",2,250,75.000000,175.000000,175.000000,225.000000,0.000000,"update objects"};
-item16[] = {"Objects_need_upd",4,218,75.000000,0.000000,175.000000,50.000000,1.000000,"Objects" \n "need update"};
+item16[] = {"Objects_need_upd",4,4314,75.000000,0.000000,175.000000,50.000000,1.000000,"Objects" \n "need update"};
 item17[] = {"timeout",4,218,250.000000,-225.000000,350.000000,-175.000000,0.000000,"timeout"};
 item18[] = {"",7,210,246.000000,271.000000,254.000000,279.000000,0.000000,""};
 item19[] = {"",7,210,-29.000000,-41.500000,-21.000000,-33.499996,0.000000,""};
@@ -67,8 +67,8 @@ link31[] = {28,9};
 link32[] = {29,9};
 link33[] = {17,30};
 link34[] = {30,17};
-globals[] = {25.000000,1,0,0,0,640,480,1,45,6316128,1,-334.464142,416.388702,422.218689,-231.785019,690,601,1};
-window[] = {2,-1,-1,-32000,-32000,846,66,1395,66,3,707};
+globals[] = {25.000000,1,0,0,0,640,480,1,45,6316128,1,-334.464142,416.388702,331.898743,-322.104980,690,601,1};
+window[] = {2,-1,-1,-1,-1,846,66,1395,66,3,707};
 *//*%FSM</HEAD>*/
 class FSM
 {
@@ -142,7 +142,7 @@ class FSM
           priority = 1.000000;
           to="update_objects";
           precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
-          condition=/*%FSM<CONDITION""">*/"( (count needUpdate_objects) > 0 && (diag_tickTime -_lastNeedUpdate> 5)  && (sm_done))"/*%FSM</CONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"(( (count needUpdate_objects) > 0) && (diag_tickTime -_lastNeedUpdate> 5))"/*%FSM</CONDITION""">*/;
           action=/*%FSM<ACTION""">*/"_lastNeedUpdate = diag_tickTime;"/*%FSM</ACTION""">*/;
         };
         /*%FSM</LINK>*/
@@ -323,10 +323,11 @@ class FSM
        "	_minute = _date select 4;" \n
        "" \n
        "	//Force full moon nights" \n
-       "	_date1 = [2012,6,6,14,_minute];" \n
+       "	_date1 = [2013,8,3,_hour,_minute];" \n
        "" \n
        "	setDate _date1;" \n
        "	dayzSetDate = _date1;" \n
+       "	dayz_storeTimeDate = _date1;" \n
        "	publicVariable ""dayzSetDate"";" \n
        "	diag_log (""TIME SYNC: Local Time set to "" + str(_date1));" \n
        "};" \n
@@ -401,7 +402,6 @@ class FSM
        "_lastNeedUpdate = diag_tickTime;" \n
        "_timeout = diag_tickTime;" \n
        "_maxBodies = 15;" \n
-       "sm_done = false;" \n
        ""/*%FSM</STATEINIT""">*/;
       precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
       class Links

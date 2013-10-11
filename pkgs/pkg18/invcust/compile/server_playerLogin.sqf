@@ -108,7 +108,7 @@ if (!_isNew) then {
 			};
 		};
 	};
-	if (!(_model in ["SurvivorW2_DZ","Survivor2_DZ","Sniper1_DZ","Soldier1_DZ","Camo1_DZ","BanditW1_DZ","Bandit1_DZ","SurvivorW2_DZ"])) then {
+	if (!(_model in AllPlayers)) then {
 		_model = "Survivor2_DZ";
 	};
 	

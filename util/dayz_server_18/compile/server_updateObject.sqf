@@ -117,6 +117,9 @@ _object_damage = {
 		} else {
 			_array set [count _array,[_selection,0]]; 
 		};
+		//"_selection" ???  anyway seems not needed
+		//_object setHit ["_selection", _hit];
+	
 	} forEach _hitpoints;
 
 	if (_forced) then {	
@@ -134,9 +137,7 @@ _object_damage = {
 
 	} else {		
 		if (!(_object in needUpdate_objects)) then {
-			//#ifdef OBJECT_DEBUG
-				diag_log format["DEBUG: Monitoring: %1",_object];
-			//#endif
+			diag_log format["DEBUG: Monitoring: %1",_object];
 			needUpdate_objects set [count needUpdate_objects, _object];
 		};
 	};

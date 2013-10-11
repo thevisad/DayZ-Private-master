@@ -31,7 +31,7 @@ while {_totalamount < _amount} do {
 		switch (true) do {
 			//One
 			case (_type == "Dayz_Plant1") : {
-					_totalamountPlant1 = _totalamountPlant1 + 1;
+				_totalamountPlant1 = _totalamountPlant1 + 1;
 			};
 			case (_type == "Dayz_Plant2") : {
 				_totalamountPlant2 = _totalamountPlant2 + 1;

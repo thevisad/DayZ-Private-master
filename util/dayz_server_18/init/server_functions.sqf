@@ -23,10 +23,6 @@ server_sendToClient =		compile preprocessFileLineNumbers "\z\addons\dayz_server\
 server_Wildgenerate =		compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\zombie_Wildgenerate.sqf";
 server_plantSpawner =		compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\server_plantSpawner.sqf";
 
-//Get instance name (e.g. dayz_1.chernarus)
-fnc_instanceName = {
-	"dayz_" + str(dayz_instance) + "." + worldName
-};
 spawnComposition = compile preprocessFileLineNumbers "ca\modules\dyno\data\scripts\objectMapper.sqf"; //"\z\addons\dayz_code\compile\object_mapper.sqf";
 fn_bases = compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\fn_bases.sqf";
 

@@ -5,8 +5,11 @@ _variable = _this select 1;
 _arraytosend = _this select 2;
 _owner = owner _unit;
 
+
+//diag_log format ["%1, %2, %3, %4", _unit, _variable, _arraytosend, _owner];
+
 //execution
-switch _variable do {
+switch (_variable) do {
 	case "VehHandleDam": {
 		_vehicle = _arraytosend select 0;
 		if (local _vehicle) then {
@@ -41,12 +44,15 @@ switch _variable do {
 	case "Humanity": {
 		PVCDZ_plr_Humanity = _arraytosend;
 		_owner publicVariableClient "PVCDZ_plr_Humanity";
+		
+		//diag_log ("Humanity" +str(PVCDZ_plr_Humanity));
 	};
 	
 	case "dayzSetDate": {
 		dayzSetDate = dayz_storeTimeDate;
 		_owner publicVariableClient "dayzSetDate";
-		diag_log ("Time and date: " +str (dayz_storeTimeDate));
+		
+		//diag_log ("Time and date: " +str (dayz_storeTimeDate));
 	};
 
 	case "Transfuse": {
@@ -78,7 +84,10 @@ switch _variable do {
 	case "Bandage": {
 		PVCDZ_hlt_Bandage = _arraytosend;
 		_owner publicVariableClient "PVCDZ_hlt_Bandage";
+		
 		_unit setVariable["medForceUpdate",true];
+		
+		//diag_log ("Bandage: " +str(PVCDZ_hlt_Bandage));
 	};
 
 	case "Antibiotics": {

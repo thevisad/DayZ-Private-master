@@ -133,6 +133,7 @@ fa_populateCargo = {
             if (_x == "BoltSteel") then { _x = "WoodenArrow" }; // Convert BoltSteel to WoodenArrow
 			// Convert to DayZ Weapons
 			if (_x == "DMR") then { _x = "DMR_DZ" };
+			//if (_x == "M14_EP1") then { _x = "M14_DZ" };
 			if (_x == "SVD") then { _x = "SVD_DZ" }; 
 			if (_x == "SVD_CAMO") then { _x = "SVD_CAMO_DZ" };
 			if (isClass(configFile >> (_config select _i) >> _x) &&
@@ -361,8 +362,8 @@ fa_staywithus = {
 	};
 	
 	// cancel the change if it is too near original pos
-	if (([(_this select 1),_a] call BIS_fnc_distance2Dsqr) <= 100) then { 
-		[_this select 0, _this select 1]
+	if (([(_this select 1),_a] call BIS_fnc_distance2Dsqr) <= 30) then { 
+		[_this select 0, +(_this select 1)]
 	}
 	else {
 		[ _dir, [_a select 0, _a select 1, 0]]
@@ -374,21 +375,25 @@ stream_locationFill = compile preprocessFileLineNumbers "\z\addons\dayz_code\com
 dayz_locationsActive = [];
 // used only by fa_smartlocation. Same as stream_locationCheck, but without any deletion.
 fa_server_locationCheck = {
+	private ["_point","_rad","_config","_i","_location","_distCfg","_distAct"];
+
 	_point = _this select 0;
 	_rad = _this select 1;
 	_config = configFile >> "CfgTownGeneratorChernarus";
 	
-	for "_i" from (count _config -1) to 0 step -1 do {
-		_x = _config select _i;
-	 	_location = getArray (_x >> "position");
-        _distCfg = getNumber (_x >> "size");
-		_distAct = [_point select 0, _point select 1, 0] distance [_location select 0, _location select 1, 0];
+	if (count _point >= 2) then {
+		for "_i" from (count _config -1) to 0 step -1 do {
+			_x = _config select _i;
+			_location = getArray (_x >> "position");
+			_distCfg = getNumber (_x >> "size");
+			_distAct = [_point select 0, _point select 1, 0] distance [_location select 0, _location select 1, 0];
 
-		if (!(_i in dayz_locationsActive)) then {
-			if (_distAct < _distCfg + _rad) then {
-				dayz_locationsActive set [count dayz_locationsActive,_i];
-				diag_log format ["%1::fa_server_locationCheck : creating %2 objects at '%3'", __FILE__, count _x, _location];
-				[_x, false] call stream_locationFill; // create wrecks & rubbish as local objects
+			if (!(_i in dayz_locationsActive)) then {
+				if (_distAct < _distCfg + _rad) then {
+					dayz_locationsActive set [count dayz_locationsActive,_i];
+					diag_log format ["%1::fa_server_locationCheck : creating %2 objects at '%3'", __FILE__, count _x, _location];
+					[_x, false] call stream_locationFill; // create wrecks & rubbish as local objects
+				};
 			};
 		};
 	};
@@ -456,7 +461,8 @@ private ["_type","_class","_dir","_oldpos","_action","_distance","_minAltitude",
 #ifdef VEH_MAINTENANCE_FIX_OUTOFMAP
 		// move object back on the map
 		_wp = [0, _oldpos] call fa_staywithus;  // use ATL format
-		_point = (_wp select 1);
+		_point = +(_wp select 1);
+		if (count _point < 2) then { _point = _oldpos; };
 #else
 		_point = +(_oldpos);
 #endif

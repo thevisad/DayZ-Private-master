@@ -21,18 +21,17 @@ private ["_clutter","_index","_lootMaxRadius2","_itemType","_position","_item","
 	_guaranteedLoot = _this select 5;
 	_lootMaxRadius2 = _lootMaxRadius + 5;
 	
-	_lootTable = "InfectedCamps";
-	_itemTypes =	[] + getArray (configFile >> "CfgBuildingLoot" >> _lootTable >> "lootType");
-	_index = dayz_CBLBase find _lootTable;
-	_weights =	dayz_CBLChances select _index;
-	_cntWeights = count _weights;
 	_i = 0;
 	
 	while {(_i < (round(random _randomLoot) + _guaranteedLoot)) && (round(time - _timeExit) < 10)} do { //timeout
 		//create loot
-		_index = floor(random _cntWeights);
-		_index = _weights select _index;
-		_itemType = _itemTypes select _index;
+		_itemTypes = [] + getArray (configFile >> "CfgBuildingLoot" >> "InfectedCamps" >> "lootType");
+		_CBLBase = dayz_CBLBase find "InfectedCamps";
+		_weights =	dayz_CBLChances select _CBLBase;
+		_cntWeights = count _weights;
+		_index1 = floor(random _cntWeights);
+		_index2 = _weights select _index1;
+		_itemType = _itemTypes select _index2;
 		
 		_position = [_basePos,_lootMinRadius,_lootMaxRadius,0,0,0,0] call BIS_fnc_findSafePos;
 		_position = [_position select 0,_position select 1,0];

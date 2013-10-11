@@ -183,6 +183,7 @@ if (_randomSpot) then {
 	if (!isDedicated) then {
 		endLoadingScreen;
 	};
+	if (worldName in ["dzhg", "panthera2", "Sara", "Utes", "Dingor", "namalsk", "isladuala", "Tavi", "dayznogova","tasmania2010"]) then { _IslandMap = true; } else { _IslandMap = false; };
 
 	//spawn into random
 	_findSpot = true;
@@ -191,7 +192,7 @@ if (_randomSpot) then {
 	for [{_j=0},{_j<=100 AND _findSpot},{_j=_j+1}] do {
 		if (_spawnSelection == 9) then {
 		// random spawn location selected, lets get the marker and spawn in somewhere
-		_mkr = getMarkerPos ("spawn" + str(floor(random 5)));
+			if (dayz_spawnselection == 1) then { _mkr = getMarkerPos ("spawn" + str(floor(random 6))); } else { _mkr = getMarkerPos ("spawn" + str(floor(random 5))); };
 		} else {
 			// spawn is not random, lets spawn in our location that was selected
 			_mkr = getMarkerPos ("spawn" + str(_spawnSelection));
@@ -208,18 +209,16 @@ if (_randomSpot) then {
 				for [{_w = 0}, {_w != 809}, {_w = ((_w + 17) % 811)}] do {
 					//if (_w < 17) then { diag_log format[ "%1 loop starts with _w=%2", __FILE__, _w]; };
 					_pos = [((_pos select 0) - _w),((_pos select 1) + _w),(_pos select 2)];
-					if(surfaceisWater _pos) exitWith {
+					if((surfaceisWater _pos) and (!_IslandMap)) exitWith {
 						_isIsland = true;
 					};
 				};
-				if (!(worldName in ["dzhg", "panthera2", "Sara", "Utes", "Dingor", "namalsk", "isladuala", "Tavi", "dayznogova"])) then {
-					if (!_isIsland) then {_findSpot = false};
-				};
+				if (!_isIsland) then {_findSpot = false};
 			};
 		};
 		//diag_log format["%1: pos:%2 _findSpot:%3", __FILE__, _position, _findSpot];
 	};
-	if (_findSpot) exitWith {
+	if ((_findSpot) and (!_IslandMap)) exitWith {
 		diag_log format["%1: Error, failed to find a suitable spawn spot for player. area:%2",__FILE__, _mkr];
 	};
 	_worldspace = [0,_position];
@@ -243,11 +242,11 @@ _clientID publicVariableClient "PVCDZ_plr_Login2";
 //record time started
 _playerObj setVariable ["lastTime",time];
 //_playerObj setVariable ["model_CHK",typeOf _playerObj];
-
+/*
 #ifdef LOGIN_DEBUG
 diag_log format["LOGIN PUBLISHING: UID#%1 CID#%2 %3 as %4 should spawn at %5", getPlayerUID _playerObj, _characterID, _playerObj call fa_plr2str, typeOf _playerObj, (_worldspace select 1) call fa_coor2str];
 #endif
-
+*/
 PVDZ_plr_Login1 = null;
 PVDZ_plr_Login2 = null;
 
