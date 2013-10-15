@@ -72,48 +72,50 @@ if (isServer and isNil "sm_done") then {
 
 			//Parse Array
 			_countr = _countr + 1;
-
-			_idKey = 	_x select 1;
-			_type =		_x select 2;
-			_ownerID = 	_x select 3;
-			_worldspace = _x select 4;
-			_inventory =	_x select 5;
-			_hitPoints=	_x select 6;
-			_fuel =		_x select 7;
-			_damage = 	_x select 8;
-
-			_dir = 0;
-			_pos = [0,0,0];
+			
+			_action = 		_x select 0; 
+			_idKey = 		_x select 1;
+			_type =			if ((typeName (_x select 2)) == "STRING") then { _x select 2 };
+			_ownerID = 		_x select 3;
+			_worldspace = 	if ((typeName (_x select 4)) == "ARRAY") then { _x select 4 } else { [] };
+			_inventory =	if ((typeName (_x select 5)) == "ARRAY") then { _x select 5 } else { [] };
+			_hitPoints =	if ((typeName (_x select 6)) == "ARRAY") then { _x select 6 } else { [] };
+			_fuel =			if ((typeName (_x select 7)) == "SCALAR") then { _x select 7 } else { 0 };
+			_damage = 		if ((typeName (_x select 8)) == "SCALAR") then { _x select 8 } else { 0.9 };
+			
+			_dir = floor(random(360));
+			_pos = getMarkerpos "respawn_west";	
 			_wsDone = false;
-			if (count _worldspace >= 2) then
-			{
+			
+			if (count _worldspace >= 1 && {(typeName (_worldspace select 0)) == "SCALAR"}) then { 
 				_dir = _worldspace select 0;
-				if (count (_worldspace select 1) == 3) then {
-					_pos = _worldspace select 1;
-					_wsDone = true;
-				}
-			};			
+			};
+			if (count _worldspace == 2 && {(typeName (_worldspace select 1)) == "ARRAY"}) then { 
+				_i = _worldspace select 1;
+				if (count _i == 3 &&
+					{(typeName (_i select 0)) == "SCALAR"} && 
+					{(typeName (_i select 1)) == "SCALAR"} &&
+					{(typeName (_i select 2)) == "SCALAR"}) then {
+					_pos = _i;
+					_wsDone = true;					
+				};
+			};
 			if (!_wsDone) then {
-				if (count _worldspace >= 1) then { _dir = _worldspace select 0; };
-				_pos = [getMarkerPos "center",0,50,10,0,2000,0] call BIS_fnc_findSafePos;
+				_pos = [getMarkerPos "center",0,30,10,0,2000,0] call BIS_fnc_findSafePos;
 				if (count _pos < 3) then { _pos = [_pos select 0,_pos select 1,0]; };
 				diag_log ("MOVED OBJ: " + str(_idKey) + " of class " + _type + " to pos: " + str(_pos));
 			};
 
 			if (_damage < 1) then {
 				//diag_log format["OBJ: %1 - %2,%3,%4,%5,%6,%7,%8", _idKey,_type,_ownerID,_worldspace,_inventory,_hitPoints,_fuel,_damage];
-
+				
+				dayz_nonCollide = ["DomeTentStorage","TentStorage","CamoNet_DZ"];
+				
 				//Create it
-				_object = createVehicle [_type, _pos, [], 0, "CAN_COLLIDE"];
+				_object = createVehicle [_type, _pos, [], 0, if (_type in dayz_nonCollide) then {"NONE"} else {"CAN_COLLIDE"}];
 				_object setVariable ["lastUpdate",time];
 				_object setVariable ["ObjectID", _idKey, true];
 				_object setVariable ["CharacterID", _ownerID, true];
-
-				if (_object isKindOf "TentStorage" || _object isKindOf "CamoNet_DZ" || _object isKindOf "Land_A_tent") then {
-					_pos set [2,0];
-					_object setpos _pos;
-					_object addMPEventHandler ["MPKilled",{_this call vehicle_handleServerKilled;}];
-				};
 				
 				_object setdir _dir;
 				_object setDamage _damage;
@@ -163,20 +165,31 @@ if (isServer and isNil "sm_done") then {
 					_object setFuel _fuel;
 					_object call fnc_veh_ResetEH;
 				} else { 
-					if (!(_type in SafeObjects )) then {
+					if (_type in SafeObjects) then {
+						if (_object isKindOf "TentStorage" || _object isKindOf "CamoNet_DZ" || _object isKindOf "Land_A_tent") then {
+							//_booleans=[];
+							//_pos = [_type, _pos, _booleans] call fn_niceSpot;
+							_pos set [2,0];
+							_object setPosATL _pos;
+							_object addMPEventHandler ["MPKilled",{_this call vehicle_handleServerKilled;}];
+						};
+						
+						if (_object isKindOf "TrapItems") then {
+							_object setVariable ["armed", _inventory select 0, false];
+						};
+					} else {
 						_damage = 1;
+						_object setDamage _damage;
 						diag_log format["OBJ: %1 - %2 REMOVED", _object,_damage];
 					};
+					
 				};
 				
-				if (_object isKindOf "TrapItems") then {
-					_object setVariable ["armed", _inventory select 0, false];
-				};
-
 				//Monitor the object
 				//_object enableSimulation false;
 				dayz_serverObjectMonitor set [count dayz_serverObjectMonitor,_object];
 			};
+			sleep 0.01;
 		} forEach _myArray;
 
 	// # END OF STREAMING #
@@ -221,7 +234,7 @@ if (isServer and isNil "sm_done") then {
 	//};
 	
 	// Trap loop
-	[] call {
+	[] spawn {
 		private ["_array","_array2","_array3","_script","_armed"];
 		_array = str dayz_traps;
 		_array2 = str dayz_traps_active;
