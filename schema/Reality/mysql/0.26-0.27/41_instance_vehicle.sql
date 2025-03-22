@@ -8,6 +8,6 @@ alter table instance_vehicle
   add constraint fk3_instance_vehicle foreign key (world_vehicle_id) references world_vehicle (id);
 
 alter table instance_vehicle
-  drop foreign key instance_vehicle_ibfk_2,
+  drop foreign key fk2_instance_vehicle,
   drop index idx1_instance_vehicle,
   drop column vehicle_id;

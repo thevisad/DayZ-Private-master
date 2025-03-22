@@ -1,1 +1,1 @@
-alter table instances change timezone offset int(1) not null default 0;
+ALTER TABLE instances CHANGE timezone `offset` INT(1) NOT NULL DEFAULT 0;

@@ -3,7 +3,7 @@ drop procedure if exists `proc_getInstanceTime`;
 create procedure `proc_getInstanceTime`(in `p_instanceId` int)
 begin
   declare server_time datetime default now(); --
-  select now() + interval (offset) hour into server_time from instances where instance = p_instanceid; --
+  select now() + interval ('offset') hour into server_time from instances where instance = p_instanceid; --
   select date_format(server_time,'%d-%m-%y'), time_format(server_time, '%T'); --
 end;
 
